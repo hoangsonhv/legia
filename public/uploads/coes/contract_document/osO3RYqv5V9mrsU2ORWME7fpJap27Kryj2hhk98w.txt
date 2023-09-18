@@ -1,0 +1,69 @@
+I. Quản lý chi: 6tr 
+- Định kỳ: Tiền điện, nước, mặt bằng -> Trên tháng, có thể tạo nhiều lần nhưng xác nhận
+- Công ty:
++ Vật liệu cho công ty
++ Văn phòng phẩm
++ Khác
+- Khách hàng
++ Vật liệu cho sản xuất
++ Khác
+=> Loại, số chứng từ, đối chứng (mã đơn hàng dialog, hiệu ứng), mô tả, ghi chú, người lập phiếu, chứng từ đi kèm (chọn loại chứng từ, upload hình), chứng từ còn thiếu (chọn loại chứng từ, upload hình), số tiền
+
+II. Quản lý thu: 5tr
+- Tiền mặt
+- Ngân hàng
+=> Hình thức thu, số chứng từ, đối chứng (mã đơn hàng 0 hoặc 1 dialog, hiệu ứng), mô tả, ghi chú, người lập phiếu, người nhận tiền, chứng từ đi kèm (chọn loại chứng từ, upload hình), chứng từ còn thiếu (chọn loại chứng từ, upload hình), số tiền tổng, Tiền đã nhận
++ Nếu Đã đủ => Cập nhật trạng thái tiền đã nhận sang "Đã đủ"
++ Nếu còn thiếu => Cho nhập số tiền theo đợt và checkbox đã đủ (Nếu checked thì cập nhật trạng thái sang "Đã đủ")
+
+III. Báo cáo bán hàng: 4tr
+Mã số đơn hàng, mô tả, hình ảnh (Nhập text + upload file), đối chứng (mã phiếu chi dialog, hiệu ứng)
+
+IV. Phân quyền
+IV.1 Quản lý quy trình: Với từng bộ phận sẽ được xử lý trên từng quy trình nhỏ. Danh sách các quy trình: 11tr
+Chi
+	1. Tạo mẫu (phiếu chi)
+	2. Chờ phê duyệt
+	3. Bắt đầu chi
+	4. Chờ mua hàng
+	5. Kiểm tra hàng hoá (Bảo vệ hoặc quản lý kho)
+	6. Bàn giao
+	6.1 Đối với đơn hàng mua cho Công ty -> Nếu đã bàn giao xong sẽ được sang Mục 7 (hoàn tất)
+	6.2 Đối với đơn hàng mua cho Khách hàng
+	a. Kho đã có hàng
+	b. Chờ sản xuất
+	c. Hoàn tất sản xuất
+	d. Xuất hàng ("Giao nhận" kiểm tra)
+	e. Vận chuyển
+	f. Đã giao cho khách hàng
+	7. Hoàn tất
+	*** Đối với phiếu chi định kỳ chỉ có mục 1, 2, 3, 7
+Thu:
+	1. Tạo mẫu (phiếu thu)
+	2. Đã nhận: còn thiếu hoặc đã đủ -> Tính năng thông báo định kỳ nếu chưa thu hoàn tất
+	3. Hoàn tất
+Báo cáo bán hàng:
+	1. Tạo mẫu
+	2. Kho đã có hàng
+	3. Chờ sản xuất
+	4. Hoàn tất sản xuất
+	d. Xuất hàng ("Giao nhận" kiểm tra)
+	6. Vận chuyển
+	7. Đã giao cho khách hàng
+	8. Hoàn tất
+IV.2 Các tính năng trong hệ thống chỉ những nhóm người dùng đặc biệt mới được phép sử dụng: 5tr
+IV.3 Quản lý người dùng: 3tr
+IV.4 Quản lý nhóm người dùng để phân quyền: 3tr
+V. Log hệ thống khi có các thao tác thêm, xoá, sửa trong thu chi: 5tr
+VI. Quản lý tài khoản ngân hàng: 6tr
+- Thông tin: Số TK, Tên NH, Chủ tài khoản, Số dư
+- Lịch sử giao dịch: Loại giao dịch (Rút, nạp), số tiền giao dịch, số dư tại thời điểm giao dịch, thời gian giao dịch, người thực hiện
+
+LIST HÀNG HOÁ, NGƯỜI MUA,... TRƯỜNG KHÁC??? -> Field hệ thống
+PHIẾU XUẤT HÀNG??? => Do nhân viên nhập vào
+QUẢN LÝ BÁN HÀNG??? KIỂM TRA DỮ LIỆU BÁN HÀNG??? -> Quản lý đơn hàng
+
+
+Check quy trình hệ thống
+Check giá tiền và thời gian
+Chuẩn bị trước VPS để lưu source
