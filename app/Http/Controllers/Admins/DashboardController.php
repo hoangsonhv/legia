@@ -3,11 +3,14 @@ namespace App\Http\Controllers\Admins;
 
 use App\Enums\ProcessStatus;
 use App\Helpers\DataHelper;
+use App\Helpers\WarehouhseHelper;
 use App\Http\Controllers\Controller;
 use App\Models\CoTmp;
 use App\Models\Repositories\RequestRepository;
 use App\Models\Repositories\CoTmpRepository;
 use App\Models\Repositories\CoRepository;
+use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
+use App\Models\Repositories\Warehouse\GroupWarehouseRepository;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -15,6 +18,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller {
 
     protected $requestRepository;
+    private $baseWarehouseRepository;
 
     /**
      * @var
@@ -30,9 +34,12 @@ class DashboardController extends Controller {
 
 	public function __construct(RequestRepository $requestRepository,
                                 CoTmpRepository $coTmpRepo,
-                                CoRepository $coRepo)
+                                CoRepository $coRepo,
+                                BaseWarehouseRepository $baseWarehouseRepository
+                                )
 	{
         $this->requestRepository    = $requestRepository;
+        $this->baseWarehouseRepository    = $baseWarehouseRepository;
         $this->coTmpRepo            = $coTmpRepo;
         $this->coRepo               = $coRepo;
         $this->menu                 = [
@@ -43,6 +50,32 @@ class DashboardController extends Controller {
 
 	public function index(Request $request)
 	{
+        $model = WarehouhseHelper::getModel(WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA);
+        $this->baseWarehouseRepository->setModel($model);
+        try {
+            $model = $this->baseWarehouseRepository->update([
+                // "code" => 'abc',
+                "vat_lieu" => 'abcaaaaaa',
+                // "do_day" => 1.2,
+                // "hinh_dang" => WarehouhseHelper::SHAPE_CICLE,
+                // "dia_w_w1" => 1.2,
+                // "l_l1" => 1.2,
+                // "w2" => 1.2,
+                // "l2" => 1.2,
+                // "sl_tam" => 2,
+                // "sl_m2" => 1.2,
+                // "lot_no" => '123123',
+                // "ghi_chu" => 'oke ne',
+                // "date" => now(),
+                // "ton_sl_tam" => 2,
+                // "ton_sl_m2" => 1.2
+            ],'abc');
+            dd($model);
+        } catch (\Throwable $th) {
+            dd( $th);
+        }
+        // $this->baseWarehouseRepository->destroy('abc');
+        // dd('oke');
         $breadcrumb     = $this->menu;
         $titleForLayout = $this->menu['root'];
         $titleForChart  = 'Thống kê nguyên vật liệu';

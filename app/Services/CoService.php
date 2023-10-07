@@ -159,7 +159,7 @@ class CoService
         return false;
     }
 
-    public function stepCO()
+    public static function stepCO()
     {
         return [
             CoStepHistory::STEP_WAITING_APPROVE_CO => [
@@ -313,7 +313,7 @@ class CoService
         ];
     }
 
-    public function paymentDocuments()
+    public static  function paymentDocuments()
     {
         return [
             'hoa_don' => 'Hoá đơn',
@@ -329,7 +329,7 @@ class CoService
         ];
     }
 
-    public function paymentStep()
+    public static function paymentStep()
     {
         return [
             'Trước khi làm hàng',
