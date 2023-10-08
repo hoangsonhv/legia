@@ -6,7 +6,7 @@ use App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
 use PhpOffice\PhpSpreadsheet\Shared\OLE\PPS;
 
-class GroupWarehouseReposiroty extends BaseWarehouseRepository
+class GroupWarehouseReposiroty 
 {
     protected $model;
 

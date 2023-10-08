@@ -36,29 +36,29 @@ class WarehouhseHelper
     const SHAPE_SQUARE = '☐';
     const SHAPE_POLYGON = '☐☐';
 
-    public static function getModel(string $type): Model
+    public static function getModel(string $type, array $attributes = []): Model
     {
         switch ($type) {
             case WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA:
-                return new Group1();
+                return new Group1($attributes);
             case WarehouhseHelper::FILLTER_GLANDPACKING_HOOP:
-                return new Group2();
+                return new Group2($attributes);
             case WarehouhseHelper::DAYCAOSU_SILICON_ONGGLASSEXPORT_DAYCREAMIC_PTFECAYONG_PTFETAPE:
-                return new Group3();
+                return new Group3($attributes);
             case WarehouhseHelper::VANDTINH_INNER_OUTER:
-                return new Group4();
+                return new Group4($attributes);
             case WarehouhseHelper::NDLOAIKHAC_NKLOAIKHAC_ORING_RTJ:
-                return new Group5();
+                return new Group5($attributes);
             case WarehouhseHelper::PHU_TUNG_DUNG_CU:
-                return new Group6();
+                return new Group6($attributes);
             case WarehouhseHelper::THANH_PHAM_SWG:
-                return new Group7();
+                return new Group7($attributes);
             case WarehouhseHelper::GLAND_PACKING_LATTY:
-                return new Group8();
+                return new Group8($attributes);
             case WarehouhseHelper::CCDC:
-                return new Group9();
+                return new Group9($attributes);
             case WarehouhseHelper::PTFE_ENVELOP:
-                return new Group10();
+                return new Group10($attributes);
             case WarehouhseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI:
                 return new Group11();
             default:

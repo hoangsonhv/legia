@@ -5,20 +5,24 @@ use App\Enums\ProcessStatus;
 use App\Helpers\DataHelper;
 use App\Helpers\WarehouhseHelper;
 use App\Http\Controllers\Controller;
+use App\Imports\Warehouse\WarehouseImport;
 use App\Models\CoTmp;
 use App\Models\Repositories\RequestRepository;
 use App\Models\Repositories\CoTmpRepository;
 use App\Models\Repositories\CoRepository;
-use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
-use App\Models\Repositories\Warehouse\GroupWarehouseRepository;
+use App\Models\Repositories\Warehouse\GroupWarehouseReposiroty;
+
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller {
 
     protected $requestRepository;
-    private $baseWarehouseRepository;
+    private $groupWarehouseRepository;
 
     /**
      * @var
@@ -35,11 +39,11 @@ class DashboardController extends Controller {
 	public function __construct(RequestRepository $requestRepository,
                                 CoTmpRepository $coTmpRepo,
                                 CoRepository $coRepo,
-                                BaseWarehouseRepository $baseWarehouseRepository
+                                GroupWarehouseReposiroty $groupWarehouseRepository
                                 )
 	{
         $this->requestRepository    = $requestRepository;
-        $this->baseWarehouseRepository    = $baseWarehouseRepository;
+        $this->groupWarehouseRepository    = $groupWarehouseRepository;
         $this->coTmpRepo            = $coTmpRepo;
         $this->coRepo               = $coRepo;
         $this->menu                 = [
@@ -50,32 +54,8 @@ class DashboardController extends Controller {
 
 	public function index(Request $request)
 	{
-        $model = WarehouhseHelper::getModel(WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA);
-        $this->baseWarehouseRepository->setModel($model);
-        try {
-            $model = $this->baseWarehouseRepository->update([
-                // "code" => 'abc',
-                "vat_lieu" => 'abcaaaaaa',
-                // "do_day" => 1.2,
-                // "hinh_dang" => WarehouhseHelper::SHAPE_CICLE,
-                // "dia_w_w1" => 1.2,
-                // "l_l1" => 1.2,
-                // "w2" => 1.2,
-                // "l2" => 1.2,
-                // "sl_tam" => 2,
-                // "sl_m2" => 1.2,
-                // "lot_no" => '123123',
-                // "ghi_chu" => 'oke ne',
-                // "date" => now(),
-                // "ton_sl_tam" => 2,
-                // "ton_sl_m2" => 1.2
-            ],'abc');
-            dd($model);
-        } catch (\Throwable $th) {
-            dd( $th);
-        }
-        // $this->baseWarehouseRepository->destroy('abc');
-        // dd('oke');
+        $file = storage_path('app/public/caosuvnza.xlsx');
+        Excel::import(new WarehouseImport(WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA),  $file);
         $breadcrumb     = $this->menu;
         $titleForLayout = $this->menu['root'];
         $titleForChart  = 'Thống kê nguyên vật liệu';

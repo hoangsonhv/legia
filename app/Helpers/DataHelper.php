@@ -127,7 +127,7 @@ class DataHelper
         return false;
     }
 
-    public function getModelWarehouses($warehouse=null, $model=null) {
+    public static function getModelWarehouses($warehouse=null, $model=null) {
         $data = [
             'plate' => [
                 'bia'        => 'Kho BIA',
