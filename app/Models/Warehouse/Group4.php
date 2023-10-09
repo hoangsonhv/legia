@@ -20,8 +20,9 @@ class Group4 extends BaseWarehouseCommon
         'ghi_chu',
         'date',
         'ton_sl_cai',
+        'model_type'
     ];
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::VANDTINH_INNER_OUTER,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::VANDTINH_INNER_OUTER,
+    // ];
 }

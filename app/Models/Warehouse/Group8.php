@@ -18,8 +18,9 @@ class Group8 extends BaseWarehouseCommon
         'ghi_chu',
         'date',
         'ton_sl_cuon',
+        'model_type'
     ];
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::GLAND_PACKING_LATTY,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::GLAND_PACKING_LATTY,
+    // ];
 }

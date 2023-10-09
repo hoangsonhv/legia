@@ -22,8 +22,9 @@ class Group2 extends BaseWarehouseCommon
         'date',
         'ton_sl_cuon',
         'ton_sl_kg',
+        'model_type'
     ];
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::FILLTER_GLANDPACKING_HOOP,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::FILLTER_GLANDPACKING_HOOP,
+    // ];
 }

@@ -21,8 +21,9 @@ class Group3 extends BaseWarehouseCommon
         'date',
         'ton_sl_cuon',
         'ton_sl_m',
+        'model_type'
     ];
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::DAYCAOSU_SILICON_ONGGLASSEXPORT_DAYCREAMIC_PTFECAYONG_PTFETAPE,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::DAYCAOSU_SILICON_ONGGLASSEXPORT_DAYCREAMIC_PTFECAYONG_PTFETAPE,
+    // ];
 }

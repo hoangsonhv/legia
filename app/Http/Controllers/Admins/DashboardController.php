@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Admins;
 
 use App\Enums\ProcessStatus;
 use App\Helpers\DataHelper;
-use App\Helpers\WarehouhseHelper;
+use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\Warehouse\WarehouseImport;
 use App\Models\CoTmp;
@@ -54,8 +54,26 @@ class DashboardController extends Controller {
 
 	public function index(Request $request)
 	{
-        $file = storage_path('app/public/caosuvnza.xlsx');
-        Excel::import(new WarehouseImport(WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA),  $file);
+        $warehouse = WarehouseHelper::getModel(WarehouseHelper::BIA);
+        // dd( $warehouse);
+        $warehouse->create([
+            'code' => '12',
+            'vat_lieu' => '12',
+            'do_day' => '12',
+            'hinh_dang' => '12',
+            'dia_w_w1' => '12',
+            'l_l1' => '12',
+            'w2' =>'12',
+            'l2' => '12',
+            'sl_tam' => '12',
+            'sl_m2' => '12',
+            'lot_no' => '12',
+            'ghi_chu' => '12',
+            'date' => now(),
+            'ton_sl_tam' =>'12',
+            'ton_sl_m2' =>'12',
+            'model_type' => '1'
+        ]);
         $breadcrumb     = $this->menu;
         $titleForLayout = $this->menu['root'];
         $titleForChart  = 'Thống kê nguyên vật liệu';

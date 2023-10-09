@@ -19,9 +19,10 @@ class Group6 extends BaseWarehouseCommon
         'ghi_chu',
         'date',
         'ton_sl_cai',
+        'model_type'
     ];
 
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::PHU_TUNG_DUNG_CU,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::PHU_TUNG_DUNG_CU,
+    // ];
 }

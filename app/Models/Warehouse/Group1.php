@@ -26,9 +26,10 @@ class Group1 extends BaseWarehouseCommon
         'date',
         'ton_sl_tam',
         'ton_sl_m2',
+        'model_type'
     ];
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA,
+    // ];
    
 }

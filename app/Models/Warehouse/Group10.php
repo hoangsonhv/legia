@@ -21,9 +21,10 @@ class Group10 extends BaseWarehouseCommon
         'ghi_chu',
         'ton_sl_cay',
         'ton_sl_m',
+        'model_type'
     ];
 
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::PTFE_ENVELOP,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::PTFE_ENVELOP,
+    // ];
 }

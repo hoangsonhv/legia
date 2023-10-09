@@ -2,28 +2,23 @@
 
 namespace App\Models\Warehouse;
 
-use App\Helpers\WarehouhseHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group9 extends BaseWarehouseCommon
+class Group12 extends BaseWarehouseCommon
 {
     use HasFactory;
+
     protected $fillable = [
         'code',
-        'vat_lieu',
-        'std',
-        'size',
-        'od',
-        'id',
-        'sl_cai',
+        'mo_ta',
+        'bo_phan',
+        'dvt',
+        'sl',
         'lot_no',
         'ghi_chu',
+        'date',
         'ton_sl_cai',
         'model_type'
     ];
-
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::CCDC,
-    // ];
 }

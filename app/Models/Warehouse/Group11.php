@@ -22,9 +22,10 @@ class Group11 extends BaseWarehouseCommon
         'lot_no',
         'ghi_chu',
         'sl_ton',
+        'model_type'
     ];
 
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI,
+    // ];
 }

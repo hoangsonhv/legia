@@ -23,8 +23,9 @@ class Group7 extends BaseWarehouseCommon
         'ghi_chu',
         'date',
         'ton_sl_cai',
+        'model_type'
     ];
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::THANH_PHAM_SWG,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::THANH_PHAM_SWG,
+    // ];
 }

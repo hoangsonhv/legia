@@ -3,7 +3,7 @@
 namespace App\Imports\Warehouse;
 
 use App\Helpers\AdminHelper;
-use App\Helpers\WarehouhseHelper;
+use App\Helpers\WarehouseHelper;
 use App\Models\WarehousePlates\WarehouseBia;
 use App\Models\WarehousePlates\WarehouseCaosu;
 use App\Models\WarehousePlates\WarehouseCaosuvnza;
@@ -46,11 +46,9 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
         if (empty($row[0])) {
             return null;
         }
-        
         switch ($this->type) {
-            
-            case WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA:
-                return  WarehouhseHelper::getModel(WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA,$this->getDataGroup1($row));
+            case WarehouseHelper::BIA:
+                return  WarehouseHelper::getModel(WarehouseHelper::BIA,$this->getDataGroup1($row));
             
         }
     }

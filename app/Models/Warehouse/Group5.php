@@ -19,8 +19,9 @@ class Group5 extends BaseWarehouseCommon
         'ghi_chu',
         'date',
         'ton_sl_cai',
+        'model_type'
     ];
-    protected $attributes = [
-        'model_type' => WarehouhseHelper::NDLOAIKHAC_NKLOAIKHAC_ORING_RTJ,
-    ];
+    // protected $attributes = [
+    //     'model_type' => WarehouhseHelper::NDLOAIKHAC_NKLOAIKHAC_ORING_RTJ,
+    // ];
 }
