@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\WarehouseSpwRequest;
 use App\Imports\Spws\WarehouseSpwsImport;
 use App\Models\Repositories\WarehouseSpwRepository;
+use App\Services\WarehouseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
@@ -15,13 +16,15 @@ use \Log;
 class WarehouseSpwController extends Controller
 {
     protected $warehouseSpwRepository;
-
+    protected $warehouseService;
     public $menu;
 
     function __construct(
-        WarehouseSpwRepository $warehouseSpwRepository
+        WarehouseSpwRepository $warehouseSpwRepository,
+        WarehouseService $warehouseService
     ) {
         $this->warehouseSpwRepository = $warehouseSpwRepository;
+        $this->warehouseService = $warehouseService;
         $this->menu                     = [
             'root' => 'Quản lý Kho SPW',
             'data' => [
@@ -72,7 +75,7 @@ class WarehouseSpwController extends Controller
         $nameWarehouse = $this->checkExistModel($model);
 
         $input = $request->except('_token');
-        if ($this->warehouseSpwRepository->store($model, $input)) {
+        if ($this->warehouseService->storeOrUpdate($model, $input)) {
             return redirect()->route('admin.warehouse-spw.index', ['model' => $model])->with('success','Tạo Vật Liệu thành công!');
         }
         return redirect()->route('admin.warehouse-spw.index', ['model' => $model])->with('error','Tạo Vật Liệu thất bại!');

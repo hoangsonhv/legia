@@ -15,12 +15,33 @@ use App\Models\WarehousePlates\WarehouseTamnhua;
 
 class WarehousePlateRepository
 {
- 
-
+    protected $warehouseBia;
+    protected $warehouseCaosuvnza;
+    protected $warehouseCaosu;
+    protected $warehouseCeramic;
+    protected $warehouseGraphite;
+    protected $warehousePtfe;
+    protected $warehouseTamkimloai;
+    protected $warehouseTamnhua;
+    
     public function __construct(
-
+        WarehouseBia $warehouseBia,
+        WarehouseCaosuvnza $warehouseCaosuvnza,
+        WarehouseCaosu $warehouseCaosu,
+        WarehouseCeramic $warehouseCeramic,
+        WarehouseGraphite $warehouseGraphite,
+        WarehousePtfe $warehousePtfe,
+        WarehouseTamkimloai $warehouseTamkimloai,
+        WarehouseTamnhua $warehouseTamnhua
     ) {
-      
+        $this->warehouseBia        = $warehouseBia;
+        $this->warehouseCaosuvnza  = $warehouseCaosuvnza;
+        $this->warehouseCaosu      = $warehouseCaosu;
+        $this->warehouseCeramic    = $warehouseCeramic;
+        $this->warehouseGraphite   = $warehouseGraphite;
+        $this->warehousePtfe       = $warehousePtfe;
+        $this->warehouseTamkimloai = $warehouseTamkimloai;
+        $this->warehouseTamnhua    = $warehouseTamnhua;
     }
 
     public function getWarehousePlates($model='bia', $where=array(), $opts=array()) 
@@ -150,27 +171,27 @@ class WarehousePlateRepository
             case 'bia':
                 $data = WarehouseHelper::getModel(WarehouseHelper::BIA);
                 break;
-            // case 'caosuvnza':
-            //     $data = $this->warehouseCaosuvnza;
-            //     break;
-            // case 'caosu':
-            //     $data = $this->warehouseCaosu;
-            //     break;
-            // case 'ceramic':
-            //     $data = $this->warehouseCeramic;
-            //     break;
-            // case 'graphite':
-            //     $data = $this->warehouseGraphite;
-            //     break;
-            // case 'ptfe':
-            //     $data = $this->warehousePtfe;
-            //     break;
-            // case 'tamkimloai':
-            //     $data = $this->warehouseTamkimloai;
-            //     break;
-            // case 'tamnhua':
-            //     $data = $this->warehouseTamnhua;
-            //     break;
+            case 'caosuvnza':
+                $data = $this->warehouseCaosuvnza;
+                break;
+            case 'caosu':
+                $data = $this->warehouseCaosu;
+                break;
+            case 'ceramic':
+                $data = $this->warehouseCeramic;
+                break;
+            case 'graphite':
+                $data = $this->warehouseGraphite;
+                break;
+            case 'ptfe':
+                $data = $this->warehousePtfe;
+                break;
+            case 'tamkimloai':
+                $data = $this->warehouseTamkimloai;
+                break;
+            case 'tamnhua':
+                $data = $this->warehouseTamnhua;
+                break;
             default:
                 $data = false;
         }

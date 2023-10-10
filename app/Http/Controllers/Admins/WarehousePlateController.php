@@ -50,7 +50,6 @@ class WarehousePlateController extends Controller
         if($request->has('key_word')) {
             $params['key_word'] = $request->key_word;
         }
-
         $warehousePlates = $this->warehousePlateRepository->getWarehousePlates($model, $params)->orderBy('id','DESC')->paginate($limit);
         $request->flash();
         return view('admins.warehouse_plates.index',compact('types', 'breadcrumb', 'titleForLayout', 'warehousePlates', 'model'));

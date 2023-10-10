@@ -15,7 +15,11 @@ class BaseWarehouseRepository
         $this->model = $model;
     }
 
-    public function create(array $data) : Model
+    public function setModel(Model $model)
+    {
+        $this->model = $model;
+    }
+    public function create(array $data) : bool
     {
         return $this->model->create($data);
     }
