@@ -69,7 +69,7 @@
                        <tbody>
                          @foreach($warehousePlates as $warehousePlate)
                            <tr>
-                             <td>{{ $warehousePlate->id }}</td>
+                             <td>{{ $warehousePlate->l_id }}</td>
                              <td>{{ $warehousePlate->code }}</td>
                              <td>{{ $warehousePlate->vat_lieu }}</td>
                              <td>{{ $warehousePlate->hinh_dang }}</td>
@@ -80,10 +80,10 @@
                              <td>{{ $warehousePlate->ton_sl_m2 }}</td>
                              <td>
                                @permission('admin.warehouse-plate.edit')
-                                 <a href="{{ route('admin.warehouse-plate.edit', ['model' => $model, 'id' => $warehousePlate->id]) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>
+                                 <a href="{{ route('admin.warehouse-plate.edit', ['model' => $model, 'id' => $warehousePlate->l_id]) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>
                                @endpermission
                                @permission('admin.warehouse-plate.destroy')
-                                 <a href="{{ route('admin.warehouse-plate.destroy', ['model' => $model, 'id' => $warehousePlate->id]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa Vật Liệu này không ?')"><i class="fas fa-trash-alt"></i></a>
+                                 <a href="{{ route('admin.warehouse-plate.destroy', ['model' => $model, 'id' => $warehousePlate->l_id]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa Vật Liệu này không ?')"><i class="fas fa-trash-alt"></i></a>
                                @endpermission
                              </td>
                            </tr>

@@ -3,6 +3,7 @@
 namespace App\Models\Repositories;
 
 use App\Helpers\AdminHelper;
+use App\Helpers\WarehouseHelper;
 use App\Models\WarehouseRemains\WarehouseCcdc;
 use App\Models\WarehouseRemains\WarehouseDaycaosusilicone;
 use App\Models\WarehouseRemains\WarehouseDayceramic;
@@ -86,34 +87,44 @@ class WarehouseRemainRepository
             }
             switch ($model) {
                 case 'ccdc':
-                    $create = WarehouseCcdc::create($data);
+                    $data["model_type"] = WarehouseHelper::CCDC;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::CCDC)::create($data);
                     break;
                 case 'daycaosusilicone':
-                    $create = WarehouseDaycaosusilicone::create($data);
+                    $data["model_type"] = WarehouseHelper::DAY_CAO_SU_VA_SILICON;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::DAY_CAO_SU_VA_SILICON)::create($data);
                     break;
                 case 'dayceramic':
-                    $create = WarehouseDayceramic::create($data);
+                    $data["model_type"] = WarehouseHelper::DAY_CREAMIC;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::DAY_CREAMIC)::create($data);
                     break;
                 case 'glandpacking':
-                    $create = WarehouseGlandpacking::create($data);
+                    $data["model_type"] = WarehouseHelper::GLAND_PACKING;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::GLAND_PACKING)::create($data);
                     break;
                 case 'nhuakythuatcayong':
-                    $create = WarehouseNhuakythuatcayong::create($data);
+                    $data["model_type"] = WarehouseHelper::NHU_KY_THUAT_CAY_ONG;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::NHU_KY_THUAT_CAY_ONG)::create($data);
                     break;
                 case 'ongglassepoxy':
-                    $create = WarehouseOngglassepoxy::create($data);
+                    $data["model_type"] = WarehouseHelper::ONG_GLASS_EXPOXY;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::ONG_GLASS_EXPOXY)::create($data);
                     break;
                 case 'phutungdungcu':
-                    $create = WarehousePhutungdungcu::create($data);
+                    $data["model_type"] = WarehouseHelper::PHU_TUNG_DUNG_CU;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::PHU_TUNG_DUNG_CU)::create($data);
                     break;
                 case 'ptfecayong':
-                    $create = WarehousePtfecayong::create($data);
+                    $data["model_type"] = WarehouseHelper::PTFE_CAYONG;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::PTFE_CAYONG)::create($data);
                     break;
                 case 'ndloaikhac':
-                    $create = WarehouseNdloaikhac::create($data);
+                    $data["model_type"] = WarehouseHelper::ND_LOAI_KHAC;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::ND_LOAI_KHAC)::create($data);
                     break;
                 case 'nkloaikhac':
-                    $create = WarehouseNkloaikhac::create($data);
+                    $data["model_type"] = WarehouseHelper::NK_LOAI_KHAC;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::NK_LOAI_KHAC)::create($data);
                     break;
             }
         } catch(\Exception $ex) {

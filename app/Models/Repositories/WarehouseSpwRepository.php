@@ -3,6 +3,7 @@
 namespace App\Models\Repositories;
 
 use App\Helpers\AdminHelper;
+use App\Helpers\WarehouseHelper;
 use App\Models\WarehouseSpws\WarehouseFiller;
 use App\Models\WarehouseSpws\WarehouseGlandpackinglatty;
 use App\Models\WarehouseSpws\WarehouseHoop;
@@ -85,34 +86,44 @@ class WarehouseSpwRepository
             }
             switch ($model) {
                 case 'filler':
-                    $create = WarehouseFiller::create($data);
+                    $data["model_type"] = WarehouseHelper::FILLER;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::FILLER)::create($data);
                     break;
                 case 'glandpackinglatty':
-                    $create = WarehouseGlandpackinglatty::create($data);
+                    $data["model_type"] = WarehouseHelper::GLAND_PACKING_LATTY;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::GLAND_PACKING_LATTY)::create($data);
                     break;
                 case 'hoop':
-                    $create = WarehouseHoop::create($data);
+                    $data["model_type"] = WarehouseHelper::HOOP;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::HOOP)::create($data);
                     break;
                 case 'oring':
-                    $create = WarehouseOring::create($data);
+                    $data["model_type"] = WarehouseHelper::ORING;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::ORING)::create($data);
                     break;
                 case 'ptfeenvelope':
-                    $create = WarehousePtfeenvelope::create($data);
+                    $data["model_type"] = WarehouseHelper::PTFE_ENVELOP;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::PTFE_ENVELOP)::create($data);
                     break;
                 case 'ptfetape':
-                    $create = WarehousePtfetape::create($data);
+                    $data["model_type"] = WarehouseHelper::PTFE_TAPE;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::PTFE_TAPE)::create($data);
                     break;
                 case 'rtj':
-                    $create = WarehouseRtj::create($data);
+                    $data["model_type"] = WarehouseHelper::RTJ;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::RTJ)::create($data);
                     break;
                 case 'thanhphamswg':
-                    $create = WarehouseThanhphamswg::create($data);
+                    $data["model_type"] = WarehouseHelper::THANH_PHAM_SWG;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::THANH_PHAM_SWG)::create($data);
                     break;
                 case 'vanhtinhinnerswg':
-                    $create = WarehouseVanhtinhinnerswg::create($data);
+                    $data["model_type"] = WarehouseHelper::VANH_TINH_INNER_SWG;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::VANH_TINH_INNER_SWG)::create($data);
                     break;
                 case 'vanhtinhouterswg':
-                    $create = WarehouseVanhtinhouterswg::create($data);
+                    $data["model_type"] = WarehouseHelper::VANH_TINH_OUTER_SWG;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::VANH_TINH_OUTER_SWG)::create($data);
                     break;
             }
         } catch(\Exception $ex) {

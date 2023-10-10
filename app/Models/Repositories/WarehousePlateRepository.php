@@ -3,6 +3,7 @@
 namespace App\Models\Repositories;
 
 use App\Helpers\AdminHelper;
+use App\Helpers\WarehouseHelper;
 use App\Models\WarehousePlates\WarehouseBia;
 use App\Models\WarehousePlates\WarehouseCaosu;
 use App\Models\WarehousePlates\WarehouseCaosuvnza;
@@ -14,33 +15,12 @@ use App\Models\WarehousePlates\WarehouseTamnhua;
 
 class WarehousePlateRepository
 {
-    protected $warehouseBia;
-    protected $warehouseCaosuvnza;
-    protected $warehouseCaosu;
-    protected $warehouseCeramic;
-    protected $warehouseGraphite;
-    protected $warehousePtfe;
-    protected $warehouseTamkimloai;
-    protected $warehouseTamnhua;
+ 
 
     public function __construct(
-        WarehouseBia $warehouseBia,
-        WarehouseCaosuvnza $warehouseCaosuvnza,
-        WarehouseCaosu $warehouseCaosu,
-        WarehouseCeramic $warehouseCeramic,
-        WarehouseGraphite $warehouseGraphite,
-        WarehousePtfe $warehousePtfe,
-        WarehouseTamkimloai $warehouseTamkimloai,
-        WarehouseTamnhua $warehouseTamnhua
+
     ) {
-        $this->warehouseBia        = $warehouseBia;
-        $this->warehouseCaosuvnza  = $warehouseCaosuvnza;
-        $this->warehouseCaosu      = $warehouseCaosu;
-        $this->warehouseCeramic    = $warehouseCeramic;
-        $this->warehouseGraphite   = $warehouseGraphite;
-        $this->warehousePtfe       = $warehousePtfe;
-        $this->warehouseTamkimloai = $warehouseTamkimloai;
-        $this->warehouseTamnhua    = $warehouseTamnhua;
+      
     }
 
     public function getWarehousePlates($model='bia', $where=array(), $opts=array()) 
@@ -72,28 +52,36 @@ class WarehousePlateRepository
             }
             switch ($model) {
                 case 'bia':
-                    $create = WarehouseBia::create($data);
+                    $data['model_type'] = WarehouseHelper::BIA;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::BIA)::create($data);
                     break;
                 case 'caosuvnza':
-                    $create = WarehouseCaosuvnza::create($data);
+                    $data['model_type'] = WarehouseHelper::CAO_SU_VN_ZA;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::CAO_SU_VN_ZA)::create($data);
                     break;
                 case 'caosu':
-                    $create = WarehouseCaosu::create($data);
+                    $data['model_type'] = WarehouseHelper::CAO_SU;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::CAO_SU)::create($data);
                     break;
                 case 'ceramic':
-                    $create = WarehouseCeramic::create($data);
+                    $data['model_type'] = WarehouseHelper::CREAMIC;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::CREAMIC)::create($data);
                     break;
                 case 'graphite':
-                    $create = WarehouseGraphite::create($data);
+                    $data['model_type'] = WarehouseHelper::GRAPHITE;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::GRAPHITE)::create($data);
                     break;
                 case 'ptfe':
-                    $create = WarehousePtfe::create($data);
+                    $data['model_type'] = WarehouseHelper::PTFE;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::PTFE)::create($data);
                     break;
                 case 'tamkimloai':
-                    $create = WarehouseTamkimloai::create($data);
+                    $data['model_type'] = WarehouseHelper::TAM_KIM_LOAI;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::PTFE)::create($data);
                     break;
                 case 'tamnhua':
-                    $create = WarehouseTamnhua::create($data);
+                    $data['model_type'] = WarehouseHelper::TAM_NHUA;
+                    $create = WarehouseHelper::getModel(WarehouseHelper::TAM_NHUA)::create($data);
                     break;
             }
         } catch(\Exception $ex) {
@@ -160,29 +148,29 @@ class WarehousePlateRepository
     private function getModel($model) {
         switch ($model) {
             case 'bia':
-                $data = $this->warehouseBia;
+                $data = WarehouseHelper::getModel(WarehouseHelper::BIA);
                 break;
-            case 'caosuvnza':
-                $data = $this->warehouseCaosuvnza;
-                break;
-            case 'caosu':
-                $data = $this->warehouseCaosu;
-                break;
-            case 'ceramic':
-                $data = $this->warehouseCeramic;
-                break;
-            case 'graphite':
-                $data = $this->warehouseGraphite;
-                break;
-            case 'ptfe':
-                $data = $this->warehousePtfe;
-                break;
-            case 'tamkimloai':
-                $data = $this->warehouseTamkimloai;
-                break;
-            case 'tamnhua':
-                $data = $this->warehouseTamnhua;
-                break;
+            // case 'caosuvnza':
+            //     $data = $this->warehouseCaosuvnza;
+            //     break;
+            // case 'caosu':
+            //     $data = $this->warehouseCaosu;
+            //     break;
+            // case 'ceramic':
+            //     $data = $this->warehouseCeramic;
+            //     break;
+            // case 'graphite':
+            //     $data = $this->warehouseGraphite;
+            //     break;
+            // case 'ptfe':
+            //     $data = $this->warehousePtfe;
+            //     break;
+            // case 'tamkimloai':
+            //     $data = $this->warehouseTamkimloai;
+            //     break;
+            // case 'tamnhua':
+            //     $data = $this->warehouseTamnhua;
+            //     break;
             default:
                 $data = false;
         }

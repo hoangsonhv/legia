@@ -23,11 +23,11 @@ use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
 class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBatchInserts, WithValidation, WithCalculatedFormulas
 {
-    private $type; 
+    private $type;
 
     public function __construct(string $type)
     {
-        $this->type = $type;     
+        $this->type = $type;
     }
 
     public function startRow(): int
@@ -36,26 +36,26 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
     }
 
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
-        
+
         if (empty($row[0])) {
             return null;
         }
         switch ($this->type) {
             case WarehouseHelper::BIA:
-                return  WarehouseHelper::getModel(WarehouseHelper::BIA,$this->getDataGroup1($row));
-            
+                return  WarehouseHelper::getModel(WarehouseHelper::BIA, $this->getDataGroup1($row));
+                
         }
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -94,7 +94,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
         }
     }
 
-    private function getDataGroup1($row){
+    private function getDataGroup1($row)
+    {
         $data =  [
             'code'       => $row[0],
             'vat_lieu'   => $row[1],
