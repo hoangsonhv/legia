@@ -138,7 +138,7 @@
                        <tbody>
                          @foreach($warehouseSpws as $warehouseSpw)
                            <tr>
-                             <td>{{ $warehouseSpw->id }}</td>
+                             <td>{{ $warehouseSpw->l_id }}</td>
                              <td>{{ $warehouseSpw->code }}</td>
                              @switch ($model)
                               @case ('filler')
@@ -218,10 +218,10 @@
                              @endswitch
                              <td>
                                @permission('admin.warehouse-spw.edit')
-                                 <a href="{{ route('admin.warehouse-spw.edit', ['model' => $model, 'id' => $warehouseSpw->id]) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>
+                                 <a href="{{ route('admin.warehouse-spw.edit', ['model' => $model, 'id' => $warehouseSpw->l_id]) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>
                                @endpermission
                                @permission('admin.warehouse-spw.destroy')
-                                 <a href="{{ route('admin.warehouse-spw.destroy', ['model' => $model, 'id' => $warehouseSpw->id]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa Vật Liệu này không ?')"><i class="fas fa-trash-alt"></i></a>
+                                 <a href="{{ route('admin.warehouse-spw.destroy', ['model' => $model, 'id' => $warehouseSpw->l_id]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa Vật Liệu này không ?')"><i class="fas fa-trash-alt"></i></a>
                                @endpermission
                              </td>
                            </tr>

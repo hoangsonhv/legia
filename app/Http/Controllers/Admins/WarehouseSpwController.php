@@ -6,6 +6,7 @@ use App\Helpers\DataHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WarehouseSpwRequest;
 use App\Imports\Spws\WarehouseSpwsImport;
+use App\Imports\Warehouse\WarehouseImport;
 use App\Models\Repositories\WarehouseSpwRepository;
 use App\Services\WarehouseService;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class WarehouseSpwController extends Controller
             $params['key_word'] = $request->key_word;
         }
 
-        $warehouseSpws = $this->warehouseSpwRepository->getWarehouseSpws($model, $params)->orderBy('id','DESC')->paginate($limit);
+        $warehouseSpws = $this->warehouseService->search($model, $params);
         $request->flash();
         return view('admins.warehouse_spws.index',compact('types', 'breadcrumb', 'titleForLayout', 'warehouseSpws', 'model'));
     }
@@ -89,8 +90,8 @@ class WarehouseSpwController extends Controller
         $breadcrumb['data']['list'] = ['label'  => 'Cập nhật ' . $nameWarehouse];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
 
-        $warehouseSpw = $this->warehouseSpwRepository->find($model, $id);
-        if ($warehouseSpw) {
+      
+        if ($warehouseSpw = $this->warehouseService->edit($id,$model)) {
             $permissions = config('permission.permissions');
             return view('admins.warehouse_spws.edit',compact('breadcrumb', 'titleForLayout', 'warehouseSpw', 'permissions', 'model'));
         }
@@ -102,9 +103,8 @@ class WarehouseSpwController extends Controller
         $nameWarehouse = $this->checkExistModel($model);
 
         $input          = $request->except('_token', '_method');
-        $warehouseSpw = $this->warehouseSpwRepository->find($model, $id);
-        if ($warehouseSpw) {
-            $this->warehouseSpwRepository->update($model, $input, $warehouseSpw);
+        $input["l_id"] = $id;
+        if ($this->warehouseService->storeOrUpdate($model, $input)) {
             return redirect()->route('admin.warehouse-spw.edit', ['model' => $model, 'id' => $id])->with('success','Cập nhật Vật Liệu thành công!');
         }
         return redirect()->back()->with('error', 'Vật Liệu không tồn tại!');
@@ -113,10 +113,7 @@ class WarehouseSpwController extends Controller
     public function destroy($model, $id)
     {
         $nameWarehouse = $this->checkExistModel($model);
-
-        $warehouseSpw = $this->warehouseSpwRepository->find($model, $id);
-        if ($warehouseSpw) {
-            $warehouseSpw->delete();
+        if ($this->warehouseService->delete($id,$model)) {
             return redirect()->route('admin.warehouse-spw.index', ['model' => $model])->with('success','Xóa Vật Liệu thành công!');
         }
         return redirect()->back()->with('error', 'Vật Liệu không tồn tại!');
@@ -131,7 +128,7 @@ class WarehouseSpwController extends Controller
             $ext = DataHelper::getExtensionImport($file->extension());
             if ($ext) {
                 \DB::beginTransaction();
-                Excel::import(new WarehouseSpwsImport($model), $file);
+                Excel::import(new WarehouseImport($model), $file);
                 \DB::commit();
                 return redirect()->back()->with('success','Đã import dữ liệu thành công.');
             }

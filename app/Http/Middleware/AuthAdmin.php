@@ -9,6 +9,7 @@ class AuthAdmin {
 
 	public function handle($request, Closure $next)
 	{
+		
 		if(!Session::has('login')) {
 			Session::put('last_url', $_SERVER['REQUEST_URI']);
 			return redirect()->route('admin.login.getLogin');

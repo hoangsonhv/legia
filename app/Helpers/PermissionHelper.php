@@ -11,7 +11,7 @@ class PermissionHelper
         if (!config('permission.role_permission')) {
             return true;
         }
-
+        
         $permissions = self::getPermissions();
         if (is_array($route)) {
             foreach ($route as $vRoute) {

@@ -21,13 +21,13 @@ use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
-class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBatchInserts, WithValidation, WithCalculatedFormulas
+class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBatchInserts, WithCalculatedFormulas
 {
-    private $type;
+    private $model;
 
-    public function __construct(string $type)
+    public function __construct(string $model)
     {
-        $this->type = $type;
+        $this->model = $model;
     }
 
     public function startRow(): int
@@ -46,23 +46,58 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
         if (empty($row[0])) {
             return null;
         }
-        switch ($this->type) {
-            case WarehouseHelper::BIA:
-                return  WarehouseHelper::getModel(WarehouseHelper::BIA, $this->getDataGroup1($row));
-                
+        switch ($this->model) {
+            case 'bia':
+                return  WarehouseHelper::getModel(WarehouseHelper::BIA, $this->getDataGroup1($row, WarehouseHelper::BIA));
+            case 'caosuvnza':
+                return WarehouseHelper::getModel(WarehouseHelper::CAO_SU_VN_ZA, $this->getDataGroup1($row, WarehouseHelper::CAO_SU_VN_ZA));
+            case 'caosu':
+                return WarehouseHelper::getModel(WarehouseHelper::CAO_SU, $this->getDataGroup1($row, WarehouseHelper::CAO_SU));
+            case 'ceramic':
+                return WarehouseHelper::getModel(WarehouseHelper::CREAMIC, $this->getDataGroup1($row, WarehouseHelper::CREAMIC));
+            case 'graphite':
+                return WarehouseHelper::getModel(WarehouseHelper::GRAPHITE, $this->getDataGroup1($row, WarehouseHelper::GRAPHITE));
+            case 'ptfe':
+                return WarehouseHelper::getModel(WarehouseHelper::PTFE, $this->getDataGroup1($row, WarehouseHelper::PTFE));
+            case 'tamkimloai':
+                return WarehouseHelper::getModel(WarehouseHelper::TAM_KIM_LOAI, $this->getDataGroup1($row, WarehouseHelper::TAM_KIM_LOAI));
+            case 'tamnhua':
+                return WarehouseHelper::getModel(WarehouseHelper::TAM_NHUA, $this->getDataGroup1($row, WarehouseHelper::TAM_NHUA));
+            case 'filler':
+                return  WarehouseHelper::getModel(WarehouseHelper::FILLER, $this->getDataGroup2($row, WarehouseHelper::FILLER));
+            case 'glandpackinglatty':
+                return  WarehouseHelper::getModel(WarehouseHelper::GLAND_PACKING_LATTY, $this->getDataGroup8($row, WarehouseHelper::GLAND_PACKING_LATTY));
+            case 'hoop':
+                return  WarehouseHelper::getModel(WarehouseHelper::HOOP, $this->getDataGroup2($row, WarehouseHelper::HOOP));
+            case 'oring':
+                return  WarehouseHelper::getModel(WarehouseHelper::ORING, $this->getDataGroup5($row, WarehouseHelper::ORING));
+            case 'ptfeenvelope':
+                return  WarehouseHelper::getModel(WarehouseHelper::PTFE_ENVELOP, $this->getDataGroup10($row, WarehouseHelper::PTFE_ENVELOP));
+            case 'ptfetape':
+                return  WarehouseHelper::getModel(WarehouseHelper::PTFE_TAPE, $this->getDataGroup3($row, WarehouseHelper::PTFE_TAPE));
+            case 'rtj':
+                return  WarehouseHelper::getModel(WarehouseHelper::RTJ, $this->getDataGroup5($row, WarehouseHelper::RTJ));
+            case 'thanhphamswg':
+                return  WarehouseHelper::getModel(WarehouseHelper::THANH_PHAM_SWG, $this->getDataGroup7($row, WarehouseHelper::THANH_PHAM_SWG));
+            case 'vanhtinhinnerswg':
+                return  WarehouseHelper::getModel(WarehouseHelper::VANH_TINH_INNER_SWG, $this->getDataGroup4($row, WarehouseHelper::VANH_TINH_INNER_SWG));
+            case 'vanhtinhouterswg':
+                return  WarehouseHelper::getModel(WarehouseHelper::VANH_TINH_OUTER_SWG, $this->getDataGroup13($row, WarehouseHelper::VANH_TINH_OUTER_SWG));
+            case 'ccdc':
+                return  WarehouseHelper::getModel(WarehouseHelper::CCDC, $this->getDataGroup9($row, WarehouseHelper::CCDC));
         }
     }
 
     /**
      * @return array
      */
-    public function rules(): array
-    {
-        return [
-            '0' => ['required'],
-            '1' => ['required'],
-        ];
-    }
+    // public function rules(): array
+    // {
+    //     // return [
+    //     //     '0' => ['required'],
+    //     //     '1' => ['required'],
+    //     // ];
+    // }
 
     /**
      * @return array
@@ -94,7 +129,7 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
         }
     }
 
-    private function getDataGroup1($row)
+    private function getDataGroup1($row, $modelType)
     {
         $data =  [
             'code'       => $row[0],
@@ -112,8 +147,233 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'date'       => now(),
             'ton_sl_tam' => floatval($row[13]),
             'ton_sl_m2'  => floatval($row[14]),
+            'model_type' => $modelType
         ];
 
+        return $data;
+    }
+
+    private function getDataGroup2($row, $modelType)
+    {
+        $data =  [
+            'code'                => $row[0],
+            'vat_lieu'            => $row[1],
+            'size'                => floatval($row[2]),
+            'trong_luong_cuon' => floatval($row[3]),
+            'm_cuon'              => floatval($row[4]),
+            'sl_cuon'             => floatval($row[5]),
+            'sl_kg'               => floatval($row[6]),
+            'lot_no'              => $row[7],
+            'ghi_chu'             => $row[8],
+            'date'                => !empty($row[9]) ? $this->transformDateTime($row[9]) : null,
+            'ton_sl_cuon'         => floatval($row[10]),
+            'ton_sl_kg'           => floatval($row[11]),
+            'model_type' => $modelType
+        ];
+
+        return $data;
+    }
+
+    private function getDataGroup3($row, $modelType)
+    {
+        $data = [
+            'code'        => $row[0],
+            'vat_lieu'    => $row[1],
+            'size'        => $row[2],
+            'm_cuon'      => floatval($row[3]),
+            'sl_cuon'     => floatval($row[4]),
+            'sl_m'        => floatval($row[5]),
+            'lot_no'      => $row[6],
+            'ghi_chu'     => $row[7],
+            'date'        => !empty($row[8]) ? $this->transformDateTime($row[8]) : null,
+            'ton_sl_cuon' => floatval($row[9]),
+            'ton_sl_m'    => floatval($row[10]),
+            'model_type' => $modelType
+        ];
+
+        return $data;
+    }
+
+    private function getDataGroup4($row, $modelType)
+    {
+        $data = [
+            'code'       => $row[0],
+            'vat_lieu'   => $row[1],
+            'do_day'     => floatval($row[2]),
+            'd1'         => floatval($row[3]),
+            'd2'         => floatval($row[4]),
+            'sl_cai'     => floatval($row[5]),
+            'lot_no'     => $row[6],
+            'ghi_chu'    => $row[7],
+            'date'       => !empty($row[8]) ? $this->transformDateTime($row[8]) : null,
+            'ton_sl_cai' => floatval($row[9]),
+            'model_type' => $modelType
+        ];
+
+        return $data;
+    }
+    private function getDataGroup13($row, $modelType)
+    {
+        $data = [
+            'code'       => $row[0],
+            'vat_lieu'   => $row[1],
+            'do_day'     => floatval($row[2]),
+            'd3'         => floatval($row[3]),
+            'd4'         => floatval($row[4]),
+            'sl_cai'     => floatval($row[5]),
+            'lot_no'     => $row[6],
+            'ghi_chu'    => $row[7],
+            'date'       => !empty($row[8]) ? $this->transformDateTime($row[8]) : null,
+            'ton_sl_cai' => floatval($row[9]),
+            'model_type' => $modelType
+        ];
+
+        return $data;
+    }
+
+    private function getDataGroup5($row, $modelType)
+    {
+        $data = [
+            'code'       => $row[0],
+            'vat_lieu'   => $row[1],
+            'size'       => $row[2],
+            'sl_cai'     => floatval($row[3]),
+            'lot_no'     => $row[4],
+            'ghi_chu'    => $row[5],
+            'date'       => !empty($row[6]) ? $this->transformDateTime($row[6]) : null,
+            'ton_sl_cai' => floatval($row[7]),
+            'model_type' => $modelType
+        ];
+
+        return $data;
+    }
+
+    private function getDataGroup6($row, $modelType)
+    {
+        $data = [
+            'code'               => $row[0],
+            'mo_ta'              => $row[1],
+            'cho_maymoc_thietbi' => $row[2],
+            'sl_cai'             => floatval($row[3]),
+            'so_hopdong_hoadon'  => $row[4],
+            'ghi_chu'            => $row[5],
+            'date'               => !empty($row[6]) ? $this->transformDateTime($row[6]) : null,
+            'ton_sl_cai'         => floatval($row[7]),
+            'model_type' => $modelType
+        ];
+
+        return $data;
+    }
+
+    private function getDataGroup7($row, $modelType)
+    {
+        $data = [
+            'code'       => $row[0],
+            'inner'      => $row[1],
+            'hoop'       => $row[2],
+            'filler'     => $row[3],
+            'outer'      => $row[4],
+            'thick'      => $row[5],
+            'tieu_chuan' => $row[6],
+            'kich_co'    => $row[7],
+            'sl_cai'     => floatval($row[8]),
+            'lot_no'     => $row[9],
+            'ghi_chu'    => $row[10],
+            'date'       => now(),
+            'ton_sl_cai' => floatval($row[12]),
+            'model_type' => $modelType
+        ];
+        return $data;
+    }
+
+    private function getDataGroup8($row, $modelType)
+    {
+        $data = [
+            'code'        => $row[0],
+            'vat_lieu'    => $row[1],
+            'size'        => $row[2],
+            'sl_cuon'     => floatval($row[3]),
+            'lot_no'      => $row[4],
+            'ghi_chu'     => $row[5],
+            'date'        => !empty($row[6]) ? $this->transformDateTime($row[6]) : null,
+            'ton_sl_cuon' => floatval($row[7]),
+            'model_type' => $modelType
+        ];
+        return $data;
+    }
+
+    private function getDataGroup9($row, $modelType)
+    {
+        $data = [
+            'code'       => $row[0],
+            'mo_ta'      => $row[1],
+            'bo_phan'    => $row[2],
+            'dvt'        => $row[3],
+            'sl'         => floatval($row[4]),
+            'lot_no'     => $row[5],
+            'ghi_chu'    => $row[6],
+            'date'       => now(),
+            'ton_sl_cai' => floatval($row[8]),
+            'model_type' => $modelType
+        ];
+        return $data;
+    }
+    private function getDataGroup10($row, $modelType)
+    {
+        $data = [
+            'code'       => $row[0],
+            'vat_lieu'   => $row[1],
+            'do_day'     => floatval($row[2]),
+            'std'        => $row[3],
+            'size'       => $row[4],
+            'od'         => floatval($row[5]),
+            'attr_id'    => floatval($row[6]),
+            'sl_cai'     => floatval($row[7]),
+            'lot_no'     => $row[8],
+            'ghi_chu'    => $row[9],
+            'date'       => !empty($row[10]) ? $this->transformDateTime($row[10]) : null,
+            'ton_sl_cai' => floatval($row[11]),
+            'model_type' => $modelType
+        ];
+        return $data;
+    }
+    private function getDataGroup11($row, $modelType)
+    {
+        $data = [
+            'code'       => $row[0],
+            'vat_lieu'   => $row[1],
+            'size'       => $row[2],
+            'm_cay'      => floatval($row[3]),
+            'sl_cay'     => floatval($row[4]),
+            'sl_m'       => floatval($row[5]),
+            'lot_no'     => $row[6],
+            'ghi_chu'    => $row[7],
+            'date'       => !empty($row[8]) ? $this->transformDateTime($row[8]) : null,
+            'ton_sl_cay' => floatval($row[9]),
+            'ton_sl_m'   => floatval($row[10]),
+            'model_type' => $modelType
+        ];
+        return $data;
+    }
+
+    private function getDataGroup12($row, $modelType)
+    {
+        $data = [
+            'code'       => $row[0],
+            'vat_lieu'   => $row[1],
+            'do_day'       => floatval($row[2]),
+            'muc_ap_luc'      => $row[3],
+            'kich_co'     => $row[4],
+            'kich_thuoc'       => $row[5],
+            'chuan_mat_bich'     => $row[6],
+            'chuan_gasket'    => $row[7],
+            'dvt'       => $row[8],
+            'lot_no' => $row[9],
+            'ghi_chu'   => $row[10],
+            'sl_ton'   => $row[10],
+            'model_type' => $modelType
+
+        ];
         return $data;
     }
 }

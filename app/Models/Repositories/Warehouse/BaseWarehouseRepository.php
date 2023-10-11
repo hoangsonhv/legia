@@ -3,6 +3,7 @@
 namespace App\Models\Repositories\Warehouse;
 
 use App\Models\Admin;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use PhpOffice\PhpSpreadsheet\Shared\OLE\PPS;
 
@@ -10,10 +11,6 @@ class BaseWarehouseRepository
 {
     protected $model;
 
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
 
     public function setModel(Model $model)
     {
@@ -21,35 +18,35 @@ class BaseWarehouseRepository
     }
     public function create(array $data) : bool
     {
-        return $this->model->create($data);
+        return $this->model->create($data) ? true : false;
     }
 
-    public function find(int $id) : Model
+    public function find(int $l_id) : Model
     {
-        return $this->model->find($id);
+        return $this->model->find($l_id);
     }
 
-    public function update(int $id, array $data) : bool
+    public function update(int $l_id, array $data) : bool
     {
-        $model = $this->find($id);
-
+        $model = $this->find($l_id);
         if ($model) {
-            $model->update($data);
-            return true;
+            return  $model->update($data);
         }
 
         return false;
     }
 
-    public function delete(int $id) : bool
+    public function delete(int $l_id) : bool
     {
-        $model = $this->find($id);
-
+        $model = $this->find($l_id);
         if ($model) {
-            $model->delete();
-            return true;
+            return $model->delete();
         }
 
         return false;
+    }
+
+    public function query() : Builder {
+        return $this->model->query();
     }
 }

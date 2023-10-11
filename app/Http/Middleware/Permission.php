@@ -17,6 +17,7 @@ class Permission
      */
     public function handle($request, Closure $next)
     {
+      
         // Log
         $prefixExl = [
             'admin/logadmin'

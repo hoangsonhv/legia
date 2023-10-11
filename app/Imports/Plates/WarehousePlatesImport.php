@@ -57,7 +57,7 @@ class WarehousePlatesImport implements ToModel, WithStartRow, WithChunkReading, 
             'sl_m2'      => floatval($row[9]),
             'lot_no'     => $row[10],
             'ghi_chu'    => $row[11],
-            'date'       => !empty($row[12]) ? $this->transformDateTime($row[12]) : null,
+            'date'       => now(),
             'ton_sl_tam' => floatval($row[13]),
             'ton_sl_m2'  => floatval($row[14]),
         ];

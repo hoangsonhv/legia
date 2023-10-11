@@ -115,7 +115,7 @@ class DataHelper
         return $files;
     }
 
-    public function getExtensionImport($ext) {
+    public  static function getExtensionImport($ext) {
         $files = [
             'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
             'xls'  => \Maatwebsite\Excel\Excel::XLS,

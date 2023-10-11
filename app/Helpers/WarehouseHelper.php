@@ -15,6 +15,7 @@ use App\Models\Warehouse\Group8;
 use App\Models\Warehouse\Group9;
 use App\Models\Warehouse\Group1;
 use App\Models\Warehouse\Group12;
+use App\Models\Warehouse\Group13;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
@@ -106,9 +107,10 @@ class WarehouseHelper
               
 
             case WarehouseHelper::VANH_TINH_INNER_SWG:
-            case WarehouseHelper::VANH_TINH_OUTER_SWG:
                 return new Group4($attributes);
-                
+
+            case WarehouseHelper::VANH_TINH_OUTER_SWG:
+                return new Group13($attributes);
 
             case WarehouseHelper::ND_LOAI_KHAC:
             case WarehouseHelper::NK_LOAI_KHAC:
@@ -138,11 +140,11 @@ class WarehouseHelper
                 
 
             case WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI:
-                return new Group11();
+                return new Group11($attributes);
                 
 
             case WarehouseHelper::CCDC:
-                return new Group12();
+                return new Group12($attributes);
                 
                 
             default:

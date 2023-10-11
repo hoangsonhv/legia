@@ -6,6 +6,7 @@ use App\Helpers\DataHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WarehousePlateRequest;
 use App\Imports\Plates\WarehousePlatesImport;
+use App\Imports\Warehouse\WarehouseImport;
 use App\Models\Repositories\WarehousePlateRepository;
 use App\Services\WarehouseService;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use \Log;
 
-class WarehousePlateController extends Controller
+class WarehouseController extends Controller
 {
     protected $warehousePlateRepository;
     protected $warehouseService;
@@ -26,11 +27,11 @@ class WarehousePlateController extends Controller
         $this->warehousePlateRepository = $warehousePlateRepository;
         $this->warehouseService = $warehouseService;
         $this->menu                     = [
-            'root' => 'Quản lý Kho Tấm',
+            'root' => 'Quản lý Kho',
             'data' => [
                 'parent' => [
                     'href'   => route('admin.warehouse-plate.index'),
-                    'label'  => 'Quản lý Kho Tấm'
+                    'label'  => 'Quản lý Kho'
                 ]
             ]
         ];
@@ -53,9 +54,10 @@ class WarehousePlateController extends Controller
         if($request->has('key_word')) {
             $params['key_word'] = $request->key_word;
         }
-        $warehousePlates = $this->warehouseService->search($model,$params);
+        $warehouses = $this->warehouseService->search($model,$params);
+        // dd($warehouses);
         $request->flash();
-        return view('admins.warehouse_plates.index',compact('types', 'breadcrumb', 'titleForLayout', 'warehousePlates', 'model'));
+        return view('admins.warehouse_plates.index',compact('types', 'breadcrumb', 'titleForLayout', 'warehouses', 'model'));
     }
 
     public function create($model)
@@ -126,7 +128,7 @@ class WarehousePlateController extends Controller
             $ext = DataHelper::getExtensionImport($file->extension());
             if ($ext) {
                 \DB::beginTransaction();
-                Excel::import(new WarehousePlatesImport($model), $file);
+                Excel::import(new WarehouseImport($model), $file);
                 \DB::commit();
                 return redirect()->back()->with('success','Đã import dữ liệu thành công.');
             }

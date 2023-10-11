@@ -16,8 +16,8 @@
       </div>
       <div class="col-12">
         <div class="card">
-          {!! Form::model($warehouseRemain, array('route' => ['admin.warehouse-remain.update', $model, $warehouseRemain->id], 'method' => 'patch')) !!}
-            {!! Form::hidden('id', null) !!}
+          {!! Form::model($warehouseRemain, array('route' => ['admin.warehouse-remain.update', $model, $warehouseRemain->l_id], 'method' => 'patch')) !!}
+            {!! Form::hidden('l_id', null) !!}
             <div class="card-body">
               <div class="form-group">
                 <label for="code">Mã hàng hoá<b style="color: red;"> (*)</b></label>

@@ -33,8 +33,8 @@
                     {!! Form::number('size', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
                   <div class="form-group">
-                    <label for="trong_luong_kg_cuon">Trọng lượng - Kg/Cuộn</label>
-                    {!! Form::number('trong_luong_kg_cuon', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                    <label for="trong_luong_cuon">Trọng lượng - Kg/Cuộn</label>
+                    {!! Form::number('trong_luong_cuon', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
                   <div class="form-group">
                     <label for="m_cuon">m/cuộn</label>
@@ -73,8 +73,8 @@
                     {!! Form::number('size', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
                   <div class="form-group">
-                    <label for="trong_luong_kg_cuon">Trọng lượng - Kg/Cuộn</label>
-                    {!! Form::number('trong_luong_kg_cuon', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                    <label for="trong_luong_cuon">Trọng lượng - Kg/Cuộn</label>
+                    {!! Form::number('trong_luong_cuon', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
                   <div class="form-group">
                     <label for="m_cuon">m/cuộn</label>

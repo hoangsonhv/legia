@@ -382,8 +382,8 @@
           </li>
           @endpermission
           @permission(['admin.warehouse-plate.index', 'admin.warehouse-spw.index', 'admin.warehouse-remain.index'])
-          <li class="nav-item{{ (strpos(url()->current(), '/warehouse-plate') !== false || strpos(url()->current(), '/warehouse-spw') !== false || strpos(url()->current(), '/warehouse-remain') !== false) ? ' menu-open' : '' }}">
-            <a href="#" class="nav-link{{ (strpos(url()->current(), '/warehouse-plate') !== false || strpos(url()->current(), '/warehouse-spw') !== false || strpos(url()->current(), '/warehouse-remain') !== false) ? ' active' : '' }}">
+          <li class="nav-item{{ (strpos(url()->current(), '/warehouse') !== false || strpos(url()->current(), '/warehouse-spw') !== false || strpos(url()->current(), '/warehouse-remain') !== false) ? ' menu-open' : '' }}">
+            <a href="#" class="nav-link{{ (strpos(url()->current(), '/warehouse') !== false || strpos(url()->current(), '/warehouse-spw') !== false || strpos(url()->current(), '/warehouse-remain') !== false) ? ' active' : '' }}">
               <i class="nav-icon fas fa-pallet" aria-hidden="true"></i>
               <p>
                 Kho
@@ -407,7 +407,7 @@
               @endpermission
               @permission('admin.warehouse-plate.index')
               <li class="nav-item">
-                <a href="{{ route('admin.warehouse-plate.index') }}" class="nav-link{{ (strpos(url()->current(), '/warehouse-plate/index') !== false) ? ' active' : '' }}">
+                <a href="{{ route('admin.warehouse-plate.index') }}" class="nav-link{{ (strpos(url()->current(), '/warehouse/index') !== false) ? ' active' : '' }}">
                   <p>Kho Tấm</p>
                 </a>
               </li>

@@ -16,8 +16,8 @@
       </div>
       <div class="col-12">
         <div class="card">
-          {!! Form::model($warehousePlate, array('route' => ['admin.warehouse-plate.update', $model, $warehousePlate->id], 'method' => 'patch')) !!}
-            {!! Form::hidden('id', null) !!}
+          {!! Form::model($warehousePlate, array('route' => ['admin.warehouse-plate.update', $model, $warehousePlate->l_id], 'method' => 'patch')) !!}
+            {!! Form::hidden('l_id', null) !!}
             <div class="card-body">
               <div class="row">
                 <div class="col-3">

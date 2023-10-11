@@ -6,7 +6,9 @@ use App\Helpers\DataHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WarehouseRemainRequest;
 use App\Imports\Remains\WarehouseRemainsImport;
+use App\Imports\Warehouse\WarehouseImport;
 use App\Models\Repositories\WarehouseRemainRepository;
+use App\Services\WarehouseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
@@ -15,13 +17,15 @@ use \Log;
 class WarehouseRemainController extends Controller
 {
     protected $warehouseRemainRepository;
-
+    protected $warehouseService;
     public $menu;
 
     function __construct(
-        WarehouseRemainRepository $warehouseRemainRepository
+        WarehouseRemainRepository $warehouseRemainRepository,
+        WarehouseService $warehouseService
     ) {
         $this->warehouseRemainRepository = $warehouseRemainRepository;
+        $this->warehouseService = $warehouseService;
         $this->menu                     = [
             'root' => 'Quản lý Kho còn lại',
             'data' => [
@@ -51,7 +55,7 @@ class WarehouseRemainController extends Controller
             $params['key_word'] = $request->key_word;
         }
 
-        $warehouseRemains = $this->warehouseRemainRepository->getWarehouseRemains($model, $params)->orderBy('id','DESC')->paginate($limit);
+        $warehouseRemains = $this->warehouseService->search($model, $params);
         $request->flash();
         return view('admins.warehouse_remains.index',compact('types', 'breadcrumb', 'titleForLayout', 'warehouseRemains', 'model'));
     }
@@ -72,7 +76,7 @@ class WarehouseRemainController extends Controller
         $nameWarehouse = $this->checkExistModel($model);
 
         $input = $request->except('_token');
-        if ($this->warehouseRemainRepository->store($model, $input)) {
+        if ($this->warehouseService->storeOrUpdate($model, $input)) {
             return redirect()->route('admin.warehouse-remain.index', ['model' => $model])->with('success','Tạo Vật Liệu thành công!');
         }
         return redirect()->route('admin.warehouse-remain.index', ['model' => $model])->with('error','Tạo Vật Liệu thất bại!');
@@ -86,8 +90,7 @@ class WarehouseRemainController extends Controller
         $breadcrumb['data']['list'] = ['label'  => 'Cập nhật ' . $nameWarehouse];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
 
-        $warehouseRemain = $this->warehouseRemainRepository->find($model, $id);
-        if ($warehouseRemain) {
+        if ($warehouseRemain = $this->warehouseService->edit($id,$model)) {
             $permissions = config('permission.permissions');
             return view('admins.warehouse_remains.edit',compact('breadcrumb', 'titleForLayout', 'warehouseRemain', 'permissions', 'model'));
         }
@@ -100,8 +103,9 @@ class WarehouseRemainController extends Controller
 
         $input           = $request->except('_token', '_method');
         $warehouseRemain = $this->warehouseRemainRepository->find($model, $id);
-        if ($warehouseRemain) {
-            $this->warehouseRemainRepository->update($model, $input, $warehouseRemain);
+        $input['l_id'] = $id;
+        if ($this->warehouseService->storeOrUpdate($model,$input)) {
+            // $this->warehouseRemainRepository->update($model, $input, $warehouseRemain);
             return redirect()->route('admin.warehouse-remain.edit', ['model' => $model, 'id' => $id])->with('success','Cập nhật Vật Liệu thành công!');
         }
         return redirect()->back()->with('error', 'Vật Liệu không tồn tại!');
@@ -110,10 +114,7 @@ class WarehouseRemainController extends Controller
     public function destroy($model, $id)
     {
         $nameWarehouse = $this->checkExistModel($model);
-
-        $warehouseRemain = $this->warehouseRemainRepository->find($model, $id);
-        if ($warehouseRemain) {
-            $warehouseRemain->delete();
+        if ($this->warehouseService->delete($id,$model)) {
             return redirect()->route('admin.warehouse-remain.index', ['model' => $model])->with('success','Xóa Vật Liệu thành công!');
         }
         return redirect()->back()->with('error', 'Vật Liệu không tồn tại!');
@@ -128,7 +129,7 @@ class WarehouseRemainController extends Controller
             $ext = DataHelper::getExtensionImport($file->extension());
             if ($ext) {
                 \DB::beginTransaction();
-                Excel::import(new WarehouseRemainsImport($model), $file);
+                Excel::import(new WarehouseImport($model), $file);
                 \DB::commit();
                 return redirect()->back()->with('success','Đã import dữ liệu thành công.');
             }

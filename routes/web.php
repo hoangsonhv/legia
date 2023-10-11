@@ -27,6 +27,7 @@ use App\Http\Controllers\Admins\DocumentController;
 use App\Http\Controllers\Admins\PDFController;
 use App\Http\Controllers\Admins\ReportController;
 use App\Http\Controllers\Admins\BankLoanController;
+use App\Http\Controllers\Admins\WarehouseController;
 use App\Http\Controllers\Admins\WarehouseGroupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admins\WarehouseProductCodeController;
@@ -164,7 +165,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin', 'permission']],
 		Route::get('/edit/{model}/{id}', [WarehousePlateController::class, 'edit'])->name('admin.warehouse-plate.edit');
 		Route::patch('/edit/{model}/{id}', [WarehousePlateController::class, 'update'])->name('admin.warehouse-plate.update');
 		Route::get('/destroy/{model}/{id}', [WarehousePlateController::class, 'destroy'])->name('admin.warehouse-plate.destroy');
-		Route::post('import/{model}', [WarehousePlateController::class, 'import'])->name('admin.warehouse-plate.import');
+		Route::post('import/{model}', [WarehouseController::class, 'import'])->name('admin.warehouse-plate.import');
 	});
 	/* WarehouseSpw */
 	Route::group(['prefix' => 'warehouse-spw'], function() {
