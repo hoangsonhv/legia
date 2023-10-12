@@ -140,7 +140,7 @@ class WarehouseRemainsImport implements ToModel, WithStartRow, WithChunkReading,
                 $data = [
                     'code'               => $row[0],
                     'mo_ta'              => $row[1],
-                    'cho_maymoc_thietbi' => $row[2],
+                    'cho_may_moc_thiet_bi' => $row[2],
                     'sl_cai'             => floatval($row[3]),
                     'so_hopdong_hoadon'  => $row[4],
                     'ghi_chu'            => $row[5],

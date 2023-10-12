@@ -16,6 +16,7 @@
       </div>
       <div class="col-12">
         <div class="card">
+          {{-- {{dd($warehouseRemain)}} --}}
           {!! Form::model($warehouseRemain, array('route' => ['admin.warehouse-remain.update', $model, $warehouseRemain->l_id], 'method' => 'patch')) !!}
             {!! Form::hidden('l_id', null) !!}
             <div class="card-body">
@@ -93,11 +94,11 @@
                   </div>
                   <div class="form-group">
                     <label for="size">Size</label>
-                    {!! Form::number('size', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                    {!! Form::text('size', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
                   <div class="form-group">
-                    <label for="trong_luong_kg_cuon">Trọng lượng - Kg/Cuộn</label>
-                    {!! Form::number('trong_luong_kg_cuon', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                    <label for="trong_luong_cuon">Trọng lượng - Kg/Cuộn</label>
+                    {!! Form::number('trong_luong_cuon', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
                   <div class="form-group">
                     <label for="m_cuon">m/cuộn</label>
@@ -162,8 +163,8 @@
                     {!! Form::text('mo_ta', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
-                    <label for="cho_maymoc_thietbi">Cho máy móc, thiết bị</b></label>
-                    {!! Form::text('cho_maymoc_thietbi', null, array('class' => 'form-control')) !!}
+                    <label for="cho_may_moc_thiet_bi">Cho máy móc, thiết bị</b></label>
+                    {!! Form::text('cho_may_moc_thiet_bi', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
                     <label for="sl_cai">SL - Cái</label>
@@ -203,7 +204,7 @@
                   </div>
                   <div class="form-group">
                     <label for="size">Size</label>
-                    {!! Form::text('text', null, array('class' => 'form-control')) !!}
+                    {!! Form::text('size', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
                     <label for="sl_cai">SL - Cái</label>
@@ -216,8 +217,8 @@
                     {!! Form::text('vat_lieu', null, array('class' => 'form-control', 'required' => 'required')) !!}
                   </div>
                   <div class="form-group">
-                    <label for="size">Size</label>
-                    {!! Form::text('text', null, array('class' => 'form-control')) !!}
+                    <label for="size">Size </label>
+                    {!! Form::text('size', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
                     <label for="sl_cai">SL - Cái</label>

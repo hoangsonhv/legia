@@ -99,9 +99,9 @@ class WarehouseHelper
                 return new Group2($attributes);
                 
             case WarehouseHelper::DAY_CAO_SU_VA_SILICON:
-            case WarehouseHelper::ONG_GLASS_EXPOXY:
+
             case WarehouseHelper::DAY_CREAMIC:
-            case WarehouseHelper::PTFE_CAYONG:
+           
             case WarehouseHelper::PTFE_TAPE:
                 return new Group3($attributes);
               
@@ -134,7 +134,8 @@ class WarehouseHelper
             case WarehouseHelper::PTFE_ENVELOP:
                 return new Group9($attributes);
                 
-
+            case WarehouseHelper::PTFE_CAYONG:
+            case WarehouseHelper::ONG_GLASS_EXPOXY:
             case WarehouseHelper::NHU_KY_THUAT_CAY_ONG:
                 return new Group10($attributes);
                 

@@ -2926,7 +2926,7 @@ CREATE TABLE `warehouse_phutungdungcus` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mo_ta` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cho_maymoc_thietbi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cho_may_moc_thiet_bi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sl_cai` double(8,2) DEFAULT NULL,
   `so_hopdong_hoadon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ghi_chu` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,

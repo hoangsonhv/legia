@@ -17,7 +17,7 @@ class CreateWarehousePhutungdungcusTable extends Migration
             $table->id();
             $table->string('code');
             $table->text('mo_ta')->nullable();
-            $table->string('cho_maymoc_thietbi')->nullable();
+            $table->string('cho_may_moc_thiet_bi')->nullable();
             $table->float('sl_cai')->nullable();
             $table->string('so_hopdong_hoadon')->nullable();
             $table->text('ghi_chu')->nullable();

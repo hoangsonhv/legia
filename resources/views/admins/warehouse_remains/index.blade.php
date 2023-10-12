@@ -173,7 +173,7 @@
                               @case ('glandpacking')
                                 <td>{{ $warehouseRemain->vat_lieu }}</td>
                                 <td>{{ $warehouseRemain->size }}</td>
-                                <td>{{ $warehouseRemain->trong_luong_kg_cuon }}</td>
+                                <td>{{ $warehouseRemain->trong_luong_cuon }}</td>
                                 <td>{{ $warehouseRemain->m_cuon }}</td>
                                 <td>{{ $warehouseRemain->sl_cuon }}</td>
                                 <td>{{ $warehouseRemain->sl_kg }}</td>
@@ -200,7 +200,7 @@
                                 @break
                               @case ('phutungdungcu')
                                 <td>{{ $warehouseRemain->vat_lieu }}</td>
-                                <td>{{ $warehouseRemain->cho_maymoc_thietbi }}</td>
+                                <td>{{ $warehouseRemain->cho_may_moc_thiet_bi }}</td>
                                 <td>{{ $warehouseRemain->sl_cai }}</td>
                                 <td>{{ $warehouseRemain->ton_sl_cai }}</td>
                                 @break

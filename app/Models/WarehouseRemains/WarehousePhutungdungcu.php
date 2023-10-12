@@ -11,7 +11,7 @@ class WarehousePhutungdungcu extends Model
     protected $fillable = [
         'code',
         'mo_ta',
-        'cho_maymoc_thietbi',
+        'cho_may_moc_thiet_bi',
         'sl_cai',
         'so_hopdong_hoadon',
         'ghi_chu',

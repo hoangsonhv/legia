@@ -85,6 +85,25 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
                 return  WarehouseHelper::getModel(WarehouseHelper::VANH_TINH_OUTER_SWG, $this->getDataGroup13($row, WarehouseHelper::VANH_TINH_OUTER_SWG));
             case 'ccdc':
                 return  WarehouseHelper::getModel(WarehouseHelper::CCDC, $this->getDataGroup9($row, WarehouseHelper::CCDC));
+            case 'daycaosusilicone':
+                return  WarehouseHelper::getModel(WarehouseHelper::DAY_CAO_SU_VA_SILICON, $this->getDataGroup3($row, WarehouseHelper::DAY_CAO_SU_VA_SILICON));
+            case 'dayceramic':
+                return  WarehouseHelper::getModel(WarehouseHelper::DAY_CREAMIC, $this->getDataGroup3($row, WarehouseHelper::DAY_CREAMIC));
+            case 'glandpacking':
+                return  WarehouseHelper::getModel(WarehouseHelper::GLAND_PACKING, $this->getDataGroup2($row, WarehouseHelper::GLAND_PACKING));
+            case 'nhuakythuatcayong':
+                return  WarehouseHelper::getModel(WarehouseHelper::NHU_KY_THUAT_CAY_ONG, $this->getDataGroup11($row, WarehouseHelper::NHU_KY_THUAT_CAY_ONG));
+            case 'ongglassepoxy':
+                return  WarehouseHelper::getModel(WarehouseHelper::ONG_GLASS_EXPOXY, $this->getDataGroup11($row, WarehouseHelper::ONG_GLASS_EXPOXY));
+            case 'phutungdungcu':
+                return  WarehouseHelper::getModel(WarehouseHelper::PHU_TUNG_DUNG_CU, $this->getDataGroup6($row, WarehouseHelper::PHU_TUNG_DUNG_CU));
+            case 'ptfecayong':
+                return  WarehouseHelper::getModel(WarehouseHelper::PTFE_CAYONG, $this->getDataGroup11($row, WarehouseHelper::PTFE_CAYONG));
+            case 'ndloaikhac':
+                return  WarehouseHelper::getModel(WarehouseHelper::ND_LOAI_KHAC, $this->getDataGroup5($row, WarehouseHelper::ND_LOAI_KHAC));
+            case 'nkloaikhac':
+                return  WarehouseHelper::getModel(WarehouseHelper::NK_LOAI_KHAC, $this->getDataGroup5($row, WarehouseHelper::NK_LOAI_KHAC));
+
         }
     }
 
@@ -165,7 +184,7 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'sl_kg'               => floatval($row[6]),
             'lot_no'              => $row[7],
             'ghi_chu'             => $row[8],
-            'date'                => !empty($row[9]) ? $this->transformDateTime($row[9]) : null,
+            'date'                => now(),
             'ton_sl_cuon'         => floatval($row[10]),
             'ton_sl_kg'           => floatval($row[11]),
             'model_type' => $modelType
@@ -185,7 +204,7 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'sl_m'        => floatval($row[5]),
             'lot_no'      => $row[6],
             'ghi_chu'     => $row[7],
-            'date'        => !empty($row[8]) ? $this->transformDateTime($row[8]) : null,
+            'date'        => now(),
             'ton_sl_cuon' => floatval($row[9]),
             'ton_sl_m'    => floatval($row[10]),
             'model_type' => $modelType
@@ -253,7 +272,7 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
         $data = [
             'code'               => $row[0],
             'mo_ta'              => $row[1],
-            'cho_maymoc_thietbi' => $row[2],
+            'cho_may_moc_thiet_bi' => $row[2],
             'sl_cai'             => floatval($row[3]),
             'so_hopdong_hoadon'  => $row[4],
             'ghi_chu'            => $row[5],
