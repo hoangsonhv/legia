@@ -7,6 +7,8 @@ use App\Models\Config;
 use App\Models\CoreCustomer;
 use App\Models\LogAdmin;
 use App\Models\Manufacture;
+use App\Models\MerchandiseCode;
+use App\Models\MerchandiseGroup;
 use App\Models\PriceSurvey;
 use App\Models\WarehouseGroup;
 use App\Models\WarehouseProductCode;
@@ -351,54 +353,32 @@ class AdminHelper
         ];
     }
 
-    public function detectProductCode($code)
+    public static function detectProductCode($code)
     {
         $result = [
             'manufacture_type' => null,
+            'merchandise_code' => null,
             'type' => null,
         ];
-        $arrCode = explode(" ", $code);
-        if(isset($arrCode[0]) && $arrCode[0]) {
-            if(in_array($arrCode[0], ['PLS', 'PR', 'PT'])) {
-                switch ($arrCode[0]) {
-                    case 'PLS':
-                    case 'PR':
-                    case 'PT':
-                        $group = self::findGroupCodePLS($arrCode[0], $arrCode);
-                        break;
-                    default:
-                        break;
+        $arrCode = explode(" ", strtoupper($code));
+        $merchandise_code = MerchandiseCode::where('code', $arrCode[0])
+                                            ->when(count($arrCode) > 1, function($q) use($arrCode) {
+                                                $q->orWhere('code' , $arrCode[0] . ' ' . $arrCode[1]);
+                                            })->first();
+        foreach ($arrCode as $key => $value) {
+            if($merchandise_code) {
+                $result['merchandise_code'] = $result['merchandise_code'] ?? $merchandise_code->infix_code;
+                $infix_codes = MerchandiseCode::where('prefix_code', $merchandise_code->infix_code)->where('code', $value)->first();
+                if(!$infix_codes) {
+                    continue;
                 }
+                $result['merchandise_code'] =  $result['merchandise_code'] . '_' . $infix_codes->infix_code;
 
-                if($group) {
-                    $result['manufacture_type'] = $group->manufacture_type;
-                    $result['type'] = $group->type;
-                    $result['group_id'] = $group->id;
-                }
-                return $result;
-            }
-
-            $group = self::findGroupByCode($arrCode[0]);
-            if($group) {
-                $codeGroup = $group->code;
-                switch ($codeGroup) {
-                    case 'SG':
-                        $group = self::findGroupCodeSG($arrCode);
-                        break;
-                    case 'SWG':
-                        $group = self::findGroupCodeSWG($arrCode);
-                        break;
-                    default:
-                        break;
-                }
-                if($group) {
-                    $result['manufacture_type'] = $group->manufacture_type;
-                    $result['type'] = $group->type;
-                    $result['group_id'] = $group->id;
-                }
             }
         }
-
+        $merchandise_group = MerchandiseGroup::where('code' , $result['merchandise_code'])->first();
+        $result['manufacture_type'] = $merchandise_group ? $merchandise_group->factory_type : '';
+        $result['type'] = $merchandise_group ? $merchandise_group->operation_type : '';
         return $result;
     }
 

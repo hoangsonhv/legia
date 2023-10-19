@@ -76,6 +76,7 @@ class CoService
                     }
                 }
             }
+            // dd($result);
         } catch(\Exception $ex) {
             report($ex);
         }

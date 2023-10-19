@@ -92,7 +92,7 @@ class DataHelper
         return $units;
     }
 
-    public function getPaymentMethods($payment=null) {
+    public static function getPaymentMethods($payment=null) {
         $payments = [
 //            1 => 'Tiền mặt',
             2 => 'Chuyển khoản',
@@ -217,7 +217,7 @@ class DataHelper
         ];
     }
 
-    public function documents()
+    public static function documents()
     {
         $documents = Document::get(['id', 'name']);
         $arrDocuments[0] = '--- Chọn chứng từ ---';

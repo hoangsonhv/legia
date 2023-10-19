@@ -41,14 +41,15 @@
       @if(!empty($warehouses))
         @php
           $sequence = 1;
+          dump($warehouses);
         @endphp
-        @foreach($warehouses as $warehouse)
+        @foreach($warehouses as $in => $warehouse)
           @php
             $detectCode = \App\Helpers\AdminHelper::detectProductCode($warehouse[1]);
             $code        = !empty($collect) ? $warehouse->code : $warehouse[1];
             $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
             $type = !empty($collect) ? $warehouse->type : $detectCode['type'];
-            $warehouseGroupId = !empty($collect) ? $warehouse->warehouse_group_id : $detectCode['group_id'];
+            $warehouseGroupId = !empty($collect) ? $warehouse->warehouse_group_id : $detectCode['type'];
             $loaiVatLieu = !empty($collect) ? $warehouse->loai_vat_lieu : $warehouse[2];
             $doDay       = !empty($collect) ? $warehouse->do_day : $warehouse[3];
             $tieuChuan   = !empty($collect) ? $warehouse->tieu_chuan : $warehouse[4];
@@ -100,12 +101,12 @@
               </td>
               <td>
                 <input type="hidden" name="manufacture_type[]" value="{{ $manufactureType }}">
-                  {{gettype($manufactureType) == 'integer' ? \App\Models\WarehouseGroup::ARR_MANUFACTURE_TYPE[$manufactureType] : ''}}
+                  {{gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$manufactureType] : ''}}
               </td>
               <td>
                   <input type="hidden" name="warehouse_group_id[]" value="{{ $warehouseGroupId }}">
                 <input type="hidden" name="type[]" value="{{ $type }}">
-                {{gettype($type) == 'integer' ? \App\Models\WarehouseGroup::ARR_TYPE[$type] : ''}}
+                {{gettype($type) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$type] : ''}}
               </td>
               <td>
                 <input type="hidden" name="dv_tinh[]" value="{{ $dvTinh }}">
