@@ -310,7 +310,7 @@ class AdminHelper
         return $arrPriceSurvey;
     }
 
-    public function getTypeBanks()
+    public static function getTypeBanks()
     {
         return [
             Bank::TYPE_ATM => 'Ngân hàng',
@@ -318,7 +318,7 @@ class AdminHelper
         ];
     }
 
-    public function getShippingUnitDelivery()
+    public static function getShippingUnitDelivery()
     {
         return [
             'viettel_post' => 'Viettel Post',
@@ -332,7 +332,7 @@ class AdminHelper
         ];
     }
 
-    public function  getShippingMethodDelivery()
+    public static function getShippingMethodDelivery()
     {
         return [
             'roadways' => 'Đường bộ',
@@ -344,7 +344,7 @@ class AdminHelper
         ];
     }
 
-    public function  getMaterialTypes()
+    public static function getMaterialTypes()
     {
         return [
             '-1' => '--- Loại ---',

@@ -104,7 +104,7 @@ class DataHelper
         return $payments;
     }
 
-    public function getFiles($file=null) {
+    public static function getFiles($file=null) {
         $files = [
             'image' => 'Hình ảnh',
             'file'  => 'File khác',
