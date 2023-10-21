@@ -736,11 +736,12 @@ class CoController extends Controller
             $code = $request->input('code');
             if ($code) {
                 $params    = ['code' => $code];
-                $materials = $this->coService->queryWareHouses('plate', null, $params)->get();
+                $materials = $this->coService->getFullPlateWareHouses($params);
+                //dd($materials);
                 $content   = view('admins.requests.includes.list-materials-full',compact('materials'))->render();
             }
         } catch(\Exception $ex) {
-            report($ex);
+            dd($ex);
             return [
                 'success' => false,
                 'content' => $content,

@@ -26,4 +26,8 @@ class MerchandiseGroup extends Model
         'factory_type',
         'operation_type',
     ];
+
+    public function warehouses() {
+        return $this->belongsToMany(Warehouse::class, 'merchandise_group_warehouse');
+    }
 }

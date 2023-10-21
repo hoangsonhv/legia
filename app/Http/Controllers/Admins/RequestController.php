@@ -101,12 +101,21 @@ class RequestController extends Controller
         $breadcrumb['data']['list'] = ['label'  => 'Thêm mới'];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
         $permissions                = config('permission.permissions');
+        $steps = \App\Services\CoService::stepCo();
+
         if ($coId) {
             $categories = DataHelper::getCategories([DataHelper::KHO]);
             $queryCo    = $this->coRepository->getCoes([
                 'id'     => $coId,
                 'status' => ProcessStatus::Approved
             ])->limit(1);
+            $co = $queryCo->first();
+
+            $coStep = '';
+            if ($co->currentStep && isset($steps[$co->currentStep->step])) {
+                $coStep = $steps[$co->currentStep->step];
+            }
+
             $co = $queryCo->pluck('code', 'id')->toArray();
             if (!$co) {
                 return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
@@ -119,7 +128,7 @@ class RequestController extends Controller
             $warehouses    = collect([]);
             $listWarehouse = collect([]);
         }
-        return view('admins.requests.create',compact('breadcrumb', 'titleForLayout', 'permissions', 'categories', 'co', 'warehouses', 'listWarehouse'));
+        return view('admins.requests.create',compact('steps', 'coStep', 'breadcrumb', 'titleForLayout', 'permissions', 'categories', 'co', 'warehouses', 'listWarehouse'));
     }
 
     public function store(RequestRequest $request)
@@ -213,6 +222,8 @@ class RequestController extends Controller
         $titleForLayout             = $breadcrumb['data']['list']['label'];
         $requestModel               = $this->requestRepository->find($id);
         $corePriceSurvey            = AdminHelper::getCorePriceSurvey();
+        $steps = \App\Services\CoService::stepCo();
+        
         if ($requestModel) {
             $user = Session::get('login');
             if(!PermissionHelper::hasPermission('admin.request.index-all') && $requestModel->admin_id != $user->id) {
@@ -228,6 +239,14 @@ class RequestController extends Controller
                     'id'     => $requestModel->co_id,
                     'status' => ProcessStatus::Approved
                 ])->limit(1);
+
+                $co = $queryCo->first();
+
+                $coStep = '';
+                if ($co->currentStep && isset($steps[$co->currentStep->step])) {
+                    $coStep = $steps[$co->currentStep->step];
+                }
+
                 $coModel = $queryCo->first();
                 $co = $queryCo->pluck('code', 'id')->toArray();
                 if (!$co) {
@@ -267,7 +286,7 @@ class RequestController extends Controller
             foreach ($arrPayments as $recod) {
                 $payments[$recod['step_id']] = $recod;
             }
-            return view('admins.requests.edit',compact('breadcrumb', 'titleForLayout', 'requestModel',
+            return view('admins.requests.edit',compact('coStep', 'steps', 'breadcrumb', 'titleForLayout', 'requestModel',
                 'permissions', 'categories', 'co', 'materials', 'existsCat', 'warehouses', 'listWarehouse',
                 'corePriceSurvey', 'payments', 'canCreatePayment', 'canCreateWarehouseReceipt'));
         }

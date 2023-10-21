@@ -72,7 +72,7 @@
             @endforeach
         @endif
         </tbody>
-        @if(!empty($requestModel) && ($requestModel->status == \App\Enums\ProcessStatus::Pending))
+        @if((!empty($requestModel) && ($requestModel->status == \App\Enums\ProcessStatus::Pending)) || $coStep == $steps[\App\Models\CoStepHistory::STEP_CREATE_REQUEST])
             <tfoot>
             <tr align="left">
                 <td colspan="9">

@@ -7,6 +7,7 @@ use App\Models\CoStepHistory;
 use App\Models\Repositories\WarehousePlateRepository;
 use App\Models\Repositories\WarehouseRemainRepository;
 use App\Models\Repositories\WarehouseSpwRepository;
+use Illuminate\Database\Eloquent\Collection;
 
 class CoService
 {
@@ -112,6 +113,18 @@ class CoService
             }
         }
         return $result;
+    }
+
+    public function getFullPlateWareHouses($where=array()) {
+        $warehouses = DataHelper::getModelWarehouses('plate');
+        $results = new Collection();
+        if ($warehouses) {
+            foreach($warehouses as $kSubWarehouse => $vSubWarehouse) {
+                //($this->warehousePlateRepository->getWarehousePlates($kSubWarehouse, $where));
+                $results = $results->merge($this->warehousePlateRepository->getWarehousePlates($kSubWarehouse, $where)->get());
+            }
+        }
+        return $results;
     }
 
     public function queryWareHouses($warehouse=null, $model=null, $where=array()) {

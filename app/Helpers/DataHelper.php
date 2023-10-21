@@ -52,7 +52,7 @@ class DataHelper
         return $typeSpending;
     }
 
-    public function getCategories($aDiplay=[]) {
+    public static function getCategories($aDiplay=[]) {
         $res  = [];
         $data = self::getCategoryPayment();
         foreach($data as $kRoot => $vRoot) {
@@ -67,7 +67,7 @@ class DataHelper
         return $res;
     }
 
-    public function getStatusCO($status=null) {
+    public static function getStatusCO($status=null) {
         $statuses = [
             0 => 'Tất cả',
             1 => 'Chưa hoàn thành',
@@ -79,7 +79,7 @@ class DataHelper
         return $statuses;
     }
 
-    public function getUnits($unit=null) {
+    public static function getUnits($unit=null) {
         $units = [
             '1' => 'Tấm',
             '2' => 'Bộ',
@@ -115,7 +115,7 @@ class DataHelper
         return $files;
     }
 
-    public  static function getExtensionImport($ext) {
+    public static function getExtensionImport($ext) {
         $files = [
             'xlsx' => \Maatwebsite\Excel\Excel::XLSX,
             'xls'  => \Maatwebsite\Excel\Excel::XLS,
@@ -173,7 +173,7 @@ class DataHelper
         return $data;
     }
 
-    public function getInfoShipments($ship=null) {
+    public static function getInfoShipments($ship=null) {
         $ships = [
             1 => 'Giá chưa bao gồm chi phí đóng gói và chi phí vận chuyển.',
         ];
@@ -183,7 +183,7 @@ class DataHelper
         return $ships;
     }
 
-    public function getInfoPending($label, $key=0) {
+    public static function getInfoPending($label, $key=0) {
         $info = [
             0 => '&nbsp;',
             1 => $label . ' chưa xét duyệt',
@@ -195,7 +195,7 @@ class DataHelper
         return $info;
     }
 
-    public function stepPay()
+    public static function stepPay()
     {
         return [
             0 => [

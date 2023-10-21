@@ -169,7 +169,7 @@ class WarehousePlateRepository
     private function getModel($model) {
         switch ($model) {
             case 'bia':
-                $data = WarehouseHelper::getModel(WarehouseHelper::BIA);
+                $data = $this->warehouseBia;
                 break;
             case 'caosuvnza':
                 $data = $this->warehouseCaosuvnza;
