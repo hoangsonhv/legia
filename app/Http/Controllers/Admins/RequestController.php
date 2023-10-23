@@ -103,6 +103,7 @@ class RequestController extends Controller
         $permissions                = config('permission.permissions');
         $steps = \App\Services\CoService::stepCo();
 
+        $coStep = '';
         if ($coId) {
             $categories = DataHelper::getCategories([DataHelper::KHO]);
             $queryCo    = $this->coRepository->getCoes([
@@ -111,7 +112,6 @@ class RequestController extends Controller
             ])->limit(1);
             $co = $queryCo->first();
 
-            $coStep = '';
             if ($co->currentStep && isset($steps[$co->currentStep->step])) {
                 $coStep = $steps[$co->currentStep->step];
             }
@@ -233,6 +233,8 @@ class RequestController extends Controller
             $existsCat   = 0;
             $canCreatePayment = false;
             $canCreateWarehouseReceipt = false;
+            $coStep = '';
+            
             if ($requestModel->co_id) {
                 $categories = DataHelper::getCategories([DataHelper::KHO]);
                 $queryCo    = $this->coRepository->getCoes([
@@ -242,7 +244,6 @@ class RequestController extends Controller
 
                 $co = $queryCo->first();
 
-                $coStep = '';
                 if ($co->currentStep && isset($steps[$co->currentStep->step])) {
                     $coStep = $steps[$co->currentStep->step];
                 }
