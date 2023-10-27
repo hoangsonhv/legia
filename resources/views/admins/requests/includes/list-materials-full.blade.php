@@ -14,19 +14,21 @@
         <th class="align-middle check-all"><input type="checkbox" value="1" onclick="checkedAllRows(this)"></th>
         <th class="align-middle">Số TT</th>
         <th class="align-middle">Mã HH</th>
-        <th class="align-middle">Vật liệu</th>
+        <th class="align-middle">Chi tiết</th>
+        {{-- <th class="align-middle">Vật liệu</th>
         <th class="align-middle">Độ dày</th>
         <th class="align-middle">Hình dạng</th>
         <th class="align-middle">Dia W W1</th>
         <th class="align-middle">L L1</th>
         <th class="align-middle">W2</th>
-        <th class="align-middle">L2</th>
-        <th class="align-middle">SL - Tấm</th>
-        <th class="align-middle">SL - m2</th>
+        <th class="align-middle">L2</th> --}}
+        {{-- <th class="align-middle">SL - Tấm</th> --}}
+        <th class="align-middle">Diện tích</th>
         <th class="align-middle">Lot No</th>
         <th class="align-middle">Date</th>
-        <th class="align-middle">Tồn SL - Tấm</th>
-        <th class="align-middle">Tồn SL - m2</th>
+        <th class="align-middle">Tồn kho</th>
+        {{-- <th class="align-middle">Tồn SL - Tấm</th>
+        <th class="align-middle">Tồn SL - m2</th> --}}
       </tr>
     </thead>
     <tbody>
@@ -48,22 +50,33 @@
               <input type="hidden" name="material[code][]" value="{{ $material->code }}">
               {{ $material->code }}
             </td>
-            <td class="vat-lieu">
-              <input type="hidden" name="material[vat_lieu][]" value="{{ $material->vat_lieu }}">
-              {{ $material->vat_lieu }}
+            <td align="left">
+              <ul>
+                @foreach ($material->detail as $properties => $item)
+                  <li> {{ $properties }} : {{ $item }} </li>
+                @endforeach
+              </ul>
             </td>
-            <td class="">{{ $material->do_day }}</td>
+            <input type="hidden" name="material[vat_lieu][]" value="{{ $material->vat_lieu }}">
+            {{-- <td class="">{{ $material->do_day }}</td>
             <td class="">{{ $material->hinh_dang }}</td>
             <td class="">{{ $material->dia_w_w1 }}</td>
             <td class="">{{ $material->l_l1 }}</td>
             <td class="">{{ $material->w2 }}</td>
-            <td class="">{{ $material->l2 }}</td>
-            <td class="">{{ $material->sl_tam }}</td>
-            <td class="">{{ $material->sl_m2 }}</td>
+            <td class="">{{ $material->l2 }}</td> --}}
+            {{-- <td class="">{{ $material->sl_tam }}</td> --}}
+            <td class="">{{ $material->creage }}</td>
             <td class="">{{ $material->lot_no }}</td>
             <td class="">{{ $material->date }}</td>
-            <td class="">{{ $material->ton_sl_tam }}</td>
-            <td class="">{{ $material->ton_sl_m2 }}</td>
+            <td align="left">
+              <ul>
+                @foreach ($material->ton_kho as $properties => $item)
+                  <li> {{ __($properties) }} : {{ $item }} </li>
+                @endforeach
+              </ul>
+            </td>
+            {{-- <td class="">{{ $material->ton_sl_tam }}</td>
+            <td class="">{{ $material->ton_sl_m2 }}</td> --}}
           </tr>
         @endforeach
       @else

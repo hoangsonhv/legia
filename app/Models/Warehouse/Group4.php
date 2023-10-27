@@ -22,7 +22,23 @@ class Group4 extends BaseWarehouseCommon
         'ton_sl_cai',
         'model_type'
     ];
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::VANDTINH_INNER_OUTER,
-    // ];
+
+    public function getDetailAttribute() {
+        return [
+            'vat_lieu' => $this->vat_lieu,
+            'do_day' => $this->size,
+            'd1' => $this->d1,
+            'd2' => $this->d2,
+        ];
+    }
+   
+    public function getAcreageAttribute() {
+        return null;
+    }
+
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_cai' => $this->ton_sl_cai,
+        ];
+    }
 }

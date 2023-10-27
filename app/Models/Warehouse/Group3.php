@@ -23,7 +23,27 @@ class Group3 extends BaseWarehouseCommon
         'ton_sl_m',
         'model_type'
     ];
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::DAYCAOSU_SILICON_ONGGLASSEXPORT_DAYCREAMIC_PTFECAYONG_PTFETAPE,
-    // ];
+
+    public function getDetailAttribute() {
+        return [
+            'vat_lieu' => $this->vat_lieu,
+            'size' => $this->size,
+            'm_cuon' => $this->m_cuon,
+        ];
+    }
+
+    public function getAcreageAttribute() {
+        return self::acreage($this->sl_cuon);
+    }
+
+    public function acreage($sl_cuon) {
+        return $this->m_cuon * $sl_cuon;
+    }
+    
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_cuon' => $this->ton_sl_cuon,
+            'ton_sl_m' => self::acreage($this->ton_sl_cuon),
+        ];
+    }
 }

@@ -41,11 +41,10 @@
       @if(!empty($warehouses))
         @php
           $sequence = 1;
-          dump($warehouses);
         @endphp
         @foreach($warehouses as $in => $warehouse)
           @php
-            $detectCode = \App\Helpers\AdminHelper::detectProductCode($warehouse[1]);
+            $detectCode = \App\Helpers\AdminHelper::detectProductCode(!empty($collect) ? $warehouse->code : $warehouse[1]);
             $code        = !empty($collect) ? $warehouse->code : $warehouse[1];
             $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
             $type = !empty($collect) ? $warehouse->type : $detectCode['type'];
@@ -147,10 +146,10 @@
                 {{ $chuanGasket }}
               </td>
               <td>
-                {{ gettype($manufactureType) == 'integer' ? \App\Models\WarehouseGroup::ARR_MANUFACTURE_TYPE[$manufactureType] : ''}}
+                {{ gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$manufactureType] : ''}}
               </td>
               <td>
-                {{ gettype($type) == 'integer' ? \App\Models\WarehouseGroup::ARR_TYPE[$type] : ''}}
+                {{ gettype($type) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$type] : ''}}
               </td>
               <td>
                 {{ $dvTinh }}

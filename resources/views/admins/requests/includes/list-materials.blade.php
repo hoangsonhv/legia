@@ -72,20 +72,15 @@
             @endforeach
         @endif
         </tbody>
-        @if((!empty($requestModel) && ($requestModel->status == \App\Enums\ProcessStatus::Pending)) || $coStep == $steps[\App\Models\CoStepHistory::STEP_CREATE_REQUEST])
-            <tfoot>
+        <tfoot>
             <tr align="left">
                 <td colspan="9">
-                    @if($co)
                         <button type="button" class="btn btn-success" id="display-material">+ Thêm vật liệu từ KHO
                         </button>
                         <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>
-                    @else
                         <button type="button" class="btn btn-success" id="add-row-material">+ Thêm</button>
-                    @endif
                 </td>
             </tr>
-            </tfoot>
-        @endif
+        </tfoot>
     </table>
 </div>

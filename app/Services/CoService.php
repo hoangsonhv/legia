@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Helpers\DataHelper;
+use App\Helpers\WarehouseHelper;
 use App\Models\CoStepHistory;
+use App\Models\MerchandiseGroup;
+use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\Repositories\WarehousePlateRepository;
 use App\Models\Repositories\WarehouseRemainRepository;
 use App\Models\Repositories\WarehouseSpwRepository;
@@ -14,15 +17,18 @@ class CoService
     protected $warehousePlateRepository;
     protected $warehouseSpwRepository;
     protected $warehouseRemainRepository;
+    protected $baseWarehouseRepository;
 
     function __construct(
         WarehousePlateRepository $warehousePlateRepository,
         WarehouseSpwRepository $warehouseSpwRepository,
-        WarehouseRemainRepository $warehouseRemainRepository
+        WarehouseRemainRepository $warehouseRemainRepository,
+        BaseWarehouseRepository $baseWarehouseRepository
     ) {
         $this->warehousePlateRepository  = $warehousePlateRepository;
         $this->warehouseSpwRepository    = $warehouseSpwRepository;
         $this->warehouseRemainRepository = $warehouseRemainRepository;
+        $this->baseWarehouseRepository   = $baseWarehouseRepository;
     }
 
     public function getMaterialsInWarehouses($codes) {
@@ -62,24 +68,32 @@ class CoService
         try {
             if ($codes) {
                 foreach ($codes as $code) {
-                    $params = ['code' => $code];
-                    $dataWarehousePlate = $this->queryAllWarehouse('plate', null, $params);
-                    if ($dataWarehousePlate->count()) {
-                        $result = $result->merge($dataWarehousePlate);
+                    $merchandiseCode = \App\Helpers\AdminHelper::detectProductCode($code);
+                    if(empty($merchandiseCode['merchandise_code'])) {
+                        continue;
                     }
-                    $dataWarehouseSpw = $this->queryAllWarehouse('spw', null, $params);
-                    if ($dataWarehouseSpw->count()) {
-                        $result = $result->merge($dataWarehouseSpw);
-                    }
-                    $dataWarehouseRemain = $this->queryAllWarehouse('remain', null, $params);
-                    if ($dataWarehouseRemain->count()) {
-                        $result = $result->merge($dataWarehouseRemain);
+                    $merchandiseGroup = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_code'] . '%' )->first();
+                    $mGroupWarehouses = $merchandiseGroup->warehouses;
+                    $merchindiseWarehouse = collect([]);
+                    foreach ($mGroupWarehouses as $warehouse) {
+                        $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouse->model_type));
+                        $arrCode = explode(" ", strtoupper($code));
+                        $codeInWareHouse = "";
+                        foreach ($arrCode as $value) {
+                            $codeInWareHouse = $codeInWareHouse ? $codeInWareHouse . ' ' . $value : $value;
+                            $totalInWarehouse = $this->baseWarehouseRepository->model->where('code', $codeInWareHouse)
+                                                                                    ->where('model_type' , $warehouse->model_type)->get();
+                            if(count($totalInWarehouse)) {
+                                $merchindiseWarehouse = $merchindiseWarehouse->merge($totalInWarehouse)->unique();
+                                continue;
+                            }
+                        }
+                        $result = $result->merge($merchindiseWarehouse);
                     }
                 }
             }
-            // dd($result);
         } catch(\Exception $ex) {
-            report($ex);
+            dd($ex);
         }
         return $result;
     }

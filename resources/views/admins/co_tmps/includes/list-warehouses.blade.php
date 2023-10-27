@@ -10,21 +10,23 @@
       <tr align="center">
         <th class="align-middle">Số TT</th>
         <th class="align-middle">Mã HH</th>
-        <th class="align-middle">Vật liệu</th>
+        <th class="">Chi tiết</th>
+        {{-- <th class="align-middle">Vật liệu</th>
         <th class="align-middle">Độ dày</th>
         <th class="align-middle">Hình dạng</th>
         <th class="align-middle">Dia W W1</th>
         <th class="align-middle">L L1</th>
         <th class="align-middle">W2</th>
         <th class="align-middle">L2</th>
-        <th class="align-middle">SL - Tấm</th>
+        <th class="align-middle">SL - Tấm</th> --}}
         <th class="align-middle">SL - m2</th>
         <th class="align-middle">Lot No</th>
         <th class="align-middle">Ghi Chú</th>
         <th class="align-middle">Date</th>
-        <th class="align-middle">Tồn SL - Tấm</th>
+        <th class="align-middle">Tồn kho</th>
+        {{-- <th class="align-middle">Tồn SL - Tấm</th>
         <th class="align-middle">Tồn SL - m2</th>
-        <th class="align-middle">Tồn SL - Cái</th>
+        <th class="align-middle">Tồn SL - Cái</th> --}}
       </tr>
     </thead>
     <tbody>
@@ -36,21 +38,36 @@
           <tr align="center">
             <td>{{ $sequence }}</td>
             <td>{{ $warehouse->code }}</td>
-            <td>{{ $warehouse->vat_lieu }}</td>
+            <td align="left">
+              <ul>
+                @foreach ($warehouse->detail as $properties => $item)
+                  <li> {{ __($properties) }} : {{ $item }} </li>
+                @endforeach
+              </ul>
+            </td>
+            {{-- <td>{{ $warehouse->vat_lieu }}</td>
             <td>{{ $warehouse->do_day }}</td>
             <td>{{ $warehouse->hinh_dang }}</td>
             <td>{{ $warehouse->dia_w_w1 }}</td>
             <td>{{ $warehouse->l_l1 }}</td>
             <td>{{ $warehouse->w2 }}</td>
             <td>{{ $warehouse->l2 }}</td>
-            <td>{{ $warehouse->sl_tam }}</td>
-            <td>{{ $warehouse->sl_m2 }}</td>
+            <td>{{ $warehouse->sl_tam }}</td> --}}
+            <td>{{ $warehouse->acreage }} - {{ $warehouse->sl_m2 }}</td>
+            {{-- <td>{{ $warehouse->sl_m2 }}</td> --}}
             <td>{{ $warehouse->lot_no }}</td>
             <td>{{ $warehouse->ghi_chu }}</td>
             <td>{{ $warehouse->date }}</td>
-            <td>{{ $warehouse->ton_sl_tam }}</td>
+            <td align="left">
+              <ul>
+                @foreach ($warehouse->ton_kho as $properties => $item)
+                  <li> {{ __($properties) }} : {{ $item }} </li>
+                @endforeach
+              </ul>
+            </td>
+            {{-- <td>{{ $warehouse->ton_sl_tam }}</td>
             <td>{{ $warehouse->ton_sl_m2 }}</td>
-            <td>{{ $warehouse->ton_sl_cai }}</td>
+            <td>{{ $warehouse->ton_sl_cai }}</td> --}}
           </tr>
           @php
             $sequence ++;

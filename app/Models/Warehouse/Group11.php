@@ -25,7 +25,26 @@ class Group11 extends BaseWarehouseCommon
         'model_type'
     ];
 
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI,
-    // ];
+    public function getDetailAttribute() {
+        return [
+            'vat_lieu'  => $this->vat_lieu,
+            'do_day'    => $this->do_day,
+            'muc_ap_luc'    => $this->muc_ap_luc,
+            'kich_co'   => $this->kich_co,
+            'kich_thuoc'    => $this->kich_thuoc,
+            'chuan_mat_bich'    => $this->chuan_mat_bich,
+            'chuan_gasket'  => $this->chuan_gasket,
+            'dvt'   => $this->dvt,
+        ];
+    }
+       
+    public function getAcreageAttribute() {
+        return null;
+    }
+
+    public function getTonKhoAttribute() {
+        return [
+            'sl_ton' => $this->sl_ton,
+        ];
+    }
 }

@@ -735,8 +735,8 @@ class CoController extends Controller
         try {
             $code = $request->input('code');
             if ($code) {
-                $params    = ['code' => $code];
-                $materials = $this->coService->getFullPlateWareHouses($params);
+                $params    = [$code];
+                $materials = $this->coService->getProductMaterialsInWarehouses($params);
                 //dd($materials);
                 $content   = view('admins.requests.includes.list-materials-full',compact('materials'))->render();
             }

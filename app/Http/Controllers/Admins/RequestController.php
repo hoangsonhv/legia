@@ -133,7 +133,7 @@ class RequestController extends Controller
 
     public function store(RequestRequest $request)
     {
-//        try {
+       try {
             $category = $request->input('category');
             $coId     = $request->input('co_id');
             if ($coId) {
@@ -166,7 +166,7 @@ class RequestController extends Controller
                     $documents[] = ['name' => $file->getClientOriginalName(), 'path' => $fileSave];
                 }
             }
-
+            // dd($request);
             \DB::beginTransaction();
             $input = [
                 'co_id'                 => $coId,
@@ -208,10 +208,10 @@ class RequestController extends Controller
                 \DB::commit();
                 return redirect()->route('admin.request.index')->with('success','Tạo Phiếu Yêu Cầu thành công!');
             }
-//        } catch(\Exception $ex) {
-//            \DB::rollback();
-//            report($ex);
-//        }
+       } catch(\Exception $ex) {
+           \DB::rollback();
+           dd($ex);
+       }
         return redirect()->route('admin.request.index')->with('error','Tạo Phiếu Yêu Cầu thất bại!');
     }
 

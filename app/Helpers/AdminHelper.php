@@ -10,6 +10,8 @@ use App\Models\Manufacture;
 use App\Models\MerchandiseCode;
 use App\Models\MerchandiseGroup;
 use App\Models\PriceSurvey;
+use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
+use App\Models\Warehouse\BaseWarehouseCommon;
 use App\Models\WarehouseGroup;
 use App\Models\WarehouseProductCode;
 use Illuminate\Support\Facades\Mail;
@@ -357,7 +359,9 @@ class AdminHelper
     {
         $result = [
             'manufacture_type' => null,
+            'merchandise_group_id' => null,
             'merchandise_code' => null,
+            'merchandise_code_in_warehouse' => null,
             'type' => null,
         ];
         $arrCode = explode(" ", strtoupper($code));
@@ -365,10 +369,16 @@ class AdminHelper
                                             ->when(count($arrCode) > 1, function($q) use($arrCode) {
                                                 $q->orWhere('code' , $arrCode[0] . ' ' . $arrCode[1]);
                                             })->first();
-        foreach ($arrCode as $key => $value) {
+        $codeInWarehouseTmp = '';
+        foreach ($arrCode as $value) {
             if($merchandise_code) {
                 $result['merchandise_code'] = $result['merchandise_code'] ?? $merchandise_code->infix_code;
                 $infix_codes = MerchandiseCode::where('prefix_code', $merchandise_code->infix_code)->where('code', $value)->first();
+                $codeInWarehouseTmp = $codeInWarehouseTmp ? $codeInWarehouseTmp . ' ' . $value : $value;
+                $codeInWarehouse = BaseWarehouseCommon::where('code', $codeInWarehouseTmp)->exists();
+                if($codeInWarehouse) {
+                    $result['merchandise_code_in_warehouse'] = $codeInWarehouseTmp;
+                }
                 if(!$infix_codes) {
                     continue;
                 }
@@ -377,9 +387,23 @@ class AdminHelper
             }
         }
         $merchandise_group = MerchandiseGroup::where('code' , $result['merchandise_code'])->first();
-        $result['manufacture_type'] = $merchandise_group ? $merchandise_group->factory_type : '';
-        $result['type'] = $merchandise_group ? $merchandise_group->operation_type : '';
+        $result['manufacture_type'] = $merchandise_group ? $merchandise_group->factory_type : null;
+        $result['type'] = $merchandise_group ? $merchandise_group->operation_type : null;
+        $result['merchandise_group_id'] = $merchandise_group ? $merchandise_group->id : null;
         return $result;
+    }
+
+    //product COMMERCE
+    public static function countProductEcomInWarehouse($codeInWareHouse, $merchandise_group_id) {
+        $merchandise_group = MerchandiseGroup::where('id',$merchandise_group_id)->first();
+        if($codeInWareHouse == '' || empty($codeInWareHouse) || empty($merchandise_group)) {
+            return null;
+        }
+        $warehouseModel = $merchandise_group->warehouses->first();
+        $baseWarehouseRepository = new BaseWarehouseRepository();
+        $baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouseModel->id));
+        return $baseWarehouseRepository->model->where('code', $codeInWareHouse)
+        ->where('model_type' , $warehouseModel->id)->first()['ton_kho'];
     }
 
     public static function findGroupByCode($code)

@@ -24,7 +24,29 @@ class Group2 extends BaseWarehouseCommon
         'ton_sl_kg',
         'model_type'
     ];
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::FILLTER_GLANDPACKING_HOOP,
-    // ];
+
+    public function getDetailAttribute() {
+        return [
+            'vat_lieu' => $this->vat_lieu,
+            'size' => $this->size,
+            'trong_luong_cuon' => $this->trong_luong_cuon,
+            'm_cuon' => $this->m_cuon,
+        ];
+    }
+   
+    public function getAcreageAttribute() {
+        return self::acreage($this->sl_cuon);
+    }
+
+    public function acreage($sl_cuon) {
+        return $this->trong_luong_cuon * $sl_cuon;
+    }
+
+    
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_cuon' => $this->ton_sl_cuon,
+            'ton_sl_kg' => self::acreage($this->ton_sl_cuon),
+        ];
+    }
 }

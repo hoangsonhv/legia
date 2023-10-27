@@ -2,10 +2,11 @@
 
 namespace App\Models\Warehouse;
 
-use App\Helpers\WarehouhseHelper;
+use App\Helpers\WarehouseHelper;
 use App\Models\Warehouse\BaseWarehouseCommon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Group1 extends BaseWarehouseCommon
 {
@@ -28,8 +29,44 @@ class Group1 extends BaseWarehouseCommon
         'ton_sl_m2',
         'model_type'
     ];
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::BIA_CAOSU_CAOSUVNZA_TAMKIMLOAI_CREAMIC_GRAPHITE_PFTE_TAMNHUA,
-    // ];
+
+    public function getDetailAttribute() {
+        return [
+            'vat_lieu' => $this->vat_lieu,
+            'do_day' => $this->do_day,
+            'hinh_dang' => $this->hinh_dang,
+            'dia_w_w1' => $this->dia_w_w1,
+            'l_l1' => $this->l_l1,
+            'w2' => $this->w2,
+            'l2' => $this->l2,
+        ];
+    }
+
+    public function getAcreageAttribute() {
+        return $this->acreage($this->sl_tam);
+    }
+    public function acreage($sl_tam) {
+        switch ($this->hinh_dang) {
+            case WarehouseHelper::SHAPE_CICLE :
+                return ((pi()/4 * pow($this->dia_w_w1, 2))/pow(10,6)) * $sl_tam;
+            case WarehouseHelper::SHAPE_SQUARE :
+                return (($this->dia_w_w1 * $this->l_l1)/pow(10,6)) * $sl_tam;
+            case WarehouseHelper::SHAPE_POLYGON :
+                return (($this->dia_w_w1 * $this->l_l1 - (($this->dia_w_w1 - $this->w2) * ($this->l_l1 - $this->l2)))/pow(10,6)) * $sl_tam;
+            default:
+                throw new NotFoundHttpException('Not found hinh_dang');
+        }
+    }
+
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_tam' => $this->ton_sl_tam,
+            'ton_sl_m2' => $this->acreage($this->ton_sl_tam),
+        ];
+    }
+
+    public function setTonSlTamAttribute() {
+        return $this->ton_sl_tam += request()->so_luong;
+    }
    
 }
