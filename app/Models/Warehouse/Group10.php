@@ -46,4 +46,8 @@ class Group10 extends BaseWarehouseCommon
             'ton_sl_m'  => self::acreage($this->ton_sl_cay),
         ];
     }
+
+    public function setTonSlTamAttribute() {
+        return $this->ton_sl_tam += request()->quantity_reality;
+    }
 }

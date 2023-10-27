@@ -398,6 +398,7 @@ class RequestController extends Controller
                 }
                 if (!empty($materials)) {
                     $requestModel->material()->createMany($materials);
+                    
                     /*$requestModel->co()->detach();
                     if (!empty($co)) {
                         $requestModel->co()->sync($co);
