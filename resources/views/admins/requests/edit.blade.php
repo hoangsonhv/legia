@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-12">
                     <div class="card form-root">
-                        {!! Form::model($requestModel, array('route' => ['admin.request.update', $requestModel->id], 'method' => 'patch', 'enctype' => 'multipart/form-data')) !!}
+                        {!! Form::model($requestModel, array('route' => ['admin.request.update', $requestModel->id], 'method' => 'patch', 'id' => 'main_form', 'enctype' => 'multipart/form-data')) !!}
                         {!! Form::hidden('id', null) !!}
                         <div class="card-body">
                             @if($co)
@@ -88,8 +88,6 @@
                             @include('admins.requests.includes.list-materials', ['co' => $co, 'materials' => $materials])
                         </div>
 
-                        {!! Form::model($requestModel, array('route' => ['admin.request.update', $requestModel->id], 'method' => 'patch', 'enctype' => 'multipart/form-data')) !!}
-                    {!! Form::hidden('id', null) !!}
                     @if(\App\Enums\ProcessStatus::Pending != $requestModel->status)
                         @include('admins.requests.includes.config_payment')
                     @endif
@@ -115,11 +113,10 @@
                                 @endpermission
                             @endif
                             @if($requestModel->status == \App\Enums\ProcessStatus::Pending)
-                                <button type="submit" class="btn btn-primary">Lưu Phiếu Yêu Cầu</button>
+                                <input type="submit" class="btn btn-primary" form="main_form" value="Lưu Phiếu Yêu Cầu" />
                             @endif
                             <a href="{{ route('admin.request.index') }}" class="btn btn-default">Quay lại</a>
                         </div>
-                    {!! Form::close() !!}
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->

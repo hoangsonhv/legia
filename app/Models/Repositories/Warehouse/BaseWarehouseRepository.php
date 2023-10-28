@@ -9,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Shared\OLE\PPS;
 
 class BaseWarehouseRepository
 {
-    protected $model;
+    public $model;
 
 
     public function setModel(Model $model)

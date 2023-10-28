@@ -94,17 +94,33 @@ class WarehouseReceiptController extends Controller
                 if (!$co) {
                     return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
                 }
-                $warehouses    = $coModel->warehouses;
-                foreach ($warehouses as $warehouse) {
-                    $products[] = [
-                        'code' => $warehouse->code,
-                        'name' => $warehouse->loai_vat_lieu,
-                        'unit' => $warehouse->dv_tinh,
-                        'quantity_doc' => $warehouse->so_luong,
-                        'quantity_reality' => 0,
-                        'unit_price' => 0,
-                        'into_money' => 0,
-                    ];
+                if ($request->material) {
+                    foreach ($request->material as $material) {
+                        $price_survey = $material->price_survey->where('status', \App\Models\PriceSurvey::TYPE_BUY)->first();
+                        $products[] = [
+                            'code' => $material->code,
+                            'name' => $material->mo_ta,
+                            'unit' => $material->dv_tinh,
+                            'quantity_doc' => $material->dinh_luong,
+                            'quantity_reality' => 0,
+                            'unit_price' => ($price_survey->price / $material->dinh_luong),
+                            'into_money' => $price_survey->price,
+                        ];
+                    }
+                }
+                else {
+                    $warehouses    = $coModel->warehouses;
+                    foreach ($warehouses as $warehouse) {
+                        $products[] = [
+                            'code' => $warehouse->code,
+                            'name' => $warehouse->loai_vat_lieu,
+                            'unit' => $warehouse->dv_tinh,
+                            'quantity_doc' => $warehouse->so_luong,
+                            'quantity_reality' => 0,
+                            'unit_price' => 0,
+                            'into_money' => 0,
+                        ];
+                    }
                 }
             }
         }

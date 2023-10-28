@@ -25,7 +25,24 @@ class Group9 extends BaseWarehouseCommon
         'model_type'
     ];
 
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::CCDC,
-    // ];
+    public function getDetailAttribute() {
+        return [
+            'vat_lieu' => $this->vat_lieu,
+            'do_day' => $this->do_day,
+            'std' => $this->std,
+            'size' => $this->size,
+            'od' => $this->od,
+            'id' => $this->id,
+        ];
+    }
+       
+    public function getAcreageAttribute() {
+        return null;
+    }
+
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_cai' => $this->ton_sl_cai,
+        ];
+    }
 }

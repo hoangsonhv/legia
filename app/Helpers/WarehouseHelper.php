@@ -18,14 +18,15 @@ use App\Models\Warehouse\Group12;
 use App\Models\Warehouse\Group13;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WarehouseHelper
 {
   
     # SHAPE
-    const SHAPE_CICLE = '◯';
-    const SHAPE_SQUARE = '☐';
-    const SHAPE_POLYGON = '☐☐';
+    const SHAPE_CICLE = 'RO1';
+    const SHAPE_SQUARE = 'RE1';
+    const SHAPE_POLYGON = 'RE2';
 
     # name of warehouse
 
@@ -79,7 +80,7 @@ class WarehouseHelper
         $ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
         if(!in_array($type,$ids))
         {
-            throw new Exception('Not Found Type');
+            throw new NotFoundHttpException('Not Found Type');
         }
        
         switch ($type) {
@@ -135,6 +136,7 @@ class WarehouseHelper
                 return new Group9($attributes);
                 
             case WarehouseHelper::PTFE_CAYONG:
+                return new Group10($attributes);
             case WarehouseHelper::ONG_GLASS_EXPOXY:
             case WarehouseHelper::NHU_KY_THUAT_CAY_ONG:
                 return new Group10($attributes);
@@ -149,7 +151,7 @@ class WarehouseHelper
                 
                 
             default:
-                throw new Exception('Not Found Model');
+                throw new NotFoundHttpException('Not Found Model');
         }
         
   

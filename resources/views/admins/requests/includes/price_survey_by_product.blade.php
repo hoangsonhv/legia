@@ -87,7 +87,7 @@
 {{--        <td></td>--}}
 {{--    </tr>--}}
     </tbody>
-    @if($requestModel->status == \App\Enums\ProcessStatus::PendingSurveyPrice)
+    {{-- @if($requestModel->status == \App\Enums\ProcessStatus::PendingSurveyPrice) --}}
         <tfoot>
         <tr>
             <td colspan="8">
@@ -100,6 +100,6 @@
             </td>
         </tr>
         </tfoot>
-    @endif
+    {{-- @endif --}}
 </table>
 {!! Form::close() !!}

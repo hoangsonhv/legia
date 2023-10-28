@@ -20,7 +20,21 @@ class Group8 extends BaseWarehouseCommon
         'ton_sl_cuon',
         'model_type'
     ];
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::GLAND_PACKING_LATTY,
-    // ];
+
+    public function getDetailAttribute() {
+        return [
+            'vat_lieu' => $this->vat_lieu,
+            'size' => $this->size,
+        ];
+    }
+       
+    public function getAcreageAttribute() {
+        return null;
+    }
+
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_cai' => $this->ton_sl_cai,
+        ];
+    }
 }

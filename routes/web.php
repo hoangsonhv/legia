@@ -54,7 +54,7 @@ Route::prefix('admin')->group(function () {
 	Route::post('/reset', [LoginController::class, 'postReset'])->name('admin.login.postReset');
 	Route::get('/logout', [LoginController::class, 'getLogout'])->name('admin.login.getLogout');
 });
-Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin', 'permission']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
     /* Dashboard */
     Route::get('/dashboard/index', [DashboardController::class, 'index'])->name('admin.dashboard.index');
     /* Administrator */

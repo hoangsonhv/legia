@@ -22,7 +22,20 @@ class Group6 extends BaseWarehouseCommon
         'model_type'
     ];
 
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::PHU_TUNG_DUNG_CU,
-    // ];
+    public function setDetailAttribute() {
+        return [
+            'mo_ta' => $this->mo_ta,
+            'cho_may_moc_thiet_bi' => $this->cho_may_moc_thiet_bi,
+        ];
+    }
+   
+    public function getAcreageAttribute() {
+        return null;
+    }
+
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_cai' => $this->ton_sl_cai,
+        ];
+    }
 }

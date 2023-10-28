@@ -21,4 +21,22 @@ class Group12 extends BaseWarehouseCommon
         'ton_sl_cai',
         'model_type'
     ];
+
+    public function getDetailAttribute() {
+        return [
+            'mo_ta'    => $this->mo_ta,
+            'bo_phan'  => $this->bo_phan,
+            'dvt'   => $this->dvt,
+        ];
+    }
+       
+    public function getAcreageAttribute() {
+        return null;
+    }
+
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_cai' => $this->ton_sl_cai,
+        ];
+    }
 }

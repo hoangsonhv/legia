@@ -24,7 +24,30 @@ class Group10 extends BaseWarehouseCommon
         'model_type'
     ];
 
-    // protected $attributes = [
-    //     'model_type' => WarehouhseHelper::PTFE_ENVELOP,
-    // ];
+    public function getDetailAttribute() {
+        return [
+            'vat_lieu' => $this->vat_lieu,
+            'size' => $this->size,
+            'm_cay' => $this->std,
+        ];
+    }
+       
+    public function getAcreageAttribute() {
+        return self::acreage($this->sl_cay);
+    }
+
+    public function acreage($sl_cay) {
+        return $this->m_cay * $sl_cay;
+    }
+
+    public function getTonKhoAttribute() {
+        return [
+            'ton_sl_cay' => $this->ton_sl_cay,
+            'ton_sl_m'  => self::acreage($this->ton_sl_cay),
+        ];
+    }
+
+    public function setTonSlTamAttribute() {
+        return $this->ton_sl_tam += request()->quantity_reality;
+    }
 }

@@ -7,7 +7,11 @@ use App\Models\Config;
 use App\Models\CoreCustomer;
 use App\Models\LogAdmin;
 use App\Models\Manufacture;
+use App\Models\MerchandiseCode;
+use App\Models\MerchandiseGroup;
 use App\Models\PriceSurvey;
+use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
+use App\Models\Warehouse\BaseWarehouseCommon;
 use App\Models\WarehouseGroup;
 use App\Models\WarehouseProductCode;
 use Illuminate\Support\Facades\Mail;
@@ -308,7 +312,7 @@ class AdminHelper
         return $arrPriceSurvey;
     }
 
-    public function getTypeBanks()
+    public static function getTypeBanks()
     {
         return [
             Bank::TYPE_ATM => 'Ngân hàng',
@@ -316,7 +320,7 @@ class AdminHelper
         ];
     }
 
-    public function getShippingUnitDelivery()
+    public static function getShippingUnitDelivery()
     {
         return [
             'viettel_post' => 'Viettel Post',
@@ -330,7 +334,7 @@ class AdminHelper
         ];
     }
 
-    public function  getShippingMethodDelivery()
+    public static function getShippingMethodDelivery()
     {
         return [
             'roadways' => 'Đường bộ',
@@ -342,7 +346,7 @@ class AdminHelper
         ];
     }
 
-    public function  getMaterialTypes()
+    public static function getMaterialTypes()
     {
         return [
             '-1' => '--- Loại ---',
@@ -351,55 +355,55 @@ class AdminHelper
         ];
     }
 
-    public function detectProductCode($code)
+    public static function detectProductCode($code)
     {
         $result = [
             'manufacture_type' => null,
+            'merchandise_group_id' => null,
+            'merchandise_code' => null,
+            'merchandise_code_in_warehouse' => null,
             'type' => null,
         ];
-        $arrCode = explode(" ", $code);
-        if(isset($arrCode[0]) && $arrCode[0]) {
-            if(in_array($arrCode[0], ['PLS', 'PR', 'PT'])) {
-                switch ($arrCode[0]) {
-                    case 'PLS':
-                    case 'PR':
-                    case 'PT':
-                        $group = self::findGroupCodePLS($arrCode[0], $arrCode);
-                        break;
-                    default:
-                        break;
+        $arrCode = explode(" ", strtoupper($code));
+        $merchandise_code = MerchandiseCode::where('code', $arrCode[0])
+                                            ->when(count($arrCode) > 1, function($q) use($arrCode) {
+                                                $q->orWhere('code' , $arrCode[0] . ' ' . $arrCode[1]);
+                                            })->first();
+        $codeInWarehouseTmp = '';
+        foreach ($arrCode as $value) {
+            if($merchandise_code) {
+                $result['merchandise_code'] = $result['merchandise_code'] ?? $merchandise_code->infix_code;
+                $infix_codes = MerchandiseCode::where('prefix_code', $merchandise_code->infix_code)->where('code', $value)->first();
+                $codeInWarehouseTmp = $codeInWarehouseTmp ? $codeInWarehouseTmp . ' ' . $value : $value;
+                $codeInWarehouse = BaseWarehouseCommon::where('code', $codeInWarehouseTmp)->exists();
+                if($codeInWarehouse) {
+                    $result['merchandise_code_in_warehouse'] = $codeInWarehouseTmp;
                 }
+                if(!$infix_codes) {
+                    continue;
+                }
+                $result['merchandise_code'] =  $result['merchandise_code'] . '_' . $infix_codes->infix_code;
 
-                if($group) {
-                    $result['manufacture_type'] = $group->manufacture_type;
-                    $result['type'] = $group->type;
-                    $result['group_id'] = $group->id;
-                }
-                return $result;
-            }
-
-            $group = self::findGroupByCode($arrCode[0]);
-            if($group) {
-                $codeGroup = $group->code;
-                switch ($codeGroup) {
-                    case 'SG':
-                        $group = self::findGroupCodeSG($arrCode);
-                        break;
-                    case 'SWG':
-                        $group = self::findGroupCodeSWG($arrCode);
-                        break;
-                    default:
-                        break;
-                }
-                if($group) {
-                    $result['manufacture_type'] = $group->manufacture_type;
-                    $result['type'] = $group->type;
-                    $result['group_id'] = $group->id;
-                }
             }
         }
-
+        $merchandise_group = MerchandiseGroup::where('code' , $result['merchandise_code'])->first();
+        $result['manufacture_type'] = $merchandise_group ? $merchandise_group->factory_type : null;
+        $result['type'] = $merchandise_group ? $merchandise_group->operation_type : null;
+        $result['merchandise_group_id'] = $merchandise_group ? $merchandise_group->id : null;
         return $result;
+    }
+
+    //product COMMERCE
+    public static function countProductEcomInWarehouse($codeInWareHouse, $merchandise_group_id) {
+        $merchandise_group = MerchandiseGroup::where('id',$merchandise_group_id)->first();
+        if($codeInWareHouse == '' || empty($codeInWareHouse) || empty($merchandise_group)) {
+            return null;
+        }
+        $warehouseModel = $merchandise_group->warehouses->first();
+        $baseWarehouseRepository = new BaseWarehouseRepository();
+        $baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouseModel->id));
+        return $baseWarehouseRepository->model->where('code', $codeInWareHouse)
+        ->where('model_type' , $warehouseModel->id)->first()['ton_kho'];
     }
 
     public static function findGroupByCode($code)

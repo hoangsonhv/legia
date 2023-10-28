@@ -53,6 +53,7 @@
             @endphp
             @foreach($warehouses as $index => $warehouse)
                 @php
+                    $detectCode = \App\Helpers\AdminHelper::detectProductCode(!empty($collect) ? $warehouse->code : $warehouse[1]);
                     $code        = !empty($collect) ? $warehouse->code : $warehouse[1];
                     $loaiVatLieu = !empty($collect) ? $warehouse->loai_vat_lieu : $warehouse[2];
                     $doDay       = !empty($collect) ? $warehouse->do_day : $warehouse[3];
@@ -68,11 +69,11 @@
                     $type        = !empty($collect) ? (gettype($warehouse->type) == 'integer' ? $warehouse->type : $warehouse->material_type) : $warehouse[13];
                     $warehouseGroupId = !empty($collect) ? $warehouse->warehouse_group_id : $warehouse[14];
                     $tonKho = '---';
-                    if(!empty($collect) && count($materials)) {
-                        $indexStock = array_search($warehouse->code, array_column($materials, 'code'));
-                        if($indexStock !== false && isset($materials[$indexStock]) && (isset($materials[$indexStock]['ton_sl_cai']) || isset($materials[$indexStock]['ton_sl_tam']))) {
-                            $tonKho = isset($materials[$indexStock]['ton_sl_cai']) ? $materials[$indexStock]['ton_sl_cai']
-                            : (isset($materials[$indexStock]['ton_sl_tam']) ? $materials[$indexStock]['ton_sl_tam'] : null);
+                    if($type == \App\Models\MerchandiseGroup::COMMERCE) {
+                        $merchandiseInfo = \App\Helpers\AdminHelper::countProductEcomInWarehouse($detectCode['merchandise_code_in_warehouse'], $detectCode['merchandise_group_id']); 
+                        // dump(!empty($merchandiseInfo));
+                        if(isset($merchandiseInfo['ton_sl_cay']) || isset($merchandiseInfo['ton_sl_cai'])) {
+                            $tonKho = $merchandiseInfo['ton_sl_cay'] ?? $merchandiseInfo['ton_sl_cai'];   
                         }
                     }
                 @endphp
@@ -117,11 +118,11 @@
                         </td>
                         <td>
                             <input type="hidden" name="manufacture_type[]" value="{{ $manufactureType }}">
-                            {{ gettype($manufactureType) == 'integer' ? \App\Models\WarehouseGroup::ARR_MANUFACTURE_TYPE[$manufactureType] : ''}}
+                            {{ gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$manufactureType] : ''}}
                         </td>
                         <td>
                             <input type="hidden" name="material_type[]" value="{{ $type }}">
-                            {{ gettype($type) == 'integer' ? \App\Models\WarehouseGroup::ARR_TYPE[$type] : ''}}
+                            {{ gettype($type) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$type] : ''}}
                         </td>
                         <td>
                             <input type="hidden" name="dv_tinh[]" value="{{ $dvTinh }}">
@@ -200,10 +201,10 @@
                             {{ $chuanGasket }}
                         </td>
                         <td>
-                            {{ gettype($manufactureType) == 'integer' ? \App\Models\WarehouseGroup::ARR_MANUFACTURE_TYPE[$manufactureType] : ''}}
+                            {{ gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$manufactureType] : ''}}
                         </td>
                         <td>
-                            {{ gettype($type) == 'integer' ? \App\Models\WarehouseGroup::ARR_TYPE[$type] : ''}}
+                            {{ gettype($type) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$type] : ''}}
                         </td>
                         <td>
                             {{ $dvTinh }}
