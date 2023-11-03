@@ -31,7 +31,8 @@
             </td>
             <td class="sequence">{{ $index + 1 }}</td>
             <td class="code">
-              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}">
+              <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}" />
+              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" />
             </td>
             <td class="">
               <textarea class="form-control" name="product[name][]" rows="1">{{ $product['name'] }}</textarea>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admins;
 
 use App\Helpers\PermissionHelper;
+use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WarehouseExportRequest;
 use App\Http\Requests\WarehouseReceiptRequest;
 use App\Models\Admin;
+use App\Models\Co;
 use App\Models\CoStepHistory;
 use App\Models\WarehouseHistory;
 use Illuminate\Http\Request;
@@ -17,6 +19,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Repositories\WarehouseExportRepository;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\WarehouseHistoryRepository;
+use App\Models\Warehouse\BaseWarehouseCommon;
+use App\Services\CoService;
 
 class WarehouseExportController extends Controller
 {
@@ -27,17 +31,21 @@ class WarehouseExportController extends Controller
     protected $whExportRepo;
     protected $coStepHisRepo;
     protected $warehouseHistoryRepo;
+    protected $coService;
 
     /**
      * @var array
      */
     public $menu;
 
-    function __construct(WarehouseExportRepository $whExportRepo, CoStepHistoryRepository $coStepHisRepo,
-                         WarehouseHistoryRepository $warehouseHistoryRepo)
+    function __construct(WarehouseExportRepository $whExportRepo,
+                        CoStepHistoryRepository $coStepHisRepo,
+                        CoService $coService,
+                        WarehouseHistoryRepository $warehouseHistoryRepo)
     {
         $this->whExportRepo = $whExportRepo;
         $this->coStepHisRepo = $coStepHisRepo;
+        $this->coService             = $coService;
         $this->warehouseHistoryRepo = $warehouseHistoryRepo;
         $this->menu = [
             'root' => 'Quản lý Phiếu xuất kho',
@@ -81,10 +89,18 @@ class WarehouseExportController extends Controller
         $permissions = config('permission.permissions');
         $model = null;
         $products = [];
+        $co = null;
+        $warehouses = null;
+        $listWarehouse = null;
         $coId = $request->has('co_id') ? $request->co_id : null;
+        if ($coId) {
+            $co = Co::find($coId);
+            $warehouses    = $co->warehouses;
+            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($co->warehouses->pluck('code', 'id')->toArray())->slice(0, 100);
+        }
 
         return view('admins.warehouse_export.create', compact('breadcrumb', 'titleForLayout',
-            'permissions', 'products', 'model', 'coId'));
+            'permissions', 'products', 'model', 'coId', 'co', 'listWarehouse', 'warehouses'));
     }
 
     public function store(WarehouseExportRequest $request)
@@ -134,14 +150,29 @@ class WarehouseExportController extends Controller
                         'quantity_reality' => $inputProducts['quantity_reality'][$key],
                         'unit_price' => $inputProducts['unit_price'][$key],
                         'into_money' => $inputProducts['into_money'][$key],
-                        'warehouse_id' => $inputProducts['warehouse_id'][$key],
+                        'merchandise_id' => $inputProducts['merchandise_id'][$key],
                         'table_name' => $inputProducts['table_name'][$key],
                     ];
                 }
             }
             if (!empty($products)) {
                 $model->products()->createMany($products);
-                $this->warehouseHistoryRepo->updateWarehouseHistory($products, WarehouseHistory::TYPE_WAREHOUSE_EXPORT);
+                
+                // Increase material in base warehouse
+                foreach ($products as $product) {
+                    if ($product['merchandise_id'] > 0) {
+                        $base_warehouse = BaseWarehouseCommon::find($product['merchandise_id']);
+                        $group_warehouse = WarehouseHelper::getModel($base_warehouse->model_type)->find($product['merchandise_id']);
+                        $group_warehouse->setQuantity($product['quantity_reality'] * (-1));
+                        $group_warehouse->save();
+                    }
+                    else
+                    {
+                        // Decrease ở kho thành phẩm
+                    }
+                }
+
+                //$this->warehouseHistoryRepo->updateWarehouseHistory($products, WarehouseHistory::TYPE_WAREHOUSE_EXPORT);
             }
             \DB::commit();
             return redirect()->route('admin.warehouse-export.index')->with('success', 'Tạo phiếu xuất kho thành công!');
@@ -165,9 +196,19 @@ class WarehouseExportController extends Controller
                 return redirect()->route('admin.warehouse-export.index')->with('error', 'Bạn không có quyền truy cập!');
             }
             $permissions = config('permission.permissions');
+            $co = null;
+            $warehouses = null;
+            $listWarehouse = null;
+            $coId = $model->co_id;
+            if ($coId) {
+                $co = Co::find($coId);
+                $warehouses    = $co->warehouses;
+                $listWarehouse = $this->coService->getProductMaterialsInWarehouses($co->warehouses->pluck('code', 'id')->toArray())->slice(0, 100);
+            }
+
             $products = $model->products->toArray();
             return view('admins.warehouse_export.edit', compact('breadcrumb', 'titleForLayout', 'model',
-                'permissions', 'products'));
+                'permissions', 'products', 'co', 'listWarehouse', 'warehouses'));
         }
         return redirect()->route('admin.warehouse_export.index')->with('error', 'Phiếu xuất kho không tồn tại!');
     }

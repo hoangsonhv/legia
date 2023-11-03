@@ -177,12 +177,15 @@
               </div>
               <div class="card-body offer-price" style="display: none" id="card-table-co">
                 @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'material' => $listWarehouse, 'collect' => true])
+                @if(!empty($listWarehouse))
+                 @include('admins.coes.includes.list-warehouses', ['warehouses' => $listWarehouse, 'collect' => true])
+               @endif
               </div>
-{{--              <div class="card-body check-warehouse">--}}
-{{--                @if(!empty($listWarehouse))--}}
-{{--                  @include('admins.coes.includes.list-warehouses', ['warehouses' => $listWarehouse, 'collect' => true])--}}
-{{--                @endif--}}
-{{--              </div>--}}
+             {{-- <div class="card-body check-warehouse">
+               @if(!empty($listWarehouse))
+                 @include('admins.coes.includes.list-warehouses', ['warehouses' => $listWarehouse, 'collect' => true])
+               @endif
+             </div> --}}
             </div>
           </div>
         </div>

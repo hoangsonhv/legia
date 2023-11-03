@@ -164,6 +164,10 @@ class WarehouseService
                 $this->modelType = WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI;
                 $this->baseWarehouseReposiroty->setModel(WarehouseHelper::getModel(WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI));
                 break;
+            case 'tpkimloai':
+                $this->modelType = WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI;
+                $this->baseWarehouseReposiroty->setModel(WarehouseHelper::getModel(WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI));
+                break;
             default:
                 throw new Exception("Not Found Model");
         }
@@ -182,6 +186,7 @@ class WarehouseService
         {
             $keyword = $params['key_word'];
             $query->where('code','like',"%$keyword%");
+            $query->orWhere('l_id', '=', $keyword);
         }
         $query->where('model_type',$this->modelType);
         $query->orderBy('l_id','DESC');

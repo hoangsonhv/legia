@@ -22,7 +22,8 @@ class OfferPriceTmp extends Model
         'don_gia',
         'type',
         'manufacture_type',
-        'warehouse_group_id'
+        'warehouse_group_id',
+        'material_type'
     ];
 
     public function co() {

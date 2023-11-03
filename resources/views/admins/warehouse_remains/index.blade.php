@@ -136,6 +136,28 @@
                               <th>SL - Cái</th>
                               <th>Tồn SL - Cái</th>
                               @break
+                            @case ('tpphikimloai')
+                              <th>Vật liệu</th>
+                              <th>Độ dày</th>
+                              <th>Mức áp lực</th>
+                              <th>Kích cỡ</th>
+                              <th>Kích thước</th>
+                              <th>Chuẩn mặt bích</th>
+                              <th>Chuẩn gasket</th>
+                              <th>Đơn vị tính</th>
+                              <th>Số lượng tồn</th>
+                              @break
+                            @case ('tpkimloai')
+                              <th>Vật liệu</th>
+                              <th>Độ dày</th>
+                              <th>Mức áp lực</th>
+                              <th>Kích cỡ</th>
+                              <th>Kích thước</th>
+                              <th>Chuẩn mặt bích</th>
+                              <th>Chuẩn gasket</th>
+                              <th>Đơn vị tính</th>
+                              <th>Số lượng tồn</th>
+                              @break
                            @endswitch
                            <th>&nbsp</th>
                          </tr>
@@ -224,6 +246,28 @@
                                 <td>{{ $warehouseRemain->size }}</td>
                                 <td>{{ $warehouseRemain->sl_cai }}</td>
                                 <td>{{ $warehouseRemain->ton_sl_cai }}</td>
+                                @break
+                              @case ('tpphikimloai')
+                                <td>{{ $warehouseRemain->vat_lieu }}</td>
+                                <td>{{ $warehouseRemain->do_day }}</td>
+                                <td>{{ $warehouseRemain->muc_ap_luc }}</td>
+                                <td>{{ $warehouseRemain->kich_co }}</td>
+                                <td>{{ $warehouseRemain->kich_thuoc }}</td>
+                                <td>{{ $warehouseRemain->chuan_mat_bich }}</td>
+                                <td>{{ $warehouseRemain->chuan_gasket }}</td>
+                                <td>{{ $warehouseRemain->dvt }}</td>
+                                <td>{{ $warehouseRemain->sl_ton }}</td>
+                                @break
+                              @case ('tpkimloai')
+                                <td>{{ $warehouseRemain->vat_lieu }}</td>
+                                <td>{{ $warehouseRemain->do_day }}</td>
+                                <td>{{ $warehouseRemain->muc_ap_luc }}</td>
+                                <td>{{ $warehouseRemain->kich_co }}</td>
+                                <td>{{ $warehouseRemain->kich_thuoc }}</td>
+                                <td>{{ $warehouseRemain->chuan_mat_bich }}</td>
+                                <td>{{ $warehouseRemain->chuan_gasket }}</td>
+                                <td>{{ $warehouseRemain->dvt }}</td>
+                                <td>{{ $warehouseRemain->sl_ton }}</td>
                                 @break
                              @endswitch
                              <td>

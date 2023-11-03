@@ -18,6 +18,7 @@ use App\Models\Repositories\CoRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\CoStepHistory;
+use App\Models\Warehouse\Group11;
 
 class WarehouseExportSellController extends Controller
 {
@@ -123,6 +124,7 @@ class WarehouseExportSellController extends Controller
                     'quantity' => $warehouse['so_luong'],
                     'unit_price' => $warehouse['don_gia'],
                     'into_money' => $warehouse['don_gia']*$warehouse['so_luong'],
+                    'merchandise_id' => $warehouse['merchandise_id'],
                 ]);
             }
         }
@@ -169,8 +171,9 @@ class WarehouseExportSellController extends Controller
                     ->first();
                 if($receipt) {
                     $this->coStepHisRepo->insertNextStep( 'receipt', $model->co_id, $receipt->id, CoStepHistory::ACTION_APPROVE, 1);
+                } else {
+                    $this->coStepHisRepo->insertNextStep('delivery', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
                 }
-//                $this->coStepHisRepo->insertNextStep('delivery', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
             }
             // Save many product
             $inputProducts = $request->input('product');
@@ -185,10 +188,22 @@ class WarehouseExportSellController extends Controller
                     'quantity' => $inputProducts['quantity'][$key],
                     'unit_price' => $inputProducts['unit_price'][$key],
                     'into_money' => $inputProducts['into_money'][$key],
+                    'merchandise_id' => $inputProducts['merchandise_id'][$key],
                 ];
             }
+
             if (!empty($products)) {
                 $model->products()->createMany($products);
+
+                // Decrease material in base warehouse
+                foreach ($products as $product) {
+                    if ($product['merchandise_id'] > 0) {
+                        $warehouseModel = Group11::find($product['merchandise_id']);
+                        $warehouseModel->setQuantity($product['quantity'] * (-1));
+                        $warehouseModel->save();
+                    }
+                }
+
                 \DB::commit();
                 return redirect()->route('admin.warehouse-export-sell.index')->with('success', 'Tạo phiếu xuất kho bán hàng thành công!');
             }
@@ -285,11 +300,22 @@ class WarehouseExportSellController extends Controller
                         'quantity' => $inputProducts['quantity'][$key],
                         'unit_price' => $inputProducts['unit_price'][$key],
                         'into_money' => $inputProducts['into_money'][$key],
+                        'merchandise_id' => $inputProducts['merchandise_id'][$key],
                     ];
                 }
 
                 if (!empty($model)) {
                     $model->products()->createMany($products);
+
+                    // Decrease material in base warehouse
+                    foreach ($products as $product) {
+                        if ($product['merchandise_id'] > 0) {
+                            $warehouseModel = Group11::find($product['merchandise_id']);
+                            $warehouseModel->setQuantity($product['quantity'] * (-1));
+                            $warehouseModel->save();
+                        }
+                    }
+
                     \DB::commit();
                     return redirect()->route('admin.warehouse-export-sell.edit', ['id' => $id])->with('success', 'Cập nhật Phiếu xuất kho bán hàng thành công!');
                 }

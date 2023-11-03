@@ -2,6 +2,7 @@
 
 namespace App\Models\Repositories;
 
+use App\Helpers\WarehouseHelper;
 use App\Models\Co;
 use App\Models\CoStepHistory;
 use App\Models\Manufacture;
@@ -72,6 +73,40 @@ class ManufactureRepository extends AdminRepository
             ->whereRaw('reality_quantity < need_quantity')
             ->get();
         if(!$query->count()) {
+            $details = ManufactureDetail::where('manufacture_id', $id)->get();
+
+            foreach ($details as $index => $detail) {
+                $material = $detail->offerPrice;
+                $modelAttributes = [
+                    'code' => $material->code,
+                    'vat_lieu'  => $material->loai_vat_lieu,
+                    'do_day'    => $material->do_day,
+                    'muc_ap_luc'    => $material->muc_ap_luc,
+                    'kich_co'   => $material->kich_co,
+                    'kich_thuoc'    => $material->kich_thuoc,
+                    'chuan_mat_bich'    => $material->chuan_bich,
+                    'chuan_gasket'  => $material->chuan_gasket,
+                    'dvt'   => $material->dv_tinh,
+                    'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type],
+                ];
+
+                $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$detail->material_type])
+                    ->where($modelAttributes)->first();
+
+                if ($warehouseModel != null) {
+                    $warehouseModel->setQuantity($detail->reality_quantity);
+                    $warehouseModel->save();
+                }
+                else
+                {
+                    $modelAttributes['sl_ton'] = $detail->reality_quantity;
+                    $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$detail->material_type])
+                        ->create($modelAttributes);
+                }
+
+                $material->merchandise_id = $warehouseModel->l_id;
+                $material->save();
+            }
             $this->update(['is_completed' => !$query->count() ? Manufacture::IS_COMPLETED : 0], $id);
         }
     }

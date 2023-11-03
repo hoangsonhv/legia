@@ -155,9 +155,10 @@ class CoTmpController extends Controller
             $dvTinh      = $request->input('dv_tinh');
             $soLuong     = $request->input('so_luong');
             $donGia      = $request->input('don_gia');
-            $type        = $request->input('type');
             $manufactureType = $request->input('manufacture_type');
             $warehouseGroupId = $request->input('warehouse_group_id');
+            $materialType = $request->input('material_type');
+            
             foreach ($codes as $key => $code) {
                 $offerPrices[] = [
                     'code'          => $code,
@@ -171,9 +172,9 @@ class CoTmpController extends Controller
                     'dv_tinh'       => $dvTinh[$key],
                     'so_luong'      => $soLuong[$key],
                     'don_gia'       => $donGia[$key],
-                    'type'          => $type[$key],
                     'manufacture_type' => $manufactureType[$key],
-                    'warehouse_group_id' => $warehouseGroupId[$key]
+                    'warehouse_group_id' => $warehouseGroupId[$key],
+                    'material_type' => $materialType[$key],
                 ];
             }
             $co->warehouses()->createMany($offerPrices);
@@ -240,6 +241,9 @@ class CoTmpController extends Controller
                 $dvTinh      = $request->input('dv_tinh');
                 $soLuong     = $request->input('so_luong');
                 $donGia      = $request->input('don_gia');
+                $manufactureType = $request->input('manufacture_type');
+                $warehouseGroupId = $request->input('warehouse_group_id');
+                $materialType = $request->input('material_type');
                 // Detach all warehouse of Chào Giá
                 $co->warehouses()->delete();
                 // Save relation
@@ -255,7 +259,10 @@ class CoTmpController extends Controller
                         'chuan_gasket'  => $chuanGasket[$key],
                         'dv_tinh'       => $dvTinh[$key],
                         'so_luong'      => $soLuong[$key],
-                        'don_gia'       => $donGia[$key]
+                        'don_gia'       => $donGia[$key],
+                        'manufacture_type' => $manufactureType[$key],
+                        'warehouse_group_id' => $warehouseGroupId[$key],
+                        'material_type' => $materialType[$key],
                     ];
                 }
                 $co->warehouses()->createMany($offerPrices);
@@ -447,6 +454,7 @@ class CoTmpController extends Controller
                 if (!$resWarehouse['success']) {
                     return $result;
                 }
+                $resWarehouse['data'] = $resWarehouse['data']->slice(0, 100);
                 // Get material
                 $contentMaterial = view('admins.co_tmps.includes.list-warehouses',['warehouses' => $resWarehouse['data']])->render();
                 // Get product

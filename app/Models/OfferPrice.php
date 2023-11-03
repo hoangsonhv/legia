@@ -24,7 +24,9 @@ class OfferPrice extends Model
         'so_luong',
         'don_gia',
         'material_type',
-        'manufacture_type'
+        'manufacture_type',
+        'warehouse_group_id',
+        'merchandise_id',
     ];
 
     public function co() {

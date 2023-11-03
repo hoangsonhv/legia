@@ -15,6 +15,7 @@ class WarehouseExportSellProduct extends Model
         'unit',
         'quantity',
         'unit_price',
-        'into_money'
+        'into_money',
+        'merchandise_id'
     ];
 }

@@ -62,6 +62,14 @@
                                 </button>
                             </div>
                         </div>
+                        @if($co)
+                            <div class="card-body">
+                                @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true, 'notAction' => true])
+                            </div>
+                            <div class="card-body">
+                                @include('admins.coes.includes.list-warehouses',['warehouses' => $listWarehouse])
+                            </div>
+                        @endif
                         <div class="card-body">
                             <h3 class="title text-primary">Nội dung</h3>
                             @include('admins.warehouse_export.includes.list-products')

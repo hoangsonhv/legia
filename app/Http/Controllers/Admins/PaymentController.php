@@ -124,7 +124,7 @@ class PaymentController extends Controller
                     $indexStepPay += 1;
                 }
                 if($indexStepPay == 3) {
-                    $paymentDocuments = $thanhToan['payment_document'] ? $thanhToan['payment_document'] : [];
+                    $paymentDocuments = isset($thanhToan['payment_document']) ? $thanhToan['payment_document'] : [];
                     $flag = true;
                     $keyPaymentDocuments = CoService::paymentDocuments();
                     foreach ($keyPaymentDocuments as $key => $doc) {

@@ -8,6 +8,7 @@ class WarehouseExportProduct extends Model
 {
     protected $fillable = [
         'warehouse_export_id',
+        'merchandise_id',
         'code',
         'name',
         'unit',

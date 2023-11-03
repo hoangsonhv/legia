@@ -37,7 +37,7 @@ class Group11 extends BaseWarehouseCommon
             'dvt'   => $this->dvt,
         ];
     }
-       
+
     public function getAcreageAttribute() {
         return null;
     }
@@ -46,5 +46,9 @@ class Group11 extends BaseWarehouseCommon
         return [
             'sl_ton' => $this->sl_ton,
         ];
+    }
+
+    public function setQuantity($qty) {
+        $this->sl_ton += $qty;
     }
 }

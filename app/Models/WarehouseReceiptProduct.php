@@ -14,6 +14,7 @@ class WarehouseReceiptProduct extends Model
         'quantity_doc',
         'quantity_reality',
         'unit_price',
-        'into_money'
+        'into_money',
+        'merchandise_id'
     ];
 }

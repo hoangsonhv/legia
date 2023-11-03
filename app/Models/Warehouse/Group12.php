@@ -39,4 +39,8 @@ class Group12 extends BaseWarehouseCommon
             'ton_sl_cai' => $this->ton_sl_cai,
         ];
     }
+
+    public function setQuantity($qty) {
+        $this->ton_sl_cai += $qty;
+    }
 }

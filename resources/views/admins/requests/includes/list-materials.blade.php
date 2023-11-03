@@ -38,6 +38,7 @@
                     </td>
                     <td class="sequence">{{ $index + 1 }}</td>
                     <td class="code">
+                        <input type="hidden" name="material[merchandise_id][]" value="{{ $material->merchandise_id }}">
                         <input class="form-control" type="text" name="material[code][]" value="{{ $material->code }}">
                     </td>
                     <td class="">

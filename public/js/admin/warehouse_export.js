@@ -90,7 +90,7 @@ $(function () {
             checkCodeExists(eleModal, aCode).then(
                 function(exists) {
                     if (exists !== true) {
-                        var eleForm = '.form-root .table tbody';
+                        var eleForm = '#content_table .table tbody';
                         var lengthTrForm = $(eleForm + ' tr').length;
                         // Get data modal
                         $(eleModal + ' tr').each(function(index, value) {
@@ -102,6 +102,7 @@ $(function () {
                                     name: eleRow.find('td.vat-lieu input').val(),
                                     warehouse_id: eleRow.find('td.warehouse_id input').val(),
                                     table_name: eleRow.find('td.table_name input').val(),
+                                    merchandise_id: eleRow.find('td.merchandise_id input').val()
                                 };
                                 $(eleForm).append(getItem(lengthTrForm, 'Tấm', opts));
                                 // Add code
@@ -229,6 +230,7 @@ function reloadDatepicker() {
 function getItem(index, unit, opts) {
     return '<tr align="center">'
         + '<input class="warehouse_id" type="hidden" name="product[warehouse_id][]" value="'+opts.warehouse_id+'"></input>'
+        + '<input class="warehouse_id" type="hidden" name="product[merchandise_id][]" value="'+opts.merchandise_id+'"></input>'
         + '<input class="table_name" type="hidden" name="product[table_name][]" value="'+opts.table_name+'"></input>'
         + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá sản phẩm" onclick="deteleItem(this)"></i></td>'
         + '<td class="sequence">'+index+'</td>'

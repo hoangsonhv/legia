@@ -116,7 +116,11 @@ class ReceiptController extends Controller
                             $indexStepPay += 1;
                         }
                         if($indexStepPay == 1) {
-                            $paymentDocuments = $thanhToan['payment_document'] ? $thanhToan['payment_document'] : [];
+                            $payment_documents = [];
+                            if (isset($thanhToan['payment_document'])) {
+                                $paymentDocuments = $thanhToan['payment_document'];
+                            }
+
                             $flag = true;
                             $keyPaymentDocuments = CoService::paymentDocuments();
                             foreach ($keyPaymentDocuments as $key => $doc) {

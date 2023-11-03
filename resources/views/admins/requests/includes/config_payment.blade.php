@@ -12,8 +12,8 @@
                     </label>
                 </div>
                 <div class="ml-2">
-                    {!! Form::text('tmp_money_total', $requestModel ? number_format($requestModel->money_total) : null, array('class' => 'form-control', 'onKeyUp' => 'return getNumberFormat(this)')) !!}
-                    {!! Form::hidden('money_total', $requestModel ? $requestModel->money_total : null, array('class' => 'data-origin')) !!}
+                    {!! Form::text('tmp_money_total', $requestModel && $requestModel->money_total != null ? number_format($requestModel->money_total) : number_format($totalPayment), array('class' => 'form-control', 'onKeyUp' => 'return getNumberFormat(this)')) !!}
+                    {!! Form::hidden('money_total', $requestModel && $requestModel->money_total != null ? $requestModel->money_total : $totalPayment, array('class' => 'data-origin')) !!}
                 </div>
             </div>
         </div>

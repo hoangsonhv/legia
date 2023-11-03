@@ -10,6 +10,7 @@ class RequestMaterial extends Model
 {
     protected $fillable = [
         'request_id',
+        'merchandise_id',
         'code',
         'mo_ta',
         'dv_tinh',

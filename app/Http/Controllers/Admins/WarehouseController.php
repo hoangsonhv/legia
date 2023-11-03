@@ -132,20 +132,20 @@ class WarehouseController extends Controller
                 \DB::commit();
                 return redirect()->back()->with('success','Đã import dữ liệu thành công.');
             }
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $ex) {
-            Log::error('--- Lỗi import: '.$nameWarehouse.' ---');
-            $errorMessages = [];
-            $failures      = $ex->failures();
-            foreach ($failures as $failure) {
-                foreach($failure->errors() as $error) {
-                    $errorMessages[] = 'Có một lỗi xảy ra trên dòng số '.$failure->row().'. '.$error;
-                }
-            }
-            Session::flash('errors', $errorMessages);
-            Log::error($ex->errors());
-            Log::error('--- End: Lỗi import: '.$nameWarehouse.'  ---');
-            \DB::rollback();
-            return redirect()->back();
+        // } catch (\Maatwebsite\Excel\Validators\ValidationException $ex) {
+        //     Log::error('--- Lỗi import: '.$nameWarehouse.' ---');
+        //     $errorMessages = [];
+        //     $failures      = $ex->failures();
+        //     foreach ($failures as $failure) {
+        //         foreach($failure->errors() as $error) {
+        //             $errorMessages[] = 'Có một lỗi xảy ra trên dòng số '.$failure->row().'. '.$error;
+        //         }
+        //     }
+        //     Session::flash('errors', $errorMessages);
+        //     Log::error($ex->errors());
+        //     Log::error('--- End: Lỗi import: '.$nameWarehouse.'  ---');
+        //     \DB::rollback();
+        //     return redirect()->back();
         } catch(\Exception $ex) {
             Log::error('--- Lỗi import: '.$nameWarehouse.'  ---');
             Log::error($ex);

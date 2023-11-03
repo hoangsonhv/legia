@@ -14,8 +14,9 @@
         <th class="align-middle check-all"><input type="checkbox" value="1" onclick="checkedAllRows(this)"></th>
         <th class="align-middle">Số TT</th>
         <th class="align-middle">Mã HH</th>
+        <th class="align-middle">Vật liệu</th>
         <th class="align-middle">Chi tiết</th>
-        {{-- <th class="align-middle">Vật liệu</th>
+        {{-- 
         <th class="align-middle">Độ dày</th>
         <th class="align-middle">Hình dạng</th>
         <th class="align-middle">Dia W W1</th>
@@ -46,9 +47,16 @@
             <td class="warehouse_id d-none">
               <input type="hidden" value="{{ $material->id }}">
             </td>
+            <td class="merchandise_id d-none">
+              <input type="hidden" value="{{ $material->l_id }}">
+            </td>
             <td class="code">
               <input type="hidden" name="material[code][]" value="{{ $material->code }}">
               {{ $material->code }}
+            </td>
+            <td class="vat-lieu">
+              <input type="hidden" name="material[mo_ta][]" value="{{ $material->vat_lieu }}">
+              {{ $material->vat_lieu }}
             </td>
             <td align="left">
               <ul>

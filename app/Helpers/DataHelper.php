@@ -162,6 +162,8 @@ class DataHelper
                 'ptfecayong'        => 'Kho PTFE Cây Ống',
                 'ndloaikhac'        => 'Kho ND loại khác',
                 'nkloaikhac'        => 'Kho NK loại khác',
+                'tpphikimloai'      => 'Kho thành phẩm phi kim loại',
+                'tpkimloai'      => 'Kho thành phẩm kim loại',
             ],
         ];
         if ($warehouse && isset($data[$warehouse])) {

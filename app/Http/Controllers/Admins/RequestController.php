@@ -121,7 +121,7 @@ class RequestController extends Controller
                 return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
             }
             $warehouses    = $queryCo->first()->warehouses;
-            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code', 'id')->toArray());
+            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code', 'id')->toArray())->slice(0, 100);
         } else {
             $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM]);
             $co            = array();
@@ -190,6 +190,7 @@ class RequestController extends Controller
                     continue;
                 }
                 $materials[] = [
+                    'merchandise_id'=> $inputMaterials['merchandise_id'][$key],
                     'code'          => $inputMaterials['code'][$key],
                     'mo_ta'         => $inputMaterials['mo_ta'][$key],
                     'dv_tinh'       => $inputMaterials['dv_tinh'][$key],
@@ -231,6 +232,7 @@ class RequestController extends Controller
             }
             $permissions = config('permission.permissions');
             $existsCat   = 0;
+            $totalPayment = 0;
             $canCreatePayment = false;
             $canCreateWarehouseReceipt = false;
             $coStep = '';
@@ -254,7 +256,7 @@ class RequestController extends Controller
                     return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
                 }
                 $warehouses    = $queryCo->first()->warehouses;
-                $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code', 'id')->toArray());
+                $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code', 'id')->toArray())->slice(0, 100);
 
                 if($coModel->currentStep) {
                     $canCreatePayment = in_array($coModel->currentStep->step, [
@@ -281,13 +283,19 @@ class RequestController extends Controller
                     ])->count();
                 }
             }
+
             $materials = $requestModel->material;
+            foreach ($materials as $material) {
+                $selectedPriceSurvey = $material->price_survey()->where('status', '1')->first();
+                if ($selectedPriceSurvey != null) $totalPayment += $selectedPriceSurvey->price;
+            }
+
             $arrPayments = $requestModel->payments()->get()->toArray();
             $payments = [];
             foreach ($arrPayments as $recod) {
                 $payments[$recod['step_id']] = $recod;
             }
-            return view('admins.requests.edit',compact('coStep', 'steps', 'breadcrumb', 'titleForLayout', 'requestModel',
+            return view('admins.requests.edit',compact('totalPayment', 'coStep', 'steps', 'breadcrumb', 'titleForLayout', 'requestModel',
                 'permissions', 'categories', 'co', 'materials', 'existsCat', 'warehouses', 'listWarehouse',
                 'corePriceSurvey', 'payments', 'canCreatePayment', 'canCreateWarehouseReceipt'));
         }
@@ -384,10 +392,11 @@ class RequestController extends Controller
                 $requestModel->material()->delete();
                 $inputMaterials = $request->input('material');
                 foreach($inputMaterials['code'] as $key => $code) {
-                    if (empty($code) || !$inputMaterials['dinh_luong'][$key]) {
+                    if (empty($code) || !$inputMaterials['dinh_luong'][$key] || !$inputMaterials['merchandise_id'][$key]) {
                         continue;
                     }
                     $materials[] = [
+                        'merchandise_id'=> $inputMaterials['merchandise_id'][$key],
                         'code'          => $inputMaterials['code'][$key],
                         'mo_ta'         => $inputMaterials['mo_ta'][$key],
                         'dv_tinh'       => $inputMaterials['dv_tinh'][$key],

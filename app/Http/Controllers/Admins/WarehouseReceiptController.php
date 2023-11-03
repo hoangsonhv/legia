@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admins;
 
 use App\Enums\ProcessStatus;
 use App\Helpers\PermissionHelper;
+use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WarehouseReceiptRequest;
 use App\Models\Admin;
@@ -16,6 +17,8 @@ use App\Models\Repositories\CoRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Request as RequestModel;
 use App\Models\Repositories\CoStepHistoryRepository;
+use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
+use App\Models\Warehouse\BaseWarehouseCommon;
 
 class WarehouseReceiptController extends Controller
 {
@@ -98,6 +101,7 @@ class WarehouseReceiptController extends Controller
                     foreach ($request->material as $material) {
                         $price_survey = $material->price_survey->where('status', \App\Models\PriceSurvey::TYPE_BUY)->first();
                         $products[] = [
+                            'merchandise_id' => $material->merchandise_id,
                             'code' => $material->code,
                             'name' => $material->mo_ta,
                             'unit' => $material->dv_tinh,
@@ -112,6 +116,7 @@ class WarehouseReceiptController extends Controller
                     $warehouses    = $coModel->warehouses;
                     foreach ($warehouses as $warehouse) {
                         $products[] = [
+                            'merchandise_id' => 0,
                             'code' => $warehouse->code,
                             'name' => $warehouse->loai_vat_lieu,
                             'unit' => $warehouse->dv_tinh,
@@ -172,6 +177,7 @@ class WarehouseReceiptController extends Controller
                     continue;
                 }
                 $products[] = [
+                    'merchandise_id' => $inputProducts['merchandise_id'][$key],
                     'code' => $inputProducts['code'][$key],
                     'name' => $inputProducts['name'][$key],
                     'unit' => $inputProducts['unit'][$key],
@@ -183,6 +189,21 @@ class WarehouseReceiptController extends Controller
             }
             if (!empty($products)) {
                 $model->products()->createMany($products);
+
+                // Increase material in base warehouse
+                foreach ($products as $product) {
+                    if ($product['merchandise_id'] > 0) {
+                        $base_warehouse = BaseWarehouseCommon::find($product['merchandise_id']);
+                        $group_warehouse = WarehouseHelper::getModel($base_warehouse->model_type)->find($product['merchandise_id']);
+                        $group_warehouse->setQuantity($product['quantity_reality']);
+                        $group_warehouse->save();
+                    }
+                    else
+                    {
+                        // Increase ở kho thành phẩm
+                    }
+                }
+
                 \DB::commit();
                 return redirect()->route('admin.warehouse-receipt.index')->with('success', 'Tạo phiếu nhập kho thành công!');
             }
@@ -252,6 +273,7 @@ class WarehouseReceiptController extends Controller
                         continue;
                     }
                     $products[] = [
+                        'merchandise_id' => $inputProducts['merchandise_id'][$key],
                         'code' => $inputProducts['code'][$key],
                         'name' => $inputProducts['name'][$key],
                         'unit' => $inputProducts['unit'][$key],
@@ -264,6 +286,21 @@ class WarehouseReceiptController extends Controller
 
                 if (!empty($model)) {
                     $model->products()->createMany($products);
+
+                    // Increase material in base warehouse
+                    foreach ($products as $product) {
+                        if ($product['merchandise_id'] > 0) {
+                            $base_warehouse = BaseWarehouseCommon::find($product['merchandise_id']);
+                            $group_warehouse = WarehouseHelper::getModel($base_warehouse->model_type)->find($product['merchandise_id']);
+                            $group_warehouse->setQuantity($product['quantity_reality']);
+                            $group_warehouse->save();
+                        }
+                        else
+                        {
+                            // Increase ở kho thành phẩm
+                        }
+                    }
+
                     \DB::commit();
                     return redirect()->route('admin.warehouse-receipt.edit', ['id' => $id])->with('success', 'Cập nhật Phiếu nhập kho thành công!');
                 }

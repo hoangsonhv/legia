@@ -47,7 +47,7 @@ class Group10 extends BaseWarehouseCommon
         ];
     }
 
-    public function setTonSlTamAttribute() {
-        return $this->ton_sl_tam += request()->quantity_reality;
+    public function setQuantity($qty) {
+        $this->ton_sl_tam += $qty;
     }
 }

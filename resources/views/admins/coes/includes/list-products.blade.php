@@ -65,15 +65,20 @@
                     $dvTinh      = !empty($collect) ? $warehouse->dv_tinh : $warehouse[9];
                     $soLuong     = !empty($collect) ? $warehouse->so_luong : $warehouse[10];
                     $donGia      = !empty($collect) ? $warehouse->don_gia : $warehouse[11];
-                    $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $warehouse[12];
-                    $type        = !empty($collect) ? (gettype($warehouse->type) == 'integer' ? $warehouse->type : $warehouse->material_type) : $warehouse[13];
-                    $warehouseGroupId = !empty($collect) ? $warehouse->warehouse_group_id : $warehouse[14];
+                    $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
+                    $materialType = !empty($collect) ? $warehouse->material_type : $detectCode['material_type'];
+                    $warehouseGroupId = !empty($collect) ? $warehouse->merchandise_group_id : $detectCode['merchandise_group_id'];
                     $tonKho = '---';
-                    if($type == \App\Models\MerchandiseGroup::COMMERCE) {
-                        $merchandiseInfo = \App\Helpers\AdminHelper::countProductEcomInWarehouse($detectCode['merchandise_code_in_warehouse'], $detectCode['merchandise_group_id']); 
-                        // dump(!empty($merchandiseInfo));
-                        if(isset($merchandiseInfo['ton_sl_cay']) || isset($merchandiseInfo['ton_sl_cai'])) {
-                            $tonKho = $merchandiseInfo['ton_sl_cay'] ?? $merchandiseInfo['ton_sl_cai'];   
+
+                    if ($manufactureType == \App\Models\MerchandiseGroup::COMMERCE) {
+                        $tonKho = \App\Helpers\AdminHelper::countProductEcomInWarehouse($detectCode['merchandise_code_in_warehouse'], $detectCode['merchandise_group_id']); 
+                    }
+                    else {
+                        if ($materialType == \App\Models\MerchandiseGroup::METAL) {
+                            $tonKho = \App\Helpers\AdminHelper::countProductInWarehouse($code, \App\Models\MerchandiseGroup::METAL);
+                        }
+                        elseif ($materialType == \App\Models\MerchandiseGroup::NON_METAL) {
+                            $tonKho = \App\Helpers\AdminHelper::countProductInWarehouse($code, \App\Models\MerchandiseGroup::NON_METAL);
                         }
                     }
                 @endphp
@@ -117,13 +122,14 @@
                             {{ $chuanGasket }}
                         </td>
                         <td>
+                            <input type="hidden" name="material_type[]" value="{{ $materialType }}">
+                              {{gettype($materialType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$materialType] : ''}}
+                          </td>
+                          <td>
+                              <input type="hidden" name="warehouse_group_id[]" value="{{ $warehouseGroupId }}">
                             <input type="hidden" name="manufacture_type[]" value="{{ $manufactureType }}">
-                            {{ gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$manufactureType] : ''}}
-                        </td>
-                        <td>
-                            <input type="hidden" name="material_type[]" value="{{ $type }}">
-                            {{ gettype($type) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$type] : ''}}
-                        </td>
+                            {{gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$manufactureType] : ''}}
+                          </td>
                         <td>
                             <input type="hidden" name="dv_tinh[]" value="{{ $dvTinh }}">
                             {{ $dvTinh }}
@@ -201,10 +207,10 @@
                             {{ $chuanGasket }}
                         </td>
                         <td>
-                            {{ gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$manufactureType] : ''}}
+                            {{gettype($materialType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$materialType] : ''}}
                         </td>
                         <td>
-                            {{ gettype($type) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$type] : ''}}
+                            {{gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$manufactureType] : ''}}
                         </td>
                         <td>
                             {{ $dvTinh }}

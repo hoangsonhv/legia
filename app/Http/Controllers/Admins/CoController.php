@@ -132,7 +132,7 @@ class CoController extends Controller
                 $warehouses = $co->warehouses;
                 // Get list warehouse
                 $request->request->add(['code' => $co->warehouses->pluck('code', 'id')->toArray()]);
-                $material = $this->getDataWarehouse($request);
+                $material = $this->getDataWarehouse($request)->slice(0, 100);
             }
         }
         $permissions = config('permission.permissions');
@@ -269,8 +269,10 @@ class CoController extends Controller
             $dvTinh      = $request->input('dv_tinh');
             $soLuong     = $request->input('so_luong');
             $donGia      = $request->input('don_gia');
-            $materialType      = $request->input('material_type');
-            $manufactureType      = $request->input('manufacture_type');
+            $manufactureType = $request->input('manufacture_type');
+            $warehouseGroupId = $request->input('warehouse_group_id');
+            $materialType = $request->input('material_type');
+
             foreach ($codes as $key => $code) {
                 $offerPrices[] = [
                     'code'          => $code,
@@ -286,8 +288,9 @@ class CoController extends Controller
                     'don_gia'       => $donGia[$key],
 //                    'material_type' => in_array($key, $request->input('material_type') ?? [])
 //                        ? OfferPrice::MATERIAL_TYPE_METAL : OfferPrice::MATERIAL_TYPE_NON_METAL
+                    'manufacture_type' => $manufactureType[$key],
+                    'warehouse_group_id' => $warehouseGroupId[$key],
                     'material_type' => $materialType[$key],
-                    'manufacture_type' => $manufactureType[$key]
                 ];
             }
             // Insert many warehouse
@@ -339,7 +342,7 @@ class CoController extends Controller
             $delivery = $co->delivery()->first();
             // Get list warehouse
             $request->request->add(['code' => $co->warehouses->pluck('code', 'id')->toArray()]);
-            $listWarehouse = $this->getDataWarehouse($request);
+            $listWarehouse = $this->getDataWarehouse($request)->slice(0, 100);
 
             $arrReceipts = $co->receipt()->get()->toArray();
             $receipts = [];
@@ -472,7 +475,10 @@ class CoController extends Controller
                 $dvTinh      = $request->input('dv_tinh');
                 $soLuong     = $request->input('so_luong');
                 $donGia      = $request->input('don_gia');
-                $type      = $request->input('type');
+                $manufactureType = $request->input('manufacture_type');
+                $warehouseGroupId = $request->input('warehouse_group_id');
+                $materialType = $request->input('material_type');
+
                 // Detach all warehouse of CO
                 $co->warehouses()->delete();
                 // Save relation
@@ -489,8 +495,11 @@ class CoController extends Controller
                         'dv_tinh'       => $dvTinh[$key],
                         'so_luong'      => $soLuong[$key],
                         'don_gia'       => $donGia[$key],
-                        'material_type' => in_array($key, $request->input('material_type') ?? [])
-                            ? OfferPrice::MATERIAL_TYPE_METAL : OfferPrice::MATERIAL_TYPE_NON_METAL
+                        // 'material_type' => in_array($key, $request->input('material_type') ?? [])
+                        //     ? OfferPrice::MATERIAL_TYPE_METAL : OfferPrice::MATERIAL_TYPE_NON_METAL
+                        'manufacture_type' => $manufactureType[$key],
+                        'warehouse_group_id' => $warehouseGroupId[$key],
+                        'material_type' => $materialType[$key],
                     ];
                 }
                 $co->warehouses()->createMany($offerPrices);
@@ -736,7 +745,7 @@ class CoController extends Controller
             $code = $request->input('code');
             if ($code) {
                 $params    = [$code];
-                $materials = $this->coService->getProductMaterialsInWarehouses($params);
+                $materials = $this->coService->getProductMaterialsInWarehouses($params)->slice(0, 100);
                 //dd($materials);
                 $content   = view('admins.requests.includes.list-materials-full',compact('materials'))->render();
             }

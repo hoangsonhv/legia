@@ -97,6 +97,7 @@ $(function () {
               if (eleRow.find('td.check-data input:checked').val()) {
                 lengthTrForm += 1;
                 var opts = {
+                  merchandise_id: eleRow.find('td.merchandise_id input').val(),
                   code: eleRow.find('td.code input').val(),
                   vat_lieu: eleRow.find('td.vat-lieu input').val()
                 };
@@ -155,7 +156,7 @@ function getItem(index, unit, opts) {
   return '<tr align="center">'
     + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá vật liệu" onclick="deteleItem(this)"></i></td>'
     + '<td class="sequence">'+index+'</td>'
-    + '<td class="code"><input class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
+    + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
     + '<td class=""><textarea class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
     + '<td class=""><input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="'+unit+'"></td>'
     + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'

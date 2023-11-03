@@ -103,7 +103,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
                 return  WarehouseHelper::getModel(WarehouseHelper::ND_LOAI_KHAC, $this->getDataGroup5($row, WarehouseHelper::ND_LOAI_KHAC));
             case 'nkloaikhac':
                 return  WarehouseHelper::getModel(WarehouseHelper::NK_LOAI_KHAC, $this->getDataGroup5($row, WarehouseHelper::NK_LOAI_KHAC));
-
+            case 'tpphikimloai':
+                return  WarehouseHelper::getModel(WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI, $this->getDataGroup12($row, WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI));
         }
     }
 

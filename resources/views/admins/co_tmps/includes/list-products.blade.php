@@ -47,8 +47,8 @@
             $detectCode = \App\Helpers\AdminHelper::detectProductCode(!empty($collect) ? $warehouse->code : $warehouse[1]);
             $code        = !empty($collect) ? $warehouse->code : $warehouse[1];
             $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
-            $type = !empty($collect) ? $warehouse->type : $detectCode['type'];
-            $warehouseGroupId = !empty($collect) ? $warehouse->warehouse_group_id : $detectCode['type'];
+            $materialType = !empty($collect) ? $warehouse->material_type : $detectCode['material_type'];
+            $warehouseGroupId = !empty($collect) ? $warehouse->merchandise_group_id : $detectCode['merchandise_group_id'];
             $loaiVatLieu = !empty($collect) ? $warehouse->loai_vat_lieu : $warehouse[2];
             $doDay       = !empty($collect) ? $warehouse->do_day : $warehouse[3];
             $tieuChuan   = !empty($collect) ? $warehouse->tieu_chuan : $warehouse[4];
@@ -99,13 +99,13 @@
                 {{ $chuanGasket }}
               </td>
               <td>
-                <input type="hidden" name="manufacture_type[]" value="{{ $manufactureType }}">
-                  {{gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$manufactureType] : ''}}
+                <input type="hidden" name="material_type[]" value="{{ $materialType }}">
+                  {{gettype($materialType) == 'integer' ? \App\Models\MerchandiseGroup::FACTORY_TYPE[$materialType] : ''}}
               </td>
               <td>
                   <input type="hidden" name="warehouse_group_id[]" value="{{ $warehouseGroupId }}">
-                <input type="hidden" name="type[]" value="{{ $type }}">
-                {{gettype($type) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$type] : ''}}
+                <input type="hidden" name="manufacture_type[]" value="{{ $manufactureType }}">
+                {{gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$manufactureType] : ''}}
               </td>
               <td>
                 <input type="hidden" name="dv_tinh[]" value="{{ $dvTinh }}">

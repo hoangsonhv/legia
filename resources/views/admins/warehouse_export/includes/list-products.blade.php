@@ -6,7 +6,7 @@
     cursor: pointer;
   }
 </style>
-<div class="table-responsive p-0">
+<div class="table-responsive p-0" id="content_table">
   <table class="table table-head-fixed table-bordered table-hover">
     <thead>
       <tr align="center">

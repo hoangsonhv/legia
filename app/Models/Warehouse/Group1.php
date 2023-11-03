@@ -54,7 +54,8 @@ class Group1 extends BaseWarehouseCommon
             case WarehouseHelper::SHAPE_POLYGON :
                 return (($this->dia_w_w1 * $this->l_l1 - (($this->dia_w_w1 - $this->w2) * ($this->l_l1 - $this->l2)))/pow(10,6)) * $sl_tam;
             default:
-                throw new NotFoundHttpException('Not found hinh_dang');
+                return 0;
+                //throw new NotFoundHttpException('Not found hinh_dang');
         }
     }
 
@@ -65,8 +66,8 @@ class Group1 extends BaseWarehouseCommon
         ];
     }
 
-    public function setTonSlTamAttribute() {
-        return $this->ton_sl_tam += request()->so_luong;
+    public function setQuantity($qty) {
+        $this->ton_sl_tam += $qty;
     }
-   
+
 }

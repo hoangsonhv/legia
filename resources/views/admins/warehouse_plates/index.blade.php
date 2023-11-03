@@ -68,7 +68,7 @@
                        </thead>
                        <tbody>
                          @foreach($warehousePlates as $warehousePlate)
-                           <tr>
+                         <tr>
                              <td>{{ $warehousePlate->l_id }}</td>
                              <td>{{ $warehousePlate->code }}</td>
                              <td>{{ $warehousePlate->vat_lieu }}</td>
@@ -76,8 +76,8 @@
                              <td>{{ $warehousePlate->do_day }}</td>
                              <td>{{ $warehousePlate->sl_tam }}</td>
                              <td>{{ $warehousePlate->sl_m2 }}</td>
-                             <td>{{ $warehousePlate->ton_sl_tam }}</td>
-                             <td>{{ $warehousePlate->ton_sl_m2 }}</td>
+                             <td>{{ $warehousePlate->ton_kho['ton_sl_tam'] }}</td>
+                             <td>{{ $warehousePlate->ton_kho['ton_sl_m2'] }}</td>
                              <td>
                                @permission('admin.warehouse-plate.edit')
                                  <a href="{{ route('admin.warehouse-plate.edit', ['model' => $model, 'id' => $warehousePlate->l_id]) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>

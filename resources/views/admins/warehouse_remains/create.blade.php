@@ -70,7 +70,7 @@
                   </div>
                   <div class="form-group">
                     <label for="size">Size</label>
-                    {!! Form::text('text', null, array('class' => 'form-control')) !!}
+                    {!! Form::text('size', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
                     <label for="m_cuon">m/cuộn</label>
@@ -202,7 +202,7 @@
                   </div>
                   <div class="form-group">
                     <label for="size">Size</label>
-                    {!! Form::text('text', null, array('class' => 'form-control')) !!}
+                    {!! Form::text('size', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
                     <label for="sl_cai">SL - Cái</label>
@@ -216,11 +216,79 @@
                   </div>
                   <div class="form-group">
                     <label for="size">Size</label>
-                    {!! Form::text('text', null, array('class' => 'form-control')) !!}
+                    {!! Form::text('size', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
                     <label for="sl_cai">SL - Cái</label>
                     {!! Form::number('sl_cai', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                  </div>
+                  @break
+                @case ('tpphikimloai')
+                  <div class="form-group">
+                    <label for="vat_lieu">Vật liệu<b style="color: red;"> (*)</b></label>
+                    {!! Form::text('vat_lieu', null, array('class' => 'form-control', 'required' => 'required')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="do_day">Độ dày</label>
+                    {!! Form::text('text', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="muc_ap_luc">Mức áp lực</label>
+                    {!! Form::text('muc_ap_luc', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="kich_co">Kích cỡ</label>
+                    {!! Form::text('kich_co', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="kich_thuoc">Kích thước</label>
+                    {!! Form::text('kich_thuoc', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="chuan_mat_bich">Chuẩn mặt bích</label>
+                    {!! Form::text('chuan_mat_bich', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="chuan_gasket">Chuẩn gasket</label>
+                    {!! Form::text('chuan_gasket', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="dvt">Đơn vị tính</label>
+                    {!! Form::text('dvt', null, array('class' => 'form-control')) !!}
+                  </div>
+                  @break
+                @case ('tpkimloai')
+                  <div class="form-group">
+                    <label for="vat_lieu">Vật liệu<b style="color: red;"> (*)</b></label>
+                    {!! Form::text('vat_lieu', null, array('class' => 'form-control', 'required' => 'required')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="do_day">Độ dày</label>
+                    {!! Form::text('text', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="muc_ap_luc">Mức áp lực</label>
+                    {!! Form::text('muc_ap_luc', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="kich_co">Kích cỡ</label>
+                    {!! Form::text('kich_co', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="kich_thuoc">Kích thước</label>
+                    {!! Form::text('kich_thuoc', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="chuan_mat_bich">Chuẩn mặt bích</label>
+                    {!! Form::text('chuan_mat_bich', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="chuan_gasket">Chuẩn gasket</label>
+                    {!! Form::text('chuan_gasket', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="dvt">Đơn vị tính</label>
+                    {!! Form::text('dvt', null, array('class' => 'form-control')) !!}
                   </div>
                   @break
               @endswitch
@@ -322,6 +390,18 @@
                   <div class="form-group">
                     <label for="ton_sl_cai">Tồn SL - Cái</label>
                     {!! Form::number('ton_sl_cai', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                  </div>
+                  @break
+                @case ('tpphikimloai')
+                  <div class="form-group">
+                    <label for="sl_ton">Tồn SL - Cái</label>
+                    {!! Form::number('sl_ton', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                  </div>
+                  @break
+                @case ('tpkimloai')
+                  <div class="form-group">
+                    <label for="sl_ton">Tồn SL - Cái</label>
+                    {!! Form::number('sl_ton', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
                   @break
               @endswitch
