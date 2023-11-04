@@ -168,7 +168,9 @@ class WarehouseReceiptController extends Controller
                 if($co && $co->request && $co->request[0]) {
                     $this->coStepHisRepo->insertNextStep('payment', $model->co_id, $co->request[0]->id, CoStepHistory::ACTION_CREATE, 3);
                 }
-//                $this->coStepHisRepo->insertNextStep('warehouse_export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
+                else {
+                    $this->coStepHisRepo->insertNextStep('warehouse_export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
+                }
             }
             // Save many product
             $inputProducts = $request->input('product');
