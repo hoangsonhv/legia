@@ -74,12 +74,19 @@
                         $tonKho = \App\Helpers\AdminHelper::countProductEcomInWarehouse($detectCode['merchandise_code_in_warehouse'], $detectCode['merchandise_group_id']); 
                     }
                     else {
-                        if ($materialType == \App\Models\MerchandiseGroup::METAL) {
-                            $tonKho = \App\Helpers\AdminHelper::countProductInWarehouse($code, \App\Models\MerchandiseGroup::METAL);
-                        }
-                        elseif ($materialType == \App\Models\MerchandiseGroup::NON_METAL) {
-                            $tonKho = \App\Helpers\AdminHelper::countProductInWarehouse($code, \App\Models\MerchandiseGroup::NON_METAL);
-                        }
+                        $modelAttributes = [
+                            'code' => $code,
+                            'vat_lieu'  => $loaiVatLieu,
+                            'do_day'    => $doDay,
+                            'tieu_chuan' => $tieuChuan,
+                            'kich_co'   => $kichCo,
+                            'kich_thuoc'    => $kichThuoc,
+                            'chuan_mat_bich'    => $chuanBich,
+                            'chuan_gasket'  => $chuanGasket,
+                            'dvt'   => $dvTinh,
+                            'model_type' => \App\Helpers\WarehouseHelper::PRODUCT_WAREHOUSES[$materialType],
+                        ];
+                        $tonKho = \App\Helpers\AdminHelper::countProductInWarehouse($modelAttributes, $materialType);
                     }
                 @endphp
                 <tr align="center">
