@@ -56,7 +56,8 @@ Route::prefix('admin')->group(function () {
 });
 Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
     /* Dashboard */
-    Route::get('/dashboard/index', [DashboardController::class, 'index'])->name('admin.dashboard.index');
+    Route::get('/dashboard/index/list-quotation', [DashboardController::class, 'quotation'])->name('admin.dashboard.quotation');
+	Route::get('/dashboard/index/list-co', [DashboardController::class, 'coList'])->name('admin.dashboard.co');
     /* Administrator */
     Route::group(['prefix' => 'administrator'], function() {
 		Route::match(['get', 'post'], '/index', [AdministratorController::class, 'index'])->name('admin.administrator.index');

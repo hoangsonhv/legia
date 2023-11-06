@@ -87,7 +87,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('admin.dashboard.index') }}" class="brand-link">
+    <a href="" class="brand-link">
       <img src="{{ asset('vendor/adminlte/dist/img/AdminLTELogo.png') }}" alt="Admin" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
@@ -96,14 +96,31 @@
     <div class="sidebar">
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item{{ (strpos(url()->current(), '/dashboard') !== false) ? ' menu-open' : '' }}">
-            <a href="{{ route('admin.dashboard.index') }}" class="nav-link{{ (strpos(url()->current(), '/dashboard') !== false) ? ' active' : '' }}">
+            <a href="#" class="nav-link{{ (strpos(url()->current(), '/dashboard') !== false) ? ' active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Tổng quan
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              @permission('admin.co-tmp.index')
+              <li class="nav-item">
+                <a href="{{ route('admin.dashboard.quotation') }}" class="nav-link{{ (strpos(url()->current(), '/co-tmp/index') !== false) ? ' active' : '' }}">
+                  <p>Danh sách chào giá</p>
+                </a>
+              </li>
+              @endpermission
+              @permission('admin.co-tmp.create')
+              <li class="nav-item">
+                <a href="{{ route('admin.dashboard.co') }}" class="nav-link{{ (strpos(url()->current(), '/co-tmp/create') !== false) ? ' active' : '' }}">
+                  <p>Danh sách CO</p>
+                </a>
+              </li>
+              @endpermission
+            </ul>
           </li>
           @permission(['admin.co-tmp.index', 'admin.co-tmp.create'])
           <li class="nav-item{{ (strpos(url()->current(), '/admin/co-tmp/') !== false) ? ' menu-open' : '' }}">
