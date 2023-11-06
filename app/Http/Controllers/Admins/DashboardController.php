@@ -93,18 +93,25 @@ class DashboardController extends Controller {
 
         $last = Carbon::parse("Now -1 {$rangeDate}");
         $now  = Carbon::now();
-        $queryDataset = $this->requestRepository->getRequests([
-                'category' => DataHelper::KHO.'-nguyen_vat_lieu',
-                'created_at' => [ 'requests.created_at', 'between', [$last->format('Y-m-d H:i:s'), $now->format('Y-m-d H:i:s')] ],
-            ])
-            ->join('request_materials', 'requests.id', 'request_materials.request_id')
-            ->groupBy('request_materials.code')
-            ->orderBy('dataset', 'DESC')
-            ->limit(10)
-            ->select(
-                'request_materials.code',
-                DB::raw('SUM(request_materials.dinh_luong) as dataset')
-            );
+       
+        $code = '';
+        if(isset($request->code))
+        {
+            $code = $request->code;
+        }
+        
+        // $queryDataset = $this->requestRepository->getRequests([
+        //         'category' => DataHelper::KHO.'-nguyen_vat_lieu',
+        //         'created_at' => [ 'requests.created_at', 'between', [$last->format('Y-m-d H:i:s'), $now->format('Y-m-d H:i:s')] ],
+        //     ])
+        //     ->join('request_materials', 'requests.id', 'request_materials.request_id')
+        //     ->groupBy('request_materials.code')
+        //     ->orderBy('dataset', 'DESC')
+        //     ->limit(10)
+        //     ->select(
+        //         'request_materials.code',
+        //         DB::raw('SUM(request_materials.dinh_luong) as dataset')
+        //     );
             // ->groupBy('label')
             // ->select(    // Số lượng nguyên vật liệu đã thêm vào phiếu yêu cầu
             //     DB::raw('DATE_FORMAT(requests.created_at, "%Y-%m-%d") as label'),
@@ -112,23 +119,23 @@ class DashboardController extends Controller {
             // );
 
         // $queryDataset = DB::table('requests')
-        $tmpData = $queryDataset->pluck('dataset', 'code')->toArray();
-        if ($tmpData) {
-            $data['labels']     = array_keys($tmpData);
-            $datasets           = array_values($tmpData);
-            $data['datasets'][] = [
-                'label'           => 'Số lượng mua nhiều nhất',
-                'backgroundColor' => 'rgba(0, 0, 0, 0)',
-                'borderColor'     => 'rgba(60,141,188,0.8)',
-                'data'            => $datasets
-            ];
-            $data = json_encode($data);
-        } else {
-            $data = json_encode([
-                'labels'   => [],
-                'datasets' => []
-            ]);
-        }
+        // $tmpData = $queryDataset->pluck('dataset', 'code')->toArray();
+        // if ($tmpData) {
+        //     $data['labels']     = array_keys($tmpData);
+        //     $datasets           = array_values($tmpData);
+        //     $data['datasets'][] = [
+        //         'label'           => 'Số lượng mua nhiều nhất',
+        //         'backgroundColor' => 'rgba(0, 0, 0, 0)',
+        //         'borderColor'     => 'rgba(60,141,188,0.8)',
+        //         'data'            => $datasets
+        //     ];
+        //     $data = json_encode($data);
+        // } else {
+        //     $data = json_encode([
+        //         'labels'   => [],
+        //         'datasets' => []
+        //     ]);
+        // }
         $request->flash();
 
         // $coTmps = $this->coTmpRepo->getCoes([
@@ -138,21 +145,25 @@ class DashboardController extends Controller {
         //     $query = $query->whereRaw(DB::raw("co_id = 0 OR (co_not_approved_id > 0 AND status = 1)"));
         // })->paginate();
 
-        $coTmps = CoTmp::select('co_tmps.*')->leftJoin('co', 'co.id', 'co_tmps.co_id')
+        $coTmps = CoTmp::select('co_tmps.*')
+        ->when($code != '',function($sql) use ($code){
+            $sql = $sql->where('co_tmps.code', 'like', "%$code%");})
+        ->leftJoin('co', 'co.id', 'co_tmps.co_id')
         ->where(function($sql) {
             $sql = $sql->where('co_tmps.status', ProcessStatus::Approved)
                 ->where('co_tmps.co_id', 0);
         })->orWhere(function($sql) {
             $sql = $sql->where('co_tmps.co_not_approved_id', '>', 0)
                 ->where('co.status', ProcessStatus::Unapproved);
-        })->orderBy('created_at', 'DESC')->paginate(3);
-
+        })
+        ->orderBy('created_at', 'DESC')->paginate(3);
+        
         $coes = $this->coRepo->getCoes([
             'confirm_done' => 0,
             ['status', '!=', ProcessStatus::Unapproved]
         ])->orderBy('created_at', 'ASC')->paginate(50);
 		return view('admins.dashboard.co.quotation', compact('breadcrumb', 'titleForLayout', 'titleForChart',
-            'listRangeDate', 'data', 'coTmps', 'coes'));
+            'listRangeDate', 'coTmps', 'coes'));
     }
     public function coList(Request $request)
     {
@@ -189,20 +200,26 @@ class DashboardController extends Controller {
             $rangeDate = 'weeks';
         }
 
+        $code = '';
+        if(isset($request->code))
+        {
+            $code = $request->code;
+        }
+
         $last = Carbon::parse("Now -1 {$rangeDate}");
         $now  = Carbon::now();
-        $queryDataset = $this->requestRepository->getRequests([
-                'category' => DataHelper::KHO.'-nguyen_vat_lieu',
-                'created_at' => [ 'requests.created_at', 'between', [$last->format('Y-m-d H:i:s'), $now->format('Y-m-d H:i:s')] ],
-            ])
-            ->join('request_materials', 'requests.id', 'request_materials.request_id')
-            ->groupBy('request_materials.code')
-            ->orderBy('dataset', 'DESC')
-            ->limit(10)
-            ->select(
-                'request_materials.code',
-                DB::raw('SUM(request_materials.dinh_luong) as dataset')
-            );
+        // $queryDataset = $this->requestRepository->getRequests([
+        //         'category' => DataHelper::KHO.'-nguyen_vat_lieu',
+        //         'created_at' => [ 'requests.created_at', 'between', [$last->format('Y-m-d H:i:s'), $now->format('Y-m-d H:i:s')] ],
+        //     ])
+        //     ->join('request_materials', 'requests.id', 'request_materials.request_id')
+        //     ->groupBy('request_materials.code')
+        //     ->orderBy('dataset', 'DESC')
+        //     ->limit(10)
+        //     ->select(
+        //         'request_materials.code',
+        //         DB::raw('SUM(request_materials.dinh_luong) as dataset')
+        //     );
             // ->groupBy('label')
             // ->select(    // Số lượng nguyên vật liệu đã thêm vào phiếu yêu cầu
             //     DB::raw('DATE_FORMAT(requests.created_at, "%Y-%m-%d") as label'),
@@ -210,23 +227,23 @@ class DashboardController extends Controller {
             // );
 
         // $queryDataset = DB::table('requests')
-        $tmpData = $queryDataset->pluck('dataset', 'code')->toArray();
-        if ($tmpData) {
-            $data['labels']     = array_keys($tmpData);
-            $datasets           = array_values($tmpData);
-            $data['datasets'][] = [
-                'label'           => 'Số lượng mua nhiều nhất',
-                'backgroundColor' => 'rgba(0, 0, 0, 0)',
-                'borderColor'     => 'rgba(60,141,188,0.8)',
-                'data'            => $datasets
-            ];
-            $data = json_encode($data);
-        } else {
-            $data = json_encode([
-                'labels'   => [],
-                'datasets' => []
-            ]);
-        }
+        // $tmpData = $queryDataset->pluck('dataset', 'code')->toArray();
+        // if ($tmpData) {
+        //     $data['labels']     = array_keys($tmpData);
+        //     $datasets           = array_values($tmpData);
+        //     $data['datasets'][] = [
+        //         'label'           => 'Số lượng mua nhiều nhất',
+        //         'backgroundColor' => 'rgba(0, 0, 0, 0)',
+        //         'borderColor'     => 'rgba(60,141,188,0.8)',
+        //         'data'            => $datasets
+        //     ];
+        //     $data = json_encode($data);
+        // } else {
+        //     $data = json_encode([
+        //         'labels'   => [],
+        //         'datasets' => []
+        //     ]);
+        // }
         $request->flash();
 
         // $coTmps = $this->coTmpRepo->getCoes([
@@ -244,12 +261,22 @@ class DashboardController extends Controller {
             $sql = $sql->where('co_tmps.co_not_approved_id', '>', 0)
                 ->where('co.status', ProcessStatus::Unapproved);
         })->get();
-
-        $coes = $this->coRepo->getCoes([
-            'confirm_done' => 0,
-            ['status', '!=', ProcessStatus::Unapproved]
-        ])->orderBy('created_at', 'ASC')->paginate(10);
+        if($code)
+        {
+            $coes = $this->coRepo->getCoes([
+                'confirm_done' => 0,
+                ['status', '!=', ProcessStatus::Unapproved],
+                ['code' ,'like', $code]
+            ])->orderBy('created_at', 'DESC')->paginate(10);
+        }
+        else {
+            $coes = $this->coRepo->getCoes([
+                'confirm_done' => 0,
+                ['status', '!=', ProcessStatus::Unapproved],
+            ])->orderBy('created_at', 'DESC')->paginate(10);
+        }
+       
 		return view('admins.dashboard.co.list', compact('breadcrumb', 'titleForLayout', 'titleForChart',
-            'listRangeDate', 'data', 'coTmps', 'coes'));
+            'listRangeDate', 'coTmps', 'coes'));
     }
 }

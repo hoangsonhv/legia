@@ -62,7 +62,7 @@
 <!-- /.content -->
 @endsection
 
-@section('js')
+{{-- @section('js')
   <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
   <script type="text/javascript">
     $( document ).ready(function() {
@@ -82,4 +82,4 @@
       new Chart(context, config);
     });
   </script>
-@endsection
+@endsection --}}

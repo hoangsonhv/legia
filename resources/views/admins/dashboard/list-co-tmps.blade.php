@@ -76,7 +76,20 @@
 @permission(['admin.co-tmp.index', 'admin.co-tmp.create'])
 @if(!empty($coTmps) && count($coTmps))
 <div class="mb-3 border p-3">
-    <h5 class="mb-3"><b>Danh sách Chào giá</b></h5>
+    <div class="d-flex  justify-content-between">
+        <h5 class="mb-3"><b>Danh sách Chào giá</b></h5>
+        <div class="w-50">
+            <form action="">
+                <div class="form-group d-flex">
+                    <input type="text" class="form-control mr-3"  name="code" id="" placeholder="Nhập mã CO">
+                    <button class="btn btn-primary w-25" type="submit">Tìm kiêm</button>
+                </div>
+
+               
+            </form>
+           
+        </div>
+    </div>
     <div class="card-body table-responsive p-0">
         <table class="table table-hover text-nowrap">
           <thead>

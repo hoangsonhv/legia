@@ -24,7 +24,7 @@ class LoginController extends Controller {
 			if (Session::has('last_url')) {
 				return redirect(Session::get('last_url'));
 			} else {
-				return redirect()->route('admin.dashboard.index');
+				return redirect()->route('admin.dashboard.quotation');
 			}
 		}
     	return view('admins.login');
