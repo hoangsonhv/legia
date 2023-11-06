@@ -52,7 +52,7 @@ class LoginController extends Controller {
 			if (Session::has('last_url')) {
 				return redirect(Session::get('last_url'));
 			} else {
-				return redirect()->route('admin.dashboard.index');
+				return redirect()->route('admin.dashboard.quotation');
 			}
     	}
     	return redirect()->route('admin.login.getLogin')->with('error', 'Thông tin tài khoản không tồn tại!');
