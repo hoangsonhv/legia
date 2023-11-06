@@ -97,8 +97,8 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item{{ (strpos(url()->current(), '/dashboard') !== false) ? ' menu-open' : '' }}">
-            <a href="#" class="nav-link{{ (strpos(url()->current(), '/dashboard') !== false) ? ' active' : '' }}">
+          <li class="nav-item{{ (strpos(url()->current(), '/admin/dashboard/index/list-quotation') !== false || (strpos(url()->current(), '/admin/dashboard/index/list-co') !== false)) ? ' menu-open' : '' }}">
+            <a href="#" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/list-quotation') !== false) || (strpos(url()->current(), '/admin/dashboard/index/list-co') !== false) ? ' active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Tổng quan
@@ -108,14 +108,14 @@
             <ul class="nav nav-treeview">
               @permission('admin.co-tmp.index')
               <li class="nav-item">
-                <a href="{{ route('admin.dashboard.quotation') }}" class="nav-link{{ (strpos(url()->current(), '/co-tmp/index') !== false) ? ' active' : '' }}">
+                <a href="{{ route('admin.dashboard.quotation') }}" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/list-quotation') !== false) ? ' active' : '' }}">
                   <p>Danh sách chào giá</p>
                 </a>
               </li>
               @endpermission
-              @permission('admin.co-tmp.create')
+              @permission('admin.co-tmp.index')
               <li class="nav-item">
-                <a href="{{ route('admin.dashboard.co') }}" class="nav-link{{ (strpos(url()->current(), '/co-tmp/create') !== false) ? ' active' : '' }}">
+                <a href="{{ route('admin.dashboard.co') }}" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/list-co') !== false) ? ' active' : '' }}">
                   <p>Danh sách CO</p>
                 </a>
               </li>
