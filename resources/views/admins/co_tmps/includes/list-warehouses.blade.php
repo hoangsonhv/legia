@@ -41,7 +41,7 @@
             <td align="left">
               <ul>
                 @foreach ($warehouse->detail as $properties => $item)
-                  <li> {{ __($properties) }} : {{ $item }} </li>
+                  <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties)  }} : {{ $item }} </li>
                 @endforeach
               </ul>
             </td>
@@ -61,7 +61,7 @@
             <td align="left">
               <ul>
                 @foreach ($warehouse->ton_kho as $properties => $item)
-                  <li> {{ __($properties) }} : {{ $item }} </li>
+                  <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties)  }} : {{ $item }} </li>
                 @endforeach
               </ul>
             </td>

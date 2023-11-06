@@ -152,4 +152,18 @@ class WarehouseHelper
                 throw new NotFoundHttpException('Not Found Model');
         }
     }
+
+    public static function translateAtt($att)
+    {
+        switch($att)
+        {
+            case 'vat_lieu' : return 'Vật liệu';
+            case 'do_day' : return 'Độ dày';
+            case 'hinh_dang' : return 'Hình dạng';
+            case 'dia_w_w1' : return 'Dia w w1';
+            case 'l_l1' : return 'L L1';
+            case 'w2' : return 'W2';
+            case 'l2' : return 'L2';
+        }
+    }
 }
