@@ -11,12 +11,14 @@ use App\Http\Requests\CoTmpRequest;
 use App\Models\Admin;
 use App\Models\CoreCustomer;
 use App\Models\CoTmp;
+use App\Models\Import\ChaoGiaImport;
 use App\Models\Repositories\CoTmpRepository;
 use App\Models\Repositories\ConfigRepository;
 use App\Services\CoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CoTmpController extends Controller
@@ -329,7 +331,7 @@ class CoTmpController extends Controller
     public function getOfferPrice(Request $request) {
         $result = ['success' => false];
         if ($request->has('file')) {
-            $aContent = Excel::toArray([], $request->file('file'));
+            $aContent = Excel::toArray(new ChaoGiaImport(), $request->file('file'), null, \Maatwebsite\Excel\Excel::XLSX);
             if (!empty($aContent[0])) {
                 $allData    = $aContent[0];
                 $warehouses = [];
@@ -454,6 +456,7 @@ class CoTmpController extends Controller
                 if (!$resWarehouse['success']) {
                     return $result;
                 }
+                // dd($warehouses);
                 $resWarehouse['data'] = $resWarehouse['data'];
                 // Get material
                 $contentMaterial = view('admins.co_tmps.includes.list-warehouses',['warehouses' => $resWarehouse['data']])->render();
