@@ -387,7 +387,6 @@ class CoTmpController extends Controller
                         } else {
                             // Ship: Get 4 row
                             // Payment: Get 2 row
-                            if($key > $isMore) dump($key, $isMore, $val);
                             switch ($key - $isMore) {
                                 case 1:
                                     $more['dong_goi_va_van_chuyen'] = $val[3];
