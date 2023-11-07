@@ -153,17 +153,70 @@ class WarehouseHelper
         }
     }
 
-    public static function translateAtt($att)
+    public static function translateAtt($key)
     {
-        switch($att)
-        {
-            case 'vat_lieu' : return 'Vật liệu';
-            case 'do_day' : return 'Độ dày';
-            case 'hinh_dang' : return 'Hình dạng';
-            case 'dia_w_w1' : return 'Dia w w1';
-            case 'l_l1' : return 'L L1';
-            case 'w2' : return 'W2';
-            case 'l2' : return 'L2';
-        }
+        $attributes = [
+            'vat_lieu' => 'Vật liệu',
+            'do_day' => 'Độ dày',
+            'hinh_dang' => 'Hình dạng',
+            'dia_w_w1' => 'Dia_W_W1',
+            'l_l1' => 'L_L1',
+            'w2' => 'W2',
+            'l2' => 'L2',
+            'size' => 'Size',
+            'trong_luong_cuon' => 'Trọng lượng cuộn',
+            'm_cuon' => 'm/cuộn',
+            'sl_cuon' => 'Số lượng cuộn',
+            'sl_kg' => 'Số lượng Kg',
+            'ton_sl_cuon' => 'Tồn (cuộn)',
+            'ton_sl_kg' => 'Tồn (kg)',
+            'sl_m' => 'Số lượng m',
+            'ton_sl_m' => 'Tồn (m)',
+            'd1' => 'D1',
+            'd2' => 'D2',
+            'd1' => 'D3',
+            'd2' => 'D4',
+            'sl_cai' => 'Số lượng cái',
+            'ton_sl_cai' => 'Tòn (cái)',
+            'cho_may_moc_thiet_bi' => 'Cho máy móc, thiết bị',
+            'so_hopdong_hoadon' => 'Số hơp đồng, hóa đơn',
+            'inner' => 'Inner',
+            'hoop' => 'Hoop',
+            'filler' => 'Filler',
+            'outer' => 'Outer',
+            'thick' => 'Thick',
+            'tieu_chuan' => 'Tiêu chuẩn',
+            'kich_co' => 'Kích cỡ',
+            'std' => 'Std',
+            'od' => 'Od',
+            'id' => 'Id',
+            'm_cay' => 'm/cây',
+            'sl_cay' => 'Số lượng cây',
+            'ton_sl_cay' => 'Tồn (cây)',
+            'muc_ap_luc' => 'Mức áp lực',
+            'tieu_chuan' => 'Tiêu chuẩn',
+            'kich_co' => 'Kích cỡ',
+            'kich_thuoc' => 'Kích thước',
+            'chuan_mat_bich' => 'Chuẩn mặt bích',
+            'chuan_gasket' => 'Chuẩn gasket',
+            'dvt' => 'Đơn vị tính',
+            'sl_ton' => 'Tồn (cái)',
+            'bo_phan' => 'Bộ phận',
+            'sl' => 'Tồn (cái)',
+            'ton_sl_tam' => 'Tồn (tấm)',
+            'ton_sl_m2' => 'Tồn (m2)',
+        ];
+
+        return $attributes[$key];
+    }
+
+    public static function nonZeroWarehouseMerchandiseConditions() {
+        return $conditions = [
+            ['ton_sl_tam', '>', 0],
+            ['ton_sl_cuon', '>', 0],
+            ['ton_sl_cai', '>', 0],
+            ['ton_sl_cay', '>', 0],
+            ['sl_ton', '>', 0],
+        ];
     }
 }

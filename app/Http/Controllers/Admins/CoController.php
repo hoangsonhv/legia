@@ -132,7 +132,7 @@ class CoController extends Controller
                 $warehouses = $co->warehouses;
                 // Get list warehouse
                 $request->request->add(['code' => $co->warehouses->pluck('code', 'id')->toArray()]);
-                $material = $this->getDataWarehouse($request)->slice(0, 100);
+                $material = $this->getDataWarehouse($request);
             }
         }
         $permissions = config('permission.permissions');
@@ -268,6 +268,7 @@ class CoController extends Controller
             $chuanGasket = $request->input('chuan_gasket');
             $dvTinh      = $request->input('dv_tinh');
             $soLuong     = $request->input('so_luong');
+            $soLuongSanXuat = $request->input('so_luong_san_xuat');
             $donGia      = $request->input('don_gia');
             $manufactureType = $request->input('manufacture_type');
             $warehouseGroupId = $request->input('warehouse_group_id');
@@ -286,6 +287,7 @@ class CoController extends Controller
                     'dv_tinh'       => $dvTinh[$key],
                     'so_luong'      => $soLuong[$key],
                     'don_gia'       => $donGia[$key],
+                    'so_luong_san_xuat' => $soLuongSanXuat[$key],
 //                    'material_type' => in_array($key, $request->input('material_type') ?? [])
 //                        ? OfferPrice::MATERIAL_TYPE_METAL : OfferPrice::MATERIAL_TYPE_NON_METAL
                     'manufacture_type' => $manufactureType[$key],
@@ -342,7 +344,7 @@ class CoController extends Controller
             $delivery = $co->delivery()->first();
             // Get list warehouse
             $request->request->add(['code' => $co->warehouses->pluck('code', 'id')->toArray()]);
-            $listWarehouse = $this->getDataWarehouse($request)->slice(0, 100);
+            $listWarehouse = $this->getDataWarehouse($request);
 
             $arrReceipts = $co->receipt()->get()->toArray();
             $receipts = [];
@@ -474,6 +476,7 @@ class CoController extends Controller
                 $chuanGasket = $request->input('chuan_gasket');
                 $dvTinh      = $request->input('dv_tinh');
                 $soLuong     = $request->input('so_luong');
+                $soLuongSanXuat = $request->input('so_luong_san_xuat');
                 $donGia      = $request->input('don_gia');
                 $manufactureType = $request->input('manufacture_type');
                 $warehouseGroupId = $request->input('warehouse_group_id');
@@ -494,6 +497,7 @@ class CoController extends Controller
                         'chuan_gasket'  => $chuanGasket[$key],
                         'dv_tinh'       => $dvTinh[$key],
                         'so_luong'      => $soLuong[$key],
+                        'so_luong_san_xuat' => $soLuongSanXuat[$key],
                         'don_gia'       => $donGia[$key],
                         // 'material_type' => in_array($key, $request->input('material_type') ?? [])
                         //     ? OfferPrice::MATERIAL_TYPE_METAL : OfferPrice::MATERIAL_TYPE_NON_METAL
@@ -556,7 +560,7 @@ class CoController extends Controller
 
     public function getDataWarehouse(Request $request) {
         $codes  = $request->input('code');
-        $result = $this->coService->getProductMaterialsInWarehouses($codes);
+        $result = $this->coService->getProductMaterialsInWarehouses($codes, true);
         if ($request->ajax()) {
             if ($result->count()) {
                 return ['success' => true, 'data' => $result];
@@ -745,7 +749,7 @@ class CoController extends Controller
             $code = $request->input('code');
             if ($code) {
                 $params    = [$code];
-                $materials = $this->coService->getProductMaterialsInWarehouses($params)->slice(0, 100);
+                $materials = $this->coService->getProductMaterialsInWarehouses($params, true);
                 //dd($materials);
                 $content   = view('admins.requests.includes.list-materials-full',compact('materials'))->render();
             }

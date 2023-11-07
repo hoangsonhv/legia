@@ -233,6 +233,10 @@
                     {!! Form::text('text', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
+                    <label for="tieu_chuan">Tiêu chuẩn</label>
+                    {!! Form::text('tieu_chuan', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
                     <label for="muc_ap_luc">Mức áp lực</label>
                     {!! Form::text('muc_ap_luc', null, array('class' => 'form-control')) !!}
                   </div>
@@ -265,6 +269,10 @@
                   <div class="form-group">
                     <label for="do_day">Độ dày</label>
                     {!! Form::text('text', null, array('class' => 'form-control')) !!}
+                  </div>
+                  <div class="form-group">
+                    <label for="tieu_chuan">Tiêu chuẩn</label>
+                    {!! Form::text('tieu_chuan', null, array('class' => 'form-control')) !!}
                   </div>
                   <div class="form-group">
                     <label for="muc_ap_luc">Mức áp lực</label>

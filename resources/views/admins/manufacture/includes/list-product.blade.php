@@ -13,8 +13,8 @@
             <th class="align-middle">Chuẩn gasket</th>
             <th class="align-middle">Đ/v tính</th>
             <th class="align-middle" style="width: 150px">Kim loại/Phi kim loại</th>
-            <th class="align-middle">Số lượng</th>
             <th class="align-middle">Số lượng cần</th>
+            <th class="align-middle">Số lượng sản xuất</th>
             <th class="align-middle">SL xác nhận</th>
         </tr>
         </thead>
@@ -37,7 +37,6 @@
                         <input hidden value="{{$detail['material_type']}}" name="offer_price_material_type[]" />
                         {{$detail['material_type'] == \App\Models\Manufacture::MATERIAL_TYPE_METAL ? 'Kim loại' : 'Phi kim loại'}}
                     </td>
-                    <td>{{ $detail['so_luong'] }}</td>
                     <td>
                         @if($is_wait)
                             <input value="{{$detail['need_quantity']}}" name="need_quantity[]" class="form-control" style="width: 80px" />
@@ -46,6 +45,7 @@
                             <input value="{{$detail['need_quantity']}}" name="need_quantity[]" hidden />
                         @endif
                     </td>
+                    <td>{{ $detail['so_luong_san_xuat'] }}</td>
                     <td>
                         @if($is_processing)
                             <input value="{{$detail['reality_quantity']}}" name="reality_quantity[]" class="form-control" style="width: 80px" />

@@ -7,6 +7,7 @@ use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
 use App\Imports\Warehouse\WarehouseImport;
 use App\Models\CoTmp;
+use App\Models\Repositories\ConfigRepository;
 use App\Models\Repositories\RequestRepository;
 use App\Models\Repositories\CoTmpRepository;
 use App\Models\Repositories\CoRepository;
@@ -34,17 +35,23 @@ class DashboardController extends Controller {
      */
     protected $coRepo;
 
+    /**
+     * @var
+     */
+    protected $configRepository;
+
 	public $menu;
 
 	public function __construct(RequestRepository $requestRepository,
                                 CoTmpRepository $coTmpRepo,
                                 CoRepository $coRepo,
-                               
+                                ConfigRepository $configRepository
                                 )
 	{
         $this->requestRepository    = $requestRepository;
         $this->coTmpRepo            = $coTmpRepo;
         $this->coRepo               = $coRepo;
+        $this->configRepository     = $configRepository;
         $this->menu                 = [
 			'root' => 'Tổng quan',
 			'data' => []
@@ -56,7 +63,7 @@ class DashboardController extends Controller {
        
 	}
 
-    public function quotation(Request $request)
+    public function coTmp(Request $request)
     {
          // $warehouse = WarehouseHelper::getModel(WarehouseHelper::BIA);
         // // dd( $warehouse);
@@ -144,13 +151,15 @@ class DashboardController extends Controller {
         // ->where(function ($query) {
         //     $query = $query->whereRaw(DB::raw("co_id = 0 OR (co_not_approved_id > 0 AND status = 1)"));
         // })->paginate();
+        $limitApprovalCg = $this->configRepository->getConfigs(['key' => 'limit_approval_cg'])->first()->value;
 
         $coTmps = CoTmp::select('co_tmps.*')
         ->when($code != '',function($sql) use ($code){
             $sql = $sql->where('co_tmps.code', 'like', "%$code%");})
         ->leftJoin('co', 'co.id', 'co_tmps.co_id')
-        ->where(function($sql) {
+        ->where(function($sql) use ($limitApprovalCg) {
             $sql = $sql->where('co_tmps.status', ProcessStatus::Approved)
+                ->orWhere('co_tmps.tong_gia', '<', $limitApprovalCg)
                 ->where('co_tmps.co_id', 0);
         })->orWhere(function($sql) {
             $sql = $sql->where('co_tmps.co_not_approved_id', '>', 0)
@@ -163,9 +172,10 @@ class DashboardController extends Controller {
             ['status', '!=', ProcessStatus::Unapproved]
         ])->orderBy('created_at', 'ASC')->paginate(50);
 		return view('admins.dashboard.co.quotation', compact('breadcrumb', 'titleForLayout', 'titleForChart',
-            'listRangeDate', 'coTmps', 'coes'));
+            'listRangeDate', 'coTmps', 'coes', 'limitApprovalCg'));
     }
-    public function coList(Request $request)
+
+    public function co(Request $request)
     {
          // $warehouse = WarehouseHelper::getModel(WarehouseHelper::BIA);
         // // dd( $warehouse);

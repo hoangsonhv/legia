@@ -131,7 +131,7 @@
                           \App\Enums\ProcessStatus::Unapproved,
                         ];
                     @endphp
-                    @if($co && in_array($requestModel->status, $statusAcceptRequest))
+                    {{-- @if($co && in_array($requestModel->status, $statusAcceptRequest))
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="title text-primary mb-4">Khảo sát giá
@@ -304,7 +304,7 @@
                             </div>
                             {!! Form::close() !!}
                         </div>
-                    @endif
+                    @endif --}}
                     @endpermission
                     @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material')])
                     <div class="modal fade" id="accompanying_document_modal">

@@ -121,7 +121,11 @@
                     @endif
                 </td>
                 <td>
-                    @if($coTmp->status == \App\Enums\ProcessStatus::Approved)
+                    @if($coTmp->tong_gia < $limitApprovalCg)
+                        <span class="badge bg-success">
+                            Không cần xét duyệt
+                        </span>
+                    @else
                         <span class="badge bg-success">
                             {{ \App\Enums\ProcessStatus::all()[$coTmp->status] }}
                         </span>

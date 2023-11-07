@@ -27,6 +27,7 @@ class OfferPrice extends Model
         'manufacture_type',
         'warehouse_group_id',
         'merchandise_id',
+        'so_luong_san_xuat'
     ];
 
     public function co() {

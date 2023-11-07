@@ -96,7 +96,7 @@ class WarehouseExportController extends Controller
         if ($coId) {
             $co = Co::find($coId);
             $warehouses    = $co->warehouses;
-            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($co->warehouses->pluck('code', 'id')->toArray())->slice(0, 100);
+            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($co->warehouses->pluck('code', 'id')->toArray(), true);
         }
 
         return view('admins.warehouse_export.create', compact('breadcrumb', 'titleForLayout',
@@ -203,7 +203,7 @@ class WarehouseExportController extends Controller
             if ($coId) {
                 $co = Co::find($coId);
                 $warehouses    = $co->warehouses;
-                $listWarehouse = $this->coService->getProductMaterialsInWarehouses($co->warehouses->pluck('code', 'id')->toArray())->slice(0, 100);
+                $listWarehouse = $this->coService->getProductMaterialsInWarehouses($co->warehouses->pluck('code', 'id')->toArray(), true);
             }
 
             $products = $model->products->toArray();

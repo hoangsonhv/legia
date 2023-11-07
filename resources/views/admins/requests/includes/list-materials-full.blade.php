@@ -12,7 +12,7 @@
       <tr align="center">
         <th class="align-middle">&nbsp</th>
         <th class="align-middle check-all"><input type="checkbox" value="1" onclick="checkedAllRows(this)"></th>
-        <th class="align-middle">Số TT</th>
+        <th class="align-middle">#ID</th>
         <th class="align-middle">Mã HH</th>
         <th class="align-middle">Vật liệu</th>
         <th class="align-middle">Chi tiết</th>
@@ -40,7 +40,7 @@
               <i class="fas fa-minus-circle text-danger delete-item" title="Xoá hàng hoá" onclick="deteleItem(this)"></i>
             </td>
             <td class="check-data"><input type="checkbox" value="1"></td>
-            <td class="sequence">{{ $index + 1 }}</td>
+            <td class="sequence">{{ $material->l_id }}</td>
             <td class="table_name d-none">
               <input type="hidden" value="{{ get_class($material) }}">
             </td>
@@ -59,9 +59,9 @@
               {{ $material->vat_lieu }}
             </td>
             <td align="left">
-              <ul>
+              <ul style="list-style: circle">
                 @foreach ($material->detail as $properties => $item)
-                  <li> {{ $properties }} : {{ $item }} </li>
+                  <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties) }} : {{ $item }} </li>
                 @endforeach
               </ul>
             </td>
@@ -77,9 +77,9 @@
             <td class="">{{ $material->lot_no }}</td>
             <td class="">{{ $material->date }}</td>
             <td align="left">
-              <ul>
+              <ul style="list-style: circle">
                 @foreach ($material->ton_kho as $properties => $item)
-                  <li> {{ __($properties) }} : {{ $item }} </li>
+                  <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties) }} : {{ $item }} </li>
                 @endforeach
               </ul>
             </td>

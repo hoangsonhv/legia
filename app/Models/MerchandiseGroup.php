@@ -15,10 +15,12 @@ class MerchandiseGroup extends Model
         self::METAL => 'Kim loại',
         self::NON_METAL => 'Phi kim loại'
     ];
+
     const OPERATION_TYPE = [
         self::MANUFACTURE => 'Sản xuất',
         self::COMMERCE => 'Thương mại'
     ];
+
     protected $table = "merchandise_groups";
     protected $fillable = [
         'name',

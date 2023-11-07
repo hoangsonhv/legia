@@ -366,9 +366,9 @@ class AdminHelper
         ];
         $arrCode = explode(" ", strtoupper($code));
         $merchandise_code = MerchandiseCode::where('code', $arrCode[0])
-                                            ->when(count($arrCode) > 1, function($q) use($arrCode) {
-                                                $q->orWhere('code' , $arrCode[0] . ' ' . $arrCode[1]);
-                                            })->first();
+            ->when(count($arrCode) > 1, function($q) use($arrCode) {
+                $q->orWhere('code' , $arrCode[0] . ' ' . $arrCode[1]);
+            })->first();
         $codeInWarehouseTmp = '';
         foreach ($arrCode as $value) {
             if($merchandise_code) {
@@ -397,7 +397,7 @@ class AdminHelper
     public static function countProductEcomInWarehouse($codeInWareHouse, $merchandise_group_id) {
         $merchandise_group = MerchandiseGroup::where('id',$merchandise_group_id)->first();
         if ($codeInWareHouse == '' || empty($codeInWareHouse) || empty($merchandise_group)) {
-            return '---';
+            return 0;
         }
         $warehouseModel = $merchandise_group->warehouses->first();
         $baseWarehouseRepository = new BaseWarehouseRepository();
@@ -408,27 +408,27 @@ class AdminHelper
             return $result['ton_kho'][array_keys($result['ton_kho'])[0]];
         }
 
-        return '---';
+        return 0;
     }
 
     //product thành phẩm
     public static function countProductInWarehouse($codeInWareHouse, $manufacture_type) {
         $baseWarehouseRepository = new BaseWarehouseRepository();
-        if ($manufacture_type == MerchandiseGroup::METAL) {
-            $baseWarehouseRepository->setModel(WarehouseHelper::getModel(WarehouseHelper::THANH_PHAM_SWG));
+        if ($manufacture_type == Manufacture::MATERIAL_TYPE_METAL) {
+            $baseWarehouseRepository->setModel(WarehouseHelper::getModel(WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI));
             $result = $baseWarehouseRepository->model->where('code', $codeInWareHouse)
-                ->where('model_type' , WarehouseHelper::THANH_PHAM_SWG)->first();
+                ->where('model_type' , WarehouseHelper::PRODUCT_WAREHOUSES[Manufacture::MATERIAL_TYPE_METAL])->first();
         }
-        else if ($manufacture_type == MerchandiseGroup::NON_METAL) {
+        else if ($manufacture_type == Manufacture::MATERIAL_TYPE_NON_METAL) {
             $baseWarehouseRepository->setModel(WarehouseHelper::getModel(WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI));
             $result = $baseWarehouseRepository->model->where('code', $codeInWareHouse)
-                ->where('model_type' , WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI)->first();
+                ->where('model_type' , WarehouseHelper::PRODUCT_WAREHOUSES[Manufacture::MATERIAL_TYPE_NON_METAL])->first();
         }
         if ($result != null) {
-            return $result['ton_kho']['ton_sl_cai'] ?? $result['ton_kho']['sl_ton'];
+            return $result['ton_kho'][array_keys($result['ton_kho'])[0]];
         }
 
-        return '---';
+        return 0;
     }
 
     public static function findGroupByCode($code)

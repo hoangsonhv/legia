@@ -268,6 +268,7 @@ class ManufactureController extends Controller
                 $details[$index]['chuan_gasket'] = $detail->offerPrice ? $detail->offerPrice->chuan_gasket : '';
                 $details[$index]['dv_tinh'] = $detail->offerPrice ? $detail->offerPrice->dv_tinh : '';
                 $details[$index]['so_luong'] = $detail->offerPrice ? $detail->offerPrice->so_luong : '';
+                $details[$index]['so_luong_san_xuat'] = $detail->offerPrice ? $detail->offerPrice->so_luong_san_xuat : '';
                 $details[$index]['reality_quantity'] = $detail->reality_quantity;
                 $details[$index]['need_quantity'] = $detail->need_quantity;
                 $details[$index]['material_type'] = $detail->material_type;

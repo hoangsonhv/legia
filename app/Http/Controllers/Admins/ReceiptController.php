@@ -226,7 +226,9 @@ class ReceiptController extends Controller
             $receipt = Receipt::create($input);
             // Save co_step_history
             if($request->input('co_id')) {
+                //dd($request->input());
                 if($request->input('step_id') == 1) {
+                    //dd('here');
                     $this->coStepHisRepo->insertNextStep('warehouse-export-sell', $request->input('co_id'), $request->input('co_id'), CoStepHistory::ACTION_CREATE);
                 } else {
                     $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );

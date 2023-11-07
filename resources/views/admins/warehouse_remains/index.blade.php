@@ -139,6 +139,7 @@
                             @case ('tpphikimloai')
                               <th>Vật liệu</th>
                               <th>Độ dày</th>
+                              <th>Tiêu chuẩn</th>
                               <th>Mức áp lực</th>
                               <th>Kích cỡ</th>
                               <th>Kích thước</th>
@@ -150,6 +151,7 @@
                             @case ('tpkimloai')
                               <th>Vật liệu</th>
                               <th>Độ dày</th>
+                              <th>Tiêu chuẩn</th>
                               <th>Mức áp lực</th>
                               <th>Kích cỡ</th>
                               <th>Kích thước</th>
@@ -250,6 +252,7 @@
                               @case ('tpphikimloai')
                                 <td>{{ $warehouseRemain->vat_lieu }}</td>
                                 <td>{{ $warehouseRemain->do_day }}</td>
+                                <td>{{ $warehouseRemain->tieu_chuan }}</td>
                                 <td>{{ $warehouseRemain->muc_ap_luc }}</td>
                                 <td>{{ $warehouseRemain->kich_co }}</td>
                                 <td>{{ $warehouseRemain->kich_thuoc }}</td>
@@ -261,6 +264,7 @@
                               @case ('tpkimloai')
                                 <td>{{ $warehouseRemain->vat_lieu }}</td>
                                 <td>{{ $warehouseRemain->do_day }}</td>
+                                <td>{{ $warehouseRemain->tieu_chuan }}</td>
                                 <td>{{ $warehouseRemain->muc_ap_luc }}</td>
                                 <td>{{ $warehouseRemain->kich_co }}</td>
                                 <td>{{ $warehouseRemain->kich_thuoc }}</td>

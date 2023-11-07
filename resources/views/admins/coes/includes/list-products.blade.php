@@ -8,18 +8,19 @@
         @php
             $total = 0;
             $materials = isset($material) ? $material->toArray() : [];
-            $hiddenShowPrice = !\App\Helpers\PermissionHelper::hasPermission('admin.co.price');
+            // $hiddenShowPrice = !\App\Helpers\PermissionHelper::hasPermission('admin.co.price');
+            $hiddenShowPrice = false;
         @endphp
         <thead>
         <tr align="center">
             @if(empty($notAction))
                 @php
-                    $colspan = empty($isCoTmp) ? 15 : 14;
+                    $colspan = empty($isCoTmp) ? 17 : 16;
                 @endphp
                 <th>&nbsp</th>
             @else
                 @php
-                    $colspan = 12;
+                    $colspan = 14;
                 @endphp
             @endif
             <th class="align-middle">Số TT
@@ -38,8 +39,9 @@
 {{--            @if(empty($notAction) && empty($isCoTmp))--}}
 {{--                <th class="align-middle">Kim loại/ Phi kim loại</th>--}}
 {{--            @endif--}}
-            <th class="align-middle">Số lượng</th>
+            <th class="align-middle">Số lượng cần</th>
             @if(empty($notAction))
+                <th class="align-middle">Số lượng sản xuất</th>
                 <th class="align-middle">Tồn kho</th>
             @endif
             <th class="align-middle {{$hiddenShowPrice ? 'd-none' : ''}}">Đơn giá (VNĐ)</th>
@@ -68,26 +70,27 @@
                     $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
                     $materialType = !empty($collect) ? $warehouse->material_type : $detectCode['material_type'];
                     $warehouseGroupId = !empty($collect) ? $warehouse->merchandise_group_id : $detectCode['merchandise_group_id'];
-                    $tonKho = '---';
+                    $tonKho = 0;
 
                     if ($manufactureType == \App\Models\MerchandiseGroup::COMMERCE) {
                         $tonKho = \App\Helpers\AdminHelper::countProductEcomInWarehouse($detectCode['merchandise_code_in_warehouse'], $detectCode['merchandise_group_id']); 
                     }
                     else {
-                        $modelAttributes = [
-                            'code' => $code,
-                            'vat_lieu'  => $loaiVatLieu,
-                            'do_day'    => $doDay,
-                            'tieu_chuan' => $tieuChuan,
-                            'kich_co'   => $kichCo,
-                            'kich_thuoc'    => $kichThuoc,
-                            'chuan_mat_bich'    => $chuanBich,
-                            'chuan_gasket'  => $chuanGasket,
-                            'dvt'   => $dvTinh,
-                            'model_type' => \App\Helpers\WarehouseHelper::PRODUCT_WAREHOUSES[$materialType],
-                        ];
-                        $tonKho = \App\Helpers\AdminHelper::countProductInWarehouse($modelAttributes, $materialType);
+                        // $modelAttributes = [
+                        //     'code' => $code,
+                        //     'vat_lieu'  => $loaiVatLieu,
+                        //     'do_day'    => $doDay,
+                        //     'tieu_chuan' => $tieuChuan,
+                        //     'kich_co'   => $kichCo,
+                        //     'kich_thuoc'    => $kichThuoc,
+                        //     'chuan_mat_bich'    => $chuanBich,
+                        //     'chuan_gasket'  => $chuanGasket,
+                        //     'dvt'   => $dvTinh,
+                        //     'model_type' => $materialType,
+                        // ];
+                        $tonKho = \App\Helpers\AdminHelper::countProductInWarehouse($detectCode['merchandise_code_in_warehouse'], $materialType);
                     }
+                    $soLuongSanXuat = $tonKho >= $soLuong ? 0 : $soLuong - $tonKho;
                 @endphp
                 <tr align="center">
                     @if(empty($notAction))
@@ -176,8 +179,12 @@
 {{--                            </td>--}}
 {{--                        @endif--}}
                         <td>
-                            <input style="width: 50px;" onChange="totalMoney(this)" type="number" min="1"
+                            <input style="width: 50px;" onChange="caclTotalMoney(this)" type="number" min="1"
                                    name="so_luong[]" value="{{ $soLuong }}">
+                        </td>
+                        <td>
+                            <input style="width: 50px;" type="number" min="0"
+                                   name="so_luong_san_xuat[]" value="{{ $soLuongSanXuat }}">
                         </td>
                         <td>
                             <span class="text-danger"><b>{{$tonKho}}</b></span>

@@ -301,7 +301,7 @@ class CoTmpController extends Controller
 
     public function getDataWarehouse(Request $request) {
         $codes  = $request->input('code');
-        $result = $this->coService->getProductMaterialsInWarehouses($codes);
+        $result = $this->coService->getProductMaterialsInWarehouses($codes, true);
         if ($request->ajax()) {
             if ($result->count()) {
                 return ['success' => true, 'data' => $result];
@@ -315,7 +315,7 @@ class CoTmpController extends Controller
     public function getDataInAllWarehouse(Request $request)
     {
         $codes  = $request->input('code');
-        $result = $this->coService->getProductMaterialsInWarehouses($codes);
+        $result = $this->coService->getProductMaterialsInWarehouses($codes, true);
         if ($request->ajax()) {
             if ($result->count()) {
                 return ['success' => true, 'data' => $result];
@@ -454,7 +454,7 @@ class CoTmpController extends Controller
                 if (!$resWarehouse['success']) {
                     return $result;
                 }
-                $resWarehouse['data'] = $resWarehouse['data']->slice(0, 100);
+                $resWarehouse['data'] = $resWarehouse['data'];
                 // Get material
                 $contentMaterial = view('admins.co_tmps.includes.list-warehouses',['warehouses' => $resWarehouse['data']])->render();
                 // Get product

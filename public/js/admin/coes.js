@@ -101,7 +101,7 @@ function getNumberFormat(_this) {
   $(_this).parent().find('.data-origin').val(number['original']);
 }
 
-function totalMoney(_this) {
+function caclTotalMoney(_this) {
   var number = $(_this).val();
   var price = $(_this).parents('tr:first').find('td.price').attr('data-price');
   var total = formatCurrent((number * price).toString());

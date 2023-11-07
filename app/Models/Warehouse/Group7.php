@@ -26,7 +26,7 @@ class Group7 extends BaseWarehouseCommon
         'model_type'
     ];
 
-    public function setDetailAttribute() {
+    public function getDetailAttribute() {
         return [
             'inner'  => $this->inner,
             'hoop'  => $this->hoop,

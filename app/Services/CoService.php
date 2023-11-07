@@ -11,6 +11,7 @@ use App\Models\Repositories\WarehousePlateRepository;
 use App\Models\Repositories\WarehouseRemainRepository;
 use App\Models\Repositories\WarehouseSpwRepository;
 use Illuminate\Database\Eloquent\Collection;
+use PhpOffice\PhpSpreadsheet\Shared\Trend\Trend;
 
 class CoService
 {
@@ -62,7 +63,7 @@ class CoService
         return $result;
     }
 
-    public function getProductMaterialsInWarehouses($codes)
+    public function getProductMaterialsInWarehouses($codes, $ignoreZero)
     {
         $result = collect([]);
         try {
@@ -81,8 +82,22 @@ class CoService
                         $codeInWareHouse = "";
                         foreach ($arrCode as $value) {
                             $codeInWareHouse = $codeInWareHouse ? $codeInWareHouse . ' ' . $value : $value;
-                            $totalInWarehouse = $this->baseWarehouseRepository->model->where('code', $codeInWareHouse)
-                                                                                    ->where('model_type' , $warehouse->model_type)->get();
+                            $totalInWarehouse = $this->baseWarehouseRepository->model
+                                ->where('code', $codeInWareHouse)
+                                ->where('model_type' , $warehouse->model_type);
+
+                            if ($ignoreZero == true) {
+                                $conditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
+
+                                $totalInWarehouse = $totalInWarehouse->where(function($query) use ($conditions) {
+                                    foreach ($conditions as $cnd) {
+                                        $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+                                    }
+                                    return $query;
+                                });
+                            }
+                            $totalInWarehouse = $totalInWarehouse->get(); 
+
                             if(count($totalInWarehouse)) {
                                 $merchindiseWarehouse = $merchindiseWarehouse->merge($totalInWarehouse)->unique();
                                 continue;

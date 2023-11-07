@@ -112,7 +112,7 @@
                 {{ $dvTinh }}
               </td>
               <td>
-                <input style="width: 50px;" onChange="totalMoney(this)" type="number" min="1" name="so_luong[]" value="{{ $soLuong }}">
+                <input style="width: 50px;" onChange="caclTotalMoney(this)" type="number" min="1" name="so_luong[]" value="{{ $soLuong }}">
               </td>
               <td class="price" data-price="{{ $donGia }}">
                 <input type="hidden" name="don_gia[]" value="{{ $donGia }}">

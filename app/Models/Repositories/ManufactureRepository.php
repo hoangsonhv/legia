@@ -70,8 +70,9 @@ class ManufactureRepository extends AdminRepository
     public function updateIsCompleted($id)
     {
         $query = ManufactureDetail::where('manufacture_id', $id)
-            ->whereRaw('reality_quantity < need_quantity')
+            ->whereRaw('reality_quantity < manufacture_quantity')
             ->get();
+
         if(!$query->count()) {
             $details = ManufactureDetail::where('manufacture_id', $id)->get();
 
@@ -81,7 +82,7 @@ class ManufactureRepository extends AdminRepository
                     'code' => $material->code,
                     'vat_lieu'  => $material->loai_vat_lieu,
                     'do_day'    => $material->do_day,
-                    'muc_ap_luc'    => $material->muc_ap_luc,
+                    'tieu_chuan' => $material->tieu_chuan,
                     'kich_co'   => $material->kich_co,
                     'kich_thuoc'    => $material->kich_thuoc,
                     'chuan_mat_bich'    => $material->chuan_bich,
@@ -90,18 +91,20 @@ class ManufactureRepository extends AdminRepository
                     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type],
                 ];
 
-                $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$detail->material_type])
-                    ->where($modelAttributes)->first();
-
-                if ($warehouseModel != null) {
-                    $warehouseModel->setQuantity($detail->reality_quantity);
-                    $warehouseModel->save();
-                }
-                else
-                {
-                    $modelAttributes['sl_ton'] = $detail->reality_quantity;
+                if ($detail->reality_quantity >= $material->so_luong_san_xuat) {
                     $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$detail->material_type])
-                        ->create($modelAttributes);
+                        ->where($modelAttributes)->first();
+
+                    if ($warehouseModel != null) {
+                        $warehouseModel->setQuantity($detail->reality_quantity);
+                        $warehouseModel->save();
+                    }
+                    else
+                    {
+                        $modelAttributes['sl_ton'] = $detail->reality_quantity;
+                        $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$detail->material_type])
+                            ->create($modelAttributes);
+                    }
                 }
 
                 $material->merchandise_id = $warehouseModel->l_id;
@@ -133,7 +136,21 @@ class ManufactureRepository extends AdminRepository
         $dataInsertMetals = [];
         $dataInsertNonMetals = [];
         foreach ($warehouses as $index => $warehouse) {
+            // $modelAttributes = [
+            //     'code' => $warehouse->code,
+            //     'vat_lieu'  => $warehouse->loai_vat_lieu,
+            //     'do_day'    => $warehouse->do_day,
+            //     'tieu_chuan' => $warehouse->tieu_chuan,
+            //     'kich_co'   => $warehouse->kich_co,
+            //     'kich_thuoc'    => $warehouse->kich_thuoc,
+            //     'chuan_mat_bich'    => $warehouse->chuan_bich,
+            //     'chuan_gasket'  => $warehouse->chuan_gasket,
+            //     'dvt'   => $warehouse->dv_tinh,
+            //     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$warehouse->material_type],
+            // ];
+
             $row = [
+                'manufacture_quantity' => $warehouse->so_luong_san_xuat,
                 'offer_price_id' => $warehouse->id,
                 'need_quantity' => $warehouse->so_luong,
                 'reality_quantity' => 0
