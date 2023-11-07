@@ -124,7 +124,7 @@ class CoTmpController extends Controller
             if(!$coreCustomer) {
                 $coreCustomer = CoreCustomer::create($dataCoreCustomer);
             }
-
+            // dd($request->all());
             $input = [
                 'code'                   => $this->coRepository->getIdCurrent(),
                 'admin_id'               => Session::get('login')->id,
@@ -355,12 +355,12 @@ class CoTmpController extends Controller
                                 break;
                             case 10:
                                 $more['customer[mst]'] = $val[2];
-                                $more['so_bao_gia']    = $val[10];
+                                $more['so_bao_gia']    = str_replace('Số báo giá : ' ,'',trim($val[9],' ')) ;
                                 break;
                             case 11:
                                 $more['customer[nguoi_nhan]'] = $val[2];
-                                if ($val[10]) {
-                                    $dateBG = \Carbon\Carbon::createFromFormat('d/m/Y', $val[10])->format('Y-m-d');
+                                if (trim($val[9],' ')) {
+                                    $dateBG = \Carbon\Carbon::createFromFormat('d/m/Y', str_replace('Ngày báo giá :  ' ,'',trim($val[9],' ')))->format('Y-m-d');
                                 } else {
                                     $dateBG = null;
                                 }
@@ -372,7 +372,7 @@ class CoTmpController extends Controller
                                 break;
                             case 13:
                                 $more['customer[email]']  = $val[2];
-                                $more['thoi_han_bao_gia'] = $val[10];
+                                $more['thoi_han_bao_gia'] = str_replace('Thời hạn báo giá : ' ,'',trim($val[9],' '));
                                 break;
                         }
                     } else {
@@ -387,6 +387,7 @@ class CoTmpController extends Controller
                         } else {
                             // Ship: Get 4 row
                             // Payment: Get 2 row
+                            if($key > $isMore) dump($key, $isMore, $val);
                             switch ($key - $isMore) {
                                 case 1:
                                     $more['dong_goi_va_van_chuyen'] = $val[3];
