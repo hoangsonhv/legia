@@ -90,6 +90,7 @@ class ReceiptController extends Controller
         $paymentMethods             = DataHelper::getPaymentMethods();
         $banks                      = AdminHelper::getBanks();
 
+        $coTmp = null;
         $receipt = null;
         if ($type && $id) {
             switch ($type) {
@@ -141,6 +142,10 @@ class ReceiptController extends Controller
                         $receipt->note = 'Tạo phiếu thu cho ' . $repository->code . ' ' . $steps[$indexStepPay]['text'];
                         $receipt->step_id = $indexStepPay;
                     }
+                    if($coTmpData = $repository->co_tmp()->first())
+                    {
+                        $coTmp = $coTmpData->warehouses;
+                    }
                     break;
                 case 'payment':
                     $repository = $this->paymentRepository->getPayments([
@@ -157,7 +162,7 @@ class ReceiptController extends Controller
             return redirect()->back()->with('error','Thông tin CO không tồn tại!');
         }
         return view('admins.receipts.create',compact('breadcrumb', 'titleForLayout', 'permissions',
-            'type', 'co', 'files', 'paymentMethods', 'banks', 'receipt'));
+            'type', 'co', 'files', 'paymentMethods', 'banks', 'receipt', 'coTmp'));
     }
 
     public function store(ReceiptRequest $request)
@@ -268,6 +273,7 @@ class ReceiptController extends Controller
             $permissions    = config('permission.permissions');
             $files          = DataHelper::getFiles();
             $paymentMethods = DataHelper::getPaymentMethods();
+            $coTmp = null;
             if ($receipt->payment_id) {
                 $repository = $this->paymentRepository->getPayments([
                         'id'     => $receipt->payment_id,
@@ -286,12 +292,16 @@ class ReceiptController extends Controller
                     $co[$repository->id] = $repository->code;
                     $type                = 'co';
                 }
+                if($coTmpData = $repository->co_tmp()->first())
+                {
+                    $coTmp = $coTmpData->warehouses;
+                }
             }
             if (empty($co)) {
                 return redirect()->back()->with('error','Thông tin CO không tồn tại!');
             }
             return view('admins.receipts.edit',compact('breadcrumb', 'titleForLayout', 'receipt',
-                'permissions', 'type', 'co', 'files', 'paymentMethods', 'banks'));
+                'permissions', 'type', 'co', 'files', 'paymentMethods', 'banks', 'coTmp'));
         }
         return redirect()->route('admin.receipt.index')->with('error', 'Phiếu Thu không tồn tại!');
     }

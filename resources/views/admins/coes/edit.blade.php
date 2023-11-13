@@ -531,6 +531,39 @@
                                 {!! Form::hidden('thanh_toan[amount_money][thoi_gian_no]', null, array('class' => 'form-control data-origin')) !!}
                               </td>
                             </tr>
+                            <tr class="text-center">
+                              <td class="text-right">Thời gian xét duyệt</td>
+                              <td>
+                                @if(isset($receipts[0]))
+                                  @if($receipts[0]['status'] == 2)
+                                    {{ $receipts[0]['approved_date'] }}
+                                  @endif
+                                @endif
+                              </td>
+                              <td>
+                                @if(isset($receipts[1]))
+                                  @if($receipts[1]['status'] == 2)
+                                    {{ $receipts[1]['approved_date'] }}
+                                  @endif
+                                @endif
+                              </td>
+                              <td>
+                                @if(isset($receipts[2]))
+                                  @if($receipts[2]['status'] == 2)
+                                    {{ $receipts[2]['approved_date'] }}
+                                  @endif
+                                @endif
+                              </td>
+                              <td>
+                                @if(isset($receipts[3]))
+                                  @if($receipts[3]['status'] == 2)
+                                    {{ $receipts[3]['approved_date'] }}
+                                  @endif
+                                @endif
+                              </td>
+                              <td>
+                              </td>
+                            </tr>
                             <tr>
                               <td class="text-right">Bộ chứng từ thanh toán</td>
                               <td colspan="6">

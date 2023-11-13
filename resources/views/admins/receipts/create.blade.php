@@ -69,6 +69,11 @@
                 {!! Form::hidden('money_total', $receipt ? $receipt->money_total : null) !!}
               </div>
             </div>
+            @if ($coTmp !== null)
+            <div class="card-body">
+              @include('admins.coes.includes.list-products', ['warehouses' => $coTmp, 'collect' => true, 'notAction' => true])
+            </div>   
+            @endif
             <!-- /.card-body -->
             <div class="card-footer text-right">
               <button type="submit" class="btn btn-primary">Lưu thông tin</button>

@@ -18,6 +18,7 @@ use App\Models\Repositories\ManufactureRepository;
 use Illuminate\Http\Request;
 use App\Models\Co;
 use App\Models\CoTmp;
+use Illuminate\Support\Carbon;
 
 class BaseAdminController extends Controller
 {
@@ -107,6 +108,8 @@ class BaseAdminController extends Controller
                         $coTmp->co_not_approved_id = $repository->id;
                         $coTmp->save();
                     }
+                } else if ($type == 'receipt') {
+                    $repository->approved_date = Carbon::now();
                 }
                 if ($repository->save()) {
                     switch ($type) {
