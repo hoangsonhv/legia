@@ -165,7 +165,7 @@ class DashboardController extends Controller {
             $sql = $sql->where('co_tmps.co_not_approved_id', '>', 0)
                 ->where('co.status', ProcessStatus::Unapproved);
         })
-        ->orderBy('created_at', 'DESC')->paginate(3);
+        ->orderBy('created_at', 'DESC')->paginate(10);
         
         $coes = $this->coRepo->getCoes([
             'confirm_done' => 0,
