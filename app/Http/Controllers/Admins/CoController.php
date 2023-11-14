@@ -24,6 +24,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\ManufactureRepository;
 use App\Helpers\PermissionHelper;
+use Hamcrest\Collection\IsEmptyTraversable;
 use Illuminate\Support\Facades\Validator;
 
 class CoController extends Controller
@@ -271,7 +272,7 @@ class CoController extends Controller
             $chuanGasket = $request->input('chuan_gasket');
             $dvTinh      = $request->input('dv_tinh');
             $soLuong     = $request->input('so_luong');
-            $soLuongSanXuat = $request->input('so_luong_san_xuat');
+            //$soLuongSanXuat = $request->input('so_luong_san_xuat');
             $donGia      = $request->input('don_gia');
             $manufactureType = $request->input('manufacture_type');
             $warehouseGroupId = $request->input('warehouse_group_id');
@@ -290,7 +291,7 @@ class CoController extends Controller
                     'dv_tinh'       => $dvTinh[$key],
                     'so_luong'      => $soLuong[$key],
                     'don_gia'       => $donGia[$key],
-                    'so_luong_san_xuat' => $soLuongSanXuat[$key],
+                    // 'so_luong_san_xuat' => $soLuongSanXuat[$key],
 //                    'material_type' => in_array($key, $request->input('material_type') ?? [])
 //                        ? OfferPrice::MATERIAL_TYPE_METAL : OfferPrice::MATERIAL_TYPE_NON_METAL
                     'manufacture_type' => $manufactureType[$key],
@@ -563,7 +564,7 @@ class CoController extends Controller
 
     public function getDataWarehouse(Request $request) {
         $codes  = $request->input('code');
-        $result = $this->coService->getProductMaterialsInWarehouses($codes, true);
+        $result = $this->coService->getProductMaterialsInWarehouses($codes, false);
         if ($request->ajax()) {
             if ($result->count()) {
                 return ['success' => true, 'data' => $result];
@@ -750,9 +751,16 @@ class CoController extends Controller
         $content = '';
         try {
             $code = $request->input('code');
+            //$lot_no = $request->input('lot_no');
             if ($code) {
                 $params    = [$code];
-                $materials = $this->coService->getProductMaterialsInWarehouses($params, true);
+                if ($request->input('is_request_material', null) != null) {
+                    $materials = $this->coService->getProductMaterialsInWarehouses($params, false);
+                }
+                else
+                {
+                    $materials = $this->coService->getProductMaterialsInWarehouses($params, true);
+                }
                 //dd($materials);
                 $content   = view('admins.requests.includes.list-materials-full',compact('materials'))->render();
             }

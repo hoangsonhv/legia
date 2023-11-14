@@ -70,10 +70,10 @@ class CoService
             if ($codes) {
                 foreach ($codes as $code) {
                     $merchandiseCode = \App\Helpers\AdminHelper::detectProductCode($code);
-                    if(empty($merchandiseCode['merchandise_code'])) {
+                    if(empty($merchandiseCode['merchandise_group_code'])) {
                         continue;
                     }
-                    $merchandiseGroup = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_code'] . '%' )->first();
+                    $merchandiseGroup = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_group_code'] . '%' )->first();
                     $mGroupWarehouses = $merchandiseGroup->warehouses;
                     $merchindiseWarehouse = collect([]);
                     foreach ($mGroupWarehouses as $warehouse) {

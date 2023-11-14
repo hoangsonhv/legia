@@ -148,19 +148,10 @@
                               <th>Đơn vị tính</th>
                               <th>Số lượng tồn</th>
                               @break
-                            @case ('tpkimloai')
-                              <th>Vật liệu</th>
-                              <th>Độ dày</th>
-                              <th>Tiêu chuẩn</th>
-                              <th>Mức áp lực</th>
-                              <th>Kích cỡ</th>
-                              <th>Kích thước</th>
-                              <th>Chuẩn mặt bích</th>
-                              <th>Chuẩn gasket</th>
-                              <th>Đơn vị tính</th>
-                              <th>Số lượng tồn</th>
-                              @break
                            @endswitch
+                           <th>Lot no</th>
+                           <th>Ghi chú</th>
+                           <th>Date</th>
                            <th>&nbsp</th>
                          </tr>
                        </thead>
@@ -261,19 +252,10 @@
                                 <td>{{ $warehouseRemain->dvt }}</td>
                                 <td>{{ $warehouseRemain->sl_ton }}</td>
                                 @break
-                              @case ('tpkimloai')
-                                <td>{{ $warehouseRemain->vat_lieu }}</td>
-                                <td>{{ $warehouseRemain->do_day }}</td>
-                                <td>{{ $warehouseRemain->tieu_chuan }}</td>
-                                <td>{{ $warehouseRemain->muc_ap_luc }}</td>
-                                <td>{{ $warehouseRemain->kich_co }}</td>
-                                <td>{{ $warehouseRemain->kich_thuoc }}</td>
-                                <td>{{ $warehouseRemain->chuan_mat_bich }}</td>
-                                <td>{{ $warehouseRemain->chuan_gasket }}</td>
-                                <td>{{ $warehouseRemain->dvt }}</td>
-                                <td>{{ $warehouseRemain->sl_ton }}</td>
-                                @break
                              @endswitch
+                             <td>{{ $warehouseRemain->lot_no }}</td>
+                             <td>{{ $warehouseRemain->ghi_chu }}</td>
+                             <td>{{ $warehouseRemain->date }}</td>
                              <td>
                                @permission('admin.warehouse-remain.edit')
                                  <a href="{{ route('admin.warehouse-remain.edit', ['model' => $model, 'id' => $warehouseRemain->l_id]) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>

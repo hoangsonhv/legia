@@ -104,8 +104,8 @@
               </td>
               <td>
                   <input type="hidden" name="warehouse_group_id[]" value="{{ $warehouseGroupId }}">
-                <input type="hidden" name="manufacture_type[]" value="{{ $manufactureType }}">
-                {{gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$manufactureType] : ''}}
+                  <input type="hidden" name="manufacture_type[]" value="{{ $manufactureType }}">
+                  {{gettype($manufactureType) == 'integer' ? \App\Models\MerchandiseGroup::OPERATION_TYPE[$manufactureType] : ''}}
               </td>
               <td>
                 <input type="hidden" name="dv_tinh[]" value="{{ $dvTinh }}">

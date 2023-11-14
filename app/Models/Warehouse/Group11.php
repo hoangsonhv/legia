@@ -37,6 +37,9 @@ class Group11 extends BaseWarehouseCommon
             'chuan_mat_bich'    => $this->chuan_mat_bich,
             'chuan_gasket'  => $this->chuan_gasket,
             'dvt'   => $this->dvt,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
 

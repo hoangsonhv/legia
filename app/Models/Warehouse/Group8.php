@@ -25,6 +25,9 @@ class Group8 extends BaseWarehouseCommon
         return [
             'vat_lieu' => $this->vat_lieu,
             'size' => $this->size,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
        

@@ -158,17 +158,13 @@ class WarehouseExportController extends Controller
             if (!empty($products)) {
                 $model->products()->createMany($products);
                 
-                // Increase material in base warehouse
+                // Decrease material in base warehouse
                 foreach ($products as $product) {
                     if ($product['merchandise_id'] > 0) {
                         $base_warehouse = BaseWarehouseCommon::find($product['merchandise_id']);
                         $group_warehouse = WarehouseHelper::getModel($base_warehouse->model_type)->find($product['merchandise_id']);
                         $group_warehouse->setQuantity($product['quantity_reality'] * (-1));
                         $group_warehouse->save();
-                    }
-                    else
-                    {
-                        // Decrease ở kho thành phẩm
                     }
                 }
 

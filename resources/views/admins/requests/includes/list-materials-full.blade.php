@@ -24,9 +24,9 @@
         <th class="align-middle">W2</th>
         <th class="align-middle">L2</th> --}}
         {{-- <th class="align-middle">SL - Tấm</th> --}}
-        <th class="align-middle">Diện tích</th>
-        <th class="align-middle">Lot No</th>
-        <th class="align-middle">Date</th>
+        {{-- <th class="align-middle">Diện tích</th> --}}
+        {{-- <th class="align-middle">Lot No</th>
+        <th class="align-middle">Date</th> --}}
         <th class="align-middle">Tồn kho</th>
         {{-- <th class="align-middle">Tồn SL - Tấm</th>
         <th class="align-middle">Tồn SL - m2</th> --}}
@@ -73,9 +73,9 @@
             <td class="">{{ $material->w2 }}</td>
             <td class="">{{ $material->l2 }}</td> --}}
             {{-- <td class="">{{ $material->sl_tam }}</td> --}}
-            <td class="">{{ $material->creage }}</td>
-            <td class="">{{ $material->lot_no }}</td>
-            <td class="">{{ $material->date }}</td>
+            {{-- <td class="">{{ $material->creage }}</td> --}}
+            {{-- <td class="">{{ $material->lot_no }}</td>
+            <td class="">{{ $material->date }}</td> --}}
             <td align="left">
               <ul style="list-style: circle">
                 @foreach ($material->ton_kho as $properties => $item)

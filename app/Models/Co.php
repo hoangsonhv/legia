@@ -75,6 +75,10 @@ class Co extends Model
     //     return $this->hasMany(Coable::class);
     // }
 
+    public function getRawCodeAttribute() {
+        return str_replace('CO', '', $this->code);
+    }
+
     public function payment() {
         return $this->morphedByMany(Payment::class, 'coables');
     }

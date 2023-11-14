@@ -167,6 +167,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
 		Route::patch('/edit/{model}/{id}', [WarehousePlateController::class, 'update'])->name('admin.warehouse-plate.update');
 		Route::get('/destroy/{model}/{id}', [WarehousePlateController::class, 'destroy'])->name('admin.warehouse-plate.destroy');
 		Route::post('import/{model}', [WarehouseController::class, 'import'])->name('admin.warehouse-plate.import');
+		Route::get('history/{model}', [WarehousePlateController::class, 'history'])->name('admin.warehouse-plate.history');
 	});
 	/* WarehouseSpw */
 	Route::group(['prefix' => 'warehouse-spw'], function() {

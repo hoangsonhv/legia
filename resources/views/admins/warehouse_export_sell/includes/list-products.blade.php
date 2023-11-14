@@ -32,7 +32,7 @@
               <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}">
               <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}">
             </td>
-            <td class="">
+            <td class="vat-lieu">
               <textarea class="form-control" name="product[name][]" rows="1">{{ $product['name'] }}</textarea>
             </td>
             <td class="">
@@ -59,7 +59,7 @@
     <tfoot>
       <tr align="left">
         <td colspan="9">
-            <button type="button" class="btn btn-success" id="add-row-material">+ Thêm</button>
+            <button type="button" class="btn btn-success" id="display-material">+ Thêm</button>
         </td>
       </tr>
       <tr align="right">

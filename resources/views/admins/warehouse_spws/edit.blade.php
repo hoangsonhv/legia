@@ -199,10 +199,6 @@
                     <label for="kich_co">Kích cỡ</label>
                     {!! Form::text('kich_co', null, array('class' => 'form-control')) !!}
                   </div>
-                  <div class="form-group">
-                    <label for="sl_cai">SL - Cái</label>
-                    {!! Form::number('sl_cai', null, array('class' => 'form-control', 'step' => 'any')) !!}
-                  </div>
                   @break
                 @case ('vanhtinhinnerswg')
                   <div class="form-group">

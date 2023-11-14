@@ -29,6 +29,9 @@ class Group13 extends BaseWarehouseCommon
             'do_day'  => $this->do_day,
             'd3'   => $this->d3,
             'd4'   => $this->d4,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
 

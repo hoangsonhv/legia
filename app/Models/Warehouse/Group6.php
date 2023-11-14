@@ -26,6 +26,9 @@ class Group6 extends BaseWarehouseCommon
         return [
             'mo_ta' => $this->mo_ta,
             'cho_may_moc_thiet_bi' => $this->cho_may_moc_thiet_bi,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
    

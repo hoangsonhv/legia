@@ -157,10 +157,10 @@ class DashboardController extends Controller {
         ->when($code != '',function($sql) use ($code){
             $sql = $sql->where('co_tmps.code', 'like', "%$code%");})
         ->leftJoin('co', 'co.id', 'co_tmps.co_id')
+        ->where('co_tmps.co_id', 0)
         ->where(function($sql) use ($limitApprovalCg) {
-            $sql = $sql->where('co_tmps.status', ProcessStatus::Approved)
-                ->orWhere('co_tmps.tong_gia', '<', $limitApprovalCg)
-                ->where('co_tmps.co_id', 0);
+            $sql = $sql->where('co_tmps.status', '<=', ProcessStatus::Approved)
+                ->orWhere('co_tmps.tong_gia', '<', $limitApprovalCg);
         })->orWhere(function($sql) {
             $sql = $sql->where('co_tmps.co_not_approved_id', '>', 0)
                 ->where('co.status', ProcessStatus::Unapproved);

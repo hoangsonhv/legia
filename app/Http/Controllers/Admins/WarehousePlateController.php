@@ -58,6 +58,28 @@ class WarehousePlateController extends Controller
         return view('admins.warehouse_plates.index',compact('types', 'breadcrumb', 'titleForLayout', 'warehousePlates', 'model'));
     }
 
+    public function history(Request $request, $model=null)
+    {
+        // dd($request->all());
+        if (!$model) {
+            $model = 'bia';
+        }
+        $nameWarehouse = $this->checkExistModel($model);
+        $types         = DataHelper::getModelWarehouses('plate');
+
+        $breadcrumb                 = $this->menu;
+        $breadcrumb['data']['list'] = ['label'  => 'Lịch sử xuất ' . $nameWarehouse];
+        $titleForLayout             = $breadcrumb['data']['list']['label'];
+        $params                     = array();
+        // search
+        if($request->has('key_word')) {
+            $params['key_word'] = $request->key_word;
+        }
+        $warehousePlates = $this->warehouseService->search($model,$params);
+        $request->flash();
+        return view('admins.warehouse_plates.history',compact('types', 'breadcrumb', 'titleForLayout', 'warehousePlates', 'model'));
+    }
+
     public function create($model)
     {
         $nameWarehouse = $this->checkExistModel($model);

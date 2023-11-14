@@ -31,6 +31,9 @@ class Group2 extends BaseWarehouseCommon
             'size' => $this->size,
             'trong_luong_cuon' => $this->trong_luong_cuon,
             'm_cuon' => $this->m_cuon,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
    

@@ -17,9 +17,9 @@ class BaseRepository
         if ($data) {
             // $increment = $data->id + 1;
             $increment = $data[0]->Auto_increment;
-            return $this->prefix_id . sprintf("%010d", $increment);
+            return $this->prefix_id . sprintf("%07d", $increment);
         }
-        return $this->prefix_id . sprintf("%010d", 1);
+        return $this->prefix_id . sprintf("%07d", 1);
     }
 
     public function setQueryCondition(&$query, array $arrCondition)

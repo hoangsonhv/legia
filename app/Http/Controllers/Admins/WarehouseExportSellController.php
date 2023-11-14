@@ -11,6 +11,7 @@ use App\Models\Receipt;
 use App\Models\WarehouseExportSell;
 use Illuminate\Http\Request;
 use App\Enums\ProcessStatus;
+use App\Helpers\WarehouseHelper;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\WarehouseExportSellRequest;
 use App\Models\Repositories\WarehouseExportSellRepository;
@@ -18,6 +19,8 @@ use App\Models\Repositories\CoRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\CoStepHistory;
+use App\Models\MerchandiseGroup;
+use App\Models\Warehouse\BaseWarehouseCommon;
 use App\Models\Warehouse\Group11;
 
 class WarehouseExportSellController extends Controller
@@ -117,6 +120,13 @@ class WarehouseExportSellController extends Controller
             $products = [];
             $warehouses = $coModel->warehouses->toArray();
             foreach ($warehouses as $warehouse) {
+                if ($warehouse['manufacture_type'] == MerchandiseGroup::COMMERCE) {
+                    $merchandise_id = 0;
+                }
+                else
+                {
+                    $merchandise_id = $warehouse['merchandise_id'];
+                }
                 array_push($products, [
                     'code' => $warehouse['code'],
                     'name' => $warehouse['loai_vat_lieu'],
@@ -124,7 +134,7 @@ class WarehouseExportSellController extends Controller
                     'quantity' => $warehouse['so_luong'],
                     'unit_price' => $warehouse['don_gia'],
                     'into_money' => $warehouse['don_gia']*$warehouse['so_luong'],
-                    'merchandise_id' => $warehouse['merchandise_id'],
+                    'merchandise_id' => $merchandise_id,
                 ]);
             }
         }
@@ -195,12 +205,30 @@ class WarehouseExportSellController extends Controller
             if (!empty($products)) {
                 $model->products()->createMany($products);
 
-                // Decrease material in base warehouse
+                // Decrease material in warehouse
                 foreach ($products as $product) {
                     if ($product['merchandise_id'] > 0) {
-                        $warehouseModel = Group11::find($product['merchandise_id']);
+                        $baseWarehouse = BaseWarehouseCommon::find($product['merchandise_id']);
+                        
+                        $warehouseModel = WarehouseHelper::getModel($baseWarehouse->model_type)
+                            ->find($product['merchandise_id']);
+
                         $warehouseModel->setQuantity($product['quantity'] * (-1));
                         $warehouseModel->save();
+                    }
+                    else
+                    {
+                        // $product['merchandise_id'] == 0 is commerce
+                        $merchandise = AdminHelper::detectProductCode($product['code']);
+                        if (isset($merchandise['merchandise_id'])) {
+                            $baseWarehouse = BaseWarehouseCommon::find($merchandise['merchandise_id']);
+                        
+                            $warehouseModel = WarehouseHelper::getModel($baseWarehouse->model_type)
+                                ->find($merchandise['merchandise_id']);
+
+                            $warehouseModel->setQuantity($product['quantity'] * (-1));
+                            $warehouseModel->save();
+                        }
                     }
                 }
 

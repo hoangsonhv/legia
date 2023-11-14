@@ -39,15 +39,15 @@
                     <td class="sequence">{{ $index + 1 }}</td>
                     <td class="code">
                         <input type="hidden" name="material[merchandise_id][]" value="{{ $material->merchandise_id }}">
-                        <input class="form-control" type="text" name="material[code][]" value="{{ $material->code }}">
+                        <input class="form-control" type="text" name="material[code][]" value="{{ $material->code }}" readonly>
                     </td>
                     <td class="">
                         <textarea class="form-control" name="material[mo_ta][]"
-                                  rows="1">{{ $material->mo_ta }}</textarea>
+                                  rows="1" readonly>{{ $material->mo_ta }}</textarea>
                     </td>
                     <td class="">
                         <input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]"
-                               value="{{ $material->dv_tinh }}">
+                               value="{{ $material->dv_tinh }}" readonly>
                     </td>
                     <td class="">
                         <input class="form-control" style="width: 120px" min="1" type="text"
@@ -78,8 +78,8 @@
                 <td colspan="9">
                         <button type="button" class="btn btn-success" id="display-material">+ Thêm vật liệu từ KHO
                         </button>
-                        <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>
-                        <button type="button" class="btn btn-success" id="add-row-material">+ Thêm</button>
+                        {{-- <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>
+                        <button type="button" class="btn btn-success" id="add-row-material">+ Thêm</button> --}}
                 </td>
             </tr>
         </tfoot>

@@ -27,6 +27,9 @@ class Group12 extends BaseWarehouseCommon
             'mo_ta'    => $this->mo_ta,
             'bo_phan'  => $this->bo_phan,
             'dvt'   => $this->dvt,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
        

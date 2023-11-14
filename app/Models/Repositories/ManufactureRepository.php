@@ -10,6 +10,7 @@ use App\Models\ManufactureDetail;
 use Illuminate\Support\Facades\DB;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\CoRepository;
+use App\Models\WarehouseGroup;
 use Illuminate\Support\Facades\Session;
 
 class ManufactureRepository extends AdminRepository
@@ -70,11 +71,15 @@ class ManufactureRepository extends AdminRepository
     public function updateIsCompleted($id)
     {
         $query = ManufactureDetail::where('manufacture_id', $id)
-            ->whereRaw('reality_quantity < manufacture_quantity')
+            ->whereRaw('reality_quantity < need_quantity')
             ->get();
-
+        
         if(!$query->count()) {
             $details = ManufactureDetail::where('manufacture_id', $id)->get();
+            $date = date('Y-m-d');
+
+            $manufacture = Manufacture::find($id);
+            $co = Co::where('id', $manufacture->co_id)->first();
 
             foreach ($details as $index => $detail) {
                 $material = $detail->offerPrice;
@@ -88,23 +93,18 @@ class ManufactureRepository extends AdminRepository
                     'chuan_mat_bich'    => $material->chuan_bich,
                     'chuan_gasket'  => $material->chuan_gasket,
                     'dvt'   => $material->dv_tinh,
+                    'lot_no' => $co->raw_code,
+                    'ghi_chu' => 'Đầu kỳ',
+                    'date' => $date,
                     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type],
                 ];
 
-                if ($detail->reality_quantity >= $material->so_luong_san_xuat) {
-                    $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$detail->material_type])
-                        ->where($modelAttributes)->first();
-
-                    if ($warehouseModel != null) {
-                        $warehouseModel->setQuantity($detail->reality_quantity);
-                        $warehouseModel->save();
-                    }
-                    else
-                    {
-                        $modelAttributes['sl_ton'] = $detail->reality_quantity;
-                        $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$detail->material_type])
-                            ->create($modelAttributes);
-                    }
+                if ($detail->reality_quantity >= $material->need_quantity) {
+                    $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type])
+                        ->create($modelAttributes);
+                    
+                    $warehouseModel->setQuantity($detail->reality_quantity);
+                    $warehouseModel->save();
                 }
 
                 $material->merchandise_id = $warehouseModel->l_id;
@@ -148,9 +148,12 @@ class ManufactureRepository extends AdminRepository
             //     'dvt'   => $warehouse->dv_tinh,
             //     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$warehouse->material_type],
             // ];
+            if ($warehouse->manufacture_type != WarehouseGroup::TYPE_MANUFACTURE) {
+                continue;
+            }
 
             $row = [
-                'manufacture_quantity' => $warehouse->so_luong_san_xuat,
+                'manufacture_quantity' => $warehouse->need_quantity,
                 'offer_price_id' => $warehouse->id,
                 'need_quantity' => $warehouse->so_luong,
                 'reality_quantity' => 0
