@@ -25,6 +25,7 @@ use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\ManufactureRepository;
 use App\Helpers\PermissionHelper;
 use Hamcrest\Collection\IsEmptyTraversable;
+use Illuminate\Support\Facades\Validator;
 
 class CoController extends Controller
 {
@@ -142,12 +143,14 @@ class CoController extends Controller
 
     public function store(CoRequest $request)
     {
-//        try {
-            // $warehouses = $this->getDataWarehouse($request);
-            // if (!$warehouses->count()) {
-            //     throw new \Exception('Data not found.');
-            // }
-
+            if (
+                $request->thanh_toan['percent']['truoc_khi_lam_hang'] + 
+                $request->thanh_toan['percent']['truoc_khi_giao_hang'] + 
+                $request->thanh_toan['percent']['ngay_khi_giao_hang'] + 
+                $request->thanh_toan['percent']['sau_khi_giao_hang_va_cttt'] != 100
+            ) {
+                return redirect()->route('admin.co.create')->withErrors(["thanh_toan"=>"Vui lòng nhập đủ 100%"]);
+            }
             $files             = $request->file('po_document');
             $poDocuments = [];
             if ($files) {
