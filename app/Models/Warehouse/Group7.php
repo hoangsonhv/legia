@@ -34,6 +34,9 @@ class Group7 extends BaseWarehouseCommon
             'outer'  => $this->outer,
             'thick'  => $this->thick,
             'tieu_chuan'  => $this->tieu_chuan,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
    

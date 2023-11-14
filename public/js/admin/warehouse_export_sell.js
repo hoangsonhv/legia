@@ -98,10 +98,11 @@ $(function () {
                             if (eleRow.find('td.check-data input:checked').val()) {
                                 lengthTrForm += 1;
                                 var opts = {
+                                    merchandise_id: eleRow.find('td.merchandise_id input').val(),
                                     code: eleRow.find('td.code input').val(),
                                     vat_lieu: eleRow.find('td.vat-lieu input').val()
                                 };
-                                $(eleForm).append(getItem(lengthTrForm, 'Tấm', opts));
+                                $(eleForm).append(getItem(lengthTrForm, 'Cái', opts));
                                 // Add code
                                 aCode.push(eleRow.find('td.code input').val());
                             }
@@ -227,8 +228,8 @@ function getItem(index, unit, opts) {
     return '<tr align="center">'
         + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá sản phẩm" onclick="deteleItem(this)"></i></td>'
         + '<td class="sequence">'+index+'</td>'
-        + '<td class="code"><input class="form-control" type="text" name="product[code][]" value=""></td>'
-        + '<td class=""><textarea class="form-control" name="product[name][]" rows="1"></textarea></td>'
+        + '<td class="code"><input type="hidden" name="product[merchandise_id][]" value="'+opts.merchandise_id+'"><input class="form-control" type="text" name="product[code][]" value="'+opts.code+'"></td>'
+        + '<td class=""><textarea class="form-control" name="product[name][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
         + '<td class=""><input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
         + '<td class=""><input class="form-control data-quantity" style="width: 120px" type="number" name="product[quantity][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
         + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[unit_price][]" onKeyUp="return getNumberFormatUnitPrice(this)" min="1" value="">'

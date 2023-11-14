@@ -14,7 +14,7 @@
         <div class="card">
           <div class="card-header">
             <div class="card-tools">
-              {!! Form::open(array('route' => ['admin.warehouse-plate.index', $model], 'method' => 'get')) !!}
+              {!! Form::open(array('route' => ['admin.warehouse-plate.history', $model], 'method' => 'get')) !!}
               <div class="input-group">
                 <input type="text" name="key_word" class="form-control float-right" placeholder="Từ khoá" value="{{old('key_word')}}">
                 <div class="input-group-append">
@@ -22,16 +22,6 @@
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
-                @permission('admin.warehouse-plate.import')
-                <div class="ml-3">
-                  <button type="button" class="btn btn-success import-plates" data-toggle="modal" data-target="#import_plates_modal">Import dữ liệu</button>
-                </div>
-                @endpermission
-                @permission('admin.warehouse-plate.create')
-                <div class="ml-3">
-                  <a href="{{ route('admin.warehouse-plate.create', ['model' => $model]) }}" class="btn btn-primary">Thêm vật liệu</a>
-                </div>
-                @endpermission
               </div>
               {!! Form::close() !!}
             </div>

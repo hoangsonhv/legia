@@ -15,7 +15,8 @@
         <tr align="center">
             @if(empty($notAction))
                 @php
-                    $colspan = empty($isCoTmp) ? 17 : 16;
+                    // $colspan = empty($isCoTmp) ? 17 : 17;
+                    $colspan = 16;
                 @endphp
                 <th>&nbsp</th>
             @else
@@ -23,8 +24,7 @@
                     $colspan = 14;
                 @endphp
             @endif
-            <th class="align-middle">Số TT
-            </th>
+            <th class="align-middle">Số TT</th>
             <th class="align-middle">Mã HH</th>
             <th class="align-middle">Loại vật liệu</th>
             <th class="align-middle">Độ dày (mm)</th>
@@ -41,7 +41,7 @@
 {{--            @endif--}}
             <th class="align-middle">Số lượng cần</th>
             @if(empty($notAction))
-                <th class="align-middle">Số lượng sản xuất</th>
+                {{-- <th class="align-middle">Số lượng sản xuất</th> --}}
                 <th class="align-middle">Tồn kho</th>
             @endif
             <th class="align-middle {{$hiddenShowPrice ? 'd-none' : ''}}">Đơn giá (VNĐ)</th>
@@ -88,9 +88,8 @@
                         //     'dvt'   => $dvTinh,
                         //     'model_type' => $materialType,
                         // ];
-                        $tonKho = \App\Helpers\AdminHelper::countProductInWarehouse($detectCode['merchandise_code_in_warehouse'], $materialType);
+                        $tonKho = '---';
                     }
-                    $soLuongSanXuat = $tonKho >= $soLuong ? 0 : $soLuong - $tonKho;
                 @endphp
                 <tr align="center">
                     @if(empty($notAction))
@@ -182,10 +181,11 @@
                             <input style="width: 50px;" onChange="caclTotalMoney(this)" type="number" min="1"
                                    name="so_luong[]" value="{{ $soLuong }}">
                         </td>
-                        <td>
+                        {{-- <td>
                             <input style="width: 50px;" type="number" min="0"
-                                   name="so_luong_san_xuat[]" value="{{ $soLuongSanXuat }}">
-                        </td>
+                                   name="so_luong_san_xuat[]" value="{{ $soLuongSanXuat }}"
+                                   @if ($manufactureType == \App\Models\MerchandiseGroup::COMMERCE) readonly @endif>
+                        </td> --}}
                         <td>
                             <span class="text-danger"><b>{{$tonKho}}</b></span>
                         </td>

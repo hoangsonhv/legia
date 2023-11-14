@@ -29,6 +29,9 @@ class Group10 extends BaseWarehouseCommon
             'vat_lieu' => $this->vat_lieu,
             'size' => $this->size,
             'm_cay' => $this->std,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
        

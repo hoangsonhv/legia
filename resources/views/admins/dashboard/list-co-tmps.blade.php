@@ -132,16 +132,44 @@
                     @endif
                 </td>
                 <td>
-                    <div class="co-alert-warning w-100">
-                        Đang chờ tạo CO
-                    </div>
+                    @if($coTmp->tong_gia < $limitApprovalCg)
+                        <div class="co-alert-warning w-100">
+                            Đang chờ tạo CO
+                        </div>
+                    @else
+                        @if($coTmp->status == \App\Enums\ProcessStatus::Pending)
+                            <div class="co-alert-warning w-100">
+                                Đang chờ xét duyệt
+                            </div>
+                        @else
+                            <div class="co-alert-warning w-100">
+                                Đang chờ tạo CO
+                            </div>
+                        @endif
+                    @endif
                 </td>
                 <td>
-                    <a href="{{route('admin.co.create', ['coTmpId' => $coTmp->id])}}" target="_blank">
-                        <button class="btn btn-success">
-                            Tạo CO
-                        </button>
-                    </a>
+                    @if($coTmp->tong_gia < $limitApprovalCg)
+                        <a href="{{route('admin.co.create', ['coTmpId' => $coTmp->id])}}" target="_blank">
+                            <button class="btn btn-success">
+                                Tạo CO
+                            </button>
+                        </a>
+                    @else
+                        @if($coTmp->status == \App\Enums\ProcessStatus::Pending)
+                            <a href="{{route('admin.co-tmp.edit', $coTmp->id)}}" target="_blank">
+                                <button class="btn btn-success">
+                                    Duyệt khảo sát
+                                </button>
+                            </a>
+                        @else
+                            <a href="{{route('admin.co.create', ['coTmpId' => $coTmp->id])}}" target="_blank">
+                                <button class="btn btn-success">
+                                    Tạo CO
+                                </button>
+                            </a>
+                        @endif
+                    @endif
                 </td>
             </tr>
             @endforeach

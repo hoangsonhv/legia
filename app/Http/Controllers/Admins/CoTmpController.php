@@ -303,7 +303,7 @@ class CoTmpController extends Controller
 
     public function getDataWarehouse(Request $request) {
         $codes  = $request->input('code');
-        $result = $this->coService->getProductMaterialsInWarehouses($codes, true);
+        $result = $this->coService->getProductMaterialsInWarehouses($codes, false);
         if ($request->ajax()) {
             if ($result->count()) {
                 return ['success' => true, 'data' => $result];
@@ -317,7 +317,7 @@ class CoTmpController extends Controller
     public function getDataInAllWarehouse(Request $request)
     {
         $codes  = $request->input('code');
-        $result = $this->coService->getProductMaterialsInWarehouses($codes, true);
+        $result = $this->coService->getProductMaterialsInWarehouses($codes, false);
         if ($request->ajax()) {
             if ($result->count()) {
                 return ['success' => true, 'data' => $result];

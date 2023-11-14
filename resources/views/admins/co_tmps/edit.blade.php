@@ -224,12 +224,14 @@
 {{--                      <label for="thanh_toan">Thanh toán</label>--}}
 {{--                      <p class="text-danger">Giá trị đơn hàng: <span class="money_total"><b></b></span></p>--}}
 
-                      <h5 class="{{!\App\Helpers\PermissionHelper::hasPermission('admin.co.price') ? 'd-none' : ''}}">
+                      {{-- <h5 class="{{!\App\Helpers\PermissionHelper::hasPermission('admin.co.price') ? 'd-none' : ''}}"> --}}
+                      <h5 class="">
                         <p style="width: fit-content; padding: 5px 10px; border-radius: 5px" class="text-danger bg-warning">
                           <b>Giá trị đơn hàng: <span class="money_total"><b></b></span></b>
                         </p>
                       </h5>
-                      <div class="table-responsive p-0 {{!\App\Helpers\PermissionHelper::hasPermission('admin.co.price') ? 'd-none' : ''}}">
+                      {{-- <div class="table-responsive p-0 {{!\App\Helpers\PermissionHelper::hasPermission('admin.co.price') ? 'd-none' : ''}}"> --}}
+                      <div class="table-responsive p-0 ">
                         <table class="table table-head-fixed table-bordered text-wrap">
                           <thead>
                             <tr class="text-center">
@@ -313,7 +315,7 @@
                                     $valVnd = null;
                                   }
                                 @endphp
-                                {!! Form::text('tmp[amount_money][thoi_gian_no]', $valVnd, array('class' => 'form-control text-center', 'onKeyUp' => 'return getNumberFormat(this)')) !!}
+                                {!! Form::text('tmp[amount_money][thoi_gian_no]', $valVnd, array('class' => 'form-control text-center d-none', 'onKeyUp' => 'return getNumberFormat(this)')) !!}
                                 {!! Form::hidden('thanh_toan[amount_money][thoi_gian_no]', null, array('class' => 'form-control data-origin')) !!}
                               </td>
                             </tr>

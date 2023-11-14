@@ -112,7 +112,6 @@
                               <th>Filler</th>
                               <th>Outer</th>
                               <th>Thick</th>
-                              <th>SL - Cái</th>
                               <th>Tồn SL - Cái</th>
                               @break
                             @case ('vanhtinhinnerswg')
@@ -132,6 +131,9 @@
                               <th>Tồn SL - Cái</th>
                               @break
                            @endswitch
+                           <th>Lot no</th>
+                           <th>Ghi chú</th>
+                           <th>Date</th>
                            <th>&nbsp</th>
                          </tr>
                        </thead>
@@ -196,7 +198,6 @@
                                 <td>{{ $warehouseSpw->filler }}</td>
                                 <td>{{ $warehouseSpw->outer }}</td>
                                 <td>{{ $warehouseSpw->thick }}</td>
-                                <td>{{ $warehouseSpw->sl_cai }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai }}</td>
                                 @break
                               @case ('vanhtinhinnerswg')
@@ -216,6 +217,9 @@
                                 <td>{{ $warehouseSpw->ton_sl_cai }}</td>
                                 @break
                              @endswitch
+                             <td>{{ $warehouseSpw->lot_no }}</td>
+                             <td>{{ $warehouseSpw->ghi_chu }}</td>
+                             <td>{{ $warehouseSpw->date }}</td>
                              <td>
                                @permission('admin.warehouse-spw.edit')
                                  <a href="{{ route('admin.warehouse-spw.edit', ['model' => $model, 'id' => $warehouseSpw->l_id]) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>

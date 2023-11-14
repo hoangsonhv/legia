@@ -29,6 +29,9 @@ class Group4 extends BaseWarehouseCommon
             'do_day' => $this->size,
             'd1' => $this->d1,
             'd2' => $this->d2,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
    

@@ -360,8 +360,9 @@ class AdminHelper
         $result = [
             'manufacture_type' => null,
             'merchandise_group_id' => null,
-            'merchandise_code' => null,
+            'merchandise_group_code' => null,
             'merchandise_code_in_warehouse' => null,
+            'merchandise_id' => null,
             'material_type' => null,
         ];
         $arrCode = explode(" ", strtoupper($code));
@@ -372,21 +373,22 @@ class AdminHelper
         $codeInWarehouseTmp = '';
         foreach ($arrCode as $value) {
             if($merchandise_code) {
-                $result['merchandise_code'] = $result['merchandise_code'] ?? $merchandise_code->infix_code;
+                $result['merchandise_group_code'] = $result['merchandise_group_code'] ?? $merchandise_code->infix_code;
                 $infix_codes = MerchandiseCode::where('prefix_code', $merchandise_code->infix_code)->where('code', $value)->first();
                 $codeInWarehouseTmp = $codeInWarehouseTmp ? $codeInWarehouseTmp . ' ' . $value : $value;
-                $codeInWarehouse = BaseWarehouseCommon::where('code', $codeInWarehouseTmp)->exists();
-                if($codeInWarehouse) {
+                $codeInWarehouse = BaseWarehouseCommon::where('code', $codeInWarehouseTmp)->first();
+                if($codeInWarehouse != null) {
                     $result['merchandise_code_in_warehouse'] = $codeInWarehouseTmp;
+                    $result['merchandise_id'] = $codeInWarehouse->l_id;
                 }
                 if(!$infix_codes) {
                     continue;
                 }
-                $result['merchandise_code'] =  $result['merchandise_code'] . '_' . $infix_codes->infix_code;
+                $result['merchandise_group_code'] =  $result['merchandise_group_code'] . '_' . $infix_codes->infix_code;
 
             }
         }
-        $merchandise_group = MerchandiseGroup::where('code' , $result['merchandise_code'])->first();
+        $merchandise_group = MerchandiseGroup::where('code' , $result['merchandise_group_code'])->first();
         $result['manufacture_type'] = $merchandise_group ? $merchandise_group->operation_type : null;
         $result['material_type'] = $merchandise_group ? $merchandise_group->factory_type : null;
         $result['merchandise_group_id'] = $merchandise_group ? $merchandise_group->id : null;
@@ -395,20 +397,27 @@ class AdminHelper
 
     //product COMMERCE
     public static function countProductEcomInWarehouse($codeInWareHouse, $merchandise_group_id) {
-        $merchandise_group = MerchandiseGroup::where('id',$merchandise_group_id)->first();
+        $merchandise_group = MerchandiseGroup::where('id',$merchandise_group_id)
+            ->where('operation_type', MerchandiseGroup::COMMERCE)->first();
+        
         if ($codeInWareHouse == '' || empty($codeInWareHouse) || empty($merchandise_group)) {
             return 0;
         }
+
+        $tonKho = 0;
         $warehouseModel = $merchandise_group->warehouses->first();
         $baseWarehouseRepository = new BaseWarehouseRepository();
         $baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouseModel->id));
-        $result = $baseWarehouseRepository->model->where('code', $codeInWareHouse)
-            ->where('model_type' , $warehouseModel->id)->first();
-        if ($result != null) {
-            return $result['ton_kho'][array_keys($result['ton_kho'])[0]];
+        $results = $baseWarehouseRepository->model->where('code', $codeInWareHouse)
+            ->where('model_type' , $warehouseModel->id)->get();
+
+        if ($results != null) {
+            foreach ($results as $result) {
+                $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];
+            }
         }
 
-        return 0;
+        return $tonKho;
     }
 
     //product thành phẩm

@@ -5,9 +5,12 @@ namespace App\Services;
 use App\Helpers\AdminHelper;
 use App\Helpers\DataHelper;
 use App\Helpers\WarehouseHelper;
+use App\Models\Co;
 use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
+use App\Models\Warehouse\BaseWarehouseCommon;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Throw_;
 
 class WarehouseService
@@ -191,6 +194,31 @@ class WarehouseService
         $query->where('model_type',$this->modelType);
         $query->orderBy('l_id','DESC');
         return $query->paginate($this->paginate());
+    }
+
+    public function history($model, $params) {
+        if ($model == 'tpphikimloai' || $model == 'thanhphamswg') {
+            $exports = DB::table('warehouse_export_sell_products')
+                ->join('base_warehouses', 'base_warehouses.l_id', '=', 'warehouse_export_sell_product.merchandise_id')
+                ->join('warehouse_export_sells', 'warehouse_export_sells.id', '=', 'warehouse_export_sell_products.warehouse_export_sell_id')
+                ->where('warehouse_export_sell_product.merchandise_id', '<>', null)
+                ->get();
+        }
+        else {
+            $exports = DB::table('warehouse_export_products')
+                ->join('base_warehouses', 'base_warehouses.l_id', '=', 'warehouse_export_products.merchandise_id')
+                ->join('warehouse_exports', 'warehouse_exports.id', '=', 'warehouse_export_products.warehouse_export_id')
+                ->where('warehouse_export_products.merchandise_id', '<>', null)
+                ->get();
+        }
+        
+        $histories = array();
+        foreach ($exports as $export) {
+            $co = Co::where('id', $export->co_id)->first();
+            $nhapTonCo = BaseWarehouseCommon::where('lot_no', '=', $co->raw_code);
+
+            
+        }
     }
 
     public function paginate(): int {

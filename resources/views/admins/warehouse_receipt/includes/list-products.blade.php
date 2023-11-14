@@ -20,11 +20,15 @@
         <th class="align-middle">Số lượng (Thực nhập)</th>
         <th class="align-middle">Đơn giá</th>
         <th class="align-middle">Thành tiền</th>
+        <th class="align-middle">&nbsp</th>
       </tr>
     </thead>
     <tbody>
       @if(!empty($products))
         @foreach($products as $index => $product)
+          @php
+            $merchandise = \App\Models\Warehouse\BaseWarehouseCommon::find($product['merchandise_id']);
+          @endphp
           <tr align="center">
             <td class="">
               <i class="fas fa-minus-circle text-danger delete-item" title="Xoá hàng hoá" onclick="deteleItem(this)"></i>
@@ -32,13 +36,13 @@
             <td class="sequence">{{ $index + 1 }}</td>
             <td class="code">
               <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}" />
-              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" />
+              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly />
             </td>
             <td class="">
-              <textarea class="form-control" name="product[name][]" rows="1">{{ $product['name'] }}</textarea>
+              <textarea class="form-control" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
             </td>
             <td class="">
-              <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}">
+              <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
             </td>
             <td class="">
               <input class="form-control" style="width: 70px" name="product[quantity_doc][]" value="{{ $product['quantity_doc'] }}">
@@ -57,13 +61,16 @@
                      onKeyUp="return getNumberFormat(this)" value="{{ number_format($product['into_money']) }}">
               <input class="form-control data-origin-into-money" type="hidden" name="product[into_money][]" value="{{$product['into_money']}}">
             </td>
+            <td>
+              <a target="_blank" href="{{ URL::to('/admin' . \App\Helpers\WarehouseHelper::warehouseEditPath($merchandise->model_type) . $merchandise->l_id) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>
+            </td>
           </tr>
         @endforeach
       @endif
     </tbody>
     <tfoot>
       <tr align="left">
-        <td colspan="9">
+        <td colspan="10">
             <button type="button" class="btn btn-success" id="add-row-material">+ Thêm</button>
         </td>
       </tr>
@@ -78,7 +85,7 @@
             }
         @endphp
         <td colspan="6">Tổng giá (VNĐ): </td>
-        <td colspan="3">
+        <td colspan="4">
           <input class="form-control" name="tmp_price_total" value="{{ number_format($priceTotal) }}">
           <input type="hidden" name="price_total" value="{{$priceTotal}}">
         </td>
@@ -99,20 +106,20 @@
       </tr>
       <tr align="right">
         <td colspan="6">Tổng tiền thanh toán (VNĐ): </td>
-        <td colspan="3">
+        <td colspan="4">
           <input class="form-control" name="tmp_total_payment" value="{{$model ? number_format($model->total_payment) : null}}">
           <input type="hidden" name="total_payment" value="{{$model ? $model->total_payment : null}}">
         </td>
       </tr>
       <tr align="right">
         <td colspan="6">Số tiền bằng chữ (VNĐ): </td>
-        <td colspan="3" style="width: 30%">
+        <td colspan="4" style="width: 30%">
           <b class="total_payment_vnese">{{$model ? \App\Helpers\AdminHelper::VndText(floatval($model->total_payment)) : null}}</b>
         </td>
       </tr>
       <tr align="right">
         <td colspan="6">Nợ (VNĐ): </td>
-        <td colspan="3">
+        <td colspan="4">
           <input class="form-control" name="tmp_amount_owed" onKeyUp="return getNumberFormat(this)"
             value="{{ $model ? number_format($model->amount_owed) : null }}">
           <input type="hidden" name="amount_owed" class="data-origin" value="{{ $model ? $model->amount_owed : null }}">
@@ -120,7 +127,7 @@
       </tr>
       <tr align="right">
         <td colspan="6">Có (VNĐ): </td>
-        <td colspan="3">
+        <td colspan="4">
           <input class="form-control" name="tmp_amount_paid" onKeyUp="return getNumberFormat(this)"
                  value="{{ $model ? number_format($model->amount_paid) : null }}">
           <input type="hidden" name="amount_paid" class="data-origin" value="{{ $model ? $model->amount_paid : null }}">

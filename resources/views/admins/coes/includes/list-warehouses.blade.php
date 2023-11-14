@@ -19,9 +19,9 @@
         <th class="align-middle">W2</th>
         <th class="align-middle">L2</th>
         <th class="align-middle">SL - Tấm</th> --}}
-        <th class="align-middle">Lot No</th>
+        {{-- <th class="align-middle">Lot No</th>
         <th class="align-middle">Ghi Chú</th>
-        <th class="align-middle">Date</th>
+        <th class="align-middle">Date</th> --}}
         <th class="align-middle">Tồn kho</th>
         {{-- <th class="align-middle">Tồn SL - Tấm</th>
         <th class="align-middle">Tồn SL - m2</th>
@@ -53,9 +53,9 @@
             <td>{{ $warehouse->l2 }}</td>
             <td>{{ $warehouse->sl_tam }}</td> --}}
             {{-- <td>{{ $warehouse->acreage }}</td> --}}
-            <td>{{ $warehouse->lot_no }}</td>
+            {{-- <td>{{ $warehouse->lot_no }}</td>
             <td>{{ $warehouse->ghi_chu }}</td>
-            <td>{{ $warehouse->date }}</td>
+            <td>{{ $warehouse->date }}</td> --}}
             <td align="left">
               <ul style="list-style: circle">
                 @foreach ($warehouse->ton_kho as $properties => $item)

@@ -13,8 +13,8 @@ class WarehouseGroup extends Model
         self::MANUFACTURE_TYPE_NON_METAL => 'Phi kim loại'
     ];
 
-    const TYPE_MANUFACTURE = 0;
-    const TYPE_COMMERCE = 1;
+    const TYPE_MANUFACTURE = 1;
+    const TYPE_COMMERCE = 0;
     const ARR_TYPE = [
         self::TYPE_MANUFACTURE => 'Sản xuất',
         self::TYPE_COMMERCE => 'Thương mại'

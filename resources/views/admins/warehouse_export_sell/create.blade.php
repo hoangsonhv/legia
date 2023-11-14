@@ -82,6 +82,7 @@
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
+                    @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material')])
                 </div>
             </div>
         </div>

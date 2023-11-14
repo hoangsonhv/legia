@@ -76,7 +76,7 @@ class WarehouseHelper
 
     public const PRODUCT_WAREHOUSES = [
         Manufacture::MATERIAL_TYPE_NON_METAL => self::KHO_THANH_PHAM_PHI_KIM_LOAI,
-        Manufacture::MATERIAL_TYPE_METAL => self::KHO_THANH_PHAM_KIM_LOAI
+        Manufacture::MATERIAL_TYPE_METAL => self::THANH_PHAM_SWG
     ];
 
     #End Group 12
@@ -153,6 +153,80 @@ class WarehouseHelper
         }
     }
 
+    public static function warehouseEditPath($modelType) {
+        $paths = [
+            WarehouseHelper::BIA => '/warehouse-plate/edit/bia/',
+            WarehouseHelper::CAO_SU => '/warehouse-plate/edit/caosu/',
+            WarehouseHelper::CAO_SU_VN_ZA => '/warehouse-plate/edit/caosuvnza/',
+            WarehouseHelper::TAM_KIM_LOAI => '/warehouse-plate/edit/tamkimloai/',
+            WarehouseHelper::CREAMIC => '/warehouse-plate/edit/ceramic/',
+            WarehouseHelper::GRAPHITE => '/warehouse-plate/edit/graphite/',
+            WarehouseHelper::PTFE => '/warehouse-plate/edit/ptfe/',
+            WarehouseHelper::TAM_NHUA => '/warehouse-plate/edit/tamnhua/',
+            WarehouseHelper::FILLER => '/warehouse-spw/edit/filler/',
+            WarehouseHelper::GLAND_PACKING => '/warehouse-remain/edit/glandpacking',
+            WarehouseHelper::HOOP => '/warehouse-spw/edit/hoop/',
+            WarehouseHelper::DAY_CAO_SU_VA_SILICON => '/warehouse-remain/edit/daycaosusilicone',
+            WarehouseHelper::ONG_GLASS_EXPOXY => '/warehouse-remain/edit/ongglassepoxy',
+            WarehouseHelper::DAY_CREAMIC => '/warehouse-remain/edit/dayceramic',
+            WarehouseHelper::PTFE_CAYONG => '/warehouse-remain/edit/ptfecayong',
+            WarehouseHelper::PTFE_TAPE => '/warehouse-spw/edit/ptfetape/',
+            WarehouseHelper::VANH_TINH_INNER_SWG => '/warehouse-spw/edit/vanhtinhinnerswg/',
+            WarehouseHelper::VANH_TINH_OUTER_SWG => '/warehouse-spw/edit/vanhtinhouterswg/',
+            WarehouseHelper::ND_LOAI_KHAC => '/warehouse-remain/edit/ndloaikhac',
+            WarehouseHelper::NK_LOAI_KHAC => '/warehouse-remain/edit/nkloaikhac',
+            WarehouseHelper::ORING => '/warehouse-spw/edit/oring/',
+            WarehouseHelper::RTJ => '/warehouse-spw/edit/rtj/',
+            WarehouseHelper::PHU_TUNG_DUNG_CU => '/warehouse-remain/edit/phutungdungcu',
+            WarehouseHelper::THANH_PHAM_SWG => '/warehouse-spw/edit/thanhphamswg/',
+            WarehouseHelper::GLAND_PACKING_LATTY => '/warehouse-spw/edit/glandpackinglatty/',
+            WarehouseHelper::CCDC => '/warehouse-remain/edit/ccdc',
+            WarehouseHelper::PTFE_ENVELOP => '/warehouse-spw/edit/ptfeenvelope/',
+            WarehouseHelper::NHU_KY_THUAT_CAY_ONG => '/warehouse-remain/edit/nhuakythuatcayong',
+            WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => '/warehouse-remain/edit/tpphikimloai',
+            WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => '/warehouse-remain/edit/tpkimloai',
+        ];
+
+        return $paths[$modelType];
+    }
+
+    public static function warehouseCreatePath($modelType) {
+        $paths = [
+            WarehouseHelper::BIA => '/warehouse-plate/create/bia/',
+            WarehouseHelper::CAO_SU => '/warehouse-plate/create/caosu/',
+            WarehouseHelper::CAO_SU_VN_ZA => '/warehouse-plate/create/caosuvnza/',
+            WarehouseHelper::TAM_KIM_LOAI => '/warehouse-plate/create/tamkimloai/',
+            WarehouseHelper::CREAMIC => '/warehouse-plate/create/ceramic/',
+            WarehouseHelper::GRAPHITE => '/warehouse-plate/create/graphite/',
+            WarehouseHelper::PTFE => '/warehouse-plate/create/ptfe/',
+            WarehouseHelper::TAM_NHUA => '/warehouse-plate/create/tamnhua/',
+            WarehouseHelper::FILLER => '/warehouse-spw/create/filler/',
+            WarehouseHelper::GLAND_PACKING => '/warehouse-remain/create/glandpacking',
+            WarehouseHelper::HOOP => '/warehouse-spw/create/hoop/',
+            WarehouseHelper::DAY_CAO_SU_VA_SILICON => '/warehouse-remain/create/daycaosusilicone',
+            WarehouseHelper::ONG_GLASS_EXPOXY => '/warehouse-remain/create/ongglassepoxy',
+            WarehouseHelper::DAY_CREAMIC => '/warehouse-remain/create/dayceramic',
+            WarehouseHelper::PTFE_CAYONG => '/warehouse-remain/create/ptfecayong',
+            WarehouseHelper::PTFE_TAPE => '/warehouse-spw/create/ptfetape/',
+            WarehouseHelper::VANH_TINH_INNER_SWG => '/warehouse-spw/create/vanhtinhinnerswg/',
+            WarehouseHelper::VANH_TINH_OUTER_SWG => '/warehouse-spw/create/vanhtinhouterswg/',
+            WarehouseHelper::ND_LOAI_KHAC => '/warehouse-remain/create/ndloaikhac',
+            WarehouseHelper::NK_LOAI_KHAC => '/warehouse-remain/create/nkloaikhac',
+            WarehouseHelper::ORING => '/warehouse-spw/create/oring/',
+            WarehouseHelper::RTJ => '/warehouse-spw/create/rtj/',
+            WarehouseHelper::PHU_TUNG_DUNG_CU => '/warehouse-remain/create/phutungdungcu',
+            WarehouseHelper::THANH_PHAM_SWG => '/warehouse-spw/create/thanhphamswg/',
+            WarehouseHelper::GLAND_PACKING_LATTY => '/warehouse-spw/create/glandpackinglatty/',
+            WarehouseHelper::CCDC => '/warehouse-remain/create/ccdc',
+            WarehouseHelper::PTFE_ENVELOP => '/warehouse-spw/create/ptfeenvelope/',
+            WarehouseHelper::NHU_KY_THUAT_CAY_ONG => '/warehouse-remain/create/nhuakythuatcayong',
+            WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => '/warehouse-remain/create/tpphikimloai',
+            WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => '/warehouse-remain/create/tpkimloai',
+        ];
+
+        return $paths[$modelType];
+    }
+
     public static function translateAtt($key)
     {
         $attributes = [
@@ -177,7 +251,7 @@ class WarehouseHelper
             'd1' => 'D3',
             'd2' => 'D4',
             'sl_cai' => 'Số lượng cái',
-            'ton_sl_cai' => 'Tòn (cái)',
+            'ton_sl_cai' => 'Tồn (cái)',
             'cho_may_moc_thiet_bi' => 'Cho máy móc, thiết bị',
             'so_hopdong_hoadon' => 'Số hơp đồng, hóa đơn',
             'inner' => 'Inner',
@@ -205,6 +279,9 @@ class WarehouseHelper
             'sl' => 'Tồn (cái)',
             'ton_sl_tam' => 'Tồn (tấm)',
             'ton_sl_m2' => 'Tồn (m2)',
+            'lot_no' => 'Lot .no',
+            'ghi_chu' => 'Ghi chú',
+            'date' => 'Date',
         ];
 
         return $attributes[$key];

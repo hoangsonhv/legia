@@ -120,6 +120,7 @@ class BaseAdminController extends Controller
                         case 'payment':
                             $this->bankRepo->updateAccountBalance($repository);
                             if ($status == ProcessStatus::Approved) {
+                                //
                                 switch ($repository->step_id) {
                                     case 0:
                                         $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id + 1);

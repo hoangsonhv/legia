@@ -33,6 +33,9 @@ class Group9 extends BaseWarehouseCommon
             'size' => $this->size,
             'od' => $this->od,
             'id' => $this->id,
+            'lot_no' => $this->lot_no,
+            'ghi_chu' => $this->ghi_chu,
+            'date' => $this->date,
         ];
     }
        
