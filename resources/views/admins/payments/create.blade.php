@@ -65,6 +65,11 @@
                 {!! Form::select('bank_id', $banks, null, array('class' => 'form-control', 'required' => 'required')) !!}
               </div>
             </div>
+            @if ($co !== null)
+            <div class="card-body">
+              @include('admins.coes.includes.list-products', ['warehouses' => $co, 'collect' => true, 'notAction' => true])
+            </div>   
+            @endif
             <!-- /.card-body -->
             <div class="card-footer text-right">
               <button type="submit" class="btn btn-primary">Lưu thông tin</button>

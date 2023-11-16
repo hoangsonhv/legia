@@ -97,7 +97,7 @@ class PaymentController extends Controller
         $categories                 = DataHelper::getCategories();
         $paymentMethods             = DataHelper::getPaymentMethods();
         $banks                      = AdminHelper::getBanks();
-
+        $co = null;
         $payment = null;
         if ($requestId) {
             $requestModel = $this->requestRepository->getRequests([
@@ -147,11 +147,15 @@ class PaymentController extends Controller
                 $payment->step_id = $indexStepPay;
             }
         }
+        if($coData = $requestModel->co()->first())
+        {
+            $co = $coData->warehouses;
+        }
         if (empty($requests)) {
             return redirect()->back()->with('error','Phiếu Yêu Cầu không tồn tại!');
         }
         return view('admins.payments.create',compact('breadcrumb', 'titleForLayout', 'permissions', 'files',
-            'categories', 'requests', 'requestModel', 'paymentMethods', 'banks', 'payment'));
+            'categories', 'requests', 'requestModel', 'paymentMethods', 'banks', 'payment', 'co'));
     }
 
     public function store(PaymentRequest $request)
@@ -239,6 +243,7 @@ class PaymentController extends Controller
             $files       = DataHelper::getFiles();
             $categories  = DataHelper::getCategories();
             $existsCat   = 0;
+            $co = null;
             if ($payment->request_id) {
                 $requestModel = $this->requestRepository->getRequests([
                         'id'     => $payment->request_id,
@@ -264,9 +269,13 @@ class PaymentController extends Controller
                     ])->count();
                 }
             }
+            if($coData = $payment->co()->first())
+            {
+                $co = $coData->warehouses;
+            }
             return view('admins.payments.edit',compact('breadcrumb', 'titleForLayout', 'payment',
                 'permissions', 'files', 'categories', 'requests', 'requestModel', 'existsCat', 'paymentMethods',
-                'banks'));
+                'banks','co'));
         }
         return redirect()->route('admin.payment.index')->with('error', 'Phiếu Chi không tồn tại!');
     }

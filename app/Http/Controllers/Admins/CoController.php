@@ -673,19 +673,19 @@ class CoController extends Controller
                                     $more['thoi_gian_giao_hang'] = $val[3];
                                     break;
                                 case 6:
-                                    $valPercent = !empty($val[3]) ? ($val[3] * 100) . '%' : null;
+                                    $valPercent = !empty($val[3]) ? ($val[3] * 100) : null;
                                     $more['thanh_toan[percent][truoc_khi_lam_hang]']        = $valPercent;
 
-                                    $valPercent = !empty($val[4]) ? ($val[4] * 100) . '%' : null;
+                                    $valPercent = !empty($val[4]) ? ($val[4] * 100) : null;
                                     $more['thanh_toan[percent][truoc_khi_giao_hang]']       = $valPercent;
 
-                                    $valPercent = !empty($val[5]) ? ($val[5] * 100) . '%' : null;
+                                    $valPercent = !empty($val[5]) ? ($val[5] * 100) : null;
                                     $more['thanh_toan[percent][ngay_khi_giao_hang]']        = $valPercent;
 
-                                    $valPercent = !empty($val[6]) ? ($val[6] * 100) . '%' : null;
+                                    $valPercent = !empty($val[6]) ? ($val[6] * 100) : null;
                                     $more['thanh_toan[percent][sau_khi_giao_hang_va_cttt]'] = $valPercent;
 
-                                    $valPercent = !empty($val[7]) ? ($val[7] * 100) . '%' : null;
+                                    $valPercent = !empty($val[7]) ? ($val[7] * 100) : null;
                                     $more['thanh_toan[percent][thoi_gian_no]']              = $valPercent;
                                     break;
                                 case 7:

@@ -28,15 +28,15 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="request_id">Phiếu Yêu Cầu</label>
-                {!! Form::select('request_id', $requests, null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
+                {!! Form::select('request_id', $requests, null, array('class' => 'form-control', 'disabled')) !!}
               </div>
               <div class="form-group">
                 <label for="code">Mã Phiếu Chi</label>
-                {!! Form::text('code', null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
+                {!! Form::text('code', null, array('class' => 'form-control', 'disabled')) !!}
               </div>
               <div class="form-group">
                 <label for="category">Danh mục<b style="color: red;"> (*)</b></label>
-                {!! Form::select('category', $categories, null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
+                {!! Form::select('category', $categories, null, array('class' => 'form-control','disabled')) !!}
               </div>
               <div class="form-group">
                 <label for="note">Ghi chú</label>
@@ -75,6 +75,11 @@
                 {!! Form::hidden('money_total', old('money_total', $payment->money_total)) !!}
               </div>
             </div>
+            @if ($co !== null)
+            <div class="card-body">
+              @include('admins.coes.includes.list-products', ['warehouses' => $co, 'collect' => true, 'notAction' => true])
+            </div>   
+            @endif
             <!-- /.card-body -->
             <div class="card-footer text-right">
               @permission('admin.receipt.create')
