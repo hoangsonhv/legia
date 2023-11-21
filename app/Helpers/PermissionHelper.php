@@ -11,8 +11,12 @@ class PermissionHelper
         if (!config('permission.role_permission')) {
             return true;
         }
-        
+
         $permissions = self::getPermissions();
+        if (!is_array($permissions) && $permissions == 'GD') {
+            return true;
+        }
+
         if (is_array($route)) {
             foreach ($route as $vRoute) {
                 if (in_array($vRoute, $permissions)) {
@@ -34,6 +38,11 @@ class PermissionHelper
         $roles       = $admin->roles()->get();
         if ($roles) {
             foreach ($roles as $kRole => $vRole) {
+                if ($vRole->id == 1) // Giám đốc
+                {
+                    return 'GD';
+                }
+
                 if ($vRole->permission) {
                     $permissions = array_merge($permissions, $vRole->permission);
                 }

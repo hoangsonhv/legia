@@ -224,14 +224,12 @@
 {{--                      <label for="thanh_toan">Thanh toán</label>--}}
 {{--                      <p class="text-danger">Giá trị đơn hàng: <span class="money_total"><b></b></span></p>--}}
 
-                      {{-- <h5 class="{{!\App\Helpers\PermissionHelper::hasPermission('admin.co.price') ? 'd-none' : ''}}"> --}}
-                      <h5 class="">
+                      <h5 class="{{!\App\Helpers\PermissionHelper::hasPermission('admin.co.price') ? 'd-none' : ''}}">
                         <p style="width: fit-content; padding: 5px 10px; border-radius: 5px" class="text-danger bg-warning">
                           <b>Giá trị đơn hàng: <span class="money_total"><b></b></span></b>
                         </p>
                       </h5>
-                      {{-- <div class="table-responsive p-0 {{!\App\Helpers\PermissionHelper::hasPermission('admin.co.price') ? 'd-none' : ''}}"> --}}
-                      <div class="table-responsive p-0 ">
+                      <div class="table-responsive p-0 {{!\App\Helpers\PermissionHelper::hasPermission('admin.co.price') ? 'd-none' : ''}}">
                         <table class="table table-head-fixed table-bordered text-wrap">
                           <thead>
                             <tr class="text-center">
