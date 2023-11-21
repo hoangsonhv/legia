@@ -77,8 +77,9 @@
             </div>
             @if ($co !== null)
             <div class="card-body">
-              @include('admins.coes.includes.list-products', ['warehouses' => $co, 'collect' => true, 'notAction' => true])
-            </div>   
+              <h3 class="title text-primary">Nội dung</h3>
+              @include('admins.payments.includes.list-materials', ['materials' => $requestModel->material])
+            </div>  
             @endif
             <!-- /.card-body -->
             <div class="card-footer text-right">

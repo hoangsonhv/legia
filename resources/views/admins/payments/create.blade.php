@@ -36,7 +36,7 @@
                 {!! Form::text('note', $payment ? $payment->note : null, array('class' => 'form-control')) !!}
               </div>
               <div class="form-group">
-                <label for="name_receiver">Người nhận<b style="color: red;"> (*)</b></label>
+                <label for="name_receiver">Người chi<b style="color: red;"> (*)</b></label>
                 {!! Form::text('name_receiver', null, array('class' => 'form-control', 'required' => 'required')) !!}
               </div>
               <div class="form-group">
@@ -66,9 +66,171 @@
               </div>
             </div>
             @if ($co !== null)
+              <div class="card-body">
+                <div class="form-group mt-3">
+                  <h5>
+                    <p style="width: fit-content; padding: 5px 10px; border-radius: 5px" class="text-danger bg-warning">
+                      <b>Giá trị đơn hàng: <span class="money_total"><b>{{ number_format($requestModel->money_total) }}</b></span></b>
+                    </p>
+                  </h5>
+                  <div class="table-responsive p-0">
+                    <table class="table table-bordered text-nowrap">
+                        <thead>
+                        <tr class="text-center">
+                            <th>&nbsp</th>
+                            <th class="align-middle">
+                                Trước khi làm hàng
+                                @if(isset($payments[0]))
+                                    <a target="_blank" href={{route('admin.payment.edit', ['id' => $payments[0]['id']])}}>
+                                        @if($payments[0]['status'] == 1)
+                                            <span class="text-info ml-2"><i class="fas fa-file"></i></span>
+                                        @endif
+                                        @if($payments[0]['status'] == 2)
+                                            <span class="text-green ml-2"><i class="fas fa-check"></i></span>
+                                        @endif
+                                    </a>
+                                @endif
+                            </th>
+                            <th class="align-middle">
+                                Trước khi giao hàng
+                                @if(isset($payments[1]))
+                                    <a target="_blank" href={{route('admin.payment.edit', ['id' => $payments[1]['id']])}}>
+                                        @if($payments[1]['status'] == 1)
+                                            <span class="text-info ml-2"><i class="fas fa-file"></i></span>
+                                        @endif
+                                        @if($payments[1]['status'] == 2)
+                                            <span class="text-green ml-2"><i class="fas fa-check"></i></span>
+                                        @endif
+                                    </a>
+                                @endif
+                            </th>
+                            <th class="align-middle">
+                                Ngay khi giao hàng
+                                @if(isset($payments[2]))
+                                    <a target="_blank" href={{route('admin.payment.edit', ['id' => $payments[2]['id']])}}>
+                                        @if($payments[2]['status'] == 1)
+                                            <span class="text-info ml-2"><i class="fas fa-file"></i></span>
+                                        @endif
+                                        @if($payments[2]['status'] == 2)
+                                            <span class="text-green ml-2"><i class="fas fa-check"></i></span>
+                                        @endif
+                                    </a>
+                                @endif
+                            </th>
+                            <th class="align-middle">
+                                Sau khi giao hàng và chứng từ thanh toán
+                                @if(isset($payments[3]))
+                                    <a target="_blank" href={{route('admin.payment.edit', ['id' => $payments[3]['id']])}}>
+                                        @if($payments[3]['status'] == 1)
+                                            <span class="text-info ml-2"><i class="fas fa-file"></i></span>
+                                        @endif
+                                        @if($payments[3]['status'] == 2)
+                                            <span class="text-green ml-2"><i class="fas fa-check"></i></span>
+                                        @endif
+                                    </a>
+                                @endif
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="text-center">
+                            <td class="text-right" width="20%">% tổng giá trị đơn hàng</td>
+                            <td>
+                              {{ $thanhToan['percent']['truoc_khi_lam_hang'] }}
+                            </td>
+                            <td>
+                              {{ $thanhToan['percent']['truoc_khi_giao_hang'] }}
+                            </td>
+                            <td>
+                                {{ $thanhToan['percent']['ngay_khi_giao_hang'] }}
+                            </td>
+                            <td>
+                                {{ $thanhToan['percent']['sau_khi_giao_hang_va_cttt'] }}
+                            </td>
+                        </tr>
+                        <tr class="text-center">
+                            <td class="text-right">Giá trị - VNĐ</td>
+                            <td>
+                                @php
+                                    $valVnd = number_format(old('thanh_toan[amount_money][truoc_khi_lam_hang]',
+                                        $requestModel->thanh_toan ? $requestModel->thanh_toan['amount_money']['truoc_khi_lam_hang'] : null));
+                                    if (!$valVnd) {
+                                      $valVnd = null;
+                                    }
+                                @endphp
+                                {{ $valVnd }}
+                            </td>
+                            <td>
+                                @php
+                                    $valVnd = number_format(old('thanh_toan[amount_money][truoc_khi_giao_hang]',
+                                        $requestModel->thanh_toan ? $requestModel->thanh_toan['amount_money']['truoc_khi_giao_hang'] : null));
+                                    if (!$valVnd) {
+                                      $valVnd = null;
+                                    }
+                                @endphp
+                                {{ $valVnd }}
+                            </td>
+                            <td>
+                                @php
+                                    $valVnd = number_format(old('thanh_toan[amount_money][ngay_khi_giao_hang]',
+                                        $requestModel->thanh_toan ? $requestModel->thanh_toan['amount_money']['ngay_khi_giao_hang'] : null));
+                                    if (!$valVnd) {
+                                      $valVnd = null;
+                                    }
+                                @endphp
+                                {{ $valVnd }}
+                            </td>
+                            <td>
+                                @php
+                                    $valVnd = number_format(old('thanh_toan[amount_money][sau_khi_giao_hang_va_cttt]',
+                                        $requestModel->thanh_toan ? $requestModel->thanh_toan['amount_money']['sau_khi_giao_hang_va_cttt'] : null));
+                                    if (!$valVnd) {
+                                      $valVnd = null;
+                                    }
+                                @endphp
+                                {{ $valVnd }}
+                            </td>
+                        </tr>
+                        <tr class="text-center">
+                          <td class="text-right">Thời gian xét duyệt</td>
+                          <td>
+                            @if(isset($payments[0]))
+                              @if($payments[0]['status'] == 2)
+                                {{ $payments[0]['approved_date'] }}
+                              @endif
+                            @endif
+                          </td>
+                          <td>
+                            @if(isset($payments[1]))
+                              @if($payments[1]['status'] == 2)
+                                {{ $payments[1]['approved_date'] }}
+                              @endif
+                            @endif
+                          </td>
+                          <td>
+                            @if(isset($payments[2]))
+                              @if($payments[2]['status'] == 2)
+                                {{ $payments[2]['approved_date'] }}
+                              @endif
+                            @endif
+                          </td>
+                          <td>
+                            @if(isset($payments[3]))
+                              @if($payments[3]['status'] == 2)
+                                {{ $payments[3]['approved_date'] }}
+                              @endif
+                            @endif
+                          </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
             <div class="card-body">
-              @include('admins.coes.includes.list-products', ['warehouses' => $co, 'collect' => true, 'notAction' => true])
-            </div>   
+              <h3 class="title text-primary">Nội dung</h3>
+              @include('admins.payments.includes.list-materials', ['materials' => $requestModel->material])
+            </div> 
             @endif
             <!-- /.card-body -->
             <div class="card-footer text-right">

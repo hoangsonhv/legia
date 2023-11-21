@@ -149,6 +149,7 @@ class ManufactureController extends Controller
                 $details[$index]['kich_co'] = $warehouse->kich_co;
                 $details[$index]['kich_thuoc'] = $warehouse->kich_thuoc;
                 $details[$index]['chuan_bich'] = $warehouse->chuan_bich;
+                $details[$index]['lot_no'] = $co->raw_code;
                 $details[$index]['chuan_gasket'] = $warehouse->chuan_gasket;
                 $details[$index]['dv_tinh'] = $warehouse->dv_tinh;
                 $details[$index]['so_luong'] = $warehouse->so_luong;
@@ -181,6 +182,7 @@ class ManufactureController extends Controller
                         'offer_price_id' => $offerPrice,
                         'reality_quantity' => $input['reality_quantity'][$index],
                         'need_quantity' => $input['need_quantity'][$index],
+                        'lot_no' => $input['lot_no'][$index],
                     ];
                     if(!isset($input['offer_price_material_type'][$index])) {
                         continue;
@@ -264,6 +266,7 @@ class ManufactureController extends Controller
                 $details[$index]['tieu_chuan'] = $detail->offerPrice ? $detail->offerPrice->tieu_chuan : '';
                 $details[$index]['kich_co'] = $detail->offerPrice ? $detail->offerPrice->kich_co : '';
                 $details[$index]['kich_thuoc'] = $detail->offerPrice ? $detail->offerPrice->kich_thuoc : '';
+                $details[$index]['lot_no'] = $detail->lot_no;
                 $details[$index]['chuan_bich'] = $detail->offerPrice ? $detail->offerPrice->chuan_bich : '';
                 $details[$index]['chuan_gasket'] = $detail->offerPrice ? $detail->offerPrice->chuan_gasket : '';
                 $details[$index]['dv_tinh'] = $detail->offerPrice ? $detail->offerPrice->dv_tinh : '';
@@ -300,6 +303,7 @@ class ManufactureController extends Controller
                             'need_quantity' => $inputs['need_quantity'][$index],
                             'material_type' => in_array($offerPriceId, $inputs['material_type'] ?? []) ?
                                 ManufactureDetail::MATERIAL_TYPE_METAL : ManufactureDetail::MATERIAL_TYPE_NON_METAL,
+                            'lot_no' => $inputs['lot_no'][$index],
                             'updated_at' => Date('Y-m-d H:i:s')
                         ];
                         ManufactureDetail::updateOrCreate(['id' => $inputs['id'][$index]],$dataUpdate);

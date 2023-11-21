@@ -364,6 +364,7 @@ class AdminHelper
             'merchandise_code_in_warehouse' => null,
             'merchandise_id' => null,
             'material_type' => null,
+            'model_type' => null,
         ];
         $arrCode = explode(" ", strtoupper($code));
         $merchandise_code = MerchandiseCode::where('code', $arrCode[0])
@@ -380,6 +381,7 @@ class AdminHelper
                 if($codeInWarehouse != null) {
                     $result['merchandise_code_in_warehouse'] = $codeInWarehouseTmp;
                     $result['merchandise_id'] = $codeInWarehouse->l_id;
+                    $result['model_type'] = $codeInWarehouse->model_type;
                 }
                 if(!$infix_codes) {
                     continue;
@@ -395,22 +397,18 @@ class AdminHelper
         return $result;
     }
 
-    //product COMMERCE
-    public static function countProductEcomInWarehouse($codeInWareHouse, $merchandise_group_id) {
-        $merchandise_group = MerchandiseGroup::where('id',$merchandise_group_id)
-            ->where('operation_type', MerchandiseGroup::COMMERCE)->first();
-        
-        if ($codeInWareHouse == '' || empty($codeInWareHouse) || empty($merchandise_group)) {
-            return 0;
+    //product and merchandise
+    public static function countProductMerchanInWarehouse($codeInWareHouse, $model_type) {
+        $tonKho = 0;
+        if ($model_type == null || $codeInWareHouse == null) {
+            return $tonKho;
         }
 
-        $tonKho = 0;
-        $warehouseModel = $merchandise_group->warehouses->first();
         $baseWarehouseRepository = new BaseWarehouseRepository();
-        $baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouseModel->id));
+        $baseWarehouseRepository->setModel(WarehouseHelper::getModel($model_type));
         $results = $baseWarehouseRepository->model->where('code', $codeInWareHouse)
-            ->where('model_type' , $warehouseModel->id)->get();
-
+            ->where('model_type' , $model_type)->get();
+    
         if ($results != null) {
             foreach ($results as $result) {
                 $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];

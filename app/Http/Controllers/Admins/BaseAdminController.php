@@ -108,9 +108,13 @@ class BaseAdminController extends Controller
                         $coTmp->co_not_approved_id = $repository->id;
                         $coTmp->save();
                     }
-                } else if ($type == 'receipt') {
+                }
+
+                if (($type == 'receipt' && ProcessStatus::Approved)
+                    || ($type == 'payment' && ProcessStatus::Approved)) {
                     $repository->approved_date = Carbon::now();
                 }
+
                 if ($repository->save()) {
                     switch ($type) {
                         case 'co':

@@ -749,20 +749,14 @@ class CoController extends Controller
     public function getMaterial(Request $request) {
         // Only get warehouse plate
         $content = '';
+        $action = $request->query('action', '');
         try {
             $code = $request->input('code');
-            //$lot_no = $request->input('lot_no');
+            $lot_no = $request->input('lot_no', '');
             if ($code) {
-                $params    = [$code];
-                if ($request->input('is_request_material', null) != null) {
-                    $materials = $this->coService->getProductMaterialsInWarehouses($params, false);
-                }
-                else
-                {
-                    $materials = $this->coService->getProductMaterialsInWarehouses($params, true);
-                }
-                //dd($materials);
-                $content   = view('admins.requests.includes.list-materials-full',compact('materials'))->render();
+                $materials = $this->coService->searchProductMaterialsInWarehouses($code, $lot_no);
+
+                $content   = view('admins.requests.includes.list-materials-full',compact('materials', 'action'))->render();
             }
         } catch(\Exception $ex) {
             dd($ex);

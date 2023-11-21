@@ -19,6 +19,7 @@ use App\Models\Request as RequestModel;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\Warehouse\BaseWarehouseCommon;
+use Carbon\Carbon;
 
 class WarehouseReceiptController extends Controller
 {
@@ -105,6 +106,7 @@ class WarehouseReceiptController extends Controller
                             'code' => $material->code,
                             'name' => $material->mo_ta,
                             'unit' => $material->dv_tinh,
+                            'lot_no' => $coModel->raw_code,
                             'quantity_doc' => $material->dinh_luong,
                             'quantity_reality' => 0,
                             'unit_price' => ($price_survey->price / $material->dinh_luong),
@@ -120,6 +122,7 @@ class WarehouseReceiptController extends Controller
                             'code' => $warehouse->code,
                             'name' => $warehouse->loai_vat_lieu,
                             'unit' => $warehouse->dv_tinh,
+                            'lot_no' => '',
                             'quantity_doc' => $warehouse->so_luong,
                             'quantity_reality' => 0,
                             'unit_price' => 0,
@@ -172,6 +175,7 @@ class WarehouseReceiptController extends Controller
                     $this->coStepHisRepo->insertNextStep('warehouse_export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
                 }
             }
+
             // Save many product
             $inputProducts = $request->input('product');
             foreach ($inputProducts['code'] as $key => $code) {
@@ -183,12 +187,14 @@ class WarehouseReceiptController extends Controller
                     'code' => $inputProducts['code'][$key],
                     'name' => $inputProducts['name'][$key],
                     'unit' => $inputProducts['unit'][$key],
+                    'lot_no' => $inputProducts['lot_no'][$key],
                     'quantity_doc' => $inputProducts['quantity_doc'][$key],
                     'quantity_reality' => $inputProducts['quantity_reality'][$key],
                     'unit_price' => $inputProducts['unit_price'][$key],
                     'into_money' => $inputProducts['into_money'][$key],
                 ];
             }
+
             if (!empty($products)) {
                 $model->products()->createMany($products);
 
@@ -196,13 +202,17 @@ class WarehouseReceiptController extends Controller
                 foreach ($products as $product) {
                     if ($product['merchandise_id'] > 0) {
                         $base_warehouse = BaseWarehouseCommon::find($product['merchandise_id']);
-                        $group_warehouse = WarehouseHelper::getModel($base_warehouse->model_type)->find($product['merchandise_id']);
-                        $group_warehouse->setQuantity($product['quantity_reality']);
-                        $group_warehouse->save();
-                    }
-                    else
-                    {
-                        // Increase ở kho thành phẩm
+                        
+                        $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
+                            ->find($product['merchandise_id']);
+
+                        $new_merchandise = $merchandise->replicate();
+                        $new_merchandise->created_at = Carbon::now();
+                        $new_merchandise->ghi_chu = "Đầu kỳ";
+                        $new_merchandise->lot_no = $product['lot_no'];
+                        $new_merchandise->date = Carbon::now();
+                        $new_merchandise->setQuantity($product['quantity_reality'], accumulate: false);
+                        $new_merchandise->save();
                     }
                 }
 
@@ -279,6 +289,7 @@ class WarehouseReceiptController extends Controller
                         'code' => $inputProducts['code'][$key],
                         'name' => $inputProducts['name'][$key],
                         'unit' => $inputProducts['unit'][$key],
+                        'lot_no' => $inputProducts['lot_no'][$key],
                         'quantity_doc' => $inputProducts['quantity_doc'][$key],
                         'quantity_reality' => $inputProducts['quantity_reality'][$key],
                         'unit_price' => $inputProducts['unit_price'][$key],
@@ -289,17 +300,29 @@ class WarehouseReceiptController extends Controller
                 if (!empty($model)) {
                     $model->products()->createMany($products);
 
-                    // Increase material in base warehouse
+                   // Increase material in base warehouse
                     foreach ($products as $product) {
                         if ($product['merchandise_id'] > 0) {
                             $base_warehouse = BaseWarehouseCommon::find($product['merchandise_id']);
-                            $group_warehouse = WarehouseHelper::getModel($base_warehouse->model_type)->find($product['merchandise_id']);
-                            $group_warehouse->setQuantity($product['quantity_reality']);
-                            $group_warehouse->save();
-                        }
-                        else
-                        {
-                            // Increase ở kho thành phẩm
+                            $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
+                                ->find($product['merchandise_id']);
+
+                            $new_merchandise = $merchandise->replicate();
+                            $new_merchandise->created_at = Carbon::now();
+                            $new_merchandise->ghi_chu = "Đầu kỳ";
+                            $new_merchandise->lot_no = $product['lot_no'];
+                            $new_merchandise->date = Carbon::now();
+                            $new_merchandise->setQuantity($product['quantity_reality'], accumulate: false);
+                            $new_merchandise->save();
+
+                            // Remove old merchandise with same lot_no
+                            $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
+                                ->where('code', $product['code'])
+                                ->where('lot_no', $product['lot_no'])
+                                ->first();
+                            if ($merchandise != null) {
+                                $merchandise->delete();
+                            }
                         }
                     }
 

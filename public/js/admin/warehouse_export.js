@@ -66,7 +66,10 @@ $(function () {
         $.ajax({
             method: "POST",
             url: $(this).attr('data-url'),
-            data: { code: $(this).parents('.modal-body:first').find('[name=code]').val() }
+            data: {
+                code: $(this).parents('.modal-body:first').find('[name=code]').val(),
+                lot_no: $(this).parents('.modal-body:first').find('[name=lot_no]').val(),
+            }
         })
             .done(function( data ) {
                 if (data.success) {
@@ -102,7 +105,9 @@ $(function () {
                                     name: eleRow.find('td.vat-lieu input').val(),
                                     warehouse_id: eleRow.find('td.warehouse_id input').val(),
                                     table_name: eleRow.find('td.table_name input').val(),
-                                    merchandise_id: eleRow.find('td.merchandise_id input').val()
+                                    merchandise_id: eleRow.find('td.merchandise_id input').val(),
+                                    lot_no: eleRow.find('td.lot_no input').val(),
+                                    ton_kho: eleRow.find('td.ton_kho input').val(),
                                 };
                                 $(eleForm).append(getItem(lengthTrForm, 'Tấm', opts));
                                 // Add code
@@ -236,7 +241,9 @@ function getItem(index, unit, opts) {
         + '<td class="sequence">'+index+'</td>'
         + '<td class="name"><textarea readonly class="form-control" name="product[name][]" rows="1">'+opts.name+'</textarea></td>'
         + '<td class="code"><input readonly class="form-control" type="text" name="product[code][]" value="'+opts.code+'"></td>'
+        + '<td class="code"><input readonly class="form-control" type="text" name="product[lot_no][]" value="'+opts.lot_no+'"></td>'
         + '<td class=""><input readonly class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
+        + '<td class="code"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho+'"></td>'
         + '<td class=""><input class="form-control" style="width: 70px" type="number" name="product[quantity_doc][]"/> </td>'
         + '<td class=""><input class="form-control data-quantity" style="width: 120px" type="number" name="product[quantity_reality][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
         + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[unit_price][]" onKeyUp="return getNumberFormatUnitPrice(this)" min="1" value="">'

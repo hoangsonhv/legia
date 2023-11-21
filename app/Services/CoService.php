@@ -10,7 +10,10 @@ use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\Repositories\WarehousePlateRepository;
 use App\Models\Repositories\WarehouseRemainRepository;
 use App\Models\Repositories\WarehouseSpwRepository;
+use App\Models\Warehouse;
+use App\Models\Warehouse\BaseWarehouseCommon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Shared\Trend\Trend;
 
 class CoService
@@ -63,55 +66,139 @@ class CoService
         return $result;
     }
 
+    public function searchProductMaterialsInWarehouses($code, $lot_no)
+    {
+        $results = collect([]);
+        try {
+            if ($code) {
+                $base_warehouse = BaseWarehouseCommon::where('code', $code)->first();
+                if ($base_warehouse == null) {
+                    return $results;
+                }
+
+                $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($base_warehouse->model_type));
+                
+                $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
+
+                $merchandises = $this->baseWarehouseRepository->model
+                    ->where('model_type' , $base_warehouse->model_type)
+                    ->where('code', $code)
+                    ->where(function($query) use ($nonZeroConditions) {
+                        foreach ($nonZeroConditions as $cnd) {
+                            $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+                        }
+                        return $query;
+                    });
+
+                if ($lot_no != null && strlen($lot_no) > 0) {
+                    $merchandises = $merchandises->where('lot_no', $lot_no);
+                }
+
+                return $merchandises->get();
+            }
+        } catch(\Exception $ex) {
+            dd($ex);
+        }
+
+        return $results;
+    }
+
     public function getProductMaterialsInWarehouses($codes, $ignoreZero)
     {
-        $result = collect([]);
+        $results = collect([]);
         try {
             if ($codes) {
+                $warehouse_ids = [];
+
                 foreach ($codes as $code) {
                     $merchandiseCode = \App\Helpers\AdminHelper::detectProductCode($code);
-                    if(empty($merchandiseCode['merchandise_group_code'])) {
+                    if (empty($merchandiseCode['merchandise_group_code'])) {
                         continue;
                     }
-                    $merchandiseGroup = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_group_code'] . '%' )->first();
-                    $mGroupWarehouses = $merchandiseGroup->warehouses;
-                    $merchindiseWarehouse = collect([]);
-                    foreach ($mGroupWarehouses as $warehouse) {
-                        $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouse->model_type));
-                        $arrCode = explode(" ", strtoupper($code));
-                        $codeInWareHouse = "";
-                        foreach ($arrCode as $value) {
-                            $codeInWareHouse = $codeInWareHouse ? $codeInWareHouse . ' ' . $value : $value;
-                            $totalInWarehouse = $this->baseWarehouseRepository->model
-                                ->where('code', $codeInWareHouse)
-                                ->where('model_type' , $warehouse->model_type);
 
-                            if ($ignoreZero == true) {
-                                $conditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
+                    $group = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_group_code'] . '%' )->first();
+                    $warehouse_ids = array_merge($warehouse_ids, $group->warehouses->pluck('id')->toArray());
+                }
+                $warehouse_ids = array_unique($warehouse_ids);
+                
+                $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
 
-                                $totalInWarehouse = $totalInWarehouse->where(function($query) use ($conditions) {
-                                    foreach ($conditions as $cnd) {
-                                        $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
-                                    }
-                                    return $query;
-                                });
+                foreach ($warehouse_ids as $warehouse_id) {
+                    $warehouse = Warehouse::find($warehouse_id);
+                    $tonKhoKey = WarehouseHelper::groupTonKhoKey($warehouse->model_type);
+                    $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouse->model_type));
+                    
+                    $query = DB::table('base_warehouses')
+                        ->select('*', DB::raw('sum('.$tonKhoKey.') as '.$tonKhoKey))
+                        ->where('model_type' , $warehouse->model_type)
+                        ->where(function($query) use ($nonZeroConditions) {
+                            foreach ($nonZeroConditions as $cnd) {
+                                $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
                             }
-                            $totalInWarehouse = $totalInWarehouse->get(); 
+                            return $query;
+                        })->groupBy('code');
 
-                            if(count($totalInWarehouse)) {
-                                $merchindiseWarehouse = $merchindiseWarehouse->merge($totalInWarehouse)->unique();
-                                continue;
-                            }
-                        }
-                        $result = $result->merge($merchindiseWarehouse);
-                    }
+                    $materials = $this->baseWarehouseRepository
+                        ->model->hydrate($query->get()->toArray());
+                    $results = $results->merge($materials);
                 }
             }
         } catch(\Exception $ex) {
             dd($ex);
         }
-        return $result;
+
+        return $results;
     }
+
+    // public function getProductMaterialsInWarehouses($codes, $ignoreZero)
+    // {
+    //     $result = collect([]);
+    //     try {
+    //         if ($codes) {
+    //             foreach ($codes as $code) {
+    //                 $merchandiseCode = \App\Helpers\AdminHelper::detectProductCode($code);
+    //                 if(empty($merchandiseCode['merchandise_group_code'])) {
+    //                     continue;
+    //                 }
+    //                 $merchandiseGroup = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_group_code'] . '%' )->first();
+    //                 $mGroupWarehouses = $merchandiseGroup->warehouses;
+    //                 $merchindiseWarehouse = collect([]);
+    //                 foreach ($mGroupWarehouses as $warehouse) {
+    //                     $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouse->model_type));
+    //                     $arrCode = explode(" ", strtoupper($code));
+    //                     $codeInWareHouse = "";
+    //                     foreach ($arrCode as $value) {
+    //                         $codeInWareHouse = $codeInWareHouse ? $codeInWareHouse . ' ' . $value : $value;
+    //                         $totalInWarehouse = $this->baseWarehouseRepository->model
+    //                             ->where('code', $codeInWareHouse)
+    //                             ->where('model_type' , $warehouse->model_type);
+
+    //                         if ($ignoreZero == true) {
+    //                             $conditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
+
+    //                             $totalInWarehouse = $totalInWarehouse->where(function($query) use ($conditions) {
+    //                                 foreach ($conditions as $cnd) {
+    //                                     $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+    //                                 }
+    //                                 return $query;
+    //                             });
+    //                         }
+    //                         $totalInWarehouse = $totalInWarehouse->get(); 
+
+    //                         if(count($totalInWarehouse)) {
+    //                             $merchindiseWarehouse = $merchindiseWarehouse->merge($totalInWarehouse)->unique();
+    //                             continue;
+    //                         }
+    //                     }
+    //                     $result = $result->merge($merchindiseWarehouse);
+    //                 }
+    //             }
+    //         }
+    //     } catch(\Exception $ex) {
+    //         dd($ex);
+    //     }
+    //     return $result;
+    // }
 
     public function queryAllWarehouse($warehouse = null, $model = null, $where = array())
     {

@@ -68,7 +68,6 @@ $(function () {
       data: {
         code: $(this).parents('.modal-body:first').find('[name=code]').val(),
         lot_no: $(this).parents('.modal-body:first').find('[name=lot_no]').val(),
-        is_request_material: true
       }
     })
     .done(function( data ) {

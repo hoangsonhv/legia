@@ -29,9 +29,6 @@ class Group10 extends BaseWarehouseCommon
             'vat_lieu' => $this->vat_lieu,
             'size' => $this->size,
             'm_cay' => $this->std,
-            'lot_no' => $this->lot_no,
-            'ghi_chu' => $this->ghi_chu,
-            'date' => $this->date,
         ];
     }
        
@@ -50,7 +47,17 @@ class Group10 extends BaseWarehouseCommon
         ];
     }
 
-    public function setQuantity($qty) {
-        $this->ton_sl_tam += $qty;
+    public function setQuantity($qty, $accumulate = true) {
+        if ($accumulate) {
+            $this->ton_sl_cay += $qty;
+        }
+        else
+        {
+            $this->ton_sl_cay = $qty;
+        }
+    }
+
+    public function getQuantityAttribute() {
+        return $this->ton_sl_cay;
     }
 }

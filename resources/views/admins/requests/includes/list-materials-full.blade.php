@@ -25,9 +25,11 @@
         <th class="align-middle">L2</th> --}}
         {{-- <th class="align-middle">SL - Tấm</th> --}}
         {{-- <th class="align-middle">Diện tích</th> --}}
-        {{-- <th class="align-middle">Lot No</th>
-        <th class="align-middle">Date</th> --}}
-        <th class="align-middle">Tồn kho</th>
+        @if ($action == "warehouse_export")
+          <th class="align-middle">Lot No</th>
+          <th class="align-middle">Date</th>
+          <th class="align-middle">Tồn kho</th>
+        @endif
         {{-- <th class="align-middle">Tồn SL - Tấm</th>
         <th class="align-middle">Tồn SL - m2</th> --}}
       </tr>
@@ -49,6 +51,14 @@
             </td>
             <td class="merchandise_id d-none">
               <input type="hidden" value="{{ $material->l_id }}">
+            </td>
+            <td class="lot_no d-none">
+              <input type="hidden" value="{{ $material->lot_no }}">
+            </td>
+            <td class="ton_kho d-none">
+              <input type="hidden" value="{{
+                $material->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($material->model_type)]
+              }}">
             </td>
             <td class="code">
               <input type="hidden" name="material[code][]" value="{{ $material->code }}">
@@ -74,15 +84,18 @@
             <td class="">{{ $material->l2 }}</td> --}}
             {{-- <td class="">{{ $material->sl_tam }}</td> --}}
             {{-- <td class="">{{ $material->creage }}</td> --}}
-            {{-- <td class="">{{ $material->lot_no }}</td>
-            <td class="">{{ $material->date }}</td> --}}
-            <td align="left">
-              <ul style="list-style: circle">
-                @foreach ($material->ton_kho as $properties => $item)
-                  <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties) }} : {{ $item }} </li>
-                @endforeach
-              </ul>
-            </td>
+            @if ($action == "warehouse_export")
+              <td class="">{{ $material->lot_no }}</td>
+              <td class="">{{ $material->date }}</td>
+              <td align="left">
+                <ul style="list-style: circle">
+                  @foreach ($material->ton_kho as $properties => $item)
+                    <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties) }} : {{ $item }} </li>
+                  @endforeach
+                </ul>
+              </td>
+            @endif
+            
             {{-- <td class="">{{ $material->ton_sl_tam }}</td>
             <td class="">{{ $material->ton_sl_m2 }}</td> --}}
           </tr>
