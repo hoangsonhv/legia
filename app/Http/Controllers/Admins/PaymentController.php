@@ -99,6 +99,9 @@ class PaymentController extends Controller
         $banks                      = AdminHelper::getBanks();
         $co = null;
         $payment = null;
+        $payments = [];
+        $thanhToan = null;
+
         if ($requestId) {
             $requestModel = $this->requestRepository->getRequests([
                     'id'     => $requestId,
@@ -141,6 +144,11 @@ class PaymentController extends Controller
                 }
                 $thanhToan = $requestModel->thanh_toan;
 
+                $arrPayments = $requestModel->payments()->get()->toArray();
+                foreach ($arrPayments as $recod) {
+                    $payments[$recod['step_id']] = $recod;
+                }
+
                 $payment = new Payment;
                 $payment->money_total = $thanhToan['amount_money'][$steps[$indexStepPay]['field']];
                 $payment->note = 'Tạo phiếu chi cho ' . $requestModel->code . ' ' . $steps[$indexStepPay]['text'];
@@ -155,7 +163,7 @@ class PaymentController extends Controller
             return redirect()->back()->with('error','Phiếu Yêu Cầu không tồn tại!');
         }
         return view('admins.payments.create',compact('breadcrumb', 'titleForLayout', 'permissions', 'files',
-            'categories', 'requests', 'requestModel', 'paymentMethods', 'banks', 'payment', 'co'));
+            'categories', 'thanhToan', 'requests', 'payments', 'requestModel', 'paymentMethods', 'banks', 'payment', 'co'));
     }
 
     public function store(PaymentRequest $request)

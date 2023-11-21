@@ -70,6 +70,10 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            <h3 class="title text-primary">Danh mục hàng hóa CO</h3>
+                            @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true, 'notAction' => true])
+                          </div>
+                        <div class="card-body">
                             <h3 class="title text-primary">Nội dung</h3>
                             @include('admins.warehouse_export_sell.includes.list-products')
                         </div>
@@ -82,7 +86,7 @@
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                    @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material')])
+                    @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material', ['action' => 'warehouse_export'])])
                 </div>
             </div>
         </div>

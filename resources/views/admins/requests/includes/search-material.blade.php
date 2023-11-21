@@ -12,12 +12,6 @@
           <div class="col-md-3">
             {!! Form::text('code', null, array('class' => 'form-control', 'placeholder' => 'Mã vật liệu')) !!}
           </div>
-          <div class="col-md-1">
-            {!! Form::text('do_day', null, array('class' => 'form-control', 'placeholder' => 'Độ dày')) !!}
-          </div>
-          <div class="col-md-3">
-            {!! Form::text('hinh_dang', null, array('class' => 'form-control', 'placeholder' => 'Hình dạng')) !!}
-          </div>
           <div class="col-md-3">
             {!! Form::text('lot_no', null, array('class' => 'form-control', 'placeholder' => 'Lot No')) !!}
           </div>

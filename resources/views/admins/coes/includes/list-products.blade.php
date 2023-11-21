@@ -70,26 +70,8 @@
                     $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
                     $materialType = !empty($collect) ? $warehouse->material_type : $detectCode['material_type'];
                     $warehouseGroupId = !empty($collect) ? $warehouse->merchandise_group_id : $detectCode['merchandise_group_id'];
-                    $tonKho = 0;
+                    $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type']);
 
-                    if ($manufactureType == \App\Models\MerchandiseGroup::COMMERCE) {
-                        $tonKho = \App\Helpers\AdminHelper::countProductEcomInWarehouse($detectCode['merchandise_code_in_warehouse'], $detectCode['merchandise_group_id']); 
-                    }
-                    else {
-                        // $modelAttributes = [
-                        //     'code' => $code,
-                        //     'vat_lieu'  => $loaiVatLieu,
-                        //     'do_day'    => $doDay,
-                        //     'tieu_chuan' => $tieuChuan,
-                        //     'kich_co'   => $kichCo,
-                        //     'kich_thuoc'    => $kichThuoc,
-                        //     'chuan_mat_bich'    => $chuanBich,
-                        //     'chuan_gasket'  => $chuanGasket,
-                        //     'dvt'   => $dvTinh,
-                        //     'model_type' => $materialType,
-                        // ];
-                        $tonKho = '---';
-                    }
                 @endphp
                 <tr align="center">
                     @if(empty($notAction))

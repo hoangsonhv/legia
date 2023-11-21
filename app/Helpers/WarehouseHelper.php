@@ -227,6 +227,43 @@ class WarehouseHelper
         return $paths[$modelType];
     }
 
+    public static function groupTonKhoKey($group_id) {
+        $keys = [
+            WarehouseHelper::BIA => 'ton_sl_tam',
+            WarehouseHelper::CAO_SU => 'ton_sl_tam',
+            WarehouseHelper::CAO_SU_VN_ZA => 'ton_sl_tam',
+            WarehouseHelper::TAM_KIM_LOAI => 'ton_sl_tam',
+            WarehouseHelper::CREAMIC => 'ton_sl_tam',
+            WarehouseHelper::GRAPHITE => 'ton_sl_tam',
+            WarehouseHelper::PTFE => 'ton_sl_tam',
+            WarehouseHelper::TAM_NHUA => 'ton_sl_tam',
+            WarehouseHelper::FILLER => 'ton_sl_cuon',
+            WarehouseHelper::GLAND_PACKING => 'ton_sl_cuon',
+            WarehouseHelper::HOOP => 'ton_sl_cuon',
+            WarehouseHelper::DAY_CAO_SU_VA_SILICON => 'ton_sl_cuon',
+            WarehouseHelper::ONG_GLASS_EXPOXY => 'ton_sl_cay',
+            WarehouseHelper::DAY_CREAMIC => 'ton_sl_cuon',
+            WarehouseHelper::PTFE_CAYONG => 'ton_sl_cay',
+            WarehouseHelper::PTFE_TAPE => 'ton_sl_cuon',
+            WarehouseHelper::VANH_TINH_INNER_SWG => 'ton_sl_cai',
+            WarehouseHelper::VANH_TINH_OUTER_SWG => 'ton_sl_cai',
+            WarehouseHelper::ND_LOAI_KHAC => 'ton_sl_cai',
+            WarehouseHelper::NK_LOAI_KHAC => 'ton_sl_cai',
+            WarehouseHelper::ORING => 'ton_sl_cai',
+            WarehouseHelper::RTJ => 'ton_sl_cai',
+            WarehouseHelper::PHU_TUNG_DUNG_CU => 'ton_sl_cai',
+            WarehouseHelper::THANH_PHAM_SWG => 'ton_sl_cai',
+            WarehouseHelper::GLAND_PACKING_LATTY => 'ton_sl_cai',
+            WarehouseHelper::CCDC => 'ton_sl_cai',
+            WarehouseHelper::PTFE_ENVELOP => 'ton_sl_cai',
+            WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'ton_sl_cay',
+            WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'ton_sl_cai',
+            WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'ton_sl_cai',
+        ];
+
+        return $keys[$group_id];
+    }
+
     public static function translateAtt($key)
     {
         $attributes = [
@@ -248,8 +285,8 @@ class WarehouseHelper
             'ton_sl_m' => 'Tồn (m)',
             'd1' => 'D1',
             'd2' => 'D2',
-            'd1' => 'D3',
-            'd2' => 'D4',
+            'd3' => 'D3',
+            'd4' => 'D4',
             'sl_cai' => 'Số lượng cái',
             'ton_sl_cai' => 'Tồn (cái)',
             'cho_may_moc_thiet_bi' => 'Cho máy móc, thiết bị',

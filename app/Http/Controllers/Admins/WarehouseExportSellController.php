@@ -103,6 +103,7 @@ class WarehouseExportSellController extends Controller
         $coreCustomers = AdminHelper::getCoreCustomer();
         $coreCustomerOrigin = CoreCustomer::all()->toArray();
         $model = null;
+        $warehouses = [];
 
         $params = $request->all();
         $coId = isset($params['co_id']) ? $params['co_id'] : null;
@@ -112,35 +113,36 @@ class WarehouseExportSellController extends Controller
                 'status' => ProcessStatus::Approved
             ])->limit(1);
             $coModel = $queryCo->first();
+            $warehouses  = $coModel->warehouses;
             $co = $queryCo->pluck('code', 'id')->toArray();
             if (!$co) {
                 return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
             }
 
             $products = [];
-            $warehouses = $coModel->warehouses->toArray();
-            foreach ($warehouses as $warehouse) {
-                if ($warehouse['manufacture_type'] == MerchandiseGroup::COMMERCE) {
-                    $merchandise_id = 0;
-                }
-                else
-                {
-                    $merchandise_id = $warehouse['merchandise_id'];
-                }
-                array_push($products, [
-                    'code' => $warehouse['code'],
-                    'name' => $warehouse['loai_vat_lieu'],
-                    'unit' => $warehouse['dv_tinh'],
-                    'quantity' => $warehouse['so_luong'],
-                    'unit_price' => $warehouse['don_gia'],
-                    'into_money' => $warehouse['don_gia']*$warehouse['so_luong'],
-                    'merchandise_id' => $merchandise_id,
-                ]);
-            }
+            // $warehouses = $coModel->warehouses->toArray();
+            // foreach ($warehouses as $warehouse) {
+            //     if ($warehouse['manufacture_type'] == MerchandiseGroup::COMMERCE) {
+            //         $merchandise_id = 0;
+            //     }
+            //     else
+            //     {
+            //         $merchandise_id = $warehouse['merchandise_id'];
+            //     }
+            //     array_push($products, [
+            //         'code' => $warehouse['code'],
+            //         'name' => $warehouse['loai_vat_lieu'],
+            //         'unit' => $warehouse['dv_tinh'],
+            //         'quantity' => $warehouse['so_luong'],
+            //         'unit_price' => $warehouse['don_gia'],
+            //         'into_money' => $warehouse['don_gia']*$warehouse['so_luong'],
+            //         'merchandise_id' => $merchandise_id,
+            //     ]);
+            // }
         }
 
         return view('admins.warehouse_export_sell.create', compact('breadcrumb', 'titleForLayout',
-            'permissions', 'coreCustomers', 'coreCustomerOrigin', 'coModel', 'co', 'products', 'model'));
+            'permissions', 'warehouses', 'coreCustomers', 'coreCustomerOrigin', 'coModel', 'co', 'products', 'model'));
     }
 
     public function store(WarehouseExportSellRequest $request)
@@ -204,31 +206,14 @@ class WarehouseExportSellController extends Controller
 
             if (!empty($products)) {
                 $model->products()->createMany($products);
-
                 // Decrease material in warehouse
                 foreach ($products as $product) {
                     if ($product['merchandise_id'] > 0) {
-                        $baseWarehouse = BaseWarehouseCommon::find($product['merchandise_id']);
-                        
-                        $warehouseModel = WarehouseHelper::getModel($baseWarehouse->model_type)
+                        $base_warehouse = BaseWarehouseCommon::find($product['merchandise_id']);
+                        $group_warehouse = WarehouseHelper::getModel($base_warehouse->model_type)
                             ->find($product['merchandise_id']);
-
-                        $warehouseModel->setQuantity($product['quantity'] * (-1));
-                        $warehouseModel->save();
-                    }
-                    else
-                    {
-                        // $product['merchandise_id'] == 0 is commerce
-                        $merchandise = AdminHelper::detectProductCode($product['code']);
-                        if (isset($merchandise['merchandise_id'])) {
-                            $baseWarehouse = BaseWarehouseCommon::find($merchandise['merchandise_id']);
-                        
-                            $warehouseModel = WarehouseHelper::getModel($baseWarehouse->model_type)
-                                ->find($merchandise['merchandise_id']);
-
-                            $warehouseModel->setQuantity($product['quantity'] * (-1));
-                            $warehouseModel->save();
-                        }
+                        $group_warehouse->setQuantity($product['quantity'] * (-1));
+                        $group_warehouse->save();
                     }
                 }
 

@@ -66,7 +66,10 @@ $(function () {
         $.ajax({
             method: "POST",
             url: $(this).attr('data-url'),
-            data: { code: $(this).parents('.modal-body:first').find('[name=code]').val() }
+            data: {
+                code: $(this).parents('.modal-body:first').find('[name=code]').val(),
+                lot_no: $(this).parents('.modal-body:first').find('[name=lot_no]').val(),
+            }
         })
             .done(function( data ) {
                 if (data.success) {
@@ -90,7 +93,7 @@ $(function () {
             checkCodeExists(eleModal, aCode).then(
                 function(exists) {
                     if (exists !== true) {
-                        var eleForm = '.form-root .table tbody';
+                        var eleForm = '#content_table .table tbody';
                         var lengthTrForm = $(eleForm + ' tr').length;
                         // Get data modal
                         $(eleModal + ' tr').each(function(index, value) {
@@ -100,7 +103,9 @@ $(function () {
                                 var opts = {
                                     merchandise_id: eleRow.find('td.merchandise_id input').val(),
                                     code: eleRow.find('td.code input').val(),
-                                    vat_lieu: eleRow.find('td.vat-lieu input').val()
+                                    vat_lieu: eleRow.find('td.vat-lieu input').val(),
+                                    lot_no: eleRow.find('td.lot_no input').val(),
+                                    ton_kho: eleRow.find('td.ton_kho input').val(),
                                 };
                                 $(eleForm).append(getItem(lengthTrForm, 'Cái', opts));
                                 // Add code
@@ -228,9 +233,11 @@ function getItem(index, unit, opts) {
     return '<tr align="center">'
         + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá sản phẩm" onclick="deteleItem(this)"></i></td>'
         + '<td class="sequence">'+index+'</td>'
-        + '<td class="code"><input type="hidden" name="product[merchandise_id][]" value="'+opts.merchandise_id+'"><input class="form-control" type="text" name="product[code][]" value="'+opts.code+'"></td>'
-        + '<td class=""><textarea class="form-control" name="product[name][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
-        + '<td class=""><input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
+        + '<td class="code"><input type="hidden" name="product[merchandise_id][]" value="'+opts.merchandise_id+'"><input readonly class="form-control" type="text" name="product[code][]" value="'+opts.code+'"></td>'
+        + '<td class=""><textarea readonly class="form-control" name="product[name][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
+        + '<td class="code"><input readonly class="form-control" type="text" name="product[lot_no][]" value="'+opts.lot_no+'"></td>'
+        + '<td class=""><input readonly class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
+        + '<td class="code"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho+'"></td>'
         + '<td class=""><input class="form-control data-quantity" style="width: 120px" type="number" name="product[quantity][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
         + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[unit_price][]" onKeyUp="return getNumberFormatUnitPrice(this)" min="1" value="">'
         + '<input class="form-control data-origin data-unit-price" type="hidden" name="product[unit_price][]" value=""></td>'

@@ -37,9 +37,6 @@ class Group11 extends BaseWarehouseCommon
             'chuan_mat_bich'    => $this->chuan_mat_bich,
             'chuan_gasket'  => $this->chuan_gasket,
             'dvt'   => $this->dvt,
-            'lot_no' => $this->lot_no,
-            'ghi_chu' => $this->ghi_chu,
-            'date' => $this->date,
         ];
     }
 
@@ -53,7 +50,17 @@ class Group11 extends BaseWarehouseCommon
         ];
     }
 
-    public function setQuantity($qty) {
-        $this->sl_ton += $qty;
+    public function setQuantity($qty, $accumulate = true) {
+        if ($accumulate) {
+            $this->sl_ton += $qty;
+        }
+        else
+        {
+            $this->sl_ton = $qty;
+        }
+    }
+
+    public function getQuantityAttribute() {
+        return $this->sl_ton;
     }
 }

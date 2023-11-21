@@ -16,7 +16,8 @@ class ManufactureDetail extends Model
         'reality_quantity',
         'material_type',
         'need_quantity',
-        'manufacture_quantity'
+        'manufacture_quantity',
+        'lot_no',
     ];
 
     public function offerPrice()

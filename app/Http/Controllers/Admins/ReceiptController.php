@@ -92,6 +92,9 @@ class ReceiptController extends Controller
 
         $coTmp = null;
         $receipt = null;
+        $co = null;
+        $thanhToan = null;
+        $receipts = [];
         if ($type && $id) {
             switch ($type) {
                 case 'co':
@@ -100,6 +103,7 @@ class ReceiptController extends Controller
                         'status' => ProcessStatus::Approved
                     ])->first();
                     if($repository) {
+                        $co = $repository;
                         $thanhToan = $repository->thanh_toan;
                         $percents = isset($thanhToan['percent']) ? $thanhToan['percent'] : [];
                         $steps = DataHelper::stepPay();
@@ -141,6 +145,13 @@ class ReceiptController extends Controller
                         $receipt->money_total = $thanhToan['amount_money'][$steps[$indexStepPay]['field']];
                         $receipt->note = 'Tạo phiếu thu cho ' . $repository->code . ' ' . $steps[$indexStepPay]['text'];
                         $receipt->step_id = $indexStepPay;
+
+                        $arrReceipts = $repository->receipt()->get()->toArray();
+                        foreach ($arrReceipts as $recod) {
+                            if(in_array($recod['status'], [ProcessStatus::Pending, ProcessStatus::Approved])) {
+                                $receipts[$recod['step_id']] = $recod;
+                            }
+                        }
                     }
                     if($coTmpData = $repository->co_tmp()->first())
                     {
@@ -155,14 +166,14 @@ class ReceiptController extends Controller
                     break;
             }
             if (!empty($repository)) {
-                $co[$repository->id] = $repository->code;
+                $coes[$repository->id] = $repository->code;
             }
         }
-        if (empty($co)) {
+        if (empty($coes)) {
             return redirect()->back()->with('error','Thông tin CO không tồn tại!');
         }
-        return view('admins.receipts.create',compact('breadcrumb', 'titleForLayout', 'permissions',
-            'type', 'co', 'files', 'paymentMethods', 'banks', 'receipt', 'coTmp'));
+        return view('admins.receipts.create',compact('receipts', 'breadcrumb', 'titleForLayout', 'permissions',
+            'type', 'coes', 'thanhToan', 'co', 'files', 'paymentMethods', 'banks', 'receipt', 'coTmp'));
     }
 
     public function store(ReceiptRequest $request)
@@ -265,6 +276,10 @@ class ReceiptController extends Controller
         $titleForLayout             = $breadcrumb['data']['list']['label'];
         $receipt                    = $this->receiptRepository->find($id);
         $banks                      = AdminHelper::getBanks();
+
+        $co = null;
+        $thanhToan = null;
+        $receipts = [];
         if ($receipt) {
             $user = Session::get('login');
             if(!PermissionHelper::hasPermission('admin.receipt.index-all') && $receipt->admin_id != $user->id) {
@@ -280,7 +295,7 @@ class ReceiptController extends Controller
                         'status' => ProcessStatus::Approved
                     ])->first();
                 if ($repository) {
-                    $co[$repository->id] = $repository->code;
+                    $coes[$repository->id] = $repository->code;
                     $type                = 'payment';
                 }
             } else if ($receipt->co_id) {
@@ -289,19 +304,28 @@ class ReceiptController extends Controller
                         'status' => ProcessStatus::Approved
                     ])->first();
                 if ($repository) {
-                    $co[$repository->id] = $repository->code;
+                    $co = $repository;
+                    $coes[$repository->id] = $repository->code;
                     $type                = 'co';
+                    $thanhToan = $repository->thanh_toan;
+
+                    $arrReceipts = $repository->receipt()->get()->toArray();
+                    foreach ($arrReceipts as $recod) {
+                        if(in_array($recod['status'], [ProcessStatus::Pending, ProcessStatus::Approved])) {
+                            $receipts[$recod['step_id']] = $recod;
+                        }
+                    }
                 }
                 if($coTmpData = $repository->co_tmp()->first())
                 {
                     $coTmp = $coTmpData->warehouses;
                 }
             }
-            if (empty($co)) {
+            if (empty($coes)) {
                 return redirect()->back()->with('error','Thông tin CO không tồn tại!');
             }
             return view('admins.receipts.edit',compact('breadcrumb', 'titleForLayout', 'receipt',
-                'permissions', 'type', 'co', 'files', 'paymentMethods', 'banks', 'coTmp'));
+                'permissions', 'type', 'receipts', 'co', 'coes', 'thanhToan', 'files', 'paymentMethods', 'banks', 'coTmp'));
         }
         return redirect()->route('admin.receipt.index')->with('error', 'Phiếu Thu không tồn tại!');
     }

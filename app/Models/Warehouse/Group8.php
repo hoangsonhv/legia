@@ -25,9 +25,6 @@ class Group8 extends BaseWarehouseCommon
         return [
             'vat_lieu' => $this->vat_lieu,
             'size' => $this->size,
-            'lot_no' => $this->lot_no,
-            'ghi_chu' => $this->ghi_chu,
-            'date' => $this->date,
         ];
     }
        
@@ -41,7 +38,17 @@ class Group8 extends BaseWarehouseCommon
         ];
     }
 
-    public function setQuantity($qty) {
-        $this->ton_sl_cai += $qty;
+    public function setQuantity($qty, $accumulate = true) {
+        if ($accumulate) {
+            $this->ton_sl_cai += $qty;
+        }
+        else
+        {
+            $this->ton_sl_cai = $qty;
+        }
+    }
+
+    public function getQuantityAttribute() {
+        return $this->ton_sl_cai;
     }
 }

@@ -27,9 +27,6 @@ class Group12 extends BaseWarehouseCommon
             'mo_ta'    => $this->mo_ta,
             'bo_phan'  => $this->bo_phan,
             'dvt'   => $this->dvt,
-            'lot_no' => $this->lot_no,
-            'ghi_chu' => $this->ghi_chu,
-            'date' => $this->date,
         ];
     }
        
@@ -43,7 +40,17 @@ class Group12 extends BaseWarehouseCommon
         ];
     }
 
-    public function setQuantity($qty) {
-        $this->ton_sl_cai += $qty;
+    public function setQuantity($qty, $accumulate = true) {
+        if ($accumulate) {
+            $this->ton_sl_cai += $qty;
+        }
+        else
+        {
+            $this->ton_sl_cai = $qty;
+        }
+    }
+
+    public function getQuantityAttribute() {
+        return $this->ton_sl_cai;
     }
 }

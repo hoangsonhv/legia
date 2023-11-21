@@ -10,7 +10,9 @@ use App\Models\ManufactureDetail;
 use Illuminate\Support\Facades\DB;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\CoRepository;
+use App\Models\Warehouse\BaseWarehouseCommon;
 use App\Models\WarehouseGroup;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
 class ManufactureRepository extends AdminRepository
@@ -93,18 +95,34 @@ class ManufactureRepository extends AdminRepository
                     'chuan_mat_bich'    => $material->chuan_bich,
                     'chuan_gasket'  => $material->chuan_gasket,
                     'dvt'   => $material->dv_tinh,
-                    'lot_no' => $co->raw_code,
+                    'lot_no' => $detail->lot_no,
                     'ghi_chu' => 'Đầu kỳ',
                     'date' => $date,
                     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type],
                 ];
 
                 if ($detail->reality_quantity >= $material->need_quantity) {
-                    $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type])
-                        ->create($modelAttributes);
+                    $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->first();
+                    if ($base_warehouse != null) {
+                        $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
+                            ->find($base_warehouse->l_id);
+
+                        $new_merchandise = $merchandise->replicate();
+                        $new_merchandise->created_at = Carbon::now();
+                        $new_merchandise->ghi_chu = "";
+                        $new_merchandise->lot_no = $detail->lot_no;
+                        $new_merchandise->date = Carbon::now();
+                        $new_merchandise->setQuantity($detail->reality_quantity, accumulate: false);
+                        $new_merchandise->save();
+                    }
+                    else
+                    {
+                        $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type])
+                            ->create($modelAttributes);
                     
-                    $warehouseModel->setQuantity($detail->reality_quantity);
-                    $warehouseModel->save();
+                        $warehouseModel->setQuantity($detail->reality_quantity);
+                        $warehouseModel->save();
+                    }
                 }
 
                 $material->merchandise_id = $warehouseModel->l_id;
@@ -156,7 +174,8 @@ class ManufactureRepository extends AdminRepository
                 'manufacture_quantity' => $warehouse->need_quantity,
                 'offer_price_id' => $warehouse->id,
                 'need_quantity' => $warehouse->so_luong,
-                'reality_quantity' => 0
+                'reality_quantity' => 0,
+                'lot_no' => $co->raw_code,
             ];
             if($warehouse->material_type == Manufacture::MATERIAL_TYPE_METAL) {
                 $row['material_type'] = Manufacture::MATERIAL_TYPE_METAL;
