@@ -160,7 +160,8 @@
                 </div>
               </div>
               <div class="card-body" style="display: none" id="card-table-tmp-co">
-                @include('admins.coes.includes.list-products', ['warehouses' => $coTmp, 'collect' => true, 'notAction' => true])
+                {{-- @include('admins.coes.includes.list-products', ['warehouses' => $coTmp, 'collect' => true, 'notAction' => true]) --}}
+                @include('admins.coes.includes.list-products', ['warehouses' => $coTmp, 'collect' => true])
               </div>
             </div>
             @endif

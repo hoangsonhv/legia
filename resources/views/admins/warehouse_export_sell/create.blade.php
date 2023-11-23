@@ -71,7 +71,8 @@
                         </div>
                         <div class="card-body">
                             <h3 class="title text-primary">Danh mục hàng hóa CO</h3>
-                            @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true, 'notAction' => true])
+                            {{-- @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true, 'notAction' => true]) --}}
+                            @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true])
                           </div>
                         <div class="card-body">
                             <h3 class="title text-primary">Nội dung</h3>

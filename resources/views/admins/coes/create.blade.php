@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="card-body offer-price">
                                     @if(!empty($warehouses))
-                                        @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'material' => $material, 'collect' => true])
+                                        @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'material' => $material, 'collect' => true, 'createCO' => true])
                                     @endif
                                 </div>
                                 <div class="card-body check-warehouse">

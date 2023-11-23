@@ -73,15 +73,12 @@ class ManufactureRepository extends AdminRepository
     public function updateIsCompleted($id)
     {
         $query = ManufactureDetail::where('manufacture_id', $id)
-            ->whereRaw('reality_quantity < need_quantity')
+            ->whereRaw('reality_quantity < manufacture_quantity')
             ->get();
         
         if(!$query->count()) {
             $details = ManufactureDetail::where('manufacture_id', $id)->get();
             $date = date('Y-m-d');
-
-            $manufacture = Manufacture::find($id);
-            $co = Co::where('id', $manufacture->co_id)->first();
 
             foreach ($details as $index => $detail) {
                 $material = $detail->offerPrice;
@@ -103,6 +100,8 @@ class ManufactureRepository extends AdminRepository
 
                 if ($detail->reality_quantity >= $material->need_quantity) {
                     $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->first();
+                    $warehouseModelId = 0;
+
                     if ($base_warehouse != null) {
                         $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
                             ->find($base_warehouse->l_id);
@@ -114,18 +113,20 @@ class ManufactureRepository extends AdminRepository
                         $new_merchandise->date = Carbon::now();
                         $new_merchandise->setQuantity($detail->reality_quantity, accumulate: false);
                         $new_merchandise->save();
+                        $warehouseModelId = $new_merchandise->l_id;
                     }
                     else
                     {
                         $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type])
                             ->create($modelAttributes);
                     
-                        $warehouseModel->setQuantity($detail->reality_quantity);
+                        $warehouseModel->setQuantity($detail->reality_quantity, accumulate: false);
                         $warehouseModel->save();
+                        $warehouseModelId = $warehouseModel->l_id;
                     }
                 }
 
-                $material->merchandise_id = $warehouseModel->l_id;
+                $material->merchandise_id = $warehouseModelId;
                 $material->save();
             }
             $this->update(['is_completed' => !$query->count() ? Manufacture::IS_COMPLETED : 0], $id);
@@ -166,7 +167,8 @@ class ManufactureRepository extends AdminRepository
             //     'dvt'   => $warehouse->dv_tinh,
             //     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$warehouse->material_type],
             // ];
-            if ($warehouse->manufacture_type != WarehouseGroup::TYPE_MANUFACTURE) {
+            if (($warehouse->manufacture_type != WarehouseGroup::TYPE_MANUFACTURE)
+                || $warehouse->so_luong_san_xuat == 0) {
                 continue;
             }
 
@@ -175,6 +177,7 @@ class ManufactureRepository extends AdminRepository
                 'offer_price_id' => $warehouse->id,
                 'need_quantity' => $warehouse->so_luong,
                 'reality_quantity' => 0,
+                'manufacture_quantity' => $warehouse->so_luong_san_xuat,
                 'lot_no' => $co->raw_code,
             ];
             if($warehouse->material_type == Manufacture::MATERIAL_TYPE_METAL) {

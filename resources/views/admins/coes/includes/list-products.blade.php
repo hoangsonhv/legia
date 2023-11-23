@@ -15,7 +15,12 @@
             @if(empty($notAction))
                 @php
                     // $colspan = empty($isCoTmp) ? 17 : 17;
-                    $colspan = 16;
+                    if(empty($isCoTmp)) {
+                        $colspan = 17;
+                    }
+                    else {
+                        $colspan = 16;
+                    }
                 @endphp
                 <th>&nbsp</th>
             @else
@@ -40,8 +45,10 @@
 {{--            @endif--}}
             <th class="align-middle">Số lượng cần</th>
             @if(empty($notAction))
-                {{-- <th class="align-middle">Số lượng sản xuất</th> --}}
                 <th class="align-middle">Tồn kho</th>
+                @if(empty($isCoTmp))
+                    <th class="align-middle">Số lượng sản xuất</th>
+                @endif
             @endif
             <th class="align-middle {{$hiddenShowPrice ? 'd-none' : ''}}">Đơn giá (VNĐ)</th>
             <th class="align-middle {{$hiddenShowPrice ? 'd-none' : ''}}">Thành tiền (VNĐ)</th>
@@ -66,11 +73,19 @@
                     $dvTinh      = !empty($collect) ? $warehouse->dv_tinh : $warehouse[9];
                     $soLuong     = !empty($collect) ? $warehouse->so_luong : $warehouse[10];
                     $donGia      = !empty($collect) ? $warehouse->don_gia : $warehouse[11];
+                    $soLuongSanXuat = !empty($collect) ? $warehouse->so_luong_san_xuat : $warehouse[18];
                     $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
                     $materialType = !empty($collect) ? $warehouse->material_type : $detectCode['material_type'];
                     $warehouseGroupId = !empty($collect) ? $warehouse->merchandise_group_id : $detectCode['merchandise_group_id'];
                     $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type']);
-
+                    if (!empty($createCO)) {
+                        if (($tonKho >= $soLuong) || $manufactureType == \App\Models\MerchandiseGroup::COMMERCE) {
+                            $soLuongSanXuat = 0;
+                        }
+                        else {
+                            $soLuongSanXuat = $soLuong - $tonKho;
+                        }
+                    }
                 @endphp
                 <tr align="center">
                     @if(empty($notAction))
@@ -162,14 +177,16 @@
                             <input style="width: 50px;" onChange="caclTotalMoney(this)" type="number" min="1"
                                    name="so_luong[]" value="{{ $soLuong }}">
                         </td>
-                        {{-- <td>
-                            <input style="width: 50px;" type="number" min="0"
-                                   name="so_luong_san_xuat[]" value="{{ $soLuongSanXuat }}"
-                                   @if ($manufactureType == \App\Models\MerchandiseGroup::COMMERCE) readonly @endif>
-                        </td> --}}
                         <td>
                             <span class="text-danger"><b>{{$tonKho}}</b></span>
                         </td>
+                        @if(empty($isCoTmp))
+                            <td>
+                                <input style="width: 50px;" type="number" min="0"
+                                    name="so_luong_san_xuat[]" value="{{ $soLuongSanXuat }}"
+                                    @if ($manufactureType == \App\Models\MerchandiseGroup::COMMERCE) readonly @endif>
+                            </td>
+                        @endif
                         <td class="price {{$hiddenShowPrice ? 'd-none' : ''}}" data-price="{{ $donGia }}">
                             <input type="hidden" name="don_gia[]" value="{{ $donGia }}">
                             {{ number_format($donGia) }}
