@@ -385,19 +385,20 @@ class CoTmpController extends Controller
                         if (!$isMore) {
                             $warehouses[] = $val;
                         } else {
+                            $more['xuat_xu'] = '';
                             // Ship: Get 4 row
                             // Payment: Get 2 row
                             switch ($key - $isMore) {
-                                case 1:
+                                case 2:
                                     $more['dong_goi_va_van_chuyen'] = $val[3];
                                     break;
-                                case 2:
+                                case 3:
                                     $more['noi_giao_hang'] = $val[3];
                                     break;
-                                case 3:
-                                    $more['xuat_xu'] = $val[3];
-                                    break;
-                                case 4:
+                                // case 3:
+                                //     $more['xuat_xu'] = $val[3];
+                                //     break;
+                                case 5:
                                     $more['thoi_gian_giao_hang'] = $val[3];
                                     break;
                                 case 7:
