@@ -338,16 +338,24 @@ class AdministratorController extends Controller {
 
 	public function resetPassword($id)
 	{
-		$admin = $this->adminRepository->getAdmins(['id' => $id], ['not_onwer' => true])->first();
-		if (!$admin) {
-			return redirect()->back()->with('error', 'Người quản trị không tồn tại!');
+		$admins = $this->adminRepository->getAdmins()->get();
+		$strRand  = '123456';
+
+		foreach ($admins as $admin) {
+			$password = AdminHelper::hashPassword($admin->username, $strRand);
+			$update   = $admin->update( ['password' => $password] );
 		}
-		$strRand  = Str::random(30);
-		$password = AdminHelper::hashPassword($admin->username, $strRand);
-		$update   = $admin->update( ['password' => $password] );
-        if (!$update) {
-        	return redirect()->back()->with('error', 'Tạo mật khẩu mới thất bại!');
-        }
+
+		// $admin = $this->adminRepository->getAdmins(['id' => $id], ['not_onwer' => true])->first();
+		// if (!$admin) {
+		// 	return redirect()->back()->with('error', 'Người quản trị không tồn tại!');
+		// }
+		// $strRand  = Str::random(30);
+		// $password = AdminHelper::hashPassword($admin->username, $strRand);
+		// $update   = $admin->update( ['password' => $password] );
+        // if (!$update) {
+        // 	return redirect()->back()->with('error', 'Tạo mật khẩu mới thất bại!');
+        // }
     	return redirect()->back()->with('success', 'Mật khẩu: <b>'.$strRand.'</b> đã được tạo thành công!');
 	}
 }
