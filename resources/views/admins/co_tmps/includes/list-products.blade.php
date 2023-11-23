@@ -12,12 +12,12 @@
       <tr align="center">
         @if(empty($notAction))
           @php
-            $colspan = 15;
+            $colspan = 16;
           @endphp
           <th>&nbsp</th>
         @else
           @php
-            $colspan = 12;
+            $colspan = 13;
           @endphp
         @endif
         <th class="align-middle">Số TT</th>
@@ -33,6 +33,7 @@
         <th class="align-middle">Thương mại/Sản xuất</th>
         <th class="align-middle">Đ/v tính</th>
         <th class="align-middle">Số lượng</th>
+        <th class="align-middle">Tồn kho</th>
         <th class="align-middle">Đơn giá (VNĐ)</th>
         <th class="align-middle">Thành tiền (VNĐ)</th>
       </tr>
@@ -59,6 +60,8 @@
             $dvTinh      = !empty($collect) ? $warehouse->dv_tinh : $warehouse[9];
             $soLuong     = !empty($collect) ? $warehouse->so_luong : $warehouse[10];
             $donGia      = !empty($collect) ? $warehouse->don_gia : $warehouse[11];
+            $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type']);
+
           @endphp
           <tr align="center">
             @if(empty($notAction))
@@ -113,6 +116,9 @@
               </td>
               <td>
                 <input style="width: 50px;" onChange="caclTotalMoney(this)" type="number" min="1" name="so_luong[]" value="{{ $soLuong }}">
+              </td>
+              <td>
+                <span class="text-danger"><b>{{$tonKho}}</b></span>
               </td>
               <td class="price" data-price="{{ $donGia }}">
                 <input type="hidden" name="don_gia[]" value="{{ $donGia }}">

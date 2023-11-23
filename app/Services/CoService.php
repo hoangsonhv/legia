@@ -108,29 +108,31 @@ class CoService
         $results = collect([]);
         try {
             if ($codes) {
-                $warehouse_ids = [];
+                $codes = array_map(function($val) {
+                    $aVal = explode(' ', $val);
+                    if (isset($aVal[0]) && isset($aVal[1])) {
+                        return trim(trim($aVal[0]) . ' '. trim($aVal[1]));
+                    } else {
+                        return null;
+                    }
+                }, $codes);
+                $codes = array_keys(array_flip(array_diff($codes, [null])));
+
+                $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
 
                 foreach ($codes as $code) {
                     $merchandiseCode = \App\Helpers\AdminHelper::detectProductCode($code);
-                    if (empty($merchandiseCode['merchandise_group_code'])) {
+                    if ($merchandiseCode['model_type'] == null) {
                         continue;
                     }
 
-                    $group = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_group_code'] . '%' )->first();
-                    $warehouse_ids = array_merge($warehouse_ids, $group->warehouses->pluck('id')->toArray());
-                }
-                $warehouse_ids = array_unique($warehouse_ids);
-                
-                $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
-
-                foreach ($warehouse_ids as $warehouse_id) {
-                    $warehouse = Warehouse::find($warehouse_id);
-                    $tonKhoKey = WarehouseHelper::groupTonKhoKey($warehouse->model_type);
-                    $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouse->model_type));
+                    $tonKhoKey = WarehouseHelper::groupTonKhoKey($merchandiseCode['model_type']);
+                    $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($merchandiseCode['model_type']));
                     
                     $query = DB::table('base_warehouses')
                         ->select('*', DB::raw('sum('.$tonKhoKey.') as '.$tonKhoKey))
-                        ->where('model_type' , $warehouse->model_type)
+                        ->where('code', 'like', '%'.$code.'%')
+                        ->where('model_type', $merchandiseCode['model_type'])
                         ->where(function($query) use ($nonZeroConditions) {
                             foreach ($nonZeroConditions as $cnd) {
                                 $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
@@ -142,6 +144,7 @@ class CoService
                         ->model->hydrate($query->get()->toArray());
                     $results = $results->merge($materials);
                 }
+
             }
         } catch(\Exception $ex) {
             dd($ex);
@@ -149,6 +152,53 @@ class CoService
 
         return $results;
     }
+
+    // public function getProductMaterialsInWarehouses($codes, $ignoreZero)
+    // {
+    //     $results = collect([]);
+    //     try {
+    //         if ($codes) {
+    //             $warehouse_ids = [];
+
+    //             foreach ($codes as $code) {
+    //                 $merchandiseCode = \App\Helpers\AdminHelper::detectProductCode($code);
+    //                 if (empty($merchandiseCode['merchandise_group_code'])) {
+    //                     continue;
+    //                 }
+
+    //                 $group = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_group_code'] . '%' )->first();
+    //                 $warehouse_ids = array_merge($warehouse_ids, $group->warehouses->pluck('id')->toArray());
+    //             }
+    //             $warehouse_ids = array_unique($warehouse_ids);
+                
+    //             $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
+
+    //             foreach ($warehouse_ids as $warehouse_id) {
+    //                 $warehouse = Warehouse::find($warehouse_id);
+    //                 $tonKhoKey = WarehouseHelper::groupTonKhoKey($warehouse->model_type);
+    //                 $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouse->model_type));
+                    
+    //                 $query = DB::table('base_warehouses')
+    //                     ->select('*', DB::raw('sum('.$tonKhoKey.') as '.$tonKhoKey))
+    //                     ->where('model_type' , $warehouse->model_type)
+    //                     ->where(function($query) use ($nonZeroConditions) {
+    //                         foreach ($nonZeroConditions as $cnd) {
+    //                             $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+    //                         }
+    //                         return $query;
+    //                     })->groupBy('code');
+
+    //                 $materials = $this->baseWarehouseRepository
+    //                     ->model->hydrate($query->get()->toArray());
+    //                 $results = $results->merge($materials);
+    //             }
+    //         }
+    //     } catch(\Exception $ex) {
+    //         dd($ex);
+    //     }
+
+    //     return $results;
+    // }
 
     // public function getProductMaterialsInWarehouses($codes, $ignoreZero)
     // {

@@ -52,7 +52,8 @@
             </div>
             @if($co)
             <div class="card-body offer-price">
-              @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true, 'notAction' => true])
+              {{-- @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true, 'notAction' => true]) --}}
+              @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true])
             </div>
             <div class="card-body check-warehouse">
               @include('admins.coes.includes.list-warehouses',['warehouses' => $listWarehouse])

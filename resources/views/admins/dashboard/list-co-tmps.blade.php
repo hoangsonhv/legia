@@ -94,7 +94,7 @@
         <table class="table table-hover text-nowrap">
           <thead>
             <tr>
-              <th>Mã CO</th>
+              <th>Số báo giá</th>
               <th>Tên người tạo</th>
               <th>Công ty</th>
               <th>Trạng thái</th>
@@ -159,7 +159,7 @@
                         @if($coTmp->status == \App\Enums\ProcessStatus::Pending)
                             <a href="{{route('admin.co-tmp.edit', $coTmp->id)}}" target="_blank">
                                 <button class="btn btn-success">
-                                    Duyệt khảo sát
+                                    Duyệt báo giá
                                 </button>
                             </a>
                         @else
