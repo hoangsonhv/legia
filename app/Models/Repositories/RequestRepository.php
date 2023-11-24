@@ -120,12 +120,12 @@ class RequestRepository extends BaseRepository
                 ->where('status', PriceSurvey::TYPE_BUY)
                 ->get();
 
-            if($priceSurvey->count() == 0) {
-                $message = $material->code . ' chưa được nhà cung cấp';
-                return false;
-            }
+            // if($priceSurvey->count() == 0) {
+            //     $message = $material->code . ' chưa được nhà cung cấp';
+            //     return false;
+            // }
 
-            if($priceSurvey->count() != 1) {
+            if($priceSurvey->count() > 1) {
                 $message = $material->code . ' không được chọn mua nhiều hơn 1 nhà cung cấp';
                 return false;
             }
