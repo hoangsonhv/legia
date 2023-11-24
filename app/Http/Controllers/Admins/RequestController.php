@@ -121,7 +121,7 @@ class RequestController extends Controller
                 return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
             }
             $warehouses    = $queryCo->first()->warehouses;
-            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code')->toArray(), false);
+            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code')->toArray());
         } else {
             $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM]);
             $co            = array();
@@ -256,7 +256,7 @@ class RequestController extends Controller
                     return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
                 }
                 $warehouses    = $queryCo->first()->warehouses;
-                $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code', 'id')->toArray(), false);
+                $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code', 'id')->toArray());
 
                 if($coModel->currentStep) {
                     $canCreatePayment = in_array($coModel->currentStep->step, [

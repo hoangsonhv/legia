@@ -6,12 +6,15 @@ use App\Helpers\DataHelper;
 use App\Helpers\WarehouseHelper;
 use App\Models\CoStepHistory;
 use App\Models\MerchandiseGroup;
+use App\Models\MerchandiseGroupWareHouse;
 use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\Repositories\WarehousePlateRepository;
 use App\Models\Repositories\WarehouseRemainRepository;
 use App\Models\Repositories\WarehouseSpwRepository;
 use App\Models\Warehouse;
 use App\Models\Warehouse\BaseWarehouseCommon;
+use App\Models\Warehouse\WarehouseSwgCode;
+use App\Models\Warehouse\WarehouseSwgSize;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Shared\Trend\Trend;
@@ -103,46 +106,49 @@ class CoService
         return $results;
     }
 
-    public function getProductMaterialsInWarehouses($codes, $ignoreZero)
+    public function getProductMaterialsInWarehouses($codes)
     {
         $results = collect([]);
         try {
             if ($codes) {
-                $codes = array_map(function($val) {
-                    $aVal = explode(' ', $val);
-                    if (isset($aVal[0]) && isset($aVal[1])) {
-                        return trim(trim($aVal[0]) . ' '. trim($aVal[1]));
-                    } else {
-                        return null;
-                    }
-                }, $codes);
-                $codes = array_keys(array_flip(array_diff($codes, [null])));
-
-                $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
-
                 foreach ($codes as $code) {
                     $merchandiseCode = \App\Helpers\AdminHelper::detectProductCode($code);
-                    if ($merchandiseCode['model_type'] == null) {
+                    if ($merchandiseCode['model_type'] == null
+                        || $merchandiseCode['manufacture_type'] == MerchandiseGroup::COMMERCE) {
                         continue;
                     }
 
-                    $tonKhoKey = WarehouseHelper::groupTonKhoKey($merchandiseCode['model_type']);
-                    $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($merchandiseCode['model_type']));
-                    
-                    $query = DB::table('base_warehouses')
-                        ->select('*', DB::raw('sum('.$tonKhoKey.') as '.$tonKhoKey))
-                        ->where('code', 'like', '%'.$code.'%')
-                        ->where('model_type', $merchandiseCode['model_type'])
-                        ->where(function($query) use ($nonZeroConditions) {
-                            foreach ($nonZeroConditions as $cnd) {
-                                $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
-                            }
-                            return $query;
-                        })->groupBy('code');
+                    $query = '';
+                    if ($merchandiseCode['model_type'] == WarehouseHelper::THANH_PHAM_SWG) {
+                        $swg_material_codes = self::getSwgMaterialCodes($code);
+                        foreach ($swg_material_codes as $model_id => $swg_material_code) {
+                            if ($swg_material_code == '') continue;
 
-                    $materials = $this->baseWarehouseRepository
-                        ->model->hydrate($query->get()->toArray());
-                    $results = $results->merge($materials);
+                            $query = self::getMaterialsQuery($swg_material_code, $model_id);
+                            $materials = WarehouseHelper::getModel($model_id)->hydrate($query->get()->toArray());
+                            $results = $results->merge($materials);
+                        }
+                    }
+                    else {
+                        $group = MerchandiseGroup::where('code', 'like' , '%' . $merchandiseCode['merchandise_group_code'] . '%' )->first();
+                        $group_model_types = $group->warehouses->pluck('model_type')->toArray();
+
+                        $aCode = explode(' ', $code);
+                        $material_code = $code;
+                        if (isset($aCode[0]) && isset($aCode[1])) {
+                            $material_code = trim(trim($aCode[0]) . ' '. trim($aCode[1]));
+                        } else {
+                            continue;
+                        }
+
+                        $query = self::getMaterialsQuery($material_code, $group_model_types);
+                        $warehouse_materials = $query->get()->toArray();
+                        if (count($warehouse_materials) > 0) {
+                            $model_type = $warehouse_materials[0]['model_type'];
+                            $materials = WarehouseHelper::getModel($model_type)->hydrate($warehouse_materials);
+                            $results = $results->merge($materials);
+                        }
+                    }
                 }
 
             }
@@ -151,6 +157,68 @@ class CoService
         }
 
         return $results;
+    }
+
+    private function getSwgMaterialCodes($swg_code) {
+        $sub_in = substr($swg_code, 3, 1);
+        $sub_out = substr($swg_code, 6, 1);
+        $h_f_size = substr($swg_code, 8, 3);
+        $rim_size = WarehouseSwgSize::where('code_size', substr($swg_code, 8, 3))
+            ->select('rim_size')->pluck('rim_size')->first() ?? '';
+        $last = WarehouseSwgCode::select(['inner', 'outer'])->where('code_part', substr($swg_code, -8))->first() ?? '';
+        
+        if ($last == '' || $rim_size == '') {
+            $product_inner = '';
+            $product_outer = '';
+        }
+        else
+        {
+            $product_inner = 'FD '.$sub_in.' '.$rim_size.' '.$last['inner'];
+            $product_outer = 'FD '.$sub_out.' '.$rim_size.' '.$last['outer'];
+        }
+
+        if ($rim_size == '') {
+            $material_inner = '';
+            $material_outer = '';
+        }
+        else
+        {
+            $material_inner = 'RAW '.$sub_in.' '.$rim_size;
+            $material_outer = 'RAW '.$sub_out.' '.$rim_size;
+        }
+
+        $hoop = 'H '.substr($swg_code, 4, 1).' '.$h_f_size;
+        $filler = 'F '.substr($swg_code, 5, 1).' '.$h_f_size;
+
+        return [
+            WarehouseHelper::VANH_TINH_INNER_SWG => $product_inner,
+            WarehouseHelper::VANH_TINH_OUTER_SWG => $product_outer,
+            WarehouseHelper::TAM_KIM_LOAI => $material_inner,
+            WarehouseHelper::TAM_KIM_LOAI => $material_outer,
+            WarehouseHelper::HOOP => $hoop,
+            WarehouseHelper::FILLER => $filler
+        ];
+    }
+
+    private function getMaterialsQuery($code, $model_type) {
+        $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
+        $query = BaseWarehouseCommon::where('code', 'like', '%'.$code.'%')
+            ->where(function($query) use ($nonZeroConditions) {
+                foreach ($nonZeroConditions as $cnd) {
+                    $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+                }
+                return $query;
+            });
+
+        if (is_array($model_type)) {
+            $query = $query->whereIn('model_type', $model_type);
+        }
+        else
+        {
+            $query = $query->where('model_type', $model_type);
+        }
+
+        return $query;
     }
 
     // public function getProductMaterialsInWarehouses($codes, $ignoreZero)
