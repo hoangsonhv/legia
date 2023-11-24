@@ -113,7 +113,7 @@
                 </a>
               </li>
               @endpermission
-              @permission('admin.co-tmp.index')
+              @permission('admin.co.index')
               <li class="nav-item">
                 <a href="{{ route('admin.dashboard.co') }}" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/coes') !== false) ? ' active' : '' }}">
                   <p>Danh sách CO</p>
