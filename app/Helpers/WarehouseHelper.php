@@ -257,8 +257,8 @@ class WarehouseHelper
             WarehouseHelper::CCDC => 'ton_sl_cai',
             WarehouseHelper::PTFE_ENVELOP => 'ton_sl_cai',
             WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'ton_sl_cay',
-            WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'ton_sl_cai',
-            WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'ton_sl_cai',
+            WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'sl_ton',
+            WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'sl_ton',
         ];
 
         return $keys[$group_id];

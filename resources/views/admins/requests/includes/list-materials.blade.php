@@ -15,6 +15,8 @@
             <th class="align-middle">Số TT</th>
             <th class="align-middle">Mã HH</th>
             <th class="align-middle">Mô tả</th>
+            <th class="align-middle">Kích thước</th>
+            <th class="align-middle">Quy cách</th>
             <th class="align-middle">Đ/v tính</th>
             <th class="align-middle t-dinh-luong">Số lượng</th>
             <th class="align-middle">Thời gian cần</th>
@@ -46,6 +48,14 @@
                                   rows="1" readonly>{{ $material->mo_ta }}</textarea>
                     </td>
                     <td class="">
+                        <textarea class="form-control" name="material[mo_ta][]"
+                                  rows="1">{{ $material->kich_thuoc }}</textarea>
+                    </td>
+                    <td class="">
+                        <textarea class="form-control" name="material[mo_ta][]"
+                                  rows="1">{{ $material->quy_cach }}</textarea>
+                    </td>
+                    <td class="">
                         <input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]"
                                value="{{ $material->dv_tinh }}" readonly>
                     </td>
@@ -66,7 +76,7 @@
                     </td>
                 </tr>
                 <tr style="background-color: #f4f6f9">
-                    <td colspan="8">
+                    <td colspan="10">
                         @include('admins.requests.includes.price_survey_by_product')
                     </td>
                 </tr>
@@ -75,7 +85,7 @@
         </tbody>
         <tfoot>
             <tr align="left">
-                <td colspan="9">
+                <td colspan="11">
                         <button type="button" class="btn btn-success" id="display-material">+ Thêm vật liệu từ KHO
                         </button>
                         {{-- <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>

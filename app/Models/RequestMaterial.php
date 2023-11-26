@@ -13,6 +13,8 @@ class RequestMaterial extends Model
         'merchandise_id',
         'code',
         'mo_ta',
+        'kich_thuoc',
+        'quy_cach',
         'dv_tinh',
         'dinh_luong',
         'thoi_gian_can',

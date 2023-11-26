@@ -20,6 +20,7 @@ use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\Warehouse\BaseWarehouseCommon;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class WarehouseReceiptController extends Controller
 {
@@ -99,14 +100,22 @@ class WarehouseReceiptController extends Controller
                     return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
                 }
                 if ($request->material) {
+                    $currentLotNo = DB::table('base_warehouses')
+                        ->select(DB::raw('MAX(REPLACE(lot_no,"NK","")) AS max_lot_no'))
+                        ->where('lot_no', 'like', 'NK%')
+                        ->first();
+                    $nextLotNo = 'NK'.(intval($currentLotNo->max_lot_no)+1);
+
                     foreach ($request->material as $material) {
                         $price_survey = $material->price_survey->where('status', \App\Models\PriceSurvey::TYPE_BUY)->first();
                         $products[] = [
                             'merchandise_id' => $material->merchandise_id,
                             'code' => $material->code,
                             'name' => $material->mo_ta,
+                            'kich_thuoc' => $material->kich_thuoc,
+                            'quy_cach' => $material->quy_cach,
                             'unit' => $material->dv_tinh,
-                            'lot_no' => $coModel->raw_code,
+                            'lot_no' => $nextLotNo,
                             'quantity_doc' => $material->dinh_luong,
                             'quantity_reality' => 0,
                             'unit_price' => ($price_survey->price / $material->dinh_luong),
@@ -187,6 +196,8 @@ class WarehouseReceiptController extends Controller
                     'code' => $inputProducts['code'][$key],
                     'name' => $inputProducts['name'][$key],
                     'unit' => $inputProducts['unit'][$key],
+                    'kich_thuoc' => $inputProducts['kich_thuoc'][$key],
+                    'quy_cach' => $inputProducts['quy_cach'][$key],
                     'lot_no' => $inputProducts['lot_no'][$key],
                     'quantity_doc' => $inputProducts['quantity_doc'][$key],
                     'quantity_reality' => $inputProducts['quantity_reality'][$key],
@@ -289,6 +300,8 @@ class WarehouseReceiptController extends Controller
                         'code' => $inputProducts['code'][$key],
                         'name' => $inputProducts['name'][$key],
                         'unit' => $inputProducts['unit'][$key],
+                        'kich_thuoc' => $inputProducts['kich_thuoc'][$key],
+                        'quy_cach' => $inputProducts['quy_cach'][$key],
                         'lot_no' => $inputProducts['lot_no'][$key],
                         'quantity_doc' => $inputProducts['quantity_doc'][$key],
                         'quantity_reality' => $inputProducts['quantity_reality'][$key],

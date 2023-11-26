@@ -161,6 +161,8 @@ function getItem(index, unit, opts) {
     + '<td class="sequence">'+index+'</td>'
     + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input readonly class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
     + '<td class=""><textarea readonly class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
+    + '<td class=""><textarea class="form-control" name="material[kich_thuoc][]" rows="1"></textarea></textarea></td>'
+    + '<td class=""><textarea class="form-control" name="material[quy_cach][]" rows="1"></textarea></td>'
     + '<td class=""><input readonly class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="'+unit+'"></td>'
     + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'
     + '<td class=""><input class="form-control calendar-date" style="width: 120px" type="text" name="material[thoi_gian_can][]" value=""></td>'
