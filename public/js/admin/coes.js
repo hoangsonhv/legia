@@ -101,6 +101,19 @@ function getNumberFormat(_this) {
   $(_this).parent().find('.data-origin').val(number['original']);
 }
 
+function updateGiaiDoanThanhToan(moneyTotal) {
+  let fields = ['truoc_khi_lam_hang', 'truoc_khi_giao_hang', 'ngay_khi_giao_hang', 'sau_khi_giao_hang_va_cttt'];
+  fields.forEach(e => {
+    let per = $("[name='thanh_toan[percent][" +e+ "]']").val();
+    let format = 0;
+    if (moneyTotal > 0) {
+      format = formatCurrent(Math.round(((per * moneyTotal)/100)).toString())
+    }
+    $("[name='tmp[amount_money][" +e+ "]']").val(format['format']);
+    $("[name='thanh_toan[amount_money][" +e+ "]']").val(format['original']);
+  })
+}
+
 function caclTotalMoney(_this) {
   var number = $(_this).val();
   var price = $(_this).parents('tr:first').find('td.price').attr('data-price');
@@ -135,6 +148,7 @@ function sumTotal(eleForm) {
     $('.vat b').text(0);
     $('.money_total b').text(0);
   }
+  updateGiaiDoanThanhToan(totalMoney);
 }
 
 function deteleItem(_this) {
