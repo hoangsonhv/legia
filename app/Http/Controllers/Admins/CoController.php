@@ -219,7 +219,7 @@ class CoController extends Controller
             ];
             $coreCustomer = CoreCustomer::where(['code' => $dataCoreCustomer['code']])->first();
             if(!$coreCustomer) {
-                $coreCustomer = CoreCustomer::insert($dataCoreCustomer);
+                $coreCustomer = CoreCustomer::create($dataCoreCustomer);
             }
 
             $coTmpId = $request->input('co_tmp_id') ? $request->input('co_tmp_id') : null;
