@@ -264,6 +264,43 @@ class WarehouseHelper
         return $keys[$group_id];
     }
 
+    public static function warehouseName($modelType) {
+        $names = [
+            WarehouseHelper::BIA => 'KHO BÌA',
+            WarehouseHelper::CAO_SU => 'KHO CAO SU',
+            WarehouseHelper::CAO_SU_VN_ZA => 'KHO CAO SU VN ZA',
+            WarehouseHelper::TAM_KIM_LOAI => 'KHO TẤM KIM LOẠI',
+            WarehouseHelper::CREAMIC => 'KHO CREAMIC',
+            WarehouseHelper::GRAPHITE => 'KHO GRAPHITE',
+            WarehouseHelper::PTFE => 'KHO PTEE',
+            WarehouseHelper::TAM_NHUA => 'KHO TẤM NHỰA',
+            WarehouseHelper::FILLER => 'KHO FILLER',
+            WarehouseHelper::GLAND_PACKING => 'KHO GLAND PACKING',
+            WarehouseHelper::HOOP => 'KHO HOOP',
+            WarehouseHelper::DAY_CAO_SU_VA_SILICON => 'KHO CAO SU VA SILICON',
+            WarehouseHelper::ONG_GLASS_EXPOXY => 'KHO ỐNG GLASS EXPOXY',
+            WarehouseHelper::DAY_CREAMIC => 'KHO DÂY CREAMIC',
+            WarehouseHelper::PTFE_CAYONG => 'KHO PTEE CÂY ỐNG',
+            WarehouseHelper::PTFE_TAPE => 'KHO PTEE TAPE',
+            WarehouseHelper::VANH_TINH_INNER_SWG => 'KHO VÀNH TINH INNER SWG',
+            WarehouseHelper::VANH_TINH_OUTER_SWG => 'KHO VÀNH TINH OUTER SWG',
+            WarehouseHelper::ND_LOAI_KHAC => 'KHO ND LOẠI KHÁC',
+            WarehouseHelper::NK_LOAI_KHAC => 'KHO NK LOẠI KHÁC',
+            WarehouseHelper::ORING => 'KHO ORING',
+            WarehouseHelper::RTJ => 'KHO RTJ',
+            WarehouseHelper::PHU_TUNG_DUNG_CU => 'KHO PHỤ TÙNG DỤNG CỤ',
+            WarehouseHelper::THANH_PHAM_SWG => 'KHO THÀNH PHẨM SWG',
+            WarehouseHelper::GLAND_PACKING_LATTY => 'KHO GLAND PACKING',
+            WarehouseHelper::CCDC => 'KHO CCDC',
+            WarehouseHelper::PTFE_ENVELOP => 'KHO PTEE ENVELOP',
+            WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'KHO NHỰA KỸ THUẬT CÂY ỐNG',
+            WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'KHO THÀNH PHẨM PHI KIM LOẠI',
+            WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'KHO THÀNH PHẨM KIM LOẠI',
+        ];
+
+        return $names[$modelType];
+    }
+
     public static function translateAtt($key)
     {
         $attributes = [

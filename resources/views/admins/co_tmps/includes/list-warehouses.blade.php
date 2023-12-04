@@ -1,79 +1,88 @@
 <style type="text/css">
-  .list-materials {
-    max-height: 500px;
-  }
+    .list-materials {
+        max-height: 500px;
+    }
 </style>
 <h3 class="text-primary">Danh sách vật liệu kho</h3>
-<div class="table-responsive list-materials p-0">
-  <table class="table table-head-fixed table-bordered table-hover text-wrap data-products">
-    <thead>
-      <tr align="center">
-        <th class="align-middle">Số TT</th>
-        <th class="align-middle">Mã HH</th>
-        <th class="">Chi tiết</th>
-        {{-- <th class="align-middle">Vật liệu</th>
-        <th class="align-middle">Độ dày</th>
-        <th class="align-middle">Hình dạng</th>
-        <th class="align-middle">Dia W W1</th>
-        <th class="align-middle">L L1</th>
-        <th class="align-middle">W2</th>
-        <th class="align-middle">L2</th>
-        <th class="align-middle">SL - Tấm</th> --}}
-        {{-- <th class="align-middle">SL - m2</th> --}}
-        <th class="align-middle">Lot No</th>
-        <th class="align-middle">Ghi Chú</th>
-        <th class="align-middle">Date</th>
-        <th class="align-middle">Tồn kho</th>
-        {{-- <th class="align-middle">Tồn SL - Tấm</th>
-        <th class="align-middle">Tồn SL - m2</th>
-        <th class="align-middle">Tồn SL - Cái</th> --}}
-      </tr>
-    </thead>
-    <tbody>
-      @if(!empty($warehouses))
+@php
+    $warehouseGroup = $warehouses->groupBy('model_type');
+    $index = 0;
+@endphp
+<ul class="nav nav-tabs" id="myTabs">
+    @foreach ($warehouseGroup as $key => $item)
+        <li class="nav-item">
+            <a class="nav-link {{ $index == 0 ? 'active' : '' }}" id="tab-{{ $key }}" data-toggle="tab"
+                href="#warehouse-{{ $key }}">{{ \App\Helpers\WarehouseHelper::warehouseName($key) }}</a>
+        </li>
         @php
-          $sequence = 1;
+            $index++;
         @endphp
-        @foreach($warehouses as $warehouse)
-          <tr align="center">
-            <td>{{ $sequence }}</td>
-            <td>{{ $warehouse->code }}</td>
-            <td align="left">
-              <ul style="list-style: circle">
-                @foreach ($warehouse->detail as $properties => $item)
-                  <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties)  }} : {{ $item }} </li>
-                @endforeach
-              </ul>
-            </td>
-            {{-- <td>{{ $warehouse->vat_lieu }}</td>
-            <td>{{ $warehouse->do_day }}</td>
-            <td>{{ $warehouse->hinh_dang }}</td>
-            <td>{{ $warehouse->dia_w_w1 }}</td>
-            <td>{{ $warehouse->l_l1 }}</td>
-            <td>{{ $warehouse->w2 }}</td>
-            <td>{{ $warehouse->l2 }}</td>
-            <td>{{ $warehouse->sl_tam }}</td> --}}
-            {{-- <td>{{ $warehouse->acreage }} - {{ $warehouse->sl_m2 }}</td> --}}
-            {{-- <td>{{ $warehouse->sl_m2 }}</td> --}}
-            <td>{{ $warehouse->lot_no }}</td>
-            <td>{{ $warehouse->ghi_chu }}</td>
-            <td>{{ $warehouse->date }}</td>
-            <td align="left">
-              <ul style="list-style: circle">
-                @foreach ($warehouse->ton_kho as $properties => $item)
-                  <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties)  }} : {{ $item }} </li>
-                @endforeach
-              </ul>
-            </td>
-            {{-- <td>{{ $warehouse->ton_sl_tam }}</td>
-            <td>{{ $warehouse->ton_sl_m2 }}</td>
-            <td>{{ $warehouse->ton_sl_cai }}</td> --}}
-          </tr>
-          @php
-            $sequence ++;
-          @endphp
-        @endforeach
-      @endif
-    </tbody>
-  </table>
+    @endforeach
+</ul>
+<div class="table-responsive list-materials p-0">
+    <div class="mt-4 table-head-fixed ">
+
+        @php
+            $index = 0;
+        @endphp
+        <div class="tab-content mt-2">
+            @foreach ($warehouseGroup as $key => $item)
+                <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="warehouse-{{ $key }}">
+                    <table
+                        class="table table-head-fixed table-bordered table-hover text-wrap data-products>
+            <thead>
+                <tr align="center">
+                        <th class="align-middle">Số TT</th>
+                        <th class="align-middle">Mã HH</th>
+                        <th class="">Chi tiết</th>
+                        <th class="align-middle">Lot No</th>
+                        <th class="align-middle">Ghi Chú</th>
+                        <th class="align-middle">Date</th>
+                        <th class="align-middle">Tồn kho</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @if (!empty($item))
+                                @php
+                                    $sequence = 1;
+                                @endphp
+                                @foreach ($item as $warehouse)
+                                    <tr align="center">
+                                        <td>{{ $sequence }}</td>
+                                        <td>{{ $warehouse->code }}</td>
+                                        <td align="left">
+                                            <ul style="list-style: circle">
+                                                @foreach ($warehouse->detail as $properties => $item)
+                                                    <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties) }} :
+                                                        {{ $item }} </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>{{ $warehouse->lot_no }}</td>
+                                        <td>{{ $warehouse->ghi_chu }}</td>
+                                        <td>{{ $warehouse->date }}</td>
+                                        <td align="left">
+                                            <ul style="list-style: circle">
+                                                @foreach ($warehouse->ton_kho as $properties => $item)
+                                                    <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties) }}
+                                                        :
+                                                        {{ $item }} </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $sequence++;
+                                    @endphp
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+                @php
+                    $index++;
+                @endphp
+            @endforeach
+        </div>
+    </div>
 </div>
