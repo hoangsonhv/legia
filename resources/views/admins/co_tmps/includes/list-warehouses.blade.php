@@ -28,18 +28,17 @@
         <div class="tab-content mt-2">
             @foreach ($warehouseGroup as $key => $item)
                 <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="warehouse-{{ $key }}">
-                    <table
-                        class="table table-head-fixed table-bordered table-hover text-wrap data-products>
-            <thead>
-                <tr align="center">
-                        <th class="align-middle">Số TT</th>
-                        <th class="align-middle">Mã HH</th>
-                        <th class="">Chi tiết</th>
-                        <th class="align-middle">Lot No</th>
-                        <th class="align-middle">Ghi Chú</th>
-                        <th class="align-middle">Date</th>
-                        <th class="align-middle">Tồn kho</th>
-                        </tr>
+                    <table class="table table-head-fixed table-bordered table-hover text-wrap data-products">
+                        <thead>
+                            <tr align="center">
+                                <th class="align-middle">Số TT</th>
+                                <th class="align-middle">Mã HH</th>
+                                <th class="">Chi tiết</th>
+                                <th class="align-middle">Lot No</th>
+                                <th class="align-middle">Ghi Chú</th>
+                                <th class="align-middle">Date</th>
+                                <th class="align-middle">Tồn kho</th>
+                            </tr>
                         </thead>
                         <tbody>
                             @if (!empty($item))
