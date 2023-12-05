@@ -31,7 +31,7 @@
               @endif
               <div class="form-group">
                 <label for="category">Danh mục<b style="color: red;"> (*)</b></label>
-                {!! Form::select('category', $categories, null, array('class' => 'form-control', 'required' => 'required')) !!}
+                {!! Form::select('category', $categories, null, array('class' => 'form-control form-select', 'required' => 'required')) !!}
               </div>
               <div class="form-group">
                 <label for="note">Ghi chú</label>

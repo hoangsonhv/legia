@@ -59,10 +59,7 @@ class DataHelper
             if ($aDiplay && !in_array($kRoot, $aDiplay)) {
                 continue;
             }
-            $res[$kRoot] = $vRoot['label'];
-            foreach($vRoot['option'] as $key => $value) {
-                $res[$key] = '&gt;&gt;&gt;&nbsp;'.$value;
-            }
+            $res[$vRoot['label']] = $vRoot['option'];
         }
         return $res;
     }
