@@ -3,6 +3,14 @@
         max-height: 500px;
     }
 </style>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+        $('.dataTable').dataTable({
+            "bPaginate": false
+        });
+    });
+</script>
 <h3 class="text-primary">Danh sách vật liệu kho</h3>
 @php
     $warehouseGroup = $warehouses->groupBy('model_type');
@@ -28,7 +36,7 @@
         <div class="tab-content mt-2">
             @foreach ($warehouseGroup as $key => $item)
                 <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="warehouse-{{ $key }}">
-                    <table class="table table-head-fixed table-bordered table-hover text-wrap data-products">
+                    <table class="table table-bordered table-striped dataTable dtr-inline data-products">
                         <thead>
                             <tr align="center">
                                 <th class="align-middle">Số TT</th>

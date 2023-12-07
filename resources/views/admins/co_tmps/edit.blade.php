@@ -46,6 +46,7 @@
                   </div>
                   <div class="card-body offer-price">
                     @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'collect' => true, 'isCoTmp' => true])
+                    @include('admins.co_tmps.includes.list-warehouses', ['warehouses' => $resWarehouses])
                   </div>
                   <div class="card-body more-info">
                     <div class="row">

@@ -204,7 +204,9 @@ class CoTmpController extends Controller
             $warehouses      = $co->warehouses;
             $permissions     = config('permission.permissions');
             $limitApprovalCg = $this->configRepository->getConfigs(['key' => 'limit_approval_cg'])->first()->value;
-            return view('admins.co_tmps.edit',compact('breadcrumb', 'titleForLayout', 'co', 'permissions', 'warehouses', 'limitApprovalCg'));
+            $codes = $warehouses->pluck('code')->toArray();
+            $resWarehouses = $this->getDataInAllWarehouse(new Request(['code' => $codes]));
+            return view('admins.co_tmps.edit',compact('breadcrumb', 'titleForLayout', 'co', 'permissions', 'warehouses', 'limitApprovalCg','resWarehouses'));
         }
         return redirect()->route('admin.co-tmp.index')->with('error', 'Chào Giá không tồn tại!');
     }

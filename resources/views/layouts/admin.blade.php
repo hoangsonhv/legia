@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">
   {{--  Select 2--}}
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link src="https://cdn.datatables.net/1.13.8/css/dataTables.jqueryui.min.css" rel="stylesheet"/>
   <style>
     .select2-container .select2-selection--single {
       height: calc(2.25rem + 2px) !important;
@@ -675,12 +676,19 @@
 <!-- Js common -->
 <script src="{{ asset('js/common.js') }}"></script>
 <!-- Custom js -->
+{{-- Datatables --}}
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.jqueryui.min.js"></script>
+
 
 {{--Select 2--}}
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     $('.select2').select2();
+    $('.dataTable').dataTable({
+        "bPaginate": false
+    });
   });
 </script>
 @yield('js')
