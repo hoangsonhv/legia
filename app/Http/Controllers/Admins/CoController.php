@@ -73,7 +73,7 @@ class CoController extends Controller
         $params                     = array();
         $limit                      = 10;
         $statuses                   = ProcessStatus::all(ProcessStatus::PendingSurveyPrice);
-        $statuses[0]                = 'Chọn trạng thái';
+        $statuses[0]                = 'TẤT CẢ';
         $cores                      = CoreCustomer::all();
         ksort($statuses);
 
@@ -115,8 +115,14 @@ class CoController extends Controller
             $params['admin_id'] = $user->id;
         }
         $coes = $this->coRepository->getCoes($params)->orderBy('id','DESC')->paginate($limit);
+        $count = [
+            $this->coRepository->countByStatus(),
+            $this->coRepository->countByStatus(ProcessStatus::Pending),
+            $this->coRepository->countByStatus(ProcessStatus::Approved),
+            $this->coRepository->countByStatus(ProcessStatus::Unapproved)
+        ];
         $request->flash();
-        return view('admins.coes.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'countPending', 'coes', 'coreCustomers'));
+        return view('admins.coes.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'countPending', 'coes', 'coreCustomers','count'));
     }
 
     public function create(Request $request, $coTmpId = null)
