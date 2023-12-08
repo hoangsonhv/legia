@@ -70,3 +70,11 @@
 .menu-is-opening  ul {
   padding:0 15px !important;
 }
+
+.bg-payment {
+  background-color: #e3b3b8;
+}
+
+.bg-receipt {
+  background-color: #9bcbd3;
+}

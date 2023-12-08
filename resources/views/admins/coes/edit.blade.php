@@ -871,7 +871,7 @@
                   @if($co->payment->count())
                     <hr class="hor">
                     @foreach($co->payment as $key => $payment)
-                      <div class="table-responsive">
+                      <div class="table-responsive bg-payment">
                         <h5><b>Phiếu Chi lần {{ $key + 1 }}</b></h5>
                         <table class="table table-bordered text-nowrap">
                           <tbody>
@@ -961,7 +961,7 @@
                       $paymentMethods = \App\Helpers\DataHelper::getPaymentMethods();
                     @endphp
                     @foreach($co->receipt as $key => $receipt)
-                      <div class="table-responsive">
+                      <div class="table-responsive bg-receipt">
                         <h5><b>Phiếu Thu lần {{ $key + 1 }}</b></h5>
                         <table class="table table-bordered text-nowrap">
                           <tbody>
