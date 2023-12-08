@@ -256,7 +256,6 @@
                 <td class="price_total">
                     <input type="hidden" name="tong_gia" value="{{ $total }}">
                     <b>{{ number_format($total) }}</b>
-                    @dump($total)
                 </td>
             </tr>
             <tr align="right">
