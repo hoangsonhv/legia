@@ -177,7 +177,7 @@
                 </div>
               </div>
               <div class="card-body offer-price" style="display: none" id="card-table-co">
-                @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'material' => $listWarehouse, 'collect' => true])
+                @include('admins.coes.includes.list-products', ['warehouses' => $warehouses, 'material' => $listWarehouse, 'collect' => true, 'is_co' => true])
                 @if(!empty($listWarehouse))
                  @include('admins.coes.includes.list-warehouses', ['warehouses' => $listWarehouse, 'collect' => true])
                @endif

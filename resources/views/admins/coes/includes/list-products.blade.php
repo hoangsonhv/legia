@@ -4,7 +4,7 @@
     }
 </style>
 <div class="table-responsive p-0">
-    <table class="table table-head-fixed table-bordered table-hover text-wrap data-products">
+    <table class="table table-head-fixed table-bordered table-hover text-wrap data-products {{ !empty($is_co) ? ($is_co ? 'data-product-co' : '') : '' }} ">
         @php
             $total = 0;
             $materials = isset($material) ? $material->toArray() : [];
@@ -256,6 +256,7 @@
                 <td class="price_total">
                     <input type="hidden" name="tong_gia" value="{{ $total }}">
                     <b>{{ number_format($total) }}</b>
+                    @dump($total)
                 </td>
             </tr>
             <tr align="right">

@@ -127,12 +127,22 @@ function caclTotalMoney(_this) {
 
 function sumTotal(eleForm) {
   var total = 0;
-  $(eleForm + ' td.total').each(function() {
-    var format = formatCurrent($(this).text());
-    if (format['original']) {
-      total += parseInt(format['original']);
-    }
-  });
+  if($('.warehouse .table.data-product-co').length) {
+    $('.warehouse .table.data-product-co td.total').each(function() {
+      var format = formatCurrent($(this).text());
+      if (format['original']) {
+        total += parseInt(format['original']);
+      }
+    });
+  }
+  else {
+    $(eleForm + ' td.total').each(function() {
+      var format = formatCurrent($(this).text());
+      if (format['original']) {
+        total += parseInt(format['original']);
+      }
+    });
+  }
   if (total) {
     var vat = (total * 10) / 100;
     totalMoney = total + vat;
