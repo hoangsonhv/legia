@@ -127,7 +127,9 @@ function caclTotalMoney(_this) {
 
 function sumTotal(eleForm) {
   var total = 0;
+  $classProductCo = '';
   if($('.warehouse .table.data-product-co').length) {
+    $classProductCo = '.data-product-co ';
     $('.warehouse .table.data-product-co td.total').each(function() {
       var format = formatCurrent($(this).text());
       if (format['original']) {
@@ -146,17 +148,19 @@ function sumTotal(eleForm) {
   if (total) {
     var vat = (total * 10) / 100;
     totalMoney = total + vat;
-    $('.price_total input').val(total);
-    $('.price_total b').text(formatCurrent(total.toString())['format']);
-    $('.vat input').val(vat);
-    $('.vat b').text(formatCurrent(vat.toString())['format']);
-    $('.money_total b').text(formatCurrent((total + vat).toString())['format']);
+    $($classProductCo + '.price_total input').val(total);
+    $($classProductCo + '.price_total b').text(formatCurrent(total.toString())['format']);
+    $($classProductCo + '.vat input').val(vat);
+    $($classProductCo + '.vat b').text(formatCurrent(vat.toString())['format']);
+    $($classProductCo + '.money_total b').text(formatCurrent((total + vat).toString())['format']);
+    $('span.money_total b').text(formatCurrent((total + vat).toString())['format']);
   } else {
-    $('.price_total input').val(0);
-    $('.price_total b').text(0);
-    $('.vat input').val(0);
-    $('.vat b').text(0);
-    $('.money_total b').text(0);
+    $($classProductCo + '.price_total input').val(0);
+    $($classProductCo + '.price_total b').text(0);
+    $($classProductCo + '.vat input').val(0);
+    $($classProductCo + '.vat b').text(0);
+    $($classProductCo + '.money_total b').text(0);
+    $('span.money_total b').text(0);
   }
   updateGiaiDoanThanhToan(totalMoney);
 }

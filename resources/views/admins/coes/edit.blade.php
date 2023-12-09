@@ -143,28 +143,29 @@
             </div>
           </div>
         </div>
+        @if($coTmp)
+        @dump($coTmp)
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-center">
+              <h3 class="title">Danh mục hàng hoá Chào Giá </h3>
+              <button class="btn btn-default ml-3" id="show-table-tmp-co">Hiển thị</button>
+              <button class="btn btn-default ml-3" id="hiden-table-tmp-co">Ẩn</button>
+            </div>
+            <div class="text-right">
+              <button type="button" class="btn btn-success" id="import-offer">Import chào giá</button>
+            </div>
+          </div>
+          <div class="card-body" style="display: none" id="card-table-tmp-co">
+            {{-- @include('admins.coes.includes.list-products', ['warehouses' => $coTmp, 'collect' => true, 'notAction' => true]) --}}
+            @include('admins.coes.includes.list-products', ['warehouses' => $coTmp, 'collect' => true, 'disabled' => true])
+          </div>
+        </div>
+        @endif
         {!! Form::model($co, array('route' => ['admin.co.update', $co->id], 'method' => 'patch', 'enctype' => 'multipart/form-data')) !!}
         {!! Form::hidden('id', null) !!}
         <div class="row">
           <div class="col-12">
-            @if($coTmp)
-            <div class="card">
-              <div class="card-header">
-                <div class="d-flex justify-content-center">
-                  <h3 class="title">Danh mục hàng hoá Chào Giá </h3>
-                  <button class="btn btn-default ml-3" id="show-table-tmp-co">Hiển thị</button>
-                  <button class="btn btn-default ml-3" id="hiden-table-tmp-co">Ẩn</button>
-                </div>
-                <div class="text-right">
-                  <button type="button" class="btn btn-success" id="import-offer">Import chào giá</button>
-                </div>
-              </div>
-              <div class="card-body" style="display: none" id="card-table-tmp-co">
-                {{-- @include('admins.coes.includes.list-products', ['warehouses' => $coTmp, 'collect' => true, 'notAction' => true]) --}}
-                @include('admins.coes.includes.list-products', ['warehouses' => $coTmp, 'collect' => true])
-              </div>
-            </div>
-            @endif
             <div class="card" id="block-offer-price">
               <div class="card-header">
                 <div class="d-flex justify-content-center">
