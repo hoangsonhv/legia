@@ -1,3 +1,9 @@
+
+:root {
+  --main-color: #3B82F6;
+  --pane-padding: 5px 42px;
+}
+
 #loading-all {
   position: fixed;
   z-index: 9999;

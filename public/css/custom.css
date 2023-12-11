@@ -1,0 +1,66 @@
+
+.sidebar{
+    background-color: var(--main-color);
+    padding: 0;
+}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active{
+    background-color: white;
+    color: black !important;
+}
+.menu-is-opening ul {
+    padding: 0 0px !important;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active .nav-icon {
+    /* Thay đổi màu của .nav-icon ở đây */
+    color: black; /* Ví dụ: màu đỏ */
+}
+.main-sidebar{
+    width: 260px;
+}
+.sidebar-mini .main-sidebar .nav-link{
+    width: 100%;
+
+}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link {
+    color: white;
+}
+.sidebar::-webkit-scrollbar-thumb{
+    background-color: white; 
+}
+.nav-pills .nav-link {
+    border-radius: 0rem;
+}
+[class*=sidebar-dark-] .sidebar a {
+    color: white;
+}
+.main-sidebar{
+    box-shadow: unset !important;
+}
+.nav .nav-treeview .nav-item a{
+    padding-left: 30px;
+}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active{
+    /* background-color: unset !important; */
+    background-color: white;
+    opacity: .9;
+}
+.nav-icon{
+    font-size: 0.7rem !important;
+}
+.nav-sidebar .nav-item>.nav-link {
+    margin-bottom: 0.05rem;
+}
+.nav-item{
+    font-size: 12px;
+}
+body{
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 0.8rem;
+}
+.btn {
+    font-size: 0.8rem;
+}
+.content-header h1{
+    font-size: 1.5rem;
+}

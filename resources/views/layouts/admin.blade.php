@@ -10,6 +10,9 @@
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
@@ -18,6 +21,7 @@
   <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
   <!-- Custom css -->
   <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
   {{--  Select 2--}}
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <link src="https://cdn.datatables.net/1.13.8/css/dataTables.jqueryui.min.css" rel="stylesheet"/>
@@ -89,14 +93,14 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="" class="brand-link">
-      <img src="{{ asset('vendor/adminlte/dist/img/AdminLTELogo.png') }}" alt="Admin" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
+      <img src="{{ asset('images/logo.jpg') }}" alt="Admin" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight">{{ config('app.name') }}</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+      <nav class="">
         <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item{{ (strpos(url()->current(), '/admin/dashboard/index/co-tmps') !== false || (strpos(url()->current(), '/admin/dashboard/index/coes') !== false)) ? ' menu-open' : '' }}">
             <a href="#" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/co-tmps') !== false) || (strpos(url()->current(), '/admin/dashboard/index/coes') !== false) ? ' active' : '' }}">
