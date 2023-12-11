@@ -242,7 +242,6 @@
                 @php
                     $sequence ++;
                     $total += $soLuong * $donGia;
-                    dump($total);
                 @endphp
             @endforeach
         @endif
