@@ -174,7 +174,7 @@
 {{--                            </td>--}}
 {{--                        @endif--}}
                         <td>
-                            <input style="width: 50px;" onChange="caclTotalMoney(this)" type="number" min="1"
+                            <input style="width: 50px;" class="form-control" onChange="caclTotalMoney(this)" type="number" min="1"
                                    name="so_luong[]" value="{{ $soLuong }}">
                         </td>
                         <td>

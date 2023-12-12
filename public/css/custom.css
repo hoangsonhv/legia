@@ -64,3 +64,40 @@ body{
 .content-header h1{
     font-size: 1.5rem;
 }
+.form-control{
+    font-size: 0.8rem;
+}
+.sidebar-collapse .main-sidebar {
+    display: none;
+}
+.sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
+    margin-left: 0rem!important;
+}
+.badge {
+    padding: 10px;
+}
+.dataTables_filter input{
+    border: none;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 8px;
+    margin-left: 14px;
+}
+.pending-approve{
+    margin-bottom: 0px !important;
+}
+
+  /* Hiệu ứng nhấp nháy */
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: .9;
+    }
+  }
+
+  .blink-button {
+    animation: blink 1s infinite; /* Sử dụng animation cho hiệu ứng nhấp nháy tự động */
+  }

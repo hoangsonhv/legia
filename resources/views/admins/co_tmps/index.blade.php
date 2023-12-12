@@ -75,7 +75,9 @@
                         <span class="badge bg-danger">
                           {{ \App\Enums\ProcessStatus::all()[$co->status] }}
                         </span>
-                        <div><small class="text-white bg-warning pl-1 pr-1" style="border-radius: 3px">{{$co->note}}</small></div>
+                        @if($co->note)
+                        <div><small class="text-white bg-warning p-1 p-1" style="border-radius: 3px;">{{$co->note}}</small></div>
+                        @endif
                       @else
                         <span class="badge bg-warning">
                           {{ \App\Enums\ProcessStatus::all()[$co->status] }}

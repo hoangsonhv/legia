@@ -69,7 +69,7 @@
               <div class="card-body">
                 <div class="form-group mt-3">
                   <h5>
-                    <p style="width: fit-content; padding: 5px 10px; border-radius: 5px" class="text-danger bg-warning">
+                    <p style="width: fit-content; padding: 5px 10px; border-radius: 5px; font-size:1rem;" class="text-danger bg-warning">
                       <b>Giá trị đơn hàng: <span class="money_total"><b>{{ number_format($requestModel->money_total) }}</b></span></b>
                     </p>
                   </h5>
