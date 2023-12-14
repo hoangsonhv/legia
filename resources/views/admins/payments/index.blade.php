@@ -19,7 +19,8 @@
               @endif
               {!! Form::open(array('route' => 'admin.payment.index', 'method' => 'get')) !!}
               <div class="input-group">
-                {!! Form::select('status', $statuses, null, array('class' => 'form-control mr-1 float-right')) !!}
+                <input type="hidden" name="status" id="selectedStatus">
+                {{-- {!! Form::select('status', $statuses, null, array('class' => 'form-control mr-1 float-right', 'id'=>'selectedStatus')) !!} --}}
                 <input type="text" name="key_word" class="form-control float-right" placeholder="Từ khoá" value="{{old('key_word')}}">
                 <div class="input-group-append">
                   <button type="submit" class="btn btn-default">
@@ -30,6 +31,20 @@
               {!! Form::close() !!}
             </div>
           </div>
+          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link {{app('request')->input('status') == 0  ? 'active'  : ''}} "  data-toggle="pill" href="#" onclick=updateSelectedStatus(0) role="tab" aria-controls="pills-home" aria-selected="true"> Tất cả</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{app('request')->input('status') == 1  ? 'active'  : ''}}"  data-toggle="pill" href="#"  onclick=updateSelectedStatus(1) role="tab" aria-controls="pills-home" aria-selected="true"> Đang chờ xử lý</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{app('request')->input('status') == 2  ? 'active'  : ''}}"  data-toggle="pill" href="#" onclick=updateSelectedStatus(2)  role="tab" aria-controls="pills-home" aria-selected="true"> Đã duyệt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{app('request')->input('status') == 3  ? 'active'  : ''}}"  data-toggle="pill" href="#" onclick=updateSelectedStatus(3) role="tab" aria-controls="pills-home" aria-selected="true"> Không duyệt</a>
+            </li>
+          </ul>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
@@ -122,6 +137,10 @@
 @section('js')
 <script type="text/javascript" src="{{ asset('js/admin/payments.js') }}"></script>
 <script type="text/javascript">
+   function updateSelectedStatus(status) {
+      $('#selectedStatus').val(status);
+      $('form').submit();
+    }
   $( document ).ready(function() {
     $('.accompanying_document').click(function() {
       var content = $(this).attr('content');
@@ -137,6 +156,7 @@
         alert('Không tồn tại chứng từ đi kèm.');
       }
     });
+ 
   });
 </script>
 @endsection
