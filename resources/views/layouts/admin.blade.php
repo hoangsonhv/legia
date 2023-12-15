@@ -691,7 +691,10 @@
   $(document).ready(function() {
     $('.select2').select2();
     $('.dataTable').dataTable({
-        "bPaginate": false
+        "bPaginate": false,
+        "oLanguage": {
+          "sSearch": "Tìm kiếm"
+        }
     });
   });
 </script>
