@@ -182,7 +182,7 @@
                         </td>
                         @if(empty($isCoTmp))
                             <td>
-                                <input style="width: 50px;" type="number" min="0"
+                                <input style="width: 50px;" class="form-control" type="number" min="0"
                                     name="so_luong_san_xuat[]" value="{{ $soLuongSanXuat }}"
                                     @if ($manufactureType == \App\Models\MerchandiseGroup::COMMERCE) readonly @endif>
                             </td>
