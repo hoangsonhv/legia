@@ -57,7 +57,7 @@ class CoTmpController extends Controller
         $limit                      = 10;
         $statuses                   = ProcessStatus::all(ProcessStatus::PendingSurveyPrice);
         $cores                      = CoreCustomer::all();
-        $statuses[0]                = 'Tất cả';
+        $statuses[0]                = 'TẤT CẢ';
         ksort($statuses);
 
         $coreCustomers[0] = 'Chọn khách hàng';

@@ -65,7 +65,7 @@ class RequestController extends Controller
         $params                     = array();
         $limit                      = 10;
         $statuses                   = ProcessStatus::all();
-        $statuses[0]                = 'Tất cả';
+        $statuses[0]                = 'TẤT CẢ';
         ksort($statuses);
 
         // Count data pending
