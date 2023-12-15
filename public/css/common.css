@@ -38,7 +38,7 @@
   position: fixed;
   z-index: 9999;
   margin: auto;
-  width: 350px;
+  /* width: 350px; */
   top: 50%;
   /* bottom: 50%; */
   right: 10px;
