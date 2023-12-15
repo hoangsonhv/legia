@@ -88,3 +88,6 @@
 .bg-receipt {
   background-color: #9bcbd3;
 }
+.dataTables_filter {
+  float: right !important;
+}
