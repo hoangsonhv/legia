@@ -745,7 +745,7 @@
                         </table>
                       </div>
                       <div class="list-survey-price mt-3">
-                        <h5>Khảo Sát Giá</h5>
+                        <h5><b class="badge badge-pill bg-purple">Khảo Sát Giá</b></h5>
                         @if($requestModel->surveyPrices->count())
                           @foreach($requestModel->surveyPrices as $indexSP => $surveyPrice)
                             <div class="table-responsive">
