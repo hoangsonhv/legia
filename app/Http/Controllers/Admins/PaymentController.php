@@ -57,7 +57,7 @@ class PaymentController extends Controller
         $params                     = array();
         $limit                      = 10;
         $statuses                   = ProcessStatus::all(ProcessStatus::PendingSurveyPrice);
-        $statuses[0]                = 'Chọn trạng thái';
+        $statuses[0]                = 'Tất cả';
         ksort($statuses);
 
         // Count data pending
@@ -83,8 +83,14 @@ class PaymentController extends Controller
 
         $payments   = $this->paymentRepository->getPayments($params)->orderBy('id','DESC')->paginate($limit);
         $categories = DataHelper::getCategories();
+        $count = [
+            $this->paymentRepository->countByStatus(),
+            $this->paymentRepository->countByStatus(ProcessStatus::Pending),
+            $this->paymentRepository->countByStatus(ProcessStatus::Approved),
+            $this->paymentRepository->countByStatus(ProcessStatus::Unapproved)
+        ];
         $request->flash();
-        return view('admins.payments.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'countPending', 'payments', 'categories'));
+        return view('admins.payments.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'countPending', 'payments', 'categories','count'));
     }
 
     public function create(Request $request, $requestId=null)

@@ -19,7 +19,7 @@
               @endif
               {!! Form::open(array('route' => 'admin.request.index', 'method' => 'get')) !!}
               <div class="input-group">
-                {!! Form::select('status', $statuses, null, array('class' => 'form-control mr-1 float-right')) !!}
+                {!! Form::select('status', $statuses, null, array('class' => 'form-control mr-1 float-right d-none','id' => 'selectedStatus')) !!}
                 <input type="text" name="key_word" class="form-control float-right" placeholder="Từ khoá" value="{{old('key_word')}}">
                 <div class="input-group-append">
                   <button type="submit" class="btn btn-default">
@@ -30,6 +30,19 @@
               {!! Form::close() !!}
             </div>
           </div>
+          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            @php
+            $selected = 0;
+            if(Session::has('_old_input.status')) {
+              $selected = Session::get('_old_input.status');
+            }
+            @endphp
+            @foreach ($statuses as $key => $item)
+            <li class="nav-item">
+              <a class="nav-link {{ $selected == $key ? 'active' :'' }}" onclick=updateSelectedStatus({{$key}}) data-toggle="pill" href="#" role="tab" aria-controls="pills-home" aria-selected="true"> {{ $item }} <span class="badge badge-danger">{{ $count[$key] }}</span></a>
+            </li>
+            @endforeach
+          </ul>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
@@ -134,5 +147,9 @@
       }
     });
   });
+  function updateSelectedStatus(status) {
+    $('#selectedStatus').val(status);
+    $('form').submit();
+  }
 </script>
 @endsection

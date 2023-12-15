@@ -65,12 +65,6 @@ class CoRepository extends BaseRepository
         return $this->model->find($id);
     }
 
-    public function countByStatus($status = null) {
-        return $this->model->when($status, function($query) use($status) {
-            $query->where('status',$status);
-        })->count();
-    }
-
     public function getListCo($id=null) {
         return Co::with(['related.coables' => function($q) use($id) {
             if ($id) {

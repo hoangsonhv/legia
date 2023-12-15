@@ -57,7 +57,7 @@ class CoTmpController extends Controller
         $limit                      = 10;
         $statuses                   = ProcessStatus::all(ProcessStatus::PendingSurveyPrice);
         $cores                      = CoreCustomer::all();
-        $statuses[0]                = 'Chọn trạng thái';
+        $statuses[0]                = 'Tất cả';
         ksort($statuses);
 
         $coreCustomers[0] = 'Chọn khách hàng';
@@ -91,9 +91,15 @@ class CoTmpController extends Controller
 
         $coes            = $this->coRepository->getCoes($params)->orderBy('id','DESC')->paginate($limit);
         $limitApprovalCg = $this->configRepository->getConfigs(['key' => 'limit_approval_cg'])->first()->value;
+        $count = [
+            $this->coRepository->countByStatus(),
+            $this->coRepository->countByStatus(ProcessStatus::Pending),
+            $this->coRepository->countByStatus(ProcessStatus::Approved),
+            $this->coRepository->countByStatus(ProcessStatus::Unapproved)
+        ];
         $request->flash();
         return view('admins.co_tmps.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'countPending',
-            'coes', 'limitApprovalCg', 'coreCustomers'));
+            'coes', 'limitApprovalCg', 'coreCustomers','count'));
     }
 
     public function create()

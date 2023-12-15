@@ -651,7 +651,7 @@
                     @endphp
                     @foreach($co->request as $key => $requestModel)
                       <div class="table-responsive">
-                        <h5><b>Phiếu Yêu Cầu lần {{ $key + 1 }}</b></h5>
+                        <h5><b class="badge bg-warning">Phiếu Yêu Cầu lần {{ $key + 1 }}</b></h5>
                         <table class="table table-bordered text-nowrap">
                           <tbody>
                             <tr>
@@ -871,8 +871,8 @@
                   @if($co->payment->count())
                     <hr class="hor">
                     @foreach($co->payment as $key => $payment)
-                      <div class="table-responsive bg-payment">
-                        <h5><b>Phiếu Chi lần {{ $key + 1 }}</b></h5>
+                      <div class="table-responsive">
+                        <h5><b class="badge bg-danger">Phiếu Chi lần {{ $key + 1 }}</b></h5>
                         <table class="table table-bordered text-nowrap">
                           <tbody>
                             <tr>
@@ -961,8 +961,8 @@
                       $paymentMethods = \App\Helpers\DataHelper::getPaymentMethods();
                     @endphp
                     @foreach($co->receipt as $key => $receipt)
-                      <div class="table-responsive bg-receipt">
-                        <h5><b>Phiếu Thu lần {{ $key + 1 }}</b></h5>
+                      <div class="table-responsive ">
+                        <h5><b class="badge bg-success">Phiếu Thu lần {{ $key + 1 }}</b></h5>
                         <table class="table table-bordered text-nowrap">
                           <tbody>
                             <tr>

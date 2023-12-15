@@ -65,7 +65,7 @@ class RequestController extends Controller
         $params                     = array();
         $limit                      = 10;
         $statuses                   = ProcessStatus::all();
-        $statuses[0]                = 'Chọn trạng thái';
+        $statuses[0]                = 'Tất cả';
         ksort($statuses);
 
         // Count data pending
@@ -91,8 +91,15 @@ class RequestController extends Controller
 
         $requests   = $this->requestRepository->getRequests($params)->orderBy('id','DESC')->paginate($limit);
         $categories = DataHelper::getCategories();
+        $count = [
+            $this->requestRepository->countByStatus(),
+            $this->requestRepository->countByStatus(ProcessStatus::Pending),
+            $this->requestRepository->countByStatus(ProcessStatus::Approved),
+            $this->requestRepository->countByStatus(ProcessStatus::Unapproved),
+            $this->requestRepository->countByStatus(ProcessStatus::PendingSurveyPrice)
+        ];
         $request->flash();
-        return view('admins.requests.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'countPending', 'requests', 'categories'));
+        return view('admins.requests.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'countPending', 'requests', 'categories', 'count'));
     }
 
     public function create(Request $request, $coId=null)

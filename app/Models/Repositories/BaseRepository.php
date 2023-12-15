@@ -106,4 +106,10 @@ class BaseRepository
                 break;
         }
     }
+
+    public function countByStatus($status = null) {
+        return $this->model->when($status, function($query) use($status) {
+            $query->where('status',$status);
+        })->count();
+    }
 }

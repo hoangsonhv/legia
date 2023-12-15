@@ -60,7 +60,7 @@ class ReceiptController extends Controller
         $params                     = array();
         $limit                      = 10;
         $statuses                   = ProcessStatus::all(ProcessStatus::PendingSurveyPrice);
-        $statuses[0]                = 'Chọn trạng thái';
+        $statuses[0]                = 'Tất cả';
         ksort($statuses);
         $paymentMethods = DataHelper::getPaymentMethods();
 
@@ -76,8 +76,14 @@ class ReceiptController extends Controller
             $params['admin_id'] = $user->id;
         }
         $receipts       = $this->receiptRepository->getReceipts($params)->orderBy('id','DESC')->paginate($limit);
+        $count = [
+            $this->receiptRepository->countByStatus(),
+            $this->receiptRepository->countByStatus(ProcessStatus::Pending),
+            $this->receiptRepository->countByStatus(ProcessStatus::Approved),
+            $this->receiptRepository->countByStatus(ProcessStatus::Unapproved)
+        ];
         $request->flash();
-        return view('admins.receipts.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'paymentMethods', 'receipts'));
+        return view('admins.receipts.index',compact('breadcrumb', 'titleForLayout', 'statuses', 'paymentMethods', 'receipts','count'));
     }
 
     public function create(Request $request, $type=null, $id=null)

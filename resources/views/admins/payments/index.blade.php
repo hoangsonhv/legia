@@ -33,16 +33,16 @@
           </div>
           <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link {{app('request')->input('status') == 0  ? 'active'  : ''}} "  data-toggle="pill" href="#" onclick=updateSelectedStatus(0) role="tab" aria-controls="pills-home" aria-selected="true"> Tất cả</a>
+              <a class="nav-link {{app('request')->input('status') == 0  ? 'active'  : ''}} "  data-toggle="pill" href="#" onclick=updateSelectedStatus(0) role="tab" aria-controls="pills-home" aria-selected="true"> Tất cả <span class="badge badge-danger">{{ $count[0] }}</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{app('request')->input('status') == 1  ? 'active'  : ''}}"  data-toggle="pill" href="#"  onclick=updateSelectedStatus(1) role="tab" aria-controls="pills-home" aria-selected="true"> Đang chờ xử lý</a>
+              <a class="nav-link {{app('request')->input('status') == 1  ? 'active'  : ''}}"  data-toggle="pill" href="#"  onclick=updateSelectedStatus(1) role="tab" aria-controls="pills-home" aria-selected="true"> Đang chờ xử lý <span class="badge badge-danger">{{ $count[1] }}</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{app('request')->input('status') == 2  ? 'active'  : ''}}"  data-toggle="pill" href="#" onclick=updateSelectedStatus(2)  role="tab" aria-controls="pills-home" aria-selected="true"> Đã duyệt</a>
+              <a class="nav-link {{app('request')->input('status') == 2  ? 'active'  : ''}}"  data-toggle="pill" href="#" onclick=updateSelectedStatus(2)  role="tab" aria-controls="pills-home" aria-selected="true"> Đã duyệt <span class="badge badge-danger">{{ $count[2] }}</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {{app('request')->input('status') == 3  ? 'active'  : ''}}"  data-toggle="pill" href="#" onclick=updateSelectedStatus(3) role="tab" aria-controls="pills-home" aria-selected="true"> Không duyệt</a>
+              <a class="nav-link {{app('request')->input('status') == 3  ? 'active'  : ''}}"  data-toggle="pill" href="#" onclick=updateSelectedStatus(3) role="tab" aria-controls="pills-home" aria-selected="true"> Không duyệt <span class="badge badge-danger">{{ $count[3] }}</span></a>
             </li>
           </ul>
           <!-- /.card-header -->
