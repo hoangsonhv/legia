@@ -36,8 +36,9 @@
     height: 3px;
     width: 80%;
     border-radius: 4px;
-    margin: 4em 0 1em 0;
+    margin: 4em 1em 1em 1em;
   }
+
   .time-line .events ol {
     margin: 0;
     padding: 0;
@@ -93,6 +94,12 @@
 
 <section class="content">
   <div class="container-fluid">
+    @include('admins.includes.approval', [
+      'id' => $co->id,
+      'type' => 'co',
+      'status' => $co->status,
+      'check_warehouse' => ($co->currentStep && $co->currentStep->step === \App\Models\CoStepHistory::STEP_CHECKWAREHOUSE) ? true : false
+     ])
     <div class="row">
       <div class="col-12">
         @include('admins.message')
@@ -276,13 +283,13 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-4">
+                      <div class="col-sm-12 col-xl-4">
                         <div class="form-group">
                           <label for="customer[code]">Mã khách hàng<b style="color: red;"> (*)</b></label>
                           {!! Form::text('customer[code]', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         </div>
                       </div>
-                      <div class="col-8">
+                      <div class="col-sm-12 col-xl-8">
                         <div class="form-group">
                           <label for="customer[ten]">Tên khách hàng<b style="color: red;"> (*)</b></label>
                           {!! Form::text('customer[ten]', null, array('class' => 'form-control', 'required' => 'required')) !!}
@@ -290,13 +297,13 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-8">
+                      <div class="col-sm-12 col-xl-8">
                         <div class="form-group">
                           <label for="customer[dia_chi]">Địa chỉ</label>
                           {!! Form::text('customer[dia_chi]', null, array('class' => 'form-control')) !!}
                         </div>
                       </div>
-                      <div class="col-4">
+                      <div class="col-sm-12 col-xl-4">
                         <div class="form-group">
                           <label for="customer[mst]">MST</label>
                           {!! Form::text('customer[mst]', null, array('class' => 'form-control')) !!}
@@ -304,13 +311,13 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="customer[nguoi_nhan]">Người nhận</label>
                           {!! Form::text('customer[nguoi_nhan]', null, array('class' => 'form-control')) !!}
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="customer[dien_thoai]">Điện thoại</label>
                           {!! Form::text('customer[dien_thoai]', null, array('class' => 'form-control')) !!}
@@ -318,13 +325,13 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="customer[email]">Email</label>
                           {!! Form::email('customer[email]', null, array('class' => 'form-control')) !!}
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="so_bao_gia">Số báo giá</label>
                           {!! Form::text('so_bao_gia', null, array('class' => 'form-control')) !!}
@@ -332,7 +339,7 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="ngay_bao_gia">Ngày báo giá</label>
                           <div class="input-group" id="ngay_bao_gia" data-target-input="nearest">
@@ -343,7 +350,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="sales">Sales</label>
                           {!! Form::text('sales', null, array('class' => 'form-control')) !!}
@@ -351,13 +358,13 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="thoi_han_bao_gia">Thời hạn báo giá</label>
                           {!! Form::text('thoi_han_bao_gia', null, array('class' => 'form-control')) !!}
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="dong_goi_va_van_chuyen">Đóng gói và vận chuyển</label>
                           {!! Form::text('dong_goi_va_van_chuyen', null, array('class' => 'form-control')) !!}
@@ -365,13 +372,13 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="noi_giao_hang">Nơi giao hàng</label>
                           {!! Form::text('noi_giao_hang', null, array('class' => 'form-control')) !!}
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="xuat_xu">Xuất xứ</label>
                           {!! Form::text('xuat_xu', null, array('class' => 'form-control')) !!}
@@ -379,7 +386,7 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-sm-12 col-xl-6">
                         <div class="form-group">
                           <label for="thoi_gian_giao_hang">Thời gian giao hàng</label>
                           {!! Form::text('thoi_gian_giao_hang', null, array('class' => 'form-control')) !!}
@@ -1122,12 +1129,7 @@
         {!! Form::close() !!}
       </div>
       @include('admins.coes.includes.offer-price', ['url' => route('admin.co.get-data-warehouse')])
-      @include('admins.includes.approval', [
-        'id' => $co->id,
-        'type' => 'co',
-        'status' => $co->status,
-        'check_warehouse' => ($co->currentStep && $co->currentStep->step === \App\Models\CoStepHistory::STEP_CHECKWAREHOUSE) ? true : false
-       ])
+
        <div class="modal fade" id="po_document_modal">
         <div class="modal-dialog">
           <div class="modal-content">

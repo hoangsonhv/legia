@@ -17,31 +17,31 @@
                         {!! Form::open(array('route' => 'admin.warehouse-group.store', 'method' => 'post', 'enctype' => 'multipart/form-data')) !!}
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="code">Mã nhóm<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('code', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="name">Tên nhóm<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('name', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="code">Kim loại / Phi kim loại</label>
                                         {!! Form::select('manufacture_type', \App\Models\WarehouseGroup::ARR_MANUFACTURE_TYPE , null, array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="code">Thương mại / Sản xuất</label>
                                         {!! Form::select('type', \App\Models\WarehouseGroup::ARR_TYPE , null, array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="warehouse">Kho</label>
                                         {!! Form::select('warehouse', \App\Models\WarehouseGroup::ARR_WAREHOUSE, null, array('class' => 'form-control')) !!}
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-sm-12 col-xl-6">
                                     <div class="form-group">
                                         <label for="warehouse">Kho nguyên liệu</label>
                                         @foreach(\App\Models\WarehouseGroup::ARR_WAREHOUSE as $keyWarehouse => $warehouse)
@@ -60,7 +60,7 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-sm-12 col-xl-6">
                                     <div class="form-group">
                                         <label for="warehouse">Kho thành phẩm</label>
                                         @foreach(\App\Models\WarehouseGroup::ARR_WAREHOUSE as $keyWarehouse => $warehouse)

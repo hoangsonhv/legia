@@ -20,49 +20,49 @@
                         {!! Form::hidden('id', null) !!}
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="code">Loại<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('type', \App\Models\CoreCustomer::ARR_TYPE ,null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="code">Mã khách hàng<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('code', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="name">Tên khách hàng<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('name', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="tax_code">Mã số thuế<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('tax_code', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="tax_code">Người liên hệ<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('recipient', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="address">Địa chỉ<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('address', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="phone">Số điện thoại<b style="color: red;"> (*)</b></label>
                                         {!! Form::number('phone', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         {!! Form::email('email', null, array('class' => 'form-control')) !!}

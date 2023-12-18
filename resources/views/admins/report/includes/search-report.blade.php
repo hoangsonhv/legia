@@ -3,7 +3,7 @@
 <div class="mb-3">
     <div class="row">
         @if(request()->has('type') && request()->type == 'date')
-            <div class="col-4">
+            <div class="col-sm-12 col-xl-4">
                 <div class="input-group">
                     <input type="text" name="from_date" class="form-control float-right"
                            placeholder="Từ ngày" value="{{ request()->has('from_date') ? request()->from_date : Carbon\Carbon::now()->subDays(7)->format('Y-m-d')}}">
@@ -13,7 +13,7 @@
             </div>
         @endif
         @if(request()->has('type') && request()->type == 'month')
-            <div class="col-2">
+            <div class="col-sm-8  col-sm-2">
                 <div class="input-group">
                     @php
                         for($i = 1; $i <= 12; $i++){
@@ -36,7 +36,7 @@
                 </div>
             </div>
         @endif
-        <div class="col-2">
+        <div class="col-sm-3  col-xl-2 mt-1">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-search"></i> Tìm kiếm

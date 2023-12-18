@@ -44,12 +44,39 @@
   right: 10px;
   text-align: right;
   transform: translateY(-50%);
-  padding: 10px 30px 10px 30px;
+  padding: 10px 10px 10px 10px;
   border-radius: 5px;
   background-color: var(--main-color);
   animation: blink 1s infinite;
 }
+@media screen and (max-width: 780px) {
+  #approval {
+    position: unset;
+    transform: unset;
+    width: 100%;
+    text-align: center;
+    /* position: fixed; */
+    top: 0px;
+  }
+}
+@media screen and (max-width: 867px) {
 
+  .begin-line{
+    display: none;
+  }
+  .events{
+    width: 100% !important  ;
+  }
+  .time-line .events ul li{
+    width: unset !important;
+  }
+  .modal {
+    width: 100vw;
+  }
+  .data-materials{
+    overflow-x: auto;
+  }
+}
 .noti-pending {
   position: absolute;
   display: inline-block;

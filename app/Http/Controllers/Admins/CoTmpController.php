@@ -197,6 +197,7 @@ class CoTmpController extends Controller
 
     public function edit(Request $request, $id)
     {
+        
         $breadcrumb                 = $this->menu;
         $breadcrumb['data']['list'] = ['label'  => 'Cập nhật'];
         $titleForLayout             = $breadcrumb['data']['list']['label'];

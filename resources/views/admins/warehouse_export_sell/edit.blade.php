@@ -15,10 +15,10 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
+                <div class="col-sm-12 col-xl-12">
                     @include('admins.message')
                 </div>
-                <div class="col-12">
+                <div class="col-sm-12 col-xl-12">
                     <div class="float-right pb-2">
                         <a href={{ route('admin.pdf.warehouse-export-sell', ['id' => $model->id]) }}>
                             <button class="btn btn-success">
@@ -34,14 +34,14 @@
                         {!! Form::hidden('id', null) !!}
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="core_customer_id">CO<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('co_id', $co, null,
                                         array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="shipping_unit">Mã phiếu xuất kho bán hàng<b style="color: red;">
                                                 (*)</b></label>
@@ -50,13 +50,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="core_customer_id">Mã khách hàng<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('core_customer_id', $coreCustomers, null, array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
                                     </div>
                                 </div>
-                                <div class="col-9">
+                                <div class="col-sm-12 col-xl-9">
                                     <div class="form-group">
                                         <label for="buyer_name">Tên khách hàng<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('buyer_name', null, array('class' => 'form-control', 'required' => 'required')) !!}
@@ -64,19 +64,19 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-sm-12 col-xl-6">
                                     <div class="form-group">
                                         <label for="buyer_address">Địa chỉ<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('buyer_address', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="buyer_phone">Điện thoại<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('buyer_phone', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="buyer_tax_code">Mã số thuế<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('buyer_tax_code', null, array('class' => 'form-control', 'required' => 'required')) !!}

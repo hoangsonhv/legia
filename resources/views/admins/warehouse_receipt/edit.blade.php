@@ -36,13 +36,13 @@
                                 {!! Form::textarea('note', null, array('class' => 'form-control', 'rows' => 1)) !!}
                             </div>
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-sm-12 col-xl-6">
                                     <div class="form-group">
                                         <label for="warehouse_at">Nhập tại kho</label>
                                         {!! Form::text('warehouse_at', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-sm-12 col-xl-6">
                                     <div class="form-group">
                                         <label for="address">Địa điểm</label>
                                         {!! Form::text('address', null, array('class' => 'form-control', 'required' => 'required')) !!}

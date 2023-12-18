@@ -148,39 +148,39 @@
                         {!! Form::hidden('id', null) !!}
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="code">Mã CO<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('co_id', $co, null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="code">Mã khách hàng<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('core_customer_id', $coreCustomers, null, array('class' => 'form-control select2', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="name">Họ tên người nhận<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('recipient_name', null,
                                             array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="tax_code">SĐT người nhận<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('recipient_phone', null,
                                             array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="shipping_unit">Đơn vị vận chuyển</label>
                                         {!! Form::select('shipping_unit', $shippingUnit, null, array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="delivery_date">Ngày giao hàng</label>
                                         <div class="input-group" id="delivery_date" data-target-input="nearest">
@@ -192,7 +192,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="delivery_date">Ngày nhận hàng dự kiến</label>
                                         <div class="input-group" id="received_date_expected" data-target-input="nearest">
@@ -206,13 +206,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="shipping_method">Phương thức vận chuyển</label>
                                         {!! Form::select('shipping_method', $shippingMethod, null, array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="shipping_fee">Phí ship</label>
                                         @php

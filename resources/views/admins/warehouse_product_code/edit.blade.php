@@ -17,19 +17,19 @@
                         {!! Form::hidden('id', null) !!}
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="code">Nhóm hàng hóa<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('warehouse_group_id', $groups, null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="code">Mã hàng hóa<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('code', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="code">Tên hàng hóa</label>
                                         {!! Form::text('name', null, array('class' => 'form-control')) !!}

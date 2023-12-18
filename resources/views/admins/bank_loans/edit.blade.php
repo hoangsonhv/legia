@@ -30,7 +30,7 @@
                                 {!! Form::text('content', null, array('class' => 'form-control')) !!}
                             </div>
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="date">Ngày vay<b style="color: red;"> (*)</b></label>
                                         <div class="input-group" id="date" data-target-input="nearest">
@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="date">Ngày đáo hạn<b style="color: red;"> (*)</b></label>
                                         <div class="input-group" id="date_due" data-target-input="nearest">
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="date">Ngày trả hàng tháng<b style="color: red;"> (*)</b></label>
                                         <div class="input-group">
@@ -67,14 +67,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-sm-12 col-xl-8">
                                     <div class="form-group">
                                         <label for="name_bank">Số tiền vay<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('tmp_amount_money', number_format($model->amount_money), array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
                                         {!! Form::hidden('amount_money', null) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="name_bank">Lãi (%)<b style="color: red;"> (*)</b></label>
                                         {!! Form::number('profit_amount', $model->profit_amount, array('class' => 'form-control', 'step' => '0.1', 'required' => 'required', 'readonly' => 'readonly')) !!}
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-sm-12 col-xl-12">
                                     <div class="form-group">
                                         <label for="name_bank">Số dư nợ vay<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('tmp_outstanding_balance', number_format($model->outstanding_balance), array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}

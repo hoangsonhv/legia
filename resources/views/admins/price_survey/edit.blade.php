@@ -21,43 +21,43 @@
                         {!! Form::hidden('id', null) !!}
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="co_id">CO<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('co_id', $arrCo, null, array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="request_id">Mã yêu cầu<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('request_id', $arrRequest, null, array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="name">IMPO/DOME<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('type', $types, null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="tax_code">Nhà cung cấp<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('supplier', null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="tax_code">Nhóm sản phẩm<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('product_group', null, array('class' => 'form-control', 'required' => 'required', 'placeholder' => 'Nhóm sản phẩm')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-12 col-xl-4">
                                     <div class="form-group">
                                         <label for="address">Người yêu cầu</label>
                                         {!! Form::text('request_person', null, array('class' => 'form-control', 'placeholder' => 'Người yêu cầu')) !!}
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="phone">Ngày yêu cầu</label>
                                         <div class="input-group" id="date_request" data-target-input="nearest">
@@ -68,7 +68,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="phone">Deadline Cần hàng</label>
                                         <div class="input-group" id="deadline" data-target-input="nearest">
@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="phone">Ngày hỏi NCC</label>
                                         <div class="input-group" id="question_date" data-target-input="nearest">
@@ -90,7 +90,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="phone">Ngày có kết quả</label>
                                         <div class="input-group" id="result_date" data-target-input="nearest">
@@ -101,26 +101,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-sm-12 col-xl-2">
                                     <div class="form-group">
                                         <label for="name">Duyệt mua<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('status', $status, null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-sm-12 col-xl-8">
                                     <div class="form-group">
                                         <label for="phone">Giá trị báo giá (Bao gồm VAT)<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('tmp_price', number_format($model->price), array('class' => 'form-control','required' => 'required', 'placeholder' => 'Giá trị báo giá')) !!}
                                         {!! Form::hidden('price', null) !!}
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-sm-12 col-xl-2">
                                     <div class="form-group">
                                         <label for="phone">Số ngày quá hạn thanh toán</label>
                                         {!! Form::number('number_date_wait_pay', null, array('class' => 'form-control', 'placeholder' => 'Số ngày quá hạn thanh toán')) !!}
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-sm-12 col-xl-12">
                                     <div class="form-group">
                                         <label for="phone">Ghi chú</label>
                                         {!! Form::textarea('note', null, array('class' => 'form-control', 'placeholder' => 'Ghi chú', 'rows' => 2)) !!}
