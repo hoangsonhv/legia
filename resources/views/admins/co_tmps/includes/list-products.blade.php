@@ -114,8 +114,8 @@
                 <input type="hidden" name="dv_tinh[]" value="{{ $dvTinh }}">
                 {{ $dvTinh }}
               </td>
-              <td>
-                <input style="width: 50px;" class="form-control" onChange="caclTotalMoney(this)" type="number" min="1" name="so_luong[]" value="{{ $soLuong }}">
+              <td >
+                <input style="width: 100%;" class="form-control" onChange="caclTotalMoney(this)" type="number" min="1" name="so_luong[]" value="{{ $soLuong }}">
               </td>
               <td>
                 <span class="text-danger"><b>{{$tonKho}}</b></span>
