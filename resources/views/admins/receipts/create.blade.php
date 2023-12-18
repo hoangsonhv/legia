@@ -78,7 +78,7 @@
                   </p>
                 </h5>
                 <div class="table-responsive p-0">
-                  <table class="table table-bordered text-nowrap">
+                  <table class="table table-bordered text-wrap">
                     <thead>
                       <tr class="text-center">
                         <th>&nbsp</th>

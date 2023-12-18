@@ -19,7 +19,7 @@
         </div>
         {{--    <p class="text-danger">Giá trị đơn hàng: <span class="money_total"><b></b></span></p>--}}
         <div class="table-responsive p-0">
-            <table class="table table-bordered text-nowrap">
+            <table class="table table-bordered text-wrap">
                 <thead>
                 <tr class="text-center">
                     <th>&nbsp</th>

@@ -400,7 +400,7 @@
                         </p>
                       </h5>
                       <div class="table-responsive p-0">
-                        <table class="table table-bordered text-nowrap">
+                        <table class="table table-bordered text-wrap">
                           <thead>
                             <tr class="text-center">
                               <th>&nbsp</th>
@@ -659,7 +659,7 @@
                     @foreach($co->request as $key => $requestModel)
                       <div class="table-responsive">
                         <h5><b class="badge bg-warning">Phiếu Yêu Cầu lần {{ $key + 1 }}</b></h5>
-                        <table class="table table-bordered text-nowrap">
+                        <table class="table table-bordered text-wrap">
                           <tbody>
                             <tr>
                               <td>Chứng từ</td>
@@ -718,7 +718,7 @@
                         </table>
                       </div>
                       <div class="table-responsive" style="margin-top: -1em;">
-                        <table class="table table-bordered text-nowrap">
+                        <table class="table table-bordered text-wrap">
                           <thead>
                             <tr align="center">
                               <th class="align-middle">Số TT</th>
@@ -756,7 +756,7 @@
                         @if($requestModel->surveyPrices->count())
                           @foreach($requestModel->surveyPrices as $indexSP => $surveyPrice)
                             <div class="table-responsive">
-                              <table class="table table-bordered text-nowrap">
+                              <table class="table table-bordered text-wrap">
                                 <tbody>
                                   <tr>
                                     <td colspan="2">
@@ -880,7 +880,7 @@
                     @foreach($co->payment as $key => $payment)
                       <div class="table-responsive">
                         <h5><b class="badge bg-danger">Phiếu Chi lần {{ $key + 1 }}</b></h5>
-                        <table class="table table-bordered text-nowrap">
+                        <table class="table table-bordered text-wrap">
                           <tbody>
                             <tr>
                               <td>Chứng từ</td>
@@ -970,7 +970,7 @@
                     @foreach($co->receipt as $key => $receipt)
                       <div class="table-responsive ">
                         <h5><b class="badge bg-success">Phiếu Thu lần {{ $key + 1 }}</b></h5>
-                        <table class="table table-bordered text-nowrap">
+                        <table class="table table-bordered text-wrap">
                           <tbody>
                             <tr>
                               <td>Chứng từ</td>
