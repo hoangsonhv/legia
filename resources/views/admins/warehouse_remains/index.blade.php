@@ -48,7 +48,7 @@
                   @endforeach
                 </ul>
               </div>
-              <div class="card-body">
+              <div class="card-body overflow-auto">
                 <div class="tab-content">
                   <div class="tab-pane fade show active" role="tabpanel">
                      <table class="table table-hover text-nowrap">

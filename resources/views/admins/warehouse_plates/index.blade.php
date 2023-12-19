@@ -16,7 +16,7 @@
             <div class="card-tools">
               {!! Form::open(array('route' => ['admin.warehouse-plate.index', $model], 'method' => 'get')) !!}
               <div class="input-group">
-                <input type="text" name="key_word" class="form-control float-right" placeholder="Từ khoá" value="{{old('key_word')}}">
+                <input type="text" name="key_word" class="form-control float-right " placeholder="Từ khoá" value="{{old('key_word')}}">
                 <div class="input-group-append">
                   <button type="submit" class="btn btn-default">
                     <i class="fas fa-search"></i>
@@ -28,7 +28,7 @@
                 </div>
                 @endpermission
                 @permission('admin.warehouse-plate.create')
-                <div class="ml-3">
+                <div class="ml-xl-3  p-sm-0">
                   <a href="{{ route('admin.warehouse-plate.create', ['model' => $model]) }}" class="btn btn-primary">Thêm vật liệu</a>
                 </div>
                 @endpermission
@@ -48,7 +48,7 @@
                   @endforeach
                 </ul>
               </div>
-              <div class="card-body">
+              <div class="card-body overflow-auto">
                 <div class="tab-content">
                   <div class="tab-pane fade show active" role="tabpanel">
                      <table class="table table-hover text-nowrap">
