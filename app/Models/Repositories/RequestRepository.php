@@ -132,4 +132,13 @@ class RequestRepository extends BaseRepository
         }
         return true;
     }
+
+    public function checkExitsCategoryInMonth($category, $startDate,$endDate) : bool{
+
+        $isExist = $this->model->whereBetween('created_at', [$startDate, $endDate])
+                            ->where('category',$category)
+                            ->get();
+ 
+         return $isExist->count();
+     }
 }

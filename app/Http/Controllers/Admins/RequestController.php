@@ -151,6 +151,13 @@ class RequestController extends Controller
                 $coId   = $co->id;
                 $coCode = $co->code;
             } else {
+                $requireCategory = DataHelper::getCategories([DataHelper::DINH_KY])['Định kỳ'];
+                $firstDay = Carbon::now()->firstOfMonth();
+                $lastDay = Carbon::now()->lastOfMonth();
+                $checkExist = $this->requestRepository->checkExitsCategoryInMonth($category,$firstDay,$lastDay);
+                if(in_array($category,array_keys($requireCategory)) && $checkExist){
+                    return redirect()->back()->withInput()->with('error','Chỉ có thể tạo một cate trong một tháng!');
+                }
                 $coId   = null;
                 $coCode = null;
             }
