@@ -51,10 +51,12 @@
 }
 @media screen and (max-width: 780px) {
   #approval {
+    z-index: 0 !important;
     position: unset;
     transform: unset;
     width: 100%;
     text-align: center;
+    margin-bottom: 10px;
     /* position: fixed; */
     top: 0px;
   }
