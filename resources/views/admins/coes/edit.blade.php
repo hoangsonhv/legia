@@ -153,10 +153,14 @@
         @if($coTmp)
         <div class="card">
           <div class="card-header">
-            <div class="d-flex justify-content-center">
-              <h3 class="title">Danh mục hàng hoá Chào Giá </h3>
-              <button class="btn btn-default ml-3" id="show-table-tmp-co">Hiển thị</button>
-              <button class="btn btn-default ml-3" id="hiden-table-tmp-co">Ẩn</button>
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="col-sm-12 col-xl-10">
+                <h3 class="title">Danh mục hàng hoá Chào Giá </h3>
+              </div>
+              <div class="col-sm-12 col-xl-2">
+                <button class="btn btn-default ml-3" id="show-table-tmp-co">Hiển thị</button>
+                <button class="btn btn-default ml-3" id="hiden-table-tmp-co">Ẩn</button>
+              </div>
             </div>
             <div class="text-right">
               <button type="button" class="btn btn-success" id="import-offer">Import chào giá</button>
@@ -175,9 +179,16 @@
             <div class="card" id="block-offer-price">
               <div class="card-header">
                 <div class="d-flex justify-content-center">
-                  <h3 class="title">Danh mục hàng hoá CO </h3>
-                  <button class="btn btn-default ml-3" id="show-table-co">Hiển thị</button>
-                  <button class="btn btn-default ml-3" id="hiden-table-co">Ẩn</button>
+                  <div class="col-sm-12 col-xl-10">
+                    <h3 class="title">Danh mục hàng hoá CO </h3>
+                  </div>
+                  <div class="col-sm-12 col-xl-2">
+                    <div>
+                      <button class="btn btn-default ml-3" id="show-table-co">Hiển thị</button>
+                      <button class="btn btn-default ml-3" id="hiden-table-co">Ẩn</button>
+                    </div>
+                  </div>
+                 
                 </div>
                 <div class="text-right">
                   <button type="button" class="btn btn-success" id="import-offer">Import chào giá</button>
@@ -201,7 +212,7 @@
           @php
             $existsRel = ($co->request->count() || $co->payment->count() || $co->receipt->count());
           @endphp
-          <div class="{{ $existsRel ? 'col-6' : 'col-12'}}">
+          <div class="{{ $existsRel ? 'col-xl-6 col-sm-12' : 'col-xl-12'}}">
             <div class="card">
               <div class="card-body">
                 <div class="card">
@@ -643,7 +654,7 @@
             </div>
           </div>
           @if($existsRel)
-          <div class="col-6">
+          <div class="col-xl-6 col-sm-12">
             @permission('admin.co.list-info-co')
               @if(\App\Enums\ProcessStatus::Approved == $co->status)
               <div class="card">

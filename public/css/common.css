@@ -76,6 +76,22 @@
   .data-materials{
     overflow-x: auto;
   }
+  .card-header{
+    padding-left: 0px;
+    padding-right: 10px;
+  }
+  .noti-pending {
+    position: unset !important;
+    width: 100%;
+    margin-bottom: 20px;
+    
+ 
+  }
+  .noti-pending a{
+    width: 100%;
+    
+ 
+  }
 }
 .noti-pending {
   position: absolute;
