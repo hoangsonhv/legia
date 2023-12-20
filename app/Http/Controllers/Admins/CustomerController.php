@@ -29,14 +29,15 @@ class CustomerController extends Controller
 
     public $menu;
 
-    function __construct(BankRepository $bankRepository,
-                         BankHistoryTransactionRepository $bankHistoryTransactionRepository,
-                         CustomerRepository $cusRepo,
-                         CoRepository $coRepo,
-                         ConfigRepository $configRepo,
-                         DeliveryRepository $deliRepo,
-                         CoTmpRepository $coTmpRepo)
-    {
+    function __construct(
+        BankRepository $bankRepository,
+        BankHistoryTransactionRepository $bankHistoryTransactionRepository,
+        CustomerRepository $cusRepo,
+        CoRepository $coRepo,
+        ConfigRepository $configRepo,
+        DeliveryRepository $deliRepo,
+        CoTmpRepository $coTmpRepo
+    ) {
         $this->bankRepository                   = $bankRepository;
         $this->bankHistoryTransactionRepository = $bankHistoryTransactionRepository;
         $this->cusRepo                          = $cusRepo;
@@ -57,23 +58,24 @@ class CustomerController extends Controller
 
     public function index(Request $request)
     {
+
         $breadcrumb                 = $this->menu;
         $breadcrumb['data']['list'] = ['label'  => 'Danh sách'];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
         $params                     = array();
         $limit                      = 10;
         // search
-        if($request->has('key_word')) {
+        if ($request->has('key_word')) {
             $params['key_word'] = $request->key_word;
         }
         $user = Session::get('login');
-        if(!PermissionHelper::hasPermission('admin.customer.index-all')) {
+        if (!PermissionHelper::hasPermission('admin.customer.index-all')) {
             $params['admin_id'] = $user->id;
         }
 
-        $datas = $this->cusRepo->search($params)->orderBy('id','DESC')->paginate($limit);
+        $datas = $this->cusRepo->search($params)->groupBy('code')->orderBy('id', 'DESC')->paginate($limit);
         $request->flash();
-        return view('admins.customers.index',compact('breadcrumb', 'titleForLayout', 'datas'));
+        return view('admins.customers.index', compact('breadcrumb', 'titleForLayout', 'datas'));
     }
 
     public function create()
@@ -82,7 +84,7 @@ class CustomerController extends Controller
         $breadcrumb['data']['list'] = ['label'  => 'Thêm mới'];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
         $permissions                = config('permission.permissions');
-        return view('admins.customers.create',compact('breadcrumb', 'titleForLayout', 'permissions'));
+        return view('admins.customers.create', compact('breadcrumb', 'titleForLayout', 'permissions'));
     }
 
     public function store(CustomerRequest $request)
@@ -91,9 +93,9 @@ class CustomerController extends Controller
         $input['admin_id'] = Session::get('login')->id;
         $bank  = CoreCustomer::create($input);
         if ($bank) {
-            return redirect()->route('admin.customer.index')->with('success','Tạo khách hàng thành công!');
+            return redirect()->route('admin.customer.index')->with('success', 'Tạo khách hàng thành công!');
         }
-        return redirect()->route('admin.customer.index')->with('error','Tạo khách hàng thất bại!');
+        return redirect()->route('admin.customer.index')->with('error', 'Tạo khách hàng thất bại!');
     }
 
     public function edit(Request $request, $id)
@@ -101,20 +103,50 @@ class CustomerController extends Controller
         $breadcrumb                 = $this->menu;
         $breadcrumb['data']['list'] = ['label'  => 'Cập nhật'];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
-        $coes                       = $this->coRepo->getCoes(['core_customer_id' => $id])->orderBy('id','DESC')->paginate(10);
-        $co_tmps                    = $this->coTmpRepo->getCoes(['core_customer_id' => $id])->orderBy('id','DESC')->paginate(10);
-        $deliveries                 = $this->deliRepo->getDeliverys(['core_customer_id' => $id])->orderBy('id','DESC')->paginate(10);
+        $coes                       = $this->coRepo->getCoes(['core_customer_id' => $id])->orderBy('id', 'DESC')->paginate(10);
+        $co_tmps                    = $this->coTmpRepo->getCoes(['core_customer_id' => $id])->orderBy('id', 'DESC')->paginate(10);
+        $deliveries                 = $this->deliRepo->getDeliverys(['core_customer_id' => $id])->orderBy('id', 'DESC')->paginate(10);
         $limitApprovalCg            = $this->configRepo->getConfigs(['key' => 'limit_approval_cg'])->first()->value;
         $model                      = $this->cusRepo->find($id);
-
+        $totalExpenditure = 0;
+        $totalRevenue = 0;
+        foreach ($coes as $key => $co) {
+            if ($co->receipt->count()) {
+                foreach ($co->payment as $val) {
+                    if ($val->status == \App\Enums\ProcessStatus::Approved) {
+                        $totalExpenditure += $val->money_total;
+                    }
+                }
+                if ($co->delivery()->count()) {
+                    $totalExpenditure += $co->delivery->first()->shipping_fee;
+                }
+            }
+            if($co->receipt->count()) {
+                foreach($co->receipt as $val) {
+                  if($val->status == \App\Enums\ProcessStatus::Approved) {
+                    $totalRevenue += $val->money_total;
+                  }
+                }
+              }
+        }
         if ($model) {
             $user = Session::get('login');
-            if(!PermissionHelper::hasPermission('admin.customer.index-all') && $model->admin_id != $user->id) {
+            if (!PermissionHelper::hasPermission('admin.customer.index-all') && $model->admin_id != $user->id) {
                 return redirect()->route('admin.bank.index')->with('error', 'Bạn không có quyền truy cập!');
             }
             $permissions             = config('permission.permissions');
-            return view('admins.customers.edit',compact('breadcrumb', 'titleForLayout', 'model',
-                'permissions', 'coes', 'limitApprovalCg', 'deliveries', 'co_tmps'));
+            return view('admins.customers.edit', compact(
+                'breadcrumb',
+                'titleForLayout',
+                'model',
+                'permissions',
+                'coes',
+                'limitApprovalCg',
+                'deliveries',
+                'co_tmps',
+                'totalExpenditure',
+                'totalRevenue'
+            ));
         }
         return redirect()->route('admin.customer.index')->with('error', 'Khách hàng không tồn tại!');
     }
@@ -125,7 +157,7 @@ class CustomerController extends Controller
         if ($model) {
             $inputs = $request->input();
             $result = $this->cusRepo->update($inputs, $id);
-            return redirect()->route('admin.customer.edit', ['id' => $id])->with('success','Cập nhật khách hàng thành công!');
+            return redirect()->route('admin.customer.edit', ['id' => $id])->with('success', 'Cập nhật khách hàng thành công!');
         }
         return redirect()->back()->withInput()->with('error', 'Khách hàng không tồn tại!');
     }
@@ -135,7 +167,7 @@ class CustomerController extends Controller
         $model = $this->cusRepo->find($id);
         if ($model) {
             $model->delete();
-            return redirect()->route('admin.customer.index')->with('success','Xóa khách hàng thành công!');
+            return redirect()->route('admin.customer.index')->with('success', 'Xóa khách hàng thành công!');
         }
         return redirect()->back()->with('error', 'Khách hàng không tồn tại!');
     }

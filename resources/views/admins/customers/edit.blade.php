@@ -68,6 +68,22 @@
                                         {!! Form::email('email', null, array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
+                                <div class="col-sm-12 col-xl-12">
+                                    <div class="form-group">
+                                        <label for="email">Tổng chi:</label>
+                                        <span class="text-bold">
+                                           {{number_format($totalExpenditure)}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-xl-12">
+                                    <div class="form-group">
+                                        <label for="email">Tổng thu:</label>
+                                        <span class="text-bold">
+                                            {{number_format($totalRevenue)}}
+                                         </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -202,7 +218,7 @@
                                                 {{ number_format($sumPrice) }}
                                             </span>
                                             </td>
-                                            <td>
+                                            <td id="tong_chi_table">
                                                 @php
                                                     $sumPayment = 0;
                                                     if($co->payment->count()) {
