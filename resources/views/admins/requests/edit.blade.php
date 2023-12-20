@@ -308,6 +308,8 @@
                     @endif --}}
                     @endpermission
                     @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material')])
+                    @include('admins.requests.includes.select-warehouse', ['url' => route('admin.warehouse.show-form-create')])
+
                     <div class="modal fade" id="accompanying_document_modal">
                         <div class="modal-dialog">
                             <div class="modal-content">

@@ -88,8 +88,7 @@
                 <td colspan="11">
                         <button type="button" class="btn btn-success" id="display-material">+ Thêm vật liệu từ KHO
                         </button>
-                        {{-- <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>
-                        <button type="button" class="btn btn-success" id="add-row-material">+ Thêm</button> --}}
+                        <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>
                 </td>
             </tr>
         </tfoot>

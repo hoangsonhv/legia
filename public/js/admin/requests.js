@@ -80,7 +80,23 @@ $(function () {
       }
     });
   });
-
+  $('#show-form').click(function() {
+    $.ajax({
+      method: "GET",
+      url: $(this).attr('data-url') + '?model_type=' + $(this).parents('.modal-body:first').find('[name=model_type]').val(),
+    })
+    .done(function( data ) {
+        var ele = $('.form-material');
+        ele.html(data);
+        ele.removeClass('d-none');
+    });
+    $('#warehouse_date').datetimepicker({
+        format: 'YYYY-MM-DD',
+        icons: {
+            time: 'far fa-clock'
+        }
+    });
+  })
   $('#load-material').click(function() {
     var eleModal = '.item-material .table tbody';
     if (!$(eleModal + ' tr td.check-data input:checked').length) {
@@ -119,17 +135,37 @@ $(function () {
     }
   });
 
-  $('#add-row-material').click(function() {
-    var ele    = $(this).parents('.form-root').find(".table-content tbody");
+  $('#load-other-material').click(function() {
+    var eleForm = $('.form-material');
+    var codeMaterial = eleForm.find('input[name="code"]').first().val();
+    var motaMaterial = eleForm.find('input[name="vat_lieu"]').length ? eleForm.find('input[name="vat_lieu"]').first().val() : '';
+    var ele    = $('.data-materials').find(".table-content tbody");
     var index  = ele.find('tr').length + 1;
     var dvTinh = '';
     if ($(this).attr('data-dvTinh')) {
       dvTinh = $(this).attr('data-dvTinh');
     }
-    ele.append(getItem(index, dvTinh, {code: '', vat_lieu: ''}));
+    submitFormMaterial(eleForm.find('form').first().attr('action') , eleForm.find('form').first().serializeArray())
+    ele.append(getItem(index, 'Tấm', {code: codeMaterial, vat_lieu: motaMaterial}));
     reloadDatepicker();
+    $('#modal-another-material').modal('hide');
+  });
+
+  $('#add-row-material').click(function() {
+    $('#modal-another-material').modal('show');
+    $('.form-material').empty();
   });
 });
+
+function submitFormMaterial(url, data){
+  $.ajax({
+    method: "POST",
+    url: url,
+    data: data
+  })
+  .done(function( data ) {
+  });
+}
 
 function calPaymentPer(_this, field) {
   let per = $(_this).val();

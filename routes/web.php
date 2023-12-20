@@ -326,4 +326,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
         Route::get('/destroy/{id}', [WarehouseProductCodeController::class, 'destroy'])->name('admin.warehouse-product-code.destroy');
         Route::post('/import', [WarehouseProductCodeController::class, 'importCode'])->name('admin.warehouse-product-code.import');
     });
+
+	/* Get form create material */
+	Route::group(['prefix' => 'warehouse'], function() {
+		Route::get('show-form-create', [WarehouseController::class, 'showFormCreate'])->name('admin.warehouse.show-form-create');
+	});
 });

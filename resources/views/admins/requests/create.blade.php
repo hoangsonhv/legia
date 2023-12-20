@@ -73,6 +73,7 @@
         </div>
         <!-- /.card -->
         @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material')])
+        @include('admins.requests.includes.select-warehouse', ['url' => route('admin.warehouse.show-form-create')])
       </div>
     </div>
   </div>

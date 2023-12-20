@@ -301,6 +301,122 @@ class WarehouseHelper
         return $names[$modelType];
     }
 
+    public static function listWarehouseNames() {
+        return [
+            'KHO TẤM' => [
+                WarehouseHelper::BIA => 'KHO BÌA',
+                WarehouseHelper::CAO_SU => 'KHO CAO SU',
+                WarehouseHelper::CAO_SU_VN_ZA => 'KHO CAO SU VN ZA',
+                WarehouseHelper::TAM_KIM_LOAI => 'KHO TẤM KIM LOẠI',
+                WarehouseHelper::CREAMIC => 'KHO CREAMIC',
+                WarehouseHelper::GRAPHITE => 'KHO GRAPHITE',
+                WarehouseHelper::PTFE => 'KHO PTEE',
+                WarehouseHelper::TAM_NHUA => 'KHO TẤM NHỰA',
+            ],
+            'KHO SPW' => [
+                WarehouseHelper::FILLER => 'KHO FILLER',
+                WarehouseHelper::GLAND_PACKING => 'KHO GLAND PACKING',
+                WarehouseHelper::HOOP => 'KHO HOOP',
+                WarehouseHelper::ORING => 'KHO ORING',
+                WarehouseHelper::PTFE_ENVELOP => 'KHO PTEE ENVELOP',
+                WarehouseHelper::PTFE_TAPE => 'KHO PTEE TAPE',
+                WarehouseHelper::RTJ => 'KHO RTJ',
+                WarehouseHelper::THANH_PHAM_SWG => 'KHO THÀNH PHẨM SWG',
+                WarehouseHelper::VANH_TINH_INNER_SWG => 'KHO VÀNH TINH INNER SWG',
+                WarehouseHelper::VANH_TINH_OUTER_SWG => 'KHO VÀNH TINH OUTER SWG',
+            ],
+            'KHO CÒN LẠI' => [
+                WarehouseHelper::DAY_CAO_SU_VA_SILICON => 'KHO CAO SU VA SILICON',
+                WarehouseHelper::ONG_GLASS_EXPOXY => 'KHO ỐNG GLASS EXPOXY',
+                WarehouseHelper::DAY_CREAMIC => 'KHO DÂY CREAMIC',
+                WarehouseHelper::PTFE_CAYONG => 'KHO PTEE CÂY ỐNG',
+                WarehouseHelper::ND_LOAI_KHAC => 'KHO ND LOẠI KHÁC',
+                WarehouseHelper::NK_LOAI_KHAC => 'KHO NK LOẠI KHÁC',
+                WarehouseHelper::PHU_TUNG_DUNG_CU => 'KHO PHỤ TÙNG DỤNG CỤ',
+                WarehouseHelper::GLAND_PACKING_LATTY => 'KHO GLAND PACKING',
+                WarehouseHelper::CCDC => 'KHO CCDC',
+                WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'KHO NHỰA KỸ THUẬT CÂY ỐNG',
+                WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'KHO THÀNH PHẨM PHI KIM LOẠI',
+                WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'KHO THÀNH PHẨM KIM LOẠI',
+            ],
+        ];
+    }
+
+    public static function warehouseModelPath($modelType) {
+        $paths = [
+            WarehouseHelper::BIA => 'bia',
+            WarehouseHelper::CAO_SU => 'caosu',
+            WarehouseHelper::CAO_SU_VN_ZA => 'caosuvnza',
+            WarehouseHelper::TAM_KIM_LOAI => 'tamkimloai',
+            WarehouseHelper::CREAMIC => 'ceramic',
+            WarehouseHelper::GRAPHITE => 'graphite',
+            WarehouseHelper::PTFE => 'ptfe',
+            WarehouseHelper::TAM_NHUA => 'tamnhua',
+            WarehouseHelper::FILLER => 'filler',
+            WarehouseHelper::GLAND_PACKING => 'glandpacking',
+            WarehouseHelper::HOOP => 'hoop',
+            WarehouseHelper::DAY_CAO_SU_VA_SILICON => 'daycaosusilicone',
+            WarehouseHelper::ONG_GLASS_EXPOXY => 'ongglassepoxy',
+            WarehouseHelper::DAY_CREAMIC => 'dayceramic',
+            WarehouseHelper::PTFE_CAYONG => 'ptfecayong',
+            WarehouseHelper::PTFE_TAPE => 'ptfetape',
+            WarehouseHelper::VANH_TINH_INNER_SWG => 'vanhtinhinnerswg',
+            WarehouseHelper::VANH_TINH_OUTER_SWG => 'vanhtinhouterswg',
+            WarehouseHelper::ND_LOAI_KHAC => 'ndloaikhac',
+            WarehouseHelper::NK_LOAI_KHAC => 'nkloaikhac',
+            WarehouseHelper::ORING => 'oring',
+            WarehouseHelper::RTJ => 'rtj',
+            WarehouseHelper::PHU_TUNG_DUNG_CU => 'phutungdungcu',
+            WarehouseHelper::THANH_PHAM_SWG => 'thanhphamswg',
+            WarehouseHelper::GLAND_PACKING_LATTY => 'glandpackinglatty',
+            WarehouseHelper::CCDC => 'ccdc',
+            WarehouseHelper::PTFE_ENVELOP => 'ptfeenvelope',
+            WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'nhuakythuatcayong',
+            WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'tpphikimloai',
+            WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'tpkimloai',
+        ];
+
+        return $paths[$modelType];
+    }
+    
+    public static function warehouseFormCreate($modelType) {
+        $formView = [
+                WarehouseHelper::BIA => 'admins._form-plate',
+                WarehouseHelper::CAO_SU => 'admins._form-plate',
+                WarehouseHelper::CAO_SU_VN_ZA => 'admins._form-plate',
+                WarehouseHelper::TAM_KIM_LOAI => 'admins._form-plate',
+                WarehouseHelper::CREAMIC => 'admins._form-plate',
+                WarehouseHelper::GRAPHITE => 'admins._form-plate',
+                WarehouseHelper::PTFE => 'admins._form-plate',
+                WarehouseHelper::TAM_NHUA => 'admins._form-plate',
+            
+                WarehouseHelper::FILLER => 'admins._form-spw',
+                WarehouseHelper::GLAND_PACKING => 'admins._form-spw',
+                WarehouseHelper::HOOP => 'admins._form-spw',
+                WarehouseHelper::ORING => 'admins._form-spw',
+                WarehouseHelper::PTFE_ENVELOP => 'admins._form-spw',
+                WarehouseHelper::PTFE_TAPE => 'admins._form-spw',
+                WarehouseHelper::RTJ => 'admins._form-spw',
+                WarehouseHelper::THANH_PHAM_SWG => 'admins._form-spw',
+                WarehouseHelper::VANH_TINH_INNER_SWG => 'admins._form-spw',
+                WarehouseHelper::VANH_TINH_OUTER_SWG => 'admins._form-spw',
+
+                WarehouseHelper::DAY_CAO_SU_VA_SILICON => 'admins._form-remain',
+                WarehouseHelper::ONG_GLASS_EXPOXY => 'admins._form-remain',
+                WarehouseHelper::DAY_CREAMIC => 'admins._form-remain',
+                WarehouseHelper::PTFE_CAYONG => 'admins._form-remain',
+                WarehouseHelper::ND_LOAI_KHAC => 'admins._form-remain',
+                WarehouseHelper::NK_LOAI_KHAC => 'admins._form-remain',
+                WarehouseHelper::PHU_TUNG_DUNG_CU => 'admins._form-remain',
+                WarehouseHelper::GLAND_PACKING_LATTY => 'admins._form-remain',
+                WarehouseHelper::CCDC => 'admins._form-remain',
+                WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'admins._form-remain',
+                WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'admins._form-remain',
+                WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'admins._form-remain',
+        ];
+        return $formView[$modelType];
+    }
+
     public static function translateAtt($key)
     {
         $attributes = [

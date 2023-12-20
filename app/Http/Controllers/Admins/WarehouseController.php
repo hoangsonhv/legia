@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admins;
 
 use App\Helpers\DataHelper;
+use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WarehousePlateRequest;
 use App\Imports\Plates\WarehousePlatesImport;
@@ -161,5 +162,11 @@ class WarehouseController extends Controller
             dd('Thông tin không hợp lệ.');
         }
         return $typeModels[$data];
+    }
+
+    public function showFormCreate(Request $request) {
+        $model = WarehouseHelper::warehouseModelPath($request->model_type);
+        $viewPath = WarehouseHelper::warehouseFormCreate($request->model_type);
+        return view($viewPath,compact('model'));
     }
 }
