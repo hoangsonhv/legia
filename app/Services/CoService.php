@@ -448,6 +448,11 @@ class CoService
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.request.edit'
             ],
+            CoStepHistory::STEP_CREATE_PRICE_SURVEY => [
+                'title' => 'B5. Đang chờ tạo khảo sát giá',
+                'action' => CoStepHistory::ACTION_CREATE,
+                'act_router' => 'admin.request.edit'
+            ],
             CoStepHistory::STEP_WAITING_APPROVE_PRICE_SURVEY => [
                 'title' => 'B6. Đang chờ duyệt khảo sát giá',
                 'action' => CoStepHistory::ACTION_APPROVE,

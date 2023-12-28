@@ -14,6 +14,8 @@ use App\Models\CoreCustomer;
 use App\Models\PriceSurvey;
 use Illuminate\Http\Request;
 use App\Models\Repositories\PriceSurveyRepository;
+use App\Models\Repositories\CoStepHistoryRepository;
+use App\Models\CoStepHistory;
 use Illuminate\Support\Facades\Session;
 
 class PriceSurveyController extends Controller
@@ -24,12 +26,16 @@ class PriceSurveyController extends Controller
     protected $coRepo;
     protected $configRepo;
     protected $priceSurveyRepo;
+    protected $coStepHisRepo;
 
     public $menu;
 
-    function __construct(PriceSurveyRepository $priceSurveyRepo)
+    function __construct(
+        PriceSurveyRepository $priceSurveyRepo,
+        CoStepHistoryRepository $coStepHisRepo)
     {
         $this->priceSurveyRepo                  = $priceSurveyRepo;
+        $this->coStepHisRepo         = $coStepHisRepo;
         $this->menu                             = [
             'root' => 'Quản lý Khảo sát giá',
             'data' => [
@@ -160,6 +166,10 @@ class PriceSurveyController extends Controller
     public function insertMultiple(Request $request)
     {
         $ids = $request->input('id');
+        if ($ids == null) {
+            return redirect()->back()->with('error', 'Vui lòng nhập khảo sát giá!');
+        }
+
         $supplier = $request->input('supplier');
         $type = $request->input('type');
         $productGroup = $request->input('product_group');
@@ -197,6 +207,22 @@ class PriceSurveyController extends Controller
 
 
         if ($priceSurvey) {
+            $requestModel = RequestModel::find($requestId);
+            if ($requestModel->co_id != null) {
+                // Check if all request materials have checked price survey
+                $materials = $requestModel->material;
+                $materialsCount = count($materials);
+                $selectedPriceSurveyCount = 0;
+                foreach ($materials as $material) {
+                    $selectedPriceSurvey = $material->price_survey()->where('status', '1')->first();
+                    if ($selectedPriceSurvey != null) {
+                        $selectedPriceSurveyCount++;
+                    }
+                }
+                if ($selectedPriceSurveyCount == $materialsCount) {
+                    $this->coStepHisRepo->insertNextStep( 'request', $requestModel->co_id, $requestModel->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
+                }
+            }
             return redirect()->route('admin.request.edit', ['id' => $requestId])->with('success','Thêm khảo sát giá thành công!');
         }
     }

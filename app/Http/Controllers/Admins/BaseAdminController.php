@@ -29,6 +29,7 @@ class BaseAdminController extends Controller
     protected $bankRepo;
     protected $coStepHistoryRepo;
     protected $manufactureRepository;
+    protected $coTmpRepository;
 
     function __construct(
         CoTmpRepository $coTmpRepository,
@@ -191,7 +192,7 @@ class BaseAdminController extends Controller
                             break;
                         case 'request':
                             if ($status == ProcessStatus::PendingSurveyPrice) {
-                                $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
+                                $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->id, CoStepHistory::ACTION_CREATE_PRICE_SURVEY);
                             } else if ($status == ProcessStatus::Approved) {
                                 $this->coStepHistoryRepo->insertNextStep('payment', $repository->co_id, $repository->id, CoStepHistory::ACTION_CREATE, 0);
                             } else if ($status == ProcessStatus::Unapproved) {

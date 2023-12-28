@@ -5,19 +5,24 @@ namespace App\Models\Repositories;
 use App\Models\CoStepHistory;
 use App\Models\Repositories\CoRepository;
 use App\Models\Repositories\RequestRepository;
+use App\Models\Repositories\ManufactureRepository;
 use App\Models\Manufacture;
 
 class CoStepHistoryRepository extends AdminRepository
 {
     protected $coRepo;
     protected $requestRepo;
+    protected $manufactureRepository;
+
     public function __construct(CoStepHistory $coStepHistory,
                                 CoRepository $coRepo,
-                                RequestRepository $requestRepo)
+                                RequestRepository $requestRepo,
+                                ManufactureRepository $manufactureRepository)
     {
         $this->model = $coStepHistory;
         $this->coRepo = $coRepo;
         $this->requestRepo = $requestRepo;
+        $this->manufactureRepository = $manufactureRepository;
     }
 
     public function insertNextStep($type, $coId, $objectId, $action, $stepId = 0)
@@ -38,6 +43,7 @@ class CoStepHistoryRepository extends AdminRepository
                     } else {
                         // Change status waiting manufacture
                         Manufacture::where('co_id', $coId)->update(['is_completed' => Manufacture::PROCESSING]);
+                        $this->manufactureRepository->checkNeedQuantity($coId);
                         $this->insertNextStep('check_warehouse', $coId, $coId, CoStepHistory::ACTION_SELECT);
                     }
                 }
@@ -96,6 +102,9 @@ class CoStepHistoryRepository extends AdminRepository
             case 'request':
                 if ($action == CoStepHistory::ACTION_CREATE) {
                     $step = CoStepHistory::STEP_CREATE_REQUEST;
+                }
+                else if ($action == CoStepHistory::ACTION_CREATE_PRICE_SURVEY) {
+                    $step = CoStepHistory::STEP_CREATE_PRICE_SURVEY;
                 } else if ($action == CoStepHistory::ACTION_APPROVE) {
                     $step = CoStepHistory::STEP_WAITING_APPROVE_REQUEST;
                 } else if ($action == CoStepHistory::ACTION_APPROVE_PRICE_SURVEY) {

@@ -89,6 +89,7 @@
     </tbody>
     {{-- @if($requestModel->status == \App\Enums\ProcessStatus::PendingSurveyPrice) --}}
         <tfoot>
+        @if (\App\Enums\ProcessStatus::PendingSurveyPrice == $requestModel->status)
         <tr>
             <td colspan="8">
                 <div class="float-right">
@@ -99,6 +100,7 @@
                 </div>
             </td>
         </tr>
+        @endif
         </tfoot>
     {{-- @endif --}}
 </table>

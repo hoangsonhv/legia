@@ -73,7 +73,7 @@ class ManufactureRepository extends AdminRepository
     public function updateIsCompleted($id)
     {
         $query = ManufactureDetail::where('manufacture_id', $id)
-            ->whereRaw('reality_quantity < manufacture_quantity')
+            ->whereRaw('reality_quantity < need_quantity')
             ->get();
         
         if(!$query->count()) {
@@ -167,13 +167,11 @@ class ManufactureRepository extends AdminRepository
             //     'dvt'   => $warehouse->dv_tinh,
             //     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$warehouse->material_type],
             // ];
-            if (($warehouse->manufacture_type != WarehouseGroup::TYPE_MANUFACTURE)
-                || $warehouse->so_luong_san_xuat == 0) {
+            if ($warehouse->manufacture_type != WarehouseGroup::TYPE_MANUFACTURE) {
                 continue;
             }
 
             $row = [
-                'manufacture_quantity' => $warehouse->need_quantity,
                 'offer_price_id' => $warehouse->id,
                 'need_quantity' => $warehouse->so_luong,
                 'reality_quantity' => 0,
@@ -192,7 +190,7 @@ class ManufactureRepository extends AdminRepository
 
         $input['co_id'] = $co->id;
         $input['is_completed'] = Manufacture::WAITING;
-        $input['admin_id'] = $user = Session::get('login')->id;
+        $input['admin_id'] = Session::get('login')->id;
         $input['material_type'] = Manufacture::MATERIAL_TYPE_METAL;
         $modelMetal = Manufacture::create($input);
         if($modelMetal) {

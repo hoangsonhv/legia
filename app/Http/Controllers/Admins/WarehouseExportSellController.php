@@ -187,6 +187,7 @@ class WarehouseExportSellController extends Controller
                     $this->coStepHisRepo->insertNextStep('delivery', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
                 }
             }
+
             // Save many product
             $inputProducts = $request->input('product');
             foreach ($inputProducts['code'] as $key => $code) {

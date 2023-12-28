@@ -301,10 +301,16 @@ class RequestController extends Controller
             }
 
             $materials = $requestModel->material;
+            $materialsCount = count($materials);
+            $selectedPriceSurveyCount = 0;
             foreach ($materials as $material) {
                 $selectedPriceSurvey = $material->price_survey()->where('status', '1')->first();
-                if ($selectedPriceSurvey != null) $totalPayment += $selectedPriceSurvey->price;
+                if ($selectedPriceSurvey != null) {
+                    $totalPayment += $selectedPriceSurvey->price;
+                    $selectedPriceSurveyCount++;
+                }
             }
+            $isSelectedPriceSurveyForAllMaterials = $selectedPriceSurveyCount == $materialsCount;
 
             $arrPayments = $requestModel->payments()->get()->toArray();
             $payments = [];
@@ -313,7 +319,7 @@ class RequestController extends Controller
             }
             return view('admins.requests.edit',compact('totalPayment', 'coStep', 'steps', 'breadcrumb', 'titleForLayout', 'requestModel',
                 'permissions', 'categories', 'co', 'materials', 'existsCat', 'warehouses', 'listWarehouse',
-                'corePriceSurvey', 'payments', 'canCreatePayment', 'canCreateWarehouseReceipt'));
+                'corePriceSurvey', 'payments', 'isSelectedPriceSurveyForAllMaterials', 'canCreatePayment', 'canCreateWarehouseReceipt'));
         }
         return redirect()->route('admin.request.index')->with('error', 'Phiếu Yêu Cầu không tồn tại!');
     }

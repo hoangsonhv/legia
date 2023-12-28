@@ -69,6 +69,7 @@ class CoStepHistory extends Model
     const ACTION_CREATE = 'create';
     const ACTION_SELECT = 'select';
     const ACTION_APPROVE_PRICE_SURVEY = 'approve_price_survey';
+    const ACTION_CREATE_PRICE_SURVEY = 'create_price_survey';
 
     protected $fillable = [
         'co_id',

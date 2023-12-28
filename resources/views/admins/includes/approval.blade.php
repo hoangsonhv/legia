@@ -15,7 +15,7 @@
         <p class="un-approve">
           <a href="{{ route('admin.base-admin.approval', ['id' => $id, 'type' => $type, 'status' => \App\Enums\ProcessStatus::Unapproved]) }}" class="btn btn-default btn-block" onclick="return confirm('Bạn có chắc chắn muốn không duyệt thông tin này ?')">KHÔNG DUYỆT</a>
         </p>
-      @elseif(\App\Enums\ProcessStatus::PendingSurveyPrice == $status)
+      @elseif(\App\Enums\ProcessStatus::PendingSurveyPrice == $status && (isset($isSelectedPriceSurveyForAllMaterials) && $isSelectedPriceSurveyForAllMaterials))
         <p class="approve">
           <a href="{{ route('admin.base-admin.approval', ['id' => $id, 'type' => $type, 'status' => \App\Enums\ProcessStatus::Approved]) }}" class="btn btn-success btn-block" onclick="return confirm('Bạn có chắc chắn muốn duyệt thông tin này ?')">DUYỆT KHẢO SÁT GIÁ</a>
         </p>
