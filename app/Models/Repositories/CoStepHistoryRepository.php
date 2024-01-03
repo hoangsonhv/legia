@@ -12,17 +12,14 @@ class CoStepHistoryRepository extends AdminRepository
 {
     protected $coRepo;
     protected $requestRepo;
-    protected $manufactureRepository;
 
     public function __construct(CoStepHistory $coStepHistory,
                                 CoRepository $coRepo,
-                                RequestRepository $requestRepo,
-                                ManufactureRepository $manufactureRepository)
+                                RequestRepository $requestRepo)
     {
         $this->model = $coStepHistory;
         $this->coRepo = $coRepo;
         $this->requestRepo = $requestRepo;
-        $this->manufactureRepository = $manufactureRepository;
     }
 
     public function insertNextStep($type, $coId, $objectId, $action, $stepId = 0)
@@ -43,7 +40,16 @@ class CoStepHistoryRepository extends AdminRepository
                     } else {
                         // Change status waiting manufacture
                         Manufacture::where('co_id', $coId)->update(['is_completed' => Manufacture::PROCESSING]);
-                        $this->manufactureRepository->checkNeedQuantity($coId);
+                        $manufactures = Manufacture::where('co_id', $coId)
+                            ->with('details')->get();
+                        if($manufactures) {
+                            foreach ($manufactures as $manufacture){
+                                if(!$manufacture->details->count()) {
+                                    $manufacture->is_completed = Manufacture::IS_COMPLETED;
+                                    $manufacture->save();
+                                }
+                            }
+                        }
                         $this->insertNextStep('check_warehouse', $coId, $coId, CoStepHistory::ACTION_SELECT);
                     }
                 }
