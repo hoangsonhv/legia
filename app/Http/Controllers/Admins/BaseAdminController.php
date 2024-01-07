@@ -126,6 +126,9 @@ class BaseAdminController extends Controller
                             }
                             break;
                         case 'payment':
+                            if(!$repository->co_id) {
+                                break;
+                            }
                             $this->bankRepo->updateAccountBalance($repository);
                             if ($status == ProcessStatus::Approved) {
                                 //
@@ -148,6 +151,9 @@ class BaseAdminController extends Controller
                             }
                             break;
                         case 'receipt':
+                            if(!$repository->co_id) {
+                                break;
+                            }
                             if ($status == ProcessStatus::Approved) {
                                 switch ($repository->step_id) {
                                     case 0:
@@ -191,6 +197,9 @@ class BaseAdminController extends Controller
                             $this->bankRepo->updateAccountBalance($repository);
                             break;
                         case 'request':
+                            if(!$repository->co_id) {
+                                break;
+                            }
                             if ($status == ProcessStatus::PendingSurveyPrice) {
                                 $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->id, CoStepHistory::ACTION_CREATE_PRICE_SURVEY);
                             } else if ($status == ProcessStatus::Approved) {

@@ -32,4 +32,7 @@ class Payment extends Model
     public function admin() {
         return $this->belongsTo(Admin::class);
     }
+    public function Request() {
+        return $this->belongsTo(Request::class);
+    }
 }

@@ -63,6 +63,20 @@ class DataHelper
         }
         return $res;
     }
+    public static function getCategoriesForIndex($aDiplay=[]) {
+        $res  = [];
+        $data = self::getCategoryPayment();
+        foreach($data as $kRoot => $vRoot) {
+            if ($aDiplay && !in_array($kRoot, $aDiplay)) {
+                continue;
+            }
+            $res[$kRoot] = $vRoot['label'];
+            foreach($vRoot['option'] as $key => $value) {
+                $res[$key] = $value;
+            }
+        }
+        return $res;
+    }
 
     public static function getStatusCO($status=null) {
         $statuses = [

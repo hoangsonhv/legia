@@ -61,7 +61,11 @@
             @endif
             <div class="card-body">
               <h3 class="title text-primary">Nội dung</h3>
-              @include('admins.requests.includes.list-materials', ['co' => $co])
+              @if ($co)    
+                @include('admins.requests.includes.list-materials', ['co' => $co])
+              @else 
+                @include('admins.requests.includes.list-service')
+              @endif
             </div>
             <!-- /.card-body -->
             <div class="card-footer text-right">

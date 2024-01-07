@@ -75,6 +75,9 @@ class RequestRepository extends BaseRepository
     public function checkConditionApproved($repository)
     {
         if($repository && $repository->money_total) {
+            if(!count($repository->co)) {
+                return true;
+            }
             $thanhToan = $repository->thanh_toan;
             if($thanhToan) {
                 $percent = is_array($thanhToan['percent']) ? $thanhToan['percent'] : [];

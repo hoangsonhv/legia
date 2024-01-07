@@ -17,6 +17,8 @@ class RequestMaterial extends Model
         'quy_cach',
         'dv_tinh',
         'dinh_luong',
+        'don_gia',
+        'thanh_tien',
         'thoi_gian_can',
         'ghi_chu',
     ];

@@ -24,10 +24,10 @@
             <div class="row">
                 <div class="col-12">
                     @include('admins.message')
-                    @if($existsCat)
+                    {{-- @if($existsCat)
                         <h5 class="mb-3 text-danger">Đã tồn tại Phiếu Yêu Cầu Định Kỳ trong tháng. Vui lòng kiểm tra
                             trước khi xét duyệt.</h5>
-                    @endif
+                    @endif --}}
                 </div>
                 <div class="col-12">
                     <div class="card form-root">
@@ -82,12 +82,16 @@
                                 @include('admins.coes.includes.list-warehouses',['warehouses' => $listWarehouse])
                             </div>
                         @endif
-                        {!! Form::close() !!}
-
                         <div class="card-body">
                             <h3 class="title text-primary">Nội dung</h3>
-                            @include('admins.requests.includes.list-materials', ['co' => $co, 'materials' => $materials])
+                            @if(!$co) 
+                            @include('admins.requests.includes.list-service', ['materials' => $materials])
+                            @endif
                         </div>
+                        {!! Form::close() !!}
+                        @if($co)                         
+                        @include('admins.requests.includes.list-materials', ['co' => $co, 'materials' => $materials])
+                        @endif
 
                     @if(\App\Enums\ProcessStatus::Pending != $requestModel->status)
                         @include('admins.requests.includes.config_payment')

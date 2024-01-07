@@ -188,7 +188,7 @@ class WarehouseExportController extends Controller
         $model = $this->whExportRepo->find($id);
         if ($model) {
             $user = Session::get('login');
-            if($user['position_id'] == Admin::POSITION_STAFF && $model->created_by != $user->id) {
+            if(( !PermissionHelper::hasPermission('admin.warehouse-export.index-all') && $model->created_by != $user->id)) {
                 return redirect()->route('admin.warehouse-export.index')->with('error', 'Bạn không có quyền truy cập!');
             }
             $permissions = config('permission.permissions');

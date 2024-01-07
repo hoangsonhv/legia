@@ -90,7 +90,7 @@ class RequestController extends Controller
         }
 
         $requests   = $this->requestRepository->getRequests($params)->orderBy('id','DESC')->paginate($limit);
-        $categories = DataHelper::getCategories();
+        $categories = DataHelper::getCategoriesForIndex();
         $count = [
             $this->requestRepository->countByStatus(),
             $this->requestRepository->countByStatus(ProcessStatus::Pending),
@@ -181,23 +181,9 @@ class RequestController extends Controller
                 }
             }
             // dd($request);
+            $money_total = 0;
+
             \DB::beginTransaction();
-            $input = [
-                'co_id'                 => $coId,
-                'co_code'               => $coCode,
-                'category'              => $category,
-                'code'                  => $this->requestRepository->getIdCurrent(),
-                'admin_id'              => Session::get('login')->id,
-                'note'                  => $request->input('note'),
-                'accompanying_document' => json_encode($documents)
-            ];
-            // Save request
-            $requestModel = RequestModel::create($input);
-            // Save co_step_history
-            if($request->input('co_id')) {
-                $this->coStepHisRepo->insertNextStep( 'request', $request->input('co_id'), $requestModel->id, CoStepHistory::ACTION_APPROVE);
-            }
-            // Save relationship
             $inputMaterials = $request->input('material');
             foreach($inputMaterials['code'] as $key => $code) {
                 if (empty($code) || !$inputMaterials['dinh_luong'][$key]) {
@@ -207,14 +193,34 @@ class RequestController extends Controller
                     'merchandise_id'=> $inputMaterials['merchandise_id'][$key],
                     'code'          => $inputMaterials['code'][$key],
                     'mo_ta'         => $inputMaterials['mo_ta'][$key],
-                    'kich_thuoc'         => $inputMaterials['kich_thuoc'][$key],
-                    'quy_cach'         => $inputMaterials['quy_cach'][$key],
+                    'kich_thuoc'    => isset($inputMaterials['kich_thuoc']) ? $inputMaterials['kich_thuoc'][$key] : null,
+                    'quy_cach'      => isset($inputMaterials['quy_cach']) ? $inputMaterials['quy_cach'][$key] : null,
                     'dv_tinh'       => $inputMaterials['dv_tinh'][$key],
                     'dinh_luong'    => $inputMaterials['dinh_luong'][$key],
                     'thoi_gian_can' => $inputMaterials['thoi_gian_can'][$key],
+                    'don_gia'       => isset($inputMaterials['don_gia']) ? $inputMaterials['don_gia'][$key] : 0,
+                    'thanh_tien'    => isset($inputMaterials['thanh_tien']) ? $inputMaterials['thanh_tien'][$key] : 0,
                     'ghi_chu'       => $inputMaterials['ghi_chu'][$key],
                 ];
+                $money_total += (isset($inputMaterials['thanh_tien']) ? $inputMaterials['thanh_tien'][$key] : 0);
             }
+            $input = [
+                'co_id'                 => $coId,
+                'co_code'               => $coCode,
+                'category'              => $category,
+                'code'                  => $this->requestRepository->getIdCurrent(),
+                'admin_id'              => Session::get('login')->id,
+                'note'                  => $request->input('note'),
+                'money_total'           => $money_total ?? null,
+                'accompanying_document' => json_encode($documents)
+            ];
+            // Save request
+            $requestModel = RequestModel::create($input);
+            // Save co_step_history
+            if($request->input('co_id')) {
+                $this->coStepHisRepo->insertNextStep( 'request', $request->input('co_id'), $requestModel->id, CoStepHistory::ACTION_APPROVE);
+            }
+            // Save relationship
             if (!empty($materials)) {
                 $requestModel->material()->createMany($materials);
                 if (!empty($co)) {
@@ -292,11 +298,14 @@ class RequestController extends Controller
                     $start      = Carbon::now()->startOfMonth()->toDatetimeString();
                     $end        = Carbon::now()->endOfMonth()->toDatetimeString();
                     $existsCat  = $this->requestRepository->getRequests([
-                        'id'         => ['id', '!=', $requestModel->id],
+                        'id'         => $requestModel->id,
                         'category'   => $requestModel->category,
                         'status'     => ProcessStatus::Approved,
                         'created_at' => ['created_at', 'between', [$start, $end]]
                     ])->count();
+                    if($existsCat) {
+                        $canCreatePayment = true;
+                    }
                 }
             }
 
@@ -401,6 +410,28 @@ class RequestController extends Controller
                     ]);
                 }
                 \DB::beginTransaction();
+                $money_total = 0;
+                $inputMaterials = $request->input('material');
+                foreach($inputMaterials['code'] as $key => $code) {
+                    if (empty($code) || !$inputMaterials['dinh_luong'][$key] || ($coId && !$inputMaterials['merchandise_id'][$key])) {
+                        continue;
+                    }
+                    $materials[] = [
+                        'merchandise_id'=> $inputMaterials['merchandise_id'][$key],
+                        'code'          => $inputMaterials['code'][$key],
+                        'mo_ta'         => $inputMaterials['mo_ta'][$key],
+                        'kich_thuoc'    => isset($inputMaterials['kich_thuoc']) ? $inputMaterials['kich_thuoc'][$key] : null,
+                        'quy_cach'      => isset($inputMaterials['quy_cach']) ? $inputMaterials['quy_cach'][$key] : null,
+                        'dv_tinh'       => $inputMaterials['dv_tinh'][$key],
+                        'dinh_luong'    => $inputMaterials['dinh_luong'][$key],
+                        'don_gia'       => isset($inputMaterials['don_gia']) ? $inputMaterials['don_gia'][$key] : 0,
+                        'thanh_tien'    => isset($inputMaterials['thanh_tien']) ? $inputMaterials['thanh_tien'][$key] : 0,
+                        'thoi_gian_can' => $inputMaterials['thoi_gian_can'][$key],
+                        'ghi_chu'       => $inputMaterials['ghi_chu'][$key],
+                    ];
+                    $money_total += (isset($inputMaterials['thanh_tien']) ? $inputMaterials['thanh_tien'][$key] : 0);
+
+                }
                 // Save request
                 $requestModel->co_id                 = $coId;
                 $requestModel->co_code               = $coCode;
@@ -408,27 +439,10 @@ class RequestController extends Controller
                 $requestModel->note                  = $request->input('note');
                 $requestModel->accompanying_document = json_encode($documents);
                 $requestModel->thanh_toan            = $request->input('thanh_toan');
-                $requestModel->money_total           = $request->input('money_total');
+                $requestModel->money_total           = $coId ? $request->input('money_total') : $money_total;
                 $requestModel->save();
                 // Save relationship
                 $requestModel->material()->delete();
-                $inputMaterials = $request->input('material');
-                foreach($inputMaterials['code'] as $key => $code) {
-                    if (empty($code) || !$inputMaterials['dinh_luong'][$key] || !$inputMaterials['merchandise_id'][$key]) {
-                        continue;
-                    }
-                    $materials[] = [
-                        'merchandise_id'=> $inputMaterials['merchandise_id'][$key],
-                        'code'          => $inputMaterials['code'][$key],
-                        'mo_ta'         => $inputMaterials['mo_ta'][$key],
-                        'kich_thuoc'         => $inputMaterials['kich_thuoc'][$key],
-                        'quy_cach'         => $inputMaterials['quy_cach'][$key],
-                        'dv_tinh'       => $inputMaterials['dv_tinh'][$key],
-                        'dinh_luong'    => $inputMaterials['dinh_luong'][$key],
-                        'thoi_gian_can' => $inputMaterials['thoi_gian_can'][$key],
-                        'ghi_chu'       => $inputMaterials['ghi_chu'][$key],
-                    ];
-                }
                 if (!empty($materials)) {
                     $requestModel->material()->createMany($materials);
                     

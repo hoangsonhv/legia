@@ -155,6 +155,17 @@ $(function () {
     $('#modal-another-material').modal('show');
     $('.form-material').empty();
   });
+
+  $('#add-row-service').click(function() {
+    var ele    = $(this).parents('.form-root').find(".table-content tbody");
+    var index  = ele.find('tr').length + 1;
+    var dvTinh = '';
+    if ($(this).attr('data-dvTinh')) {
+      dvTinh = $(this).attr('data-dvTinh');
+    }
+    ele.append(getItemService(index, dvTinh, {code: '', vat_lieu: ''}, false));
+    reloadDatepicker();
+  });
 });
 
 function submitFormMaterial(url, data){
@@ -191,16 +202,32 @@ function reloadDatepicker() {
   });
 }
 
-function getItem(index, unit, opts) {
+function getItem(index, unit, opts, readonly = true) {
+  $readonly = readonly ? 'readonly' : '';
   return '<tr align="center">'
     + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá vật liệu" onclick="deteleItem(this)"></i></td>'
     + '<td class="sequence">'+index+'</td>'
-    + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input readonly class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
-    + '<td class=""><textarea readonly class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
+    + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input '+$readonly+' class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
+    + '<td class=""><textarea '+$readonly+' class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
     + '<td class=""><textarea class="form-control" name="material[kich_thuoc][]" rows="1"></textarea></textarea></td>'
     + '<td class=""><textarea class="form-control" name="material[quy_cach][]" rows="1"></textarea></td>'
-    + '<td class=""><input readonly class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="'+unit+'"></td>'
+    + '<td class=""><input '+$readonly+' class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="'+unit+'"></td>'
     + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'
+    + '<td class=""><input class="form-control calendar-date" style="width: 120px" type="text" name="material[thoi_gian_can][]" value=""></td>'
+    + '<td class=""><textarea class="form-control" name="material[ghi_chu][]" rows="1"></textarea></td>'
+    + '</tr>';
+}
+function getItemService(index, unit, opts, readonly = true) {
+  $readonly = readonly ? 'readonly' : '';
+  return '<tr align="center">'
+    + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá vật liệu" onclick="deteleItem(this)"></i></td>'
+    + '<td class="sequence">'+index+'</td>'
+    + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input '+$readonly+' class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
+    + '<td class=""><textarea '+$readonly+' class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
+    + '<td class=""><textarea class="form-control" name="material[dv_tinh][]" rows="1"></textarea></textarea></td>'
+    + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'
+    + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[don_gia][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[don_gia][]" value=""></td>'
+    + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[thanh_tien][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[thanh_tien][]" value=""></td>'
     + '<td class=""><input class="form-control calendar-date" style="width: 120px" type="text" name="material[thoi_gian_can][]" value=""></td>'
     + '<td class=""><textarea class="form-control" name="material[ghi_chu][]" rows="1"></textarea></td>'
     + '</tr>';

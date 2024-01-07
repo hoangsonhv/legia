@@ -65,7 +65,7 @@
                 @foreach($payments as $payment)
                   <tr>
                     <td>{{ $payment->co_code }}</td>
-                    <td>{{ (!empty($payment->co->first()) && $payment->co->first()->request->first()) ? $payment->co->first()->request->first()->code : '' }}</td>
+                    <td>{{ $payment->request->code }}</td>
                     <td>{{ $payment->code }}</td>
                     <td>{!! isset($categories[$payment->category]) ? $categories[$payment->category] : '' !!}</td>
                     <td>

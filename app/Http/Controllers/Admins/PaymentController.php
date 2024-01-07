@@ -82,7 +82,7 @@ class PaymentController extends Controller
         }
 
         $payments   = $this->paymentRepository->getPayments($params)->orderBy('id','DESC')->paginate($limit);
-        $categories = DataHelper::getCategories();
+        $categories = DataHelper::getCategoriesForIndex();
         $count = [
             $this->paymentRepository->countByStatus(),
             $this->paymentRepository->countByStatus(ProcessStatus::Pending),
@@ -221,7 +221,7 @@ class PaymentController extends Controller
             ];
             // Save payment
             $payment = Payment::create($input);
-            if($payment) {
+            if($payment && $requestModel->co_id) {
                 $this->coStepHisRepo->insertNextStep('payment', $payment->co_id, $payment->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id'));
             }
             // Save relationship
