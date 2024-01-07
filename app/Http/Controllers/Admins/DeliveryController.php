@@ -137,9 +137,9 @@ class DeliveryController extends Controller
             $input['admin_id'] = Session::get('login')->id;
             $input['status_customer_received'] = (int) $request->input('status_customer_received');
             $delivery          = Delivery::create($input);
-
+            $receipt_id = $delivery->co->receipt()->orderBy('step_id', 'desc')->first()->id;
             if($delivery) {
-                $this->coStepHisRepo->insertNextStep('delivery', $delivery->co_id, $delivery->id, CoStepHistory::ACTION_APPROVE);
+                $this->coStepHisRepo->insertNextStep('receipt', $delivery->co_id, $receipt_id, CoStepHistory::ACTION_APPROVE,4);
             }
 
             // Save timeline

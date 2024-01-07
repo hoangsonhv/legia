@@ -538,15 +538,15 @@ class CoService
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.co.edit',
             ],
-            CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_N3 => [
-                'title' => 'B23. Đang chờ duyệt phiếu thu '. self::paymentStep()[2],
-                'action' => CoStepHistory::ACTION_APPROVE,
-                'act_router' => 'admin.receipt.edit',
-            ],
             CoStepHistory::STEP_CREATE_DELIVERY => [
-                'title' => 'B24. Đang chờ tạo giao hàng',
+                'title' => 'B23. Đang chờ tạo giao hàng',
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.co.edit',
+            ],
+            CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_N3 => [
+                'title' => 'B24. Đang chờ duyệt phiếu thu '. self::paymentStep()[2],
+                'action' => CoStepHistory::ACTION_APPROVE,
+                'act_router' => 'admin.receipt.edit',
             ],
             CoStepHistory::STEP_WAITING_APPROVE_DELIVERY => [
                 'title' => 'B25. Đơn hàng đang vận chuyển',

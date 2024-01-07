@@ -253,9 +253,11 @@ class ReceiptController extends Controller
                     //dd('here');
                     $this->coStepHisRepo->insertNextStep('warehouse-export-sell', $request->input('co_id'), $request->input('co_id'), CoStepHistory::ACTION_CREATE);
                 } else {
-                    $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );
+                    $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'),$request->input('step_id') == 2 ? $request->input('co_id') :  $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );
                 }
             }
+            // \DB::rollBack();
+            // dd($request->input('step_id'));
             // Save relationship
             if (!empty($co)) {
                 $receipt->co()->save($co);
