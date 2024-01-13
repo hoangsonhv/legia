@@ -166,8 +166,9 @@ class BaseAdminController extends Controller
                                         $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
                                         break;
                                     case 2:
+                                        // dd($repository->co->first()->delivery->id);
 //                                        $this->coStepHistoryRepo->insertNextStep('warehouse-export-sell', $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE);
-                                        $this->coStepHistoryRepo->insertNextStep('delivery', $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE);
+                                        $this->coStepHistoryRepo->insertNextStep('delivery', $repository->co_id, $repository->co->first()->delivery->id, CoStepHistory::ACTION_APPROVE);
                                         break;
                                     case 3:
                                         $this->coRepository->doneCo($repository->co_id);

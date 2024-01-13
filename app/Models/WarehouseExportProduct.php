@@ -12,6 +12,7 @@ class WarehouseExportProduct extends Model
         'code',
         'name',
         'unit',
+        'lot_no',
         'quantity_doc',
         'quantity_reality',
         'unit_price',

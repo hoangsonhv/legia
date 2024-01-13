@@ -25,12 +25,6 @@
     <tbody>
       @if(!empty($products))
         @foreach($products as $index => $product)
-          @php
-            $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])
-              ->first();
-            $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
-              ->where('l_id', $product['merchandise_id'])->first();
-          @endphp
           <tr align="center">
             <td class="">
               <i class="fas fa-minus-circle text-danger delete-item" title="Xoá hàng hoá" onclick="deteleItem(this)"></i>
@@ -44,14 +38,14 @@
               <textarea class="form-control" name="product[name][]" rows="1">{{ $product['name'] }}</textarea>
             </td>
             <td class="">
-              <input class="form-control" name="product[lot_no][]" value="{{ $merchandise->lot_no }}" readonly />
+              <input class="form-control" name="product[lot_no][]" value="{{ $product['lot_no'] }}" readonly />
             </td>
             <td class="">
               <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
             </td>
             <td class="">
               <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{ 
-                $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
+                $product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])]
               }}">
             </td>
             <td class="">

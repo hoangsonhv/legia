@@ -15,6 +15,7 @@ class WarehouseExportSellProduct extends Model
         'unit',
         'quantity',
         'unit_price',
+        'lot_no',
         'into_money',
         'merchandise_id'
     ];

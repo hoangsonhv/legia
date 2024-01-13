@@ -524,7 +524,7 @@ class CoService
                 'act_router' => 'admin.co.edit',
             ],
             CoStepHistory::STEP_CREATE_WAREHOUSE_EXPORT_SELL => [
-                'title' => '20. Đang chờ tạo phiếu xuất kho bán hàng',
+                'title' => 'B20. Đang chờ tạo phiếu xuất kho bán hàng',
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.co.edit',
             ],

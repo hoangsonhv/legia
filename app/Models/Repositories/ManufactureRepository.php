@@ -73,7 +73,7 @@ class ManufactureRepository extends AdminRepository
     public function updateIsCompleted($id)
     {
         $query = ManufactureDetail::where('manufacture_id', $id)
-            ->whereRaw('reality_quantity < need_quantity')
+            ->whereRaw('reality_quantity < manufacture_quantity')
             ->get();
         
         if(!$query->count()) {

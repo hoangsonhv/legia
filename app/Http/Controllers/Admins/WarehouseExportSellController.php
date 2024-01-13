@@ -119,28 +119,44 @@ class WarehouseExportSellController extends Controller
                 return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
             }
 
+            // dd($warehouses);
             $products = [];
-            // $warehouses = $coModel->warehouses->toArray();
-            // foreach ($warehouses as $warehouse) {
-            //     if ($warehouse['manufacture_type'] == MerchandiseGroup::COMMERCE) {
-            //         $merchandise_id = 0;
-            //     }
-            //     else
-            //     {
-            //         $merchandise_id = $warehouse['merchandise_id'];
-            //     }
-            //     array_push($products, [
-            //         'code' => $warehouse['code'],
-            //         'name' => $warehouse['loai_vat_lieu'],
-            //         'unit' => $warehouse['dv_tinh'],
-            //         'quantity' => $warehouse['so_luong'],
-            //         'unit_price' => $warehouse['don_gia'],
-            //         'into_money' => $warehouse['don_gia']*$warehouse['so_luong'],
-            //         'merchandise_id' => $merchandise_id,
-            //     ]);
-            // }
-        }
+            foreach ($warehouses as $warehouse) {
+                if ($warehouse['manufacture_type'] == MerchandiseGroup::COMMERCE) {
+                    $merchandise_id = 0;
+                }
+                else
+                {
+                    $merchandise_id = $warehouse['merchandise_id'];
+                }
+                $need_quantity = $warehouse['so_luong'];
+                $base_warehouse = BaseWarehouseCommon::where('l_id', $merchandise_id)->first();
+                $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)->where('code', $warehouse['code'])->get()->map(function($item) use($warehouse, $merchandise_id, &$products, &$need_quantity){
+                    if($item->quantity > 0) {
+                        if($item->quantity >= $need_quantity) {
+                            $quantity = $need_quantity;
+                            $need_quantity = 0;
+                        } else {
+                            $quantity = $item->quantity;
+                            $need_quantity = $need_quantity - $item->quantity;
+                        }
+                        array_push($products, [
+                            'code' => $warehouse['code'],
+                            'name' => $warehouse['loai_vat_lieu'],
+                            'unit' => $warehouse['dv_tinh'],
+                            'lot_no' => $item->lot_no,
+                            'model_type' => $item->model_type,
+                            'ton_kho' => $item->ton_kho,
+                            'quantity' => $quantity,
+                            'unit_price' => $warehouse['don_gia'],
+                            'into_money' => $warehouse['don_gia']*$quantity,
+                            'merchandise_id' => $merchandise_id,
+                        ]);
 
+                    }
+                });
+            }
+        }
         return view('admins.warehouse_export_sell.create', compact('breadcrumb', 'titleForLayout',
             'permissions', 'warehouses', 'coreCustomers', 'coreCustomerOrigin', 'coModel', 'co', 'products', 'model'));
     }
@@ -184,7 +200,7 @@ class WarehouseExportSellController extends Controller
                 if($receipt) {
                     $this->coStepHisRepo->insertNextStep( 'receipt', $model->co_id, $receipt->id, CoStepHistory::ACTION_APPROVE, 1);
                 } else {
-                    $this->coStepHisRepo->insertNextStep('delivery', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
+                    $this->coStepHisRepo->insertNextStep( 'receipt', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE, 2);
                 }
             }
 
@@ -201,6 +217,7 @@ class WarehouseExportSellController extends Controller
                     'quantity' => $inputProducts['quantity'][$key],
                     'unit_price' => $inputProducts['unit_price'][$key],
                     'into_money' => $inputProducts['into_money'][$key],
+                    'lot_no' => $inputProducts['lot_no'][$key],
                     'merchandise_id' => $inputProducts['merchandise_id'][$key],
                 ];
             }
@@ -244,6 +261,13 @@ class WarehouseExportSellController extends Controller
             $permissions = config('permission.permissions');
             $coreCustomers = AdminHelper::getCoreCustomer();
             $coreCustomerOrigin = CoreCustomer::all()->toArray();
+            $model->products->map(function($item){
+                $base_warehouse = BaseWarehouseCommon::where('l_id', $item->merchandise_id)->first();
+                $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)->where('code',$item->code)->where('lot_no',$item->lot_no)->first();
+                $item->model_type = $base_warehouse->model_type;
+                $item->ton_kho = $merchandise->ton_kho;
+                return $item;
+            });
             $products = $model->products->toArray();
 
             $coId = $model->co_id ?? null;

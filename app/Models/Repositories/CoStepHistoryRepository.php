@@ -61,12 +61,12 @@ class CoStepHistoryRepository extends AdminRepository
                             $step = CoStepHistory::STEP_CREATE_RECEIPT_N1;
                             break;
                         case 1:
-                            // Nếu phiếu thu lần 2 == 0 thì chuyển lần 3
+                            // Nếu phiếu thu lần 2 == 0 thì chuyển phiếu xuất kho bán hàng
                             $hasPercent = $this->coRepo->checkPercentPayment($coId, $stepId);
                             if ($hasPercent) {
                                 $step = CoStepHistory::STEP_CREATE_RECEIPT_N2;
                             } else {
-                                $this->insertNextStep('receipt', $coId, $objectId, CoStepHistory::ACTION_CREATE, 2);
+                                $this->insertNextStep('warehouse-export-sell', $coId, $coId, CoStepHistory::ACTION_CREATE);
                             }
                             break;
                         case 2:
@@ -75,7 +75,7 @@ class CoStepHistoryRepository extends AdminRepository
                             if ($hasPercent) {
                                 $step = CoStepHistory::STEP_CREATE_RECEIPT_N3;
                             } else {
-                                $this->insertNextStep('warehouse-export-sell', $coId, $coId, CoStepHistory::ACTION_CREATE);
+                                $this->insertNextStep('receipt', $coId, $objectId, CoStepHistory::ACTION_CREATE, 3);
                             }
                             break;
                         case 3:

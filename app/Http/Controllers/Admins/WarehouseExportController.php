@@ -151,6 +151,7 @@ class WarehouseExportController extends Controller
                         'unit_price' => $inputProducts['unit_price'][$key],
                         'into_money' => $inputProducts['into_money'][$key],
                         'merchandise_id' => $inputProducts['merchandise_id'][$key],
+                        'lot_no' => $inputProducts['lot_no'][$key],
                         'table_name' => $inputProducts['table_name'][$key],
                     ];
                 }
