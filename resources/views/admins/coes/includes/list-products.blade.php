@@ -8,7 +8,7 @@
         @php
             $total = 0;
             $materials = isset($material) ? $material->toArray() : [];
-            $hiddenShowPrice = !\App\Helpers\PermissionHelper::hasPermission('admin.co.price');
+            $hiddenShowPrice = !\App\Helpers\PermissionHelper::hasPermission('admin.co.show-price');
         @endphp
         <thead>
         <tr align="center">
