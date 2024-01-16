@@ -36,6 +36,7 @@
                                     <th>Ngân hàng</th>
                                     <th>Mã khế ước</th>
                                     <th>Nội dung vay</th>
+                                    <th>Hình thức vay</th>
                                     <th>Nội dung chi tiết</th>
                                     <th>Ngày vay</th>
                                     <th>Ngày đáo hạn</th>
@@ -49,6 +50,20 @@
                                 </thead>
                                 <tbody>
                                 @foreach($datas as $data)
+                                @php 
+                                $type = '';
+                                switch ($data->loan_type) {
+                                    case 1:
+                                        $type = 'Trung hạn';
+                                        break;
+                                    case 2:
+                                        $type = 'Dài hạn';
+                                    break;
+                                    default:
+                                        $type = 'Ngắn hạn';
+                                        break;
+                                }
+                                @endphp 
                                     <tr>
                                         <td>{{ $data->id }}</td>
                                         <td>
@@ -59,6 +74,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $data->code }}</td>
+                                        <td>{{ $type }}</td>
                                         <td>{{ $data->lead }}</td>
                                         <td>{{ $data->content }}</td>
                                         <td>{{ $data->date }}</td>

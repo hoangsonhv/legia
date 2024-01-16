@@ -25,6 +25,10 @@
                 {!! Form::text('lead', null, array('class' => 'form-control', 'required' => 'required')) !!}
               </div>
               <div class="form-group">
+                <label for="name_bank">Mã khế ước<b style="color: red;"> (*)</b></label>
+                {!! Form::text('code', null, array('class' => 'form-control', 'required' => 'required')) !!}
+              </div>
+              <div class="form-group">
                 <label for="name_bank">Nội dung chi tiết</label>
                 {!! Form::text('content', null, array('class' => 'form-control')) !!}
               </div>
@@ -73,10 +77,17 @@
                     {!! Form::hidden('amount_money', null) !!}
                   </div>
                 </div>
+             
                 <div class="col-sm-12 col-xl-4">
                   <div class="form-group">
                     <label for="name_bank">Lãi (%)<b style="color: red;"> (*)</b></label>
                     {!! Form::number('profit_amount', null, array('class' => 'form-control', 'step' => '0.1', 'required' => 'required')) !!}
+                  </div>
+                </div>
+                <div class="col-sm-12 col-xl-12">
+                  <div class="form-group">
+                    <label for="name_bank">Hình thức vay<b style="color: red;"> (*)</b></label>
+                    {!! Form::select('loan_type', [0 => 'Ngắn hạn', 1 => 'Trung hạn', 2 => 'Dài hạn'], null, array('class' => 'form-control', 'required' => 'required')) !!}
                   </div>
                 </div>
               </div>

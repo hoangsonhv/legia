@@ -18,7 +18,8 @@ class BankLoan extends Model
         'profit_amount',
         'outstanding_balance',
         'note',
-        'admin_id'
+        'admin_id',
+        'loan_type'
     ];
 
     public function bank() {

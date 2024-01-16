@@ -626,7 +626,7 @@
                                       </td>
                                       <td class="text-center">
                                         <div class="">
-                                          {!! Form::select('thanh_toan[payment_document]['. 'document_id_' .$key .']' , \App\Helpers\DataHelper::documents() , null, array('id' => 'document_id_' .$key, 'class' => 'form-control')) !!}
+                                          {!! Form::file('thanh_toan[payment_document]['. 'document_id_' .$key .']' , \App\Helpers\DataHelper::documents() , null, array('id' => 'document_id_' .$key, 'class' => 'form-control')) !!}
                                         </div>
                                       </td>
                                     </tr>

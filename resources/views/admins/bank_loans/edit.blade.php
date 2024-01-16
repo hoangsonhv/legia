@@ -91,6 +91,14 @@
                                 </div>
                             </div>
                             <div class="row">
+                            <div class="col-sm-12 col-xl-12">
+                                <div class="form-group">
+                                  <label for="name_bank">Hình thức vay<b style="color: red;"> (*)</b></label>
+                                  {!! Form::select('loan_type', [0 => 'Ngắn hạn', 1 => 'Trung hạn', 2 => 'Dài hạn'], $model->loan_type, array('class' => 'form-control', 'required' => 'required')) !!}
+                                </div>
+                              </div>    
+                            </div>
+                            <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="name_bank">Ghi chú</label>
@@ -114,6 +122,9 @@
                         <h3>Chi tiết trả vay nợ</h3>
                         <div class="card">
                             <div class="card-header">
+                                <div class="card-sub text-bold"> 
+                                    Tổng tiền đã trả : {{number_format($bankLoanDetails->sum('debit_amount'));}}
+                                </div>
                                 <div class="card-tools">
                                     {!! Form::open(array('route' => ['admin.bank-loans.edit', $model->id], 'method' => 'get')) !!}
                                     <div class="input-group">

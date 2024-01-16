@@ -74,8 +74,17 @@ class PaymentController extends Controller
             if ($request->input('status')) {
                 $params['status'] = $request->status;
             }
+            if ($request->input('from_date')) {
+                $fromDate = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('from_date'))->format('Y-m-d 00:00:00');
+                $params['created_at_01'] = ['created_at', '>=', $fromDate];
+            }
+            if ($request->input('to_date')) {
+                $toDate = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('to_date'))->format('Y-m-d 23:59:59');
+                $params['created_at_02'] = ['created_at', '<=', $toDate];
+            }
         }
-
+        $arrParms = $request->all();
+        $this->paymentRepository->setParams($params, $arrParms);
         $user = Session::get('login');
         if(!PermissionHelper::hasPermission('admin.payment.index-all')) {
             $params['admin_id'] = $user->id;

@@ -70,18 +70,24 @@
                                 </div>
                                 <div class="col-sm-12 col-xl-12">
                                     <div class="form-group">
-                                        <label for="email">Tổng chi:</label>
-                                        <span class="text-bold">
+                                        <div class="badge bg-danger">
+                                            <label for="email">Tổng chi:</label>
+                                        <span class="text-bold ">
                                            {{number_format($totalExpenditure)}}
                                         </span>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-xl-12">
                                     <div class="form-group">
-                                        <label for="email">Tổng thu:</label>
-                                        <span class="text-bold">
-                                            {{number_format($totalRevenue)}}
-                                         </span>
+                                        <div class="badge bg-success">
+                                            <label for="email">Tổng thu:</label>
+                                            <span class="text-bold">
+                                                {{number_format($totalRevenue)}}
+                                             </span>
+                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>

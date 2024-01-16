@@ -1,5 +1,8 @@
 @extends('layouts.admin')
-
+@section('css')
+<link rel="stylesheet" href="{{ asset('vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/daterangepicker/daterangepicker.css') }}">
+@endsection
 @section('content')
 
 @include('admins.breadcrumb')
@@ -18,6 +21,8 @@
               <div class="input-group">
                 {!! Form::select('status', $statuses, null, array('class' => 'form-control mr-1 float-right d-none', 'id' => 'selectedStatus')) !!}
                 <input type="text" name="key_word" class="form-control float-right" placeholder="Từ khoá" value="{{old('key_word')}}">
+                <input type="text" name="from_date" class="form-control float-right" placeholder="Từ ngày" value="{{old('from_date')}}">
+                <input type="text" name="to_date" class="form-control float-right mr-1" placeholder="Đến ngày" value="{{old('to_date')}}">
                 <div class="input-group-append">
                   <button type="submit" class="btn btn-default">
                     <i class="fas fa-search"></i>
@@ -130,6 +135,9 @@
 
 @section('js')
 <script type="text/javascript" src="{{ asset('js/admin/receipts.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/moment/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/daterangepicker/daterangepicker.js') }}"></script>
 <script type="text/javascript">
   $( document ).ready(function() {
     $('.accompanying_document').click(function() {
@@ -151,5 +159,39 @@
     $('#selectedStatus').val(status);
     $('form').submit();
   }
+</script>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $('[name="from_date"]').daterangepicker({
+      autoUpdateInput: false,
+      singleDatePicker: true,
+      maxDate: moment(),
+      locale: {
+        format: 'YYYY-MM-DD'
+      }
+    });
+    $('[name="from_date"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('YYYY-MM-DD'));
+    });
+    $('[name="from_date"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+    });
+
+    $('[name="to_date"]').daterangepicker({
+      autoUpdateInput: false,
+      singleDatePicker: true,
+      maxDate: moment(),
+      locale: {
+        format: 'YYYY-MM-DD'
+      }
+    });
+    $('[name="to_date"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('YYYY-MM-DD'));
+    });
+    $('[name="to_date"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+    });
+  });
+
 </script>
 @endsection

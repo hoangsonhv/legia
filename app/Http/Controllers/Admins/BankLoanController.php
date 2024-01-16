@@ -74,7 +74,6 @@ class BankLoanController extends Controller
             $inputs = array_map('trim', $request->input());
             $user = Session::get('login');
             $inputs['admin_id'] = $user->id;
-            $inputs['code'] = $this->bankLoanRepository->generateCode();
             $inputs['outstanding_balance'] = $inputs['amount_money'] + ($inputs['amount_money'] * $inputs['profit_amount'] / 100);
             $bankLoan = $this->bankLoanRepository->insert($inputs);
             if ($bankLoan) {
