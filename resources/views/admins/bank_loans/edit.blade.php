@@ -26,6 +26,10 @@
                                 {!! Form::text('lead', null, array('class' => 'form-control', 'required' => 'required')) !!}
                             </div>
                             <div class="form-group">
+                                <label for="name_bank">Mã khế ước<b style="color: red;"> (*)</b></label>
+                                {!! Form::text('code', null, array('class' => 'form-control', 'required' => 'required')) !!}
+                            </div>
+                            <div class="form-group">
                                 <label for="name_bank">Nội dung chi tiết</label>
                                 {!! Form::text('content', null, array('class' => 'form-control')) !!}
                             </div>
@@ -123,7 +127,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-sub text-bold"> 
-                                    Tổng tiền đã trả : {{number_format($bankLoanDetails->sum('debit_amount'));}}
+                                    Tổng tiền đã trả : {{number_format($bankLoanDetails->sum('total_amount'));}}
                                 </div>
                                 <div class="card-tools">
                                     {!! Form::open(array('route' => ['admin.bank-loans.edit', $model->id], 'method' => 'get')) !!}

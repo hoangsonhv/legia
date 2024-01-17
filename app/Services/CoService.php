@@ -459,42 +459,42 @@ class CoService
                 'act_router' => 'admin.request.edit'
             ],
             CoStepHistory::STEP_CREATE_PAYMENT_N1 => [
-                'title' => 'B7. Đang chờ tạo phiếu chi '. self::paymentStep()[0],
+                'title' => 'B7. Đang chờ tạo phiếu chi '. self::paymentInportStep()[0],
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.request.edit'
             ],
             CoStepHistory::STEP_WAITING_APPROVE_PAYMENT_N1 => [
-                'title' => 'B8. Đang chờ duyệt phiếu chi '. self::paymentStep()[0],
+                'title' => 'B8. Đang chờ duyệt phiếu chi '. self::paymentInportStep()[0],
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.payment.edit'
             ],
             CoStepHistory::STEP_CREATE_PAYMENT_N2 => [
-                'title' => 'B9. Đang chờ tạo phiếu chi '. self::paymentStep()[1],
+                'title' => 'B9. Đang chờ tạo phiếu chi '. self::paymentInportStep()[1],
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.request.edit'
             ],
             CoStepHistory::STEP_WAITING_APPROVE_PAYMENT_N2 => [
-                'title' => 'B10. Đang chờ duyệt phiếu chi '. self::paymentStep()[1],
+                'title' => 'B10. Đang chờ duyệt phiếu chi '. self::paymentInportStep()[1],
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.payment.edit'
             ],
             CoStepHistory::STEP_CREATE_PAYMENT_N3 => [
-                'title' => 'B11. Đang chờ tạo phiếu chi '. self::paymentStep()[2],
+                'title' => 'B11. Đang chờ tạo phiếu chi '. self::paymentInportStep()[2],
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.request.edit'
             ],
             CoStepHistory::STEP_WAITING_APPROVE_PAYMENT_N3 => [
-                'title' => 'B12. Đang chờ duyệt phiếu chi '. self::paymentStep()[2],
+                'title' => 'B12. Đang chờ duyệt phiếu chi '. self::paymentInportStep()[2],
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.payment.edit'
             ],
             CoStepHistory::STEP_CREATE_PAYMENT_N4 => [
-                'title' => 'B13. Đang chờ tạo phiếu chi '. self::paymentStep()[3],
+                'title' => 'B13. Đang chờ tạo phiếu chi '. self::paymentInportStep()[3],
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.request.edit'
             ],
             CoStepHistory::STEP_WAITING_APPROVE_PAYMENT_N4 => [
-                'title' => 'B14. Đang chờ duyệt phiếu chi '. self::paymentStep()[3],
+                'title' => 'B14. Đang chờ duyệt phiếu chi '. self::paymentInportStep()[3],
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.payment.edit'
             ],
@@ -586,6 +586,15 @@ class CoService
     {
         return [
             'Trước khi làm hàng',
+            'Trước khi giao hàng',
+            'Ngay khi giao hàng',
+            'Sau khi giao hàng và chứng từ thanh toán'
+        ];
+    }
+    public static function paymentInportStep()
+    {
+        return [
+            'Trước khi mua hàng',
             'Trước khi giao hàng',
             'Ngay khi giao hàng',
             'Sau khi giao hàng và chứng từ thanh toán'

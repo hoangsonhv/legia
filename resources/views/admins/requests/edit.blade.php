@@ -92,12 +92,196 @@
                         @if($co)                         
                         @include('admins.requests.includes.list-materials', ['co' => $co, 'materials' => $materials])
                         @endif
-
+                        @permission('admin.request.update-survey-price')
+                        @php
+                            $statusAcceptRequest = [
+                            \App\Enums\ProcessStatus::Approved,
+                            \App\Enums\ProcessStatus::PendingSurveyPrice,
+                            ];
+                            $statusNotEdit = [
+                            \App\Enums\ProcessStatus::Approved,
+                            \App\Enums\ProcessStatus::Unapproved,
+                            ];
+                        @endphp
+                        @if($co && in_array($requestModel->status, $statusAcceptRequest))
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="title text-primary mb-4">Khảo sát giá
+                                        @if (!in_array($requestModel->status, $statusNotEdit))
+                                            <a target="_blank"
+                                            href="{{route('admin.price-survey.create', ['co_id' => $requestModel->co_id, 'request_id' => $requestModel->id])}}">
+                                                <button class="btn btn-primary">
+                                                    Tạo khảo sát giá
+                                                </button>
+                                            </a>
+                                        @endif
+                                    </h3>
+                                    {!! Form::model($requestModel, array('route' => ['admin.request.update-survey-price', $requestModel->id], 'method' => 'patch', 'enctype' => 'multipart/form-data')) !!}
+                                    {!! Form::hidden('id', null) !!}
+                                    <div class="list-survey-price">
+                                        @if($requestModel->surveyPrices->count())
+                                            @foreach($requestModel->surveyPrices as $indexSP => $surveyPrice)
+                                                <div class="row">
+                                                    <div class="col-7">
+                                                        <div class="item-survey-price" data-index="{{ $indexSP }}">
+                                                            {!! Form::hidden('survey_price['.$indexSP.'][id]', $surveyPrice->id, array('class' => 'survey_price_id')) !!}
+                                                            <div class="form-group">
+                                                                <div class="icheck-success">
+                                                                    @php
+                                                                        $formOpts = array('id' => 'is_accept'.$indexSP);
+                                                                        if (in_array($requestModel->status, $statusNotEdit)) {
+                                                                        $formOpts['disabled'] = 'disabled';
+                                                                        }
+                                                                    @endphp
+                                                                    {!! Form::checkbox('survey_price['.$indexSP.'][is_accept]', true, $surveyPrice->is_accept, $formOpts) !!}
+                                                                    <label for="{{ 'is_accept'.$indexSP }}">Khảo Sát
+                                                                        Giá {{ $indexSP + 1 }}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Chứng từ đi kèm</label>
+                                                                @php
+                                                                    $accompanyingDocument = json_decode($surveyPrice->accompanying_document, true);
+                                                                @endphp
+                                                                <div class="d-block">
+                                                                    @if($accompanyingDocument)
+                                                                        <button type="button" class="btn btn-success"
+                                                                                data-toggle="modal"
+                                                                                data-target="#accompanying_document_survey_price_modal{{ $indexSP }}">
+                                                                            Hiển thị chứng từ đã
+                                                                            tồn tại
+                                                                        </button>
+                                                                    @else
+                                                                        Không tồn tại chứng từ
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>
+                                                                    Khảo sát giá
+                                                                </label>
+                                                                {!! Form::select('survey_price['.$indexSP.'][core_price_survey_id]', $corePriceSurvey , $surveyPrice->core_price_survey_id, array('class' => 'form-control')) !!}
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="survey_price[{{ $indexSP }}][note]">Ghi
+                                                                    chú</label>
+                                                                {!! Form::text('survey_price['.$indexSP.'][note]', $surveyPrice->note, array('class' => 'form-control')) !!}
+                                                            </div>
+                                                            @if (!in_array($requestModel->status, $statusNotEdit))
+                                                                <button type="button" class="btn btn-danger"
+                                                                        onclick="removeSurveyPrice(this)">Xoá Khảo Sát Giá
+                                                                </button>
+                                                            @endif
+                                                            @if($accompanyingDocument)
+                                                                <div class="modal fade"
+                                                                    id="accompanying_document_survey_price_modal{{ $indexSP }}">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header bg-success">
+                                                                                <h4 class="modal-title">Chứng từ khảo sát
+                                                                                    giá</h4>
+                                                                                <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                @foreach($accompanyingDocument as $index => $file)
+                                                                                    <div class="data-file">
+                                                                                        {!! \App\Helpers\AdminHelper::checkFile($file) !!}
+                                                                                        @if(!in_array($requestModel->status, $statusNotEdit))
+                                                                                            <div class="mt-2">
+                                                                                                <button type="button"
+                                                                                                        class="btn btn-danger form-control"
+                                                                                                        onclick="removeFile(this)"
+                                                                                                        data-path="{{ $file['path'] }}">
+                                                                                                    Xoá file
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        @endif
+                                                                                    </div>
+                                                                                @endforeach
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button"
+                                                                                        class="btn btn-outline-dark"
+                                                                                        data-dismiss="modal">Đóng
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /.modal-content -->
+                                                                    </div>
+                                                                    <!-- /.modal-dialog -->
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-5 border-left pl-2">
+                                                        @if($surveyPrice->corePriceSurvey)
+                                                            @include('admins.requests.includes.detail-price-survey', ['surveyPrice' => $surveyPrice->corePriceSurvey])
+                                                        @endif
+                                                    </div>
+                                                    <hr class="w-100 hor">
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            @php
+                                                $indexSP = $requestModel->surveyPrices->count();
+                                            @endphp
+                                            <div class="item-survey-price" data-index="0">
+                                                <div class="form-group">
+                                                    <div class="">
+                                                        <label for="{{ 'is_accept'.$indexSP }}">Khảo Sát
+                                                            Giá {{ $indexSP + 1 }}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="survey_price[{{ $indexSP }}][note]">Khảo sát giá</label>
+                                                    {!! Form::select('survey_price['.$indexSP.'][core_price_survey_id]', $corePriceSurvey, null, array('class' => 'form-control')) !!}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Chứng từ đi kèm</label>
+                                                    <div class="input-group block-file">
+                                                        <div class="custom-file">
+                                                            <input type="file"
+                                                                name="survey_price[{{ $indexSP }}][accompanying_document][]"
+                                                                class="custom-file-input" multiple/>
+                                                            <label class="custom-file-label">Chọn file</label>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-success add-upload"
+                                                            field-file="survey_price[{{ $indexSP }}][accompanying_document]">
+                                                        Thêm file upload
+                                                    </button>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="survey_price[{{ $indexSP }}][note]">Ghi chú</label>
+                                                    {!! Form::text('survey_price['.$indexSP.'][note]', null, array('class' => 'form-control')) !!}
+                                                </div>
+                                                <hr class="hor">
+                                            </div>
+                                        @endif
+                                    </div>
+                                    @if (!in_array($requestModel->status, $statusNotEdit))
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success add-survey-price">
+                                                Thêm Khảo Sát Giá
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="card-footer text-right">
+                                    <button type="submit" class="btn btn-primary">Lưu Khảo Sát Giá</button>
+                                </div>
+                                {!! Form::close() !!}
+                            </div>
+                        @endif
+                        @endpermission
                     @if(\App\Enums\ProcessStatus::Pending != $requestModel->status)
                         @include('admins.requests.includes.config_payment')
                     @endif
                     <!-- /.card-body -->
-
                         <div class="card-footer text-right">
                             @if(!empty($canCreatePayment) && $canCreatePayment)
                                 @permission('admin.payment.create')
@@ -125,192 +309,7 @@
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                    @permission('admin.request.update-survey-price')
-                    @php
-                        $statusAcceptRequest = [
-                          \App\Enums\ProcessStatus::Approved,
-                          \App\Enums\ProcessStatus::PendingSurveyPrice,
-                        ];
-                        $statusNotEdit = [
-                          \App\Enums\ProcessStatus::Approved,
-                          \App\Enums\ProcessStatus::Unapproved,
-                        ];
-                    @endphp
-                    {{-- @if($co && in_array($requestModel->status, $statusAcceptRequest))
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="title text-primary mb-4">Khảo sát giá
-                                    @if (!in_array($requestModel->status, $statusNotEdit))
-                                        <a target="_blank"
-                                           href="{{route('admin.price-survey.create', ['co_id' => $requestModel->co_id, 'request_id' => $requestModel->id])}}">
-                                            <button class="btn btn-primary">
-                                                Tạo khảo sát giá
-                                            </button>
-                                        </a>
-                                    @endif
-                                </h3>
-                                {!! Form::model($requestModel, array('route' => ['admin.request.update-survey-price', $requestModel->id], 'method' => 'patch', 'enctype' => 'multipart/form-data')) !!}
-                                {!! Form::hidden('id', null) !!}
-                                <div class="list-survey-price">
-                                    @if($requestModel->surveyPrices->count())
-                                        @foreach($requestModel->surveyPrices as $indexSP => $surveyPrice)
-                                            <div class="row">
-                                                <div class="col-7">
-                                                    <div class="item-survey-price" data-index="{{ $indexSP }}">
-                                                        {!! Form::hidden('survey_price['.$indexSP.'][id]', $surveyPrice->id, array('class' => 'survey_price_id')) !!}
-                                                        <div class="form-group">
-                                                            <div class="icheck-success">
-                                                                @php
-                                                                    $formOpts = array('id' => 'is_accept'.$indexSP);
-                                                                    if (in_array($requestModel->status, $statusNotEdit)) {
-                                                                      $formOpts['disabled'] = 'disabled';
-                                                                    }
-                                                                @endphp
-                                                                {!! Form::checkbox('survey_price['.$indexSP.'][is_accept]', true, $surveyPrice->is_accept, $formOpts) !!}
-                                                                <label for="{{ 'is_accept'.$indexSP }}">Khảo Sát
-                                                                    Giá {{ $indexSP + 1 }}</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Chứng từ đi kèm</label>
-                                                            @php
-                                                                $accompanyingDocument = json_decode($surveyPrice->accompanying_document, true);
-                                                            @endphp
-                                                            <div class="d-block">
-                                                                @if($accompanyingDocument)
-                                                                    <button type="button" class="btn btn-success"
-                                                                            data-toggle="modal"
-                                                                            data-target="#accompanying_document_survey_price_modal{{ $indexSP }}">
-                                                                        Hiển thị chứng từ đã
-                                                                        tồn tại
-                                                                    </button>
-                                                                @else
-                                                                    Không tồn tại chứng từ
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>
-                                                                Khảo sát giá
-                                                            </label>
-                                                            {!! Form::select('survey_price['.$indexSP.'][core_price_survey_id]', $corePriceSurvey , $surveyPrice->core_price_survey_id, array('class' => 'form-control')) !!}
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="survey_price[{{ $indexSP }}][note]">Ghi
-                                                                chú</label>
-                                                            {!! Form::text('survey_price['.$indexSP.'][note]', $surveyPrice->note, array('class' => 'form-control')) !!}
-                                                        </div>
-                                                        @if (!in_array($requestModel->status, $statusNotEdit))
-                                                            <button type="button" class="btn btn-danger"
-                                                                    onclick="removeSurveyPrice(this)">Xoá Khảo Sát Giá
-                                                            </button>
-                                                        @endif
-                                                        @if($accompanyingDocument)
-                                                            <div class="modal fade"
-                                                                 id="accompanying_document_survey_price_modal{{ $indexSP }}">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header bg-success">
-                                                                            <h4 class="modal-title">Chứng từ khảo sát
-                                                                                giá</h4>
-                                                                            <button type="button" class="close"
-                                                                                    data-dismiss="modal"
-                                                                                    aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            @foreach($accompanyingDocument as $index => $file)
-                                                                                <div class="data-file">
-                                                                                    {!! \App\Helpers\AdminHelper::checkFile($file) !!}
-                                                                                    @if(!in_array($requestModel->status, $statusNotEdit))
-                                                                                        <div class="mt-2">
-                                                                                            <button type="button"
-                                                                                                    class="btn btn-danger form-control"
-                                                                                                    onclick="removeFile(this)"
-                                                                                                    data-path="{{ $file['path'] }}">
-                                                                                                Xoá file
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    @endif
-                                                                                </div>
-                                                                            @endforeach
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                    class="btn btn-outline-dark"
-                                                                                    data-dismiss="modal">Đóng
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- /.modal-content -->
-                                                                </div>
-                                                                <!-- /.modal-dialog -->
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-5 border-left pl-2">
-                                                    @if($surveyPrice->corePriceSurvey)
-                                                        @include('admins.requests.includes.detail-price-survey', ['surveyPrice' => $surveyPrice->corePriceSurvey])
-                                                    @endif
-                                                </div>
-                                                <hr class="w-100 hor">
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        @php
-                                            $indexSP = $requestModel->surveyPrices->count();
-                                        @endphp
-                                        <div class="item-survey-price" data-index="0">
-                                            <div class="form-group">
-                                                <div class="">
-                                                    <label for="{{ 'is_accept'.$indexSP }}">Khảo Sát
-                                                        Giá {{ $indexSP + 1 }}</label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="survey_price[{{ $indexSP }}][note]">Khảo sát giá</label>
-                                                {!! Form::select('survey_price['.$indexSP.'][core_price_survey_id]', $corePriceSurvey, null, array('class' => 'form-control')) !!}
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Chứng từ đi kèm</label>
-                                                <div class="input-group block-file">
-                                                    <div class="custom-file">
-                                                        <input type="file"
-                                                               name="survey_price[{{ $indexSP }}][accompanying_document][]"
-                                                               class="custom-file-input" multiple/>
-                                                        <label class="custom-file-label">Chọn file</label>
-                                                    </div>
-                                                </div>
-                                                <button type="button" class="btn btn-success add-upload"
-                                                        field-file="survey_price[{{ $indexSP }}][accompanying_document]">
-                                                    Thêm file upload
-                                                </button>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="survey_price[{{ $indexSP }}][note]">Ghi chú</label>
-                                                {!! Form::text('survey_price['.$indexSP.'][note]', null, array('class' => 'form-control')) !!}
-                                            </div>
-                                            <hr class="hor">
-                                        </div>
-                                    @endif
-                                </div>
-                                @if (!in_array($requestModel->status, $statusNotEdit))
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-success add-survey-price">
-                                            Thêm Khảo Sát Giá
-                                        </button>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="card-footer text-right">
-                                <button type="submit" class="btn btn-primary">Lưu Khảo Sát Giá</button>
-                            </div>
-                            {!! Form::close() !!}
-                        </div>
-                    @endif --}}
-                    @endpermission
+                    
                     @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material')])
                     @include('admins.requests.includes.select-warehouse', ['url' => route('admin.warehouse.show-form-create')])
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admins;
 
+use App\Helpers\DataHelper;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class ReportController extends Controller
      * @var
      */
     protected $bankRepository;
-
+    protected $reportRepository;
 
     public function __construct(ReportRepository $reportRepository,
                                 BankRepository $bankRepository)
@@ -63,6 +64,7 @@ class ReportController extends Controller
 
         $bankLoans = $this->reportRepository->reportByMonthBankLoan();
         $bankLoanSummary = $this->reportRepository->summaryBankLoan();
+        $bankLoansByBank = $this->reportRepository->reportByMonthBankLoanWithParrent();
 
         // table
         $tableTmpCo = $this->reportRepository->getTmpCO($arrRequest);
@@ -70,10 +72,13 @@ class ReportController extends Controller
         $tableRequest = $this->reportRepository->getRequest($arrRequest);
         $tableCustomerTmpCo = $this->reportRepository->getCustomerTmpCo($arrRequest);
         $tableCustomerCo = $this->reportRepository->getCustomerCo($arrRequest);
+        $tablePayment = $this->reportRepository->getPayment($arrRequest);
+        $tableReceipt = $this->reportRepository->getReceipt($arrRequest);
+        $categories = DataHelper::getCategoriesForIndex();
         $request->flash();
         return view('admins.report.index', compact('breadcrumb', 'titleForLayout', 'arrBanks', 'arrCoes',
             'arrPaymentReceipts', 'bankLoans', 'bankLoanSummary', 'tableCo', 'arrRequest', 'tableTmpCo', 'tableRequest',
-            'tableCustomerTmpCo', 'tableCustomerCo'));
+            'tableCustomerTmpCo', 'tableCustomerCo', 'tablePayment', 'tableReceipt', 'categories','bankLoansByBank'));
     }
 
     public function getTmpCo(Request $request)
@@ -88,6 +93,27 @@ class ReportController extends Controller
     }
 
     public function getCo(Request $request)
+    {
+        $breadcrumb = $this->menu;
+        $titleForLayout = $this->menu['root'];
+
+        $arrRequest = $request->all('');
+        $this->reportRepository->setParamsDefaultReport($arrRequest);
+        $datas = $this->reportRepository->getCO($arrRequest);
+        return view('admins.report.co', compact('breadcrumb', 'titleForLayout', 'datas', 'arrRequest'));
+    }
+    public function getPayment(Request $request)
+    {
+        $breadcrumb = $this->menu;
+        $titleForLayout = $this->menu['root'];
+
+        $arrRequest = $request->all('');
+        $this->reportRepository->setParamsDefaultReport($arrRequest);
+        $datas = $this->reportRepository->getPayment($arrRequest);
+        return view('admins.report.co', compact('breadcrumb', 'titleForLayout', 'datas', 'arrRequest'));
+    }
+    
+    public function getReceipt(Request $request)
     {
         $breadcrumb = $this->menu;
         $titleForLayout = $this->menu['root'];

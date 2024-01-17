@@ -3,6 +3,7 @@
 namespace App\Models\Repositories;
 
 use App\Helpers\DataHelper;
+use App\Models\Bank;
 use App\Models\BankLoan;
 use App\Models\BankLoanDetail;
 use App\Models\Co;
@@ -72,18 +73,39 @@ class ReportRepository extends BaseRepository
                 SUM(total_amount) AS total_amount,
                 SUM(debit_amount) AS total_debit_amount,
                 SUM(profit_amount) AS total_profit_amount")
+            ->orderby('created_at')
             ->groupBy('month')
             ->get();
 
         return $query;
     }
+    public function reportByMonthBankLoanWithParrent1()
+    {
+        $query = BankLoanDetail::selectRaw("DATE_FORMAT(created_at,'%m-%Y') AS month, 
+                SUM(total_amount) AS total_amount,
+                SUM(debit_amount) AS total_debit_amount,
+                SUM(profit_amount) AS total_profit_amount,
+                bank_loan_id")
+            ->groupBy('month','bank_loan_id')
+            ->with('bankLoan', 'bankLoan.bank')
+            ->get();
+        return $query;
+    }
+    public function reportByMonthBankLoanWithParrent()
+    {
+        $query = Bank::with(['bankLoans', 'bankLoans.bankLoanDetails'])
+                    ->get();
+        return $query;
+    }
 
     public function summaryBankLoan()
     {
-        $query = BankLoan::selectRaw('SUM(amount_money) AS total_amount_money, 
-            SUM(outstanding_balance) AS total_outstanding_balance');
-
-        return $query->first();
+        $query = BankLoanDetail::selectRaw('SUM(total_amount) AS total_amount,
+                SUM(debit_amount) AS total_debit_amount,
+                SUM(profit_amount) AS total_profit_amount,bank_loan_id')
+                ->groupBy('bank_loan_id')
+                ->with('bankLoan');
+        return $query->get();
     }
 
     public function getTmpCO(array $arrCondition)
@@ -111,6 +133,30 @@ class ReportRepository extends BaseRepository
                 SUM(IF(status = 3, 1, 0)) AS sum_no_approved,
                 SUM(IF(status = 1, 1, 0)) AS sum_processing")
             ->groupBy('admin_id')
+            ->orderBy('total', 'DESC');
+        $this->setQueryCondition($query, $arrCondition);
+        return $query->get();
+    }
+    public function getPayment(array $arrCondition)
+    {
+        $query = Payment::selectRaw("id , admin_id, 
+                COUNT(*) AS total, 
+                SUM(money_total) AS sum_tong_tien,
+                co_id, co_code,category, code, request_id")
+            ->where('status', 2)
+            ->groupBy('co_id','category')
+            ->orderBy('total', 'DESC');
+        $this->setQueryCondition($query, $arrCondition);
+        return $query->get();
+    }
+    public function getReceipt(array $arrCondition)
+    {
+        $query = Receipt::selectRaw("admin_id, 
+                COUNT(*) AS total, 
+                SUM(money_total) AS sum_tong_tien,
+                co_id ,co_code, code")
+            ->groupBy('co_id')
+            ->where('status', 2)
             ->orderBy('total', 'DESC');
         $this->setQueryCondition($query, $arrCondition);
         return $query->get();

@@ -20,6 +20,15 @@
                             <div class="col-lg-6">
                                 @include('admins.report.includes.index.bank-loan-table')
                             </div>
+                            @php
+                                $col = 24/($bankLoansByBank->count());
+                            @endphp
+                            @foreach ($bankLoansByBank as $data)
+                                <div class="col-lg-{{$col}}">
+                                    @include('admins.report.includes.index.list-bank-loan-table', ['datas' => $data])
+                                </div>
+                            @endforeach
+                            
                             <div class="col-lg-12">
                                 @include('admins.report.includes.index.co-chart')
                             </div>

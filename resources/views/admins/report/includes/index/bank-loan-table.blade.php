@@ -1,5 +1,5 @@
 <div class="card p-3">
-    <h5>Thanh toán vay nợ của công ty theo tháng</h5>
+    <h5>Thanh toán vay nợ của công ty theo tháng - Tổng hợp</h5>
     <div class="card-body table-responsive p-0">
         <table class="table table-hover text-nowrap">
             <thead>
@@ -16,10 +16,21 @@
             </tr>
             </thead>
             <tbody>
+                @php
+                    $total_amount_money = 0;
+                    $total_outstanding_balance = 0;
+                    $total_debit = 0;
+                    foreach ($bankLoanSummary as $value) {
+                        $total_amount_money += $value->bankLoan->amount_money;
+                        $total_outstanding_balance += $value->total_amount;
+                        $total_debit += $value->total_debit_amount;
+                    }
+                    $total_residual = $total_amount_money - $total_debit;
+                @endphp
             <tr>
-                <td class="text-center bg-danger">{{$bankLoanSummary ? number_format($bankLoanSummary->total_amount_money) : 0 }}</td>
-                <td class="text-center bg-success">{{$bankLoanSummary ? number_format($bankLoanSummary->total_outstanding_balance) : 0 }}</td>
-                <td class="text-center bg-gray">{{$bankLoanSummary ? number_format($bankLoanSummary->total_amount_money - $bankLoanSummary->total_outstanding_balance) : 0}}</td>
+                <td class="text-center bg-danger">{{number_format($total_amount_money)}}</td>
+                <td class="text-center bg-success">{{number_format($total_outstanding_balance)}}</td>
+                <td class="text-center bg-gray">{{number_format($total_residual)}}</td>
             </tr>
             </tbody>
         </table>

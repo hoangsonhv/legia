@@ -81,6 +81,7 @@ class BankLoanController extends Controller
             }
             return redirect()->route('admin.bank-loans.index')->with('error', 'Tạo vay nợ thất bại!');
         } catch (\Exception $exception) {
+            dd($exception);
             return redirect()->route('admin.bank-loans.index')->with('error', 'Tạo vay nợ thất bại!');
         }
     }

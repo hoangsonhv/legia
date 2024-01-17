@@ -29,4 +29,8 @@ class BankLoan extends Model
     public function admin() {
         return $this->belongsTo(Admin::class, 'admin_id');
     }
+
+    public function bankLoanDetails() {
+        return $this->hasMany(BankLoanDetail::class, 'bank_loan_id');
+    }
 }

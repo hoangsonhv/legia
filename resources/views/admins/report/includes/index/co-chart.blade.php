@@ -29,6 +29,24 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card card-cyan p-3">
+                    <div class="card-header">Danh sách thu</div>
+                    <div class="col-12">
+                        @include('admins.report.includes.receipt.table', ['datas' => $tableReceipt, 'arrRequest' => $arrRequest,])
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card card-cyan p-3">
+                    <div class="card-header">Danh sách chi</div>
+                    <div class="col-12">
+                        @include('admins.report.includes.payment.table', ['datas' => $tablePayment, 'arrRequest' => $arrRequest, 'categories' => $categories])
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row card card-cyan p-3">
             <div class="card-header">Danh sách nhân viên đã chào giá</div>
             <div class="col-12">

@@ -722,13 +722,11 @@
                                 @endif
                               </td>
                             </tr>
-                            <tr>
-                              <td colspan="2">Nội dung</td>
-                            </tr>
                           </tbody>
                         </table>
                       </div>
                       <div class="table-responsive" style="margin-top: -1em;">
+                        <b>Nội dung</b>
                         <table class="table table-bordered text-wrap">
                           <thead>
                             <tr align="center">
