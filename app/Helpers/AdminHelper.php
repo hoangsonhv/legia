@@ -390,6 +390,9 @@ class AdminHelper
 
             }
         }
+        if($result['merchandise_group_code'] == 'SG') {
+            $result['merchandise_group_code'] =  $result['merchandise_group_code'] . '_' . 'SHEET';
+        }
         $merchandise_group = MerchandiseGroup::where('code' , $result['merchandise_group_code'])->first();
         $result['manufacture_type'] = $merchandise_group ? $merchandise_group->operation_type : null;
         $result['material_type'] = $merchandise_group ? $merchandise_group->factory_type : null;

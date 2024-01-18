@@ -76,6 +76,9 @@ class WarehouseSpwController extends Controller
         $nameWarehouse = $this->checkExistModel($model);
 
         $input = $request->except('_token');
+        if($request->ajax()){
+            return $this->warehouseService->storeOrUpdate($model, $input, false);
+        }
         if ($this->warehouseService->storeOrUpdate($model, $input)) {
             return redirect()->route('admin.warehouse-spw.index', ['model' => $model])->with('success','Tạo Vật Liệu thành công!');
         }

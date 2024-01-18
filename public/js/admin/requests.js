@@ -145,11 +145,22 @@ $(function () {
     if ($(this).attr('data-dvTinh')) {
       dvTinh = $(this).attr('data-dvTinh');
     }
-    submitFormMaterial(eleForm.find('form').first().attr('action') , eleForm.find('form').first().serializeArray())
-    ele.append(getItem(index, 'Tấm', {code: codeMaterial, vat_lieu: motaMaterial}));
-    reloadDatepicker();
-    $('#modal-another-material').modal('hide');
+    submitFormMaterial(eleForm.find('form').first().attr('action'), eleForm.find('form').first().serializeArray(), function(res) {
+      ele.append(getItem(index, 'Tấm', { code: codeMaterial, vat_lieu: motaMaterial, merchandise_id: res.l_id }));
+      reloadDatepicker();
+      $('#modal-another-material').modal('hide');
+    });
   });
+  function submitFormMaterial(url, data, callback) {
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: data
+    })
+    .done(function(res) {
+        callback(res);
+    });
+  }
 
   $('#add-row-material').click(function() {
     $('#modal-another-material').modal('show');
@@ -167,16 +178,6 @@ $(function () {
     reloadDatepicker();
   });
 });
-
-function submitFormMaterial(url, data){
-  $.ajax({
-    method: "POST",
-    url: url,
-    data: data
-  })
-  .done(function( data ) {
-  });
-}
 
 function calPaymentPer(_this, field) {
   let per = $(_this).val();

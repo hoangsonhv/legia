@@ -119,16 +119,9 @@ class WarehouseExportSellController extends Controller
                 return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
             }
 
-            // dd($warehouses);
             $products = [];
             foreach ($warehouses as $warehouse) {
-                if ($warehouse['manufacture_type'] == MerchandiseGroup::COMMERCE) {
-                    $merchandise_id = 0;
-                }
-                else
-                {
-                    $merchandise_id = $warehouse['merchandise_id'];
-                }
+                $merchandise_id = $warehouse['merchandise_id'];
                 $need_quantity = $warehouse['so_luong'];
                 $base_warehouse = BaseWarehouseCommon::where('l_id', $merchandise_id)->first();
                 $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)->where('code', $warehouse['code'])->get()->map(function($item) use($warehouse, $merchandise_id, &$products, &$need_quantity){

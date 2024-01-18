@@ -21,7 +21,7 @@ class WarehouseService
     public function __construct(BaseWarehouseRepository $baseWarehouseReposiroty){
         $this->baseWarehouseReposiroty = $baseWarehouseReposiroty;
     }
-    public function storeOrUpdate(string $model, array $data) : bool {
+    public function storeOrUpdate(string $model, array $data, $booleanOrModel = true) {
         try {
             if (!empty($data['date'])) {
                 $data['date'] = AdminHelper::convertDate($data['date']);
@@ -34,7 +34,7 @@ class WarehouseService
             {
                 return $this->baseWarehouseReposiroty->update($data["l_id"],$data);
             }
-            else return $this->baseWarehouseReposiroty->create($data);
+            else return $this->baseWarehouseReposiroty->create($data, $booleanOrModel );
         }
         catch(Exception $e)
         {

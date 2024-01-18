@@ -16,9 +16,9 @@ class BaseWarehouseRepository
     {
         $this->model = $model;
     }
-    public function create(array $data) : bool
+    public function create(array $data, $booleanOrModel = true)
     {
-        return $this->model->create($data) ? true : false;
+        return $booleanOrModel  ? ($this->model->create($data) ? true : false) : $this->model->create($data);
     }
 
     public function find(int $l_id) : Model
