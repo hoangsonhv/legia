@@ -258,7 +258,8 @@ class WarehouseExportSellController extends Controller
                 $base_warehouse = BaseWarehouseCommon::where('l_id', $item->merchandise_id)->first();
                 $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)->where('code',$item->code)->where('lot_no',$item->lot_no)->first();
                 $item->model_type = $base_warehouse->model_type;
-                $item->ton_kho = $merchandise->ton_kho;
+                // dump($item->code, $item->lot_no);
+                $item->ton_kho = $merchandise->ton_kho ?? 0;
                 return $item;
             });
             $products = $model->products->toArray();
@@ -329,6 +330,7 @@ class WarehouseExportSellController extends Controller
                         'name' => $inputProducts['name'][$key],
                         'unit' => $inputProducts['unit'][$key],
                         'quantity' => $inputProducts['quantity'][$key],
+                        'lot_no' => $inputProducts['lot_no'][$key],
                         'unit_price' => $inputProducts['unit_price'][$key],
                         'into_money' => $inputProducts['into_money'][$key],
                         'merchandise_id' => $inputProducts['merchandise_id'][$key],
@@ -338,14 +340,14 @@ class WarehouseExportSellController extends Controller
                 if (!empty($model)) {
                     $model->products()->createMany($products);
 
-                    // Decrease material in base warehouse
-                    foreach ($products as $product) {
-                        if ($product['merchandise_id'] > 0) {
-                            $warehouseModel = Group11::find($product['merchandise_id']);
-                            $warehouseModel->setQuantity($product['quantity'] * (-1));
-                            $warehouseModel->save();
-                        }
-                    }
+                    // // Decrease material in base warehouse
+                    // foreach ($products as $product) {
+                    //     if ($product['merchandise_id'] > 0) {
+                    //         $warehouseModel = Group11::find($product['merchandise_id']);
+                    //         $warehouseModel->setQuantity($product['quantity'] * (-1));
+                    //         $warehouseModel->save();
+                    //     }
+                    // }
 
                     \DB::commit();
                     return redirect()->route('admin.warehouse-export-sell.edit', ['id' => $id])->with('success', 'Cập nhật Phiếu xuất kho bán hàng thành công!');
