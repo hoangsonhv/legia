@@ -136,7 +136,7 @@ class ReceiptController extends Controller
                             }
                             $indexStepPay += 1;
                         }
-                        if($indexStepPay == 1) {
+                        if($indexStepPay == 3) {
                             $payment_documents = [];
                             if (isset($thanhToan['payment_document'])) {
                                 $paymentDocuments = $thanhToan['payment_document'];
