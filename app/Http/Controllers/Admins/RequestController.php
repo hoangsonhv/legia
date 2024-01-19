@@ -21,6 +21,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Repositories\CoStepHistoryRepository;
+use App\Models\Repositories\RequestStepHistoryRepository;
+use App\Models\RequestStepHistory;
 
 class RequestController extends Controller
 {
@@ -294,7 +296,8 @@ class RequestController extends Controller
                 $co            = array();
                 $warehouses    = collect([]);
                 $listWarehouse = collect([]);
-                if (array_key_exists($requestModel->category, DataHelper::getCategoryPayment(DataHelper::DINH_KY)['option'])) {
+                if (array_key_exists($requestModel->category, DataHelper::getCategoryPayment(DataHelper::DINH_KY)['option'])
+                    || (in_array($requestModel->category,array_keys(array_values(DataHelper::getCategories([DataHelper::VAN_PHONG_PHAM]))[0])) && $requestModel->status == ProcessStatus::Pending)) {
                     $start      = Carbon::now()->startOfMonth()->toDatetimeString();
                     $end        = Carbon::now()->endOfMonth()->toDatetimeString();
                     $existsCat  = $this->requestRepository->getRequests([
@@ -305,6 +308,18 @@ class RequestController extends Controller
                     ])->count();
                     if($existsCat) {
                         $canCreatePayment = true;
+                    }
+                } else if(in_array($requestModel->category,array_keys(array_values(DataHelper::getCategories([DataHelper::VAN_PHONG_PHAM]))[0]))) {
+                    // dd($requestModel->currentStep->step);
+                    $currentStep = $requestModel->currentStep;
+                    $canCreatePayment = in_array($currentStep->step, [
+                        CoStepHistory::STEP_CREATE_PAYMENT_N1,
+                        CoStepHistory::STEP_CREATE_PAYMENT_N2,
+                        CoStepHistory::STEP_CREATE_PAYMENT_N3,
+                        CoStepHistory::STEP_CREATE_PAYMENT_N4,
+                    ]);
+                    if($requestModel->payments->last()->status == 1) {
+                        $canCreatePayment = false;
                     }
                 }
             }

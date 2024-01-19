@@ -83,6 +83,11 @@
                                   rows="1">{{ $material->ghi_chu }}</textarea>
                     </td>
                 </tr>
+                <tr style="background-color: #f4f6f9">
+                    <td colspan="10">
+                        @include('admins.requests.includes.price_survey_by_product')
+                    </td>
+                </tr>
             @endforeach
         @endif
         </tbody>

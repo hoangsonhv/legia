@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admins;
 
 use App\Enums\ProcessStatus;
+use App\Helpers\DataHelper;
 use App\Http\Controllers\Controller;
 use App\Models\CoStepHistory;
 use App\Models\Manufacture;
@@ -18,6 +19,8 @@ use App\Models\Repositories\ManufactureRepository;
 use Illuminate\Http\Request;
 use App\Models\Co;
 use App\Models\CoTmp;
+use App\Models\Repositories\RequestStepHistoryRepository;
+use App\Models\RequestStepHistory;
 use Illuminate\Support\Carbon;
 
 class BaseAdminController extends Controller
@@ -28,6 +31,7 @@ class BaseAdminController extends Controller
     protected $receiptRepository;
     protected $bankRepo;
     protected $coStepHistoryRepo;
+    protected $requestStepHistoryRepository;
     protected $manufactureRepository;
     protected $coTmpRepository;
 
@@ -39,6 +43,7 @@ class BaseAdminController extends Controller
         ReceiptRepository $receiptRepository,
         BankRepository $bankRepo,
         CoStepHistoryRepository $coStepHistoryRepo,
+        RequestStepHistoryRepository $requestStepHistoryRepository,
         ManufactureRepository $manufactureRepository
     )
     {
@@ -48,6 +53,7 @@ class BaseAdminController extends Controller
         $this->paymentRepository = $paymentRepository;
         $this->receiptRepository = $receiptRepository;
         $this->coStepHistoryRepo = $coStepHistoryRepo;
+        $this->requestStepHistoryRepository = $requestStepHistoryRepository;
         $this->manufactureRepository = $manufactureRepository;
         $this->bankRepo = $bankRepo;
     }
@@ -199,6 +205,15 @@ class BaseAdminController extends Controller
                             break;
                         case 'request':
                             if(!$repository->co_id) {
+                                if(in_array($repository->category,array_keys(array_values(DataHelper::getCategories([DataHelper::VAN_PHONG_PHAM]))[0]))) {
+                                    if ($status == ProcessStatus::PendingSurveyPrice) {
+                                        $this->requestStepHistoryRepository->insertNextStep($type, $repository->id, $repository->id, RequestStepHistory::ACTION_CREATE_PRICE_SURVEY);
+                                    } else if ($status == ProcessStatus::Approved) {
+                                        $this->requestStepHistoryRepository->insertNextStep('payment', $repository->id, $repository->id, RequestStepHistory::ACTION_CREATE, 0);
+                                    } else if ($status == ProcessStatus::Unapproved) {
+                                        $this->requestStepHistoryRepository->insertNextStep('request', $repository->id, $repository->id, RequestStepHistory::ACTION_CREATE);
+                                    }
+                                }
                                 break;
                             }
                             if ($status == ProcessStatus::PendingSurveyPrice) {

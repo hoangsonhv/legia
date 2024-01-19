@@ -47,4 +47,8 @@ class Request extends Model
     public function payments() {
         return $this->hasMany(Payment::class);
     }
+
+    public function currentStep() {
+        return $this->hasOne(RequestStepHistory::class, 'request_id')->latest();
+    }
 }

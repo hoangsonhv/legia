@@ -82,13 +82,13 @@
                                 @include('admins.coes.includes.list-warehouses',['warehouses' => $listWarehouse])
                             </div>
                         @endif
+                        {!! Form::close() !!}
                         <div class="card-body">
                             <h3 class="title text-primary">Nội dung</h3>
                             @if(!$co) 
                             @include('admins.requests.includes.list-service', ['materials' => $materials])
                             @endif
                         </div>
-                        {!! Form::close() !!}
                         @if($co)                         
                         @include('admins.requests.includes.list-materials', ['co' => $co, 'materials' => $materials])
                         @endif
@@ -103,7 +103,7 @@
                             \App\Enums\ProcessStatus::Unapproved,
                             ];
                         @endphp
-                        @if($co && in_array($requestModel->status, $statusAcceptRequest))
+                        @if(($co || in_array($requestModel->category,array_keys(array_values(\App\Helpers\DataHelper::getCategories([\App\Helpers\DataHelper::VAN_PHONG_PHAM]))[0]))) && in_array($requestModel->status, $statusAcceptRequest))
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="title text-primary mb-4">Khảo sát giá
@@ -334,7 +334,7 @@
                     </div>
                 </div>
                 @php
-                    if (!$co) {
+                    if (!$co && isset($requestModel->category) && !in_array($requestModel->category,array_keys(array_values(\App\Helpers\DataHelper::getCategories([\App\Helpers\DataHelper::VAN_PHONG_PHAM]))[0]))) {
                       $isNotCo = true;
                     } else {
                       $isNotCo = false;
