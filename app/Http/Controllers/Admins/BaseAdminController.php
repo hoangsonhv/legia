@@ -60,12 +60,13 @@ class BaseAdminController extends Controller
 
     public function approval(Request $request)
     {
-//        try {
+       try {
             \DB::beginTransaction();
             $id = $request->input('id');
             $type = $request->input('type');
             $status = $request->input('status');
             $note = $request->has('note') ? $request->input('note') : '';
+            $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
             switch ($type) {
                 case 'co-tmp':
                     $repository = $this->coTmpRepository->find($id);
@@ -132,28 +133,49 @@ class BaseAdminController extends Controller
                             }
                             break;
                         case 'payment':
-                            if(!$repository->co_id) {
+                            if(!$repository->co_id && !in_array($repository->request->category, array_keys($categories))) {
                                 break;
                             }
                             $this->bankRepo->updateAccountBalance($repository);
                             if ($status == ProcessStatus::Approved) {
                                 //
-                                switch ($repository->step_id) {
-                                    case 0:
-                                        $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
-                                        break;
-                                    case 1:
-                                        $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
-                                        break;
-                                    case 2:
-                                        $this->coStepHistoryRepo->insertNextStep('warehouse-receipt', $repository->co_id, $repository->request_id, CoStepHistory::ACTION_CREATE);
-                                        break;
-                                    case 3:
-                                        $this->coStepHistoryRepo->insertNextStep('warehouse-export', $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE);
-                                        break;
+                                if($repository->request->co_id) {
+                                    switch ($repository->step_id) {
+                                        case 0:
+                                            $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
+                                            break;
+                                        case 1:
+                                            $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
+                                            break;
+                                        case 2:
+                                            $this->coStepHistoryRepo->insertNextStep('warehouse-receipt', $repository->co_id, $repository->request_id, CoStepHistory::ACTION_CREATE);
+                                            break;
+                                        case 3:
+                                            $this->coStepHistoryRepo->insertNextStep('warehouse-export', $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE);
+                                            break;
+                                    }
+                                } else if (in_array($repository->request->category, array_keys($categories))) {
+                                    switch ($repository->step_id) {
+                                        case 0:
+                                            $this->requestStepHistoryRepository->insertNextStep($type, $repository->request_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
+                                            break;
+                                        case 1:
+                                            $this->requestStepHistoryRepository->insertNextStep($type, $repository->request_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
+                                            break;
+                                        case 2:
+                                            $this->requestStepHistoryRepository->insertNextStep($type, $repository->request_id, $repository->request_id, CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
+                                            break;
+                                        case 3:
+                                            $this->requestRepository->doneRequest($repository->request_id);
+                                            break;
+                                    }
                                 }
                             } else if($status == ProcessStatus::Unapproved) {
-                                $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id);
+                                if($repository->request->co_id) {
+                                    $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id);
+                                } else if (in_array($repository->request->category, array_keys($categories))) {
+                                    $this->requestStepHistoryRepository->insertNextStep($type, $repository->request_id, $repository->request_id,CoStepHistory::ACTION_CREATE, $repository->step_id);
+                                }
                             }
                             break;
                         case 'receipt':
@@ -231,9 +253,9 @@ class BaseAdminController extends Controller
                     return redirect()->back()->with('success', 'Quá trình xét duyệt thành công!');
                 }
             }
-//        } catch (\Exception $ex) {
-//            report($ex);
-//        }
+       } catch (\Exception $ex) {
+           dd($ex);
+       }
         return redirect()->back()->with('error', 'Quá trình xét duyệt thất bại!');
     }
 

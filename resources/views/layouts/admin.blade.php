@@ -102,8 +102,8 @@
       <!-- Sidebar Menu -->
       <nav class="">
         <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item{{ (strpos(url()->current(), '/admin/dashboard/index/co-tmps') !== false || (strpos(url()->current(), '/admin/dashboard/index/coes') !== false)) ? ' menu-open' : '' }}">
-            <a href="#" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/co-tmps') !== false) || (strpos(url()->current(), '/admin/dashboard/index/coes') !== false) ? ' active' : '' }}">
+          <li class="nav-item{{ (strpos(url()->current(), '/admin/dashboard/index/co-tmps') !== false || (strpos(url()->current(), '/admin/dashboard/index/coes') !== false) || (strpos(url()->current(), '/admin/dashboard/index/requests') !== false)) ? ' menu-open' : '' }}">
+            <a href="#" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/co-tmps') !== false) || (strpos(url()->current(), '/admin/dashboard/index/coes') !== false) || (strpos(url()->current(), '/admin/dashboard/index/requests') !== false) ? ' active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Tổng quan
@@ -122,6 +122,13 @@
               <li class="nav-item">
                 <a href="{{ route('admin.dashboard.co') }}" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/coes') !== false) ? ' active' : '' }}">
                   <p>Danh sách CO</p>
+                </a>
+              </li>
+              @endpermission
+              @permission(['admin.request.index'])
+              <li class="nav-item">
+                <a href="{{ route('admin.dashboard.request') }}" class="nav-link{{ (strpos(url()->current(), '/admin/dashboard/index/requests') !== false) ? ' active' : '' }}">
+                  <p>Danh sách Phiếu yêu cầu</p>
                 </a>
               </li>
               @endpermission

@@ -15,6 +15,7 @@ use App\Models\Payment;
 use App\Models\Repositories\PaymentRepository;
 use App\Models\Repositories\RequestRepository;
 use App\Models\Repositories\CoStepHistoryRepository;
+use App\Models\Repositories\RequestStepHistoryRepository;
 use App\Services\CoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -28,16 +29,19 @@ class PaymentController extends Controller
     protected $paymentRepository;
     protected $requestRepository;
     protected $coStepHisRepo;
+    protected $requestStepHisRepo;
 
     public $menu;
 
     function __construct(PaymentRepository $paymentRepository,
                          RequestRepository $requestRepository,
+                         RequestStepHistoryRepository $requestStepHisRepo,
                          CoStepHistoryRepository $coStepHisRepo)
     {
         $this->paymentRepository = $paymentRepository;
         $this->requestRepository = $requestRepository;
         $this->coStepHisRepo     = $coStepHisRepo;
+        $this->requestStepHisRepo     = $requestStepHisRepo;
         $this->menu              = [
             'root' => 'Quản lý Phiếu Chi',
             'data' => [
@@ -193,6 +197,7 @@ class PaymentController extends Controller
             $coCode   = $requestModel->co_code;
             $category = $requestModel->category;
 
+            $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
             // Upload file
             $files     = $request->file('accompanying_document');
             $documents = [];
@@ -232,6 +237,8 @@ class PaymentController extends Controller
             $payment = Payment::create($input);
             if($payment && $requestModel->co_id) {
                 $this->coStepHisRepo->insertNextStep('payment', $payment->co_id, $payment->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id'));
+            } else if (in_array($requestModel->category, array_keys($categories))) {
+                $this->requestStepHisRepo->insertNextStep('payment', $requestId, $payment->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id'));
             }
             // Save relationship
             if ($requestModel->co_id) {
@@ -270,7 +277,7 @@ class PaymentController extends Controller
             if ($payment->request_id) {
                 $requestModel = $this->requestRepository->getRequests([
                         'id'     => $payment->request_id,
-                        'status' => ProcessStatus::Approved
+                        ['status' , 'in', [ProcessStatus::Approved, ProcessStatus::DoneRequest]]
                     ])
                     ->first();
                 if ($requestModel) {

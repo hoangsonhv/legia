@@ -289,4 +289,46 @@ class DashboardController extends Controller {
 		return view('admins.dashboard.co.list', compact('breadcrumb', 'titleForLayout', 'titleForChart',
             'listRangeDate', 'coTmps', 'coes'));
     }
+
+    public function requests(Request $request) {
+        $breadcrumb     = $this->menu;
+        $titleForLayout = $this->menu['root'];
+        $titleForChart  = 'Thống kê nguyên vật liệu';
+        $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
+        $listRangeDate  = [
+            'weeks'  => 'Biều đồ trên tuần',
+            'months' => 'Biểu đồ trên tháng'
+		];
+        $rangeDate = $request->input('range_date');
+        if (!$rangeDate) {
+            $rangeDate = 'weeks';
+        }
+
+        $code = '';
+        if(isset($request->code))
+        {
+            $code = $request->code;
+        }
+
+        $last = Carbon::parse("Now -1 {$rangeDate}");
+        $now  = Carbon::now();
+        $request->flash();
+        if($code)
+        {
+            $requests = $this->requestRepository->getRequests([
+                ['status', '!=', ProcessStatus::DoneRequest],
+                ['category', 'in', array_keys($categories)],
+                ['code' ,'like', $code]
+            ])->orderBy('created_at', 'DESC')->paginate(10);
+        }
+        else {
+            $requests = $this->requestRepository->getRequests([
+                ['status', '!=', ProcessStatus::DoneRequest],
+                ['category', 'in', array_keys($categories)]
+            ])->orderBy('created_at', 'DESC')->paginate(10);
+        }
+
+        return view('admins.dashboard.request.list', compact('breadcrumb', 'titleForLayout', 'titleForChart',
+            'listRangeDate', 'requests'));
+    }
 }

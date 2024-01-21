@@ -34,6 +34,8 @@ class RequestRepository extends BaseRepository
                         $query = $query->where($field,$condition,"%".$val."%");
                     } else if($condition === "between") {
                         $query = $query->whereBetween($field,$val);
+                    } else if($condition === "in") {
+                        $query = $query->whereIn($field,$val);
                     } else {
                         $query = $query->where($field,$condition,$val);
                     }
@@ -144,4 +146,12 @@ class RequestRepository extends BaseRepository
  
          return $isExist->count();
      }
+    
+    public function doneRequest($requestId) {
+        $rq = $this->model->find($requestId);
+        if ($rq) {
+            $rq->status = 9; //DoneRequest
+            $rq->save();
+        }
+    }
 }

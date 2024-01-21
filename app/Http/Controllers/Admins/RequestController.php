@@ -318,9 +318,6 @@ class RequestController extends Controller
                         CoStepHistory::STEP_CREATE_PAYMENT_N3,
                         CoStepHistory::STEP_CREATE_PAYMENT_N4,
                     ]);
-                    if($requestModel->payments->last()->status == 1) {
-                        $canCreatePayment = false;
-                    }
                 }
             }
 

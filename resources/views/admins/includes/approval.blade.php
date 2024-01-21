@@ -24,7 +24,11 @@
         </p>
       @else
         <p class="pending-approve" style="color: #FFF;">
+          @if ($status == \App\Enums\ProcessStatus::DoneRequest)
+              Đã xong
+          @else
           {{ \App\Enums\ProcessStatus::all()[$status] }}
+          @endif
         </p>
       @endif
     @elseif($type === 'co' && !empty($check_warehouse) && $check_warehouse)

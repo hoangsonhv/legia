@@ -60,17 +60,21 @@ class RequestStepHistoryRepository extends AdminRepository
                             }
                             break;
                         case 2:
-                            // Nếu phiếu chi lần 3 == 0 thì chuyển nhập kho
+                            // Nếu phiếu chi lần 3 == 0 thì chuyển lần 4
                             $hasPercent = $this->requestRepo->checkPercentPayment($objectId, $stepId);
                             if ($hasPercent) {
                                 $step = RequestStepHistory::STEP_CREATE_PAYMENT_N3;
+                            } else {
+                                $this->insertNextStep('payment', $requestId, $objectId, RequestStepHistory::ACTION_CREATE, $stepId + 1);
                             }
                             break;
                         case 3:
-                            // Nếu phiếu chi lần 4 == 0 thì chuyển xuất kho
+                            // Nếu phiếu chi lần 4 == 0 thì xong
                             $hasPercent = $this->requestRepo->checkPercentPayment($objectId, $stepId);
                             if ($hasPercent) {
                                 $step = RequestStepHistory::STEP_CREATE_PAYMENT_N4;
+                            } else {
+                                $this->requestRepo->doneRequest($requestId);
                             }
                             break;
                     }

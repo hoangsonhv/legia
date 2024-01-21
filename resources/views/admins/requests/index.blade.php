@@ -73,6 +73,10 @@
                         <span class="badge bg-danger">
                           {{ \App\Enums\ProcessStatus::all()[$request->status] }}
                         </span>
+                      @elseif($request->status == \App\Enums\ProcessStatus::DoneRequest)
+                      <span class="badge bg-success">
+                        Đã xong
+                      </span>
                       @else
                         <span class="badge bg-warning">
                           {{ \App\Enums\ProcessStatus::all()[$request->status] }}

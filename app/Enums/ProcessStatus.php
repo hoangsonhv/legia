@@ -8,6 +8,7 @@ class ProcessStatus
     const Approved           = 2;
     const Unapproved         = 3;
     const PendingSurveyPrice = 4;
+    const DoneRequest = 9;
 
     public static function all($unKey = null) {
         $statuses = [

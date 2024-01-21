@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admins;
 
 use App\Helpers\AdminHelper;
+use App\Helpers\DataHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\PriceSurveyRequest;
 use App\Models\Admin;
 use App\Models\Co;
+use App\Models\Repositories\RequestStepHistoryRepository;
 use App\Models\Request as RequestModel;
 use App\Models\CoreCustomer;
 use App\Models\PriceSurvey;
@@ -27,15 +29,18 @@ class PriceSurveyController extends Controller
     protected $configRepo;
     protected $priceSurveyRepo;
     protected $coStepHisRepo;
+    protected $requestHisRepo;
 
     public $menu;
 
     function __construct(
         PriceSurveyRepository $priceSurveyRepo,
-        CoStepHistoryRepository $coStepHisRepo)
+        CoStepHistoryRepository $coStepHisRepo,
+        RequestStepHistoryRepository $requestHisRepo)
     {
         $this->priceSurveyRepo                  = $priceSurveyRepo;
         $this->coStepHisRepo         = $coStepHisRepo;
+        $this->requestHisRepo = $requestHisRepo;
         $this->menu                             = [
             'root' => 'Quản lý Khảo sát giá',
             'data' => [
@@ -181,6 +186,7 @@ class PriceSurveyController extends Controller
         $materialId = $request->input('material_id');
         $coId = $request->input('co_id');
         $user = Session::get('login');
+        $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
 
         $dataInsert = [];
         foreach ($ids as $key => $id) {
@@ -208,7 +214,7 @@ class PriceSurveyController extends Controller
 
         if ($priceSurvey) {
             $requestModel = RequestModel::find($requestId);
-            if ($requestModel->co_id != null) {
+            if ($requestModel->co_id != null || in_array($requestModel->category, array_keys($categories))) {
                 // Check if all request materials have checked price survey
                 $materials = $requestModel->material;
                 $materialsCount = count($materials);
@@ -220,7 +226,11 @@ class PriceSurveyController extends Controller
                     }
                 }
                 if ($selectedPriceSurveyCount == $materialsCount) {
-                    $this->coStepHisRepo->insertNextStep( 'request', $requestModel->co_id, $requestModel->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
+                    if($requestModel->co_id) {
+                        $this->coStepHisRepo->insertNextStep( 'request', $requestModel->co_id, $requestModel->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
+                    } else if (in_array($requestModel->category, array_keys($categories))) {
+                        $this->requestHisRepo->insertNextStep( 'request', $requestModel->id, $requestModel->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
+                    }
                 }
             }
             return redirect()->route('admin.request.edit', ['id' => $requestId])->with('success','Thêm khảo sát giá thành công!');
