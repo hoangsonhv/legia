@@ -361,9 +361,37 @@ class RequestController extends Controller
                 $coId   = null;
                 $coCode = null;
             }
-
             $requestModel = $this->requestRepository->find($id);
             if (!empty($request['is_request_payment'])) {
+                $thanhToanModel = $requestModel->thanh_toan;
+                $paymentDocumentModels = isset($thanhToanModel['payment_document']) ? $thanhToanModel['payment_document'] : [];
+                $thanhToan = $request->thanh_toan;
+                $keyPaymentDocuments = CoService::paymentDocuments();
+                foreach ($keyPaymentDocuments as $key => $text) {
+                    $arrDoc = [];
+                    if(isset($paymentDocumentModels['file_'. $key])) {
+                        $arrDoc = $paymentDocumentModels['file_'. $key];
+                    }
+                    $fileDoc = $request->file('thanh_toan.payment_document.file_'. $key);
+                    if($fileDoc) {
+                        $path = 'uploads/requests/thanh_toan/documents';
+                        foreach($fileDoc as $file) {
+                            $fileSave = Storage::disk($this->disk)->put($path, $file);
+                            if (!$fileSave) {
+                                if ($arrDoc) {
+                                    foreach($arrDoc as $doc) {
+                                        Storage::disk($this->disk)->delete($doc);
+                                    }
+                                }
+                            }
+                            $arrDoc[] = ['name' => $file->getClientOriginalName(), 'path' => $fileSave];
+                        }
+                    }
+                    $thanhToan['payment_document']['file_'. $key] = $arrDoc;
+                }
+                $request->merge([
+                    'thanh_toan' => $thanhToan,
+                ]);
                 $requestModel->thanh_toan            = $request->input('thanh_toan');
                 $requestModel->money_total           = $request->input('money_total');
                 $requestModel->save();
