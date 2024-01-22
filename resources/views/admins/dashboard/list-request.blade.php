@@ -30,7 +30,7 @@
                     @foreach($requests as $request)
                     <tr>
                         <td>
-                            <a href="{{route('admin.co.edit', ['id' => $request->id])}}">
+                            <a href="{{route('admin.request.edit', ['id' => $request->id])}}">
                                 {{$request->code}}
                             </a>
                         </td>
