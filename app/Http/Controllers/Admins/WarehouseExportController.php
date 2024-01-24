@@ -18,7 +18,10 @@ use App\Models\Repositories\CoRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Repositories\WarehouseExportRepository;
 use App\Models\Repositories\CoStepHistoryRepository;
+use App\Models\Repositories\RequestRepository;
+use App\Models\Repositories\RequestStepHistoryRepository;
 use App\Models\Repositories\WarehouseHistoryRepository;
+use App\Models\Request as ModelsRequest;
 use App\Models\Warehouse\BaseWarehouseCommon;
 use App\Services\CoService;
 
@@ -30,6 +33,7 @@ class WarehouseExportController extends Controller
      */
     protected $whExportRepo;
     protected $coStepHisRepo;
+    protected $requestRepo;
     protected $warehouseHistoryRepo;
     protected $coService;
 
@@ -40,12 +44,14 @@ class WarehouseExportController extends Controller
 
     function __construct(WarehouseExportRepository $whExportRepo,
                         CoStepHistoryRepository $coStepHisRepo,
+                        RequestRepository $requestRepo,
                         CoService $coService,
                         WarehouseHistoryRepository $warehouseHistoryRepo)
     {
         $this->whExportRepo = $whExportRepo;
         $this->coStepHisRepo = $coStepHisRepo;
         $this->coService             = $coService;
+        $this->requestRepo             = $requestRepo;
         $this->warehouseHistoryRepo = $warehouseHistoryRepo;
         $this->menu = [
             'root' => 'Quản lý Phiếu xuất kho',
@@ -93,14 +99,15 @@ class WarehouseExportController extends Controller
         $warehouses = null;
         $listWarehouse = null;
         $coId = $request->has('co_id') ? $request->co_id : null;
+        $requestId = $request->has('request_id') ? $request->request_id : null;
         if ($coId) {
             $co = Co::find($coId);
             $warehouses    = $co->warehouses;
-            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($co->warehouses->pluck('code', 'id')->toArray());
+            $listWarehouse = $this->coService->getProductMaterialsInWarehouses($warehouses->pluck('code', 'id')->toArray());
         }
 
         return view('admins.warehouse_export.create', compact('breadcrumb', 'titleForLayout',
-            'permissions', 'products', 'model', 'coId', 'co', 'listWarehouse', 'warehouses'));
+            'permissions', 'products', 'model', 'coId', 'co', 'listWarehouse', 'warehouses','requestId'));
     }
 
     public function store(WarehouseExportRequest $request)
@@ -137,6 +144,7 @@ class WarehouseExportController extends Controller
             }
             // Save many product
             $inputProducts = $request->input('product');
+            $sum_quantity_reality = [];
             if($inputProducts) {
                 foreach ($inputProducts['code'] as $key => $code) {
                     if (empty($code)) {
@@ -153,6 +161,10 @@ class WarehouseExportController extends Controller
                         'merchandise_id' => $inputProducts['merchandise_id'][$key],
                         'lot_no' => $inputProducts['lot_no'][$key],
                         'table_name' => $inputProducts['table_name'][$key],
+                    ];
+                    $sum_quantity_reality[] = [
+                        'code' => $inputProducts['code'][$key],
+                        'quantity_reality' => $inputProducts['quantity_reality'][$key],
                     ];
                 }
             }
@@ -171,11 +183,39 @@ class WarehouseExportController extends Controller
 
                 //$this->warehouseHistoryRepo->updateWarehouseHistory($products, WarehouseHistory::TYPE_WAREHOUSE_EXPORT);
             }
+            if ($model && $model->request_id) {
+                $modelRequest = ModelsRequest::find($model->request_id);
+                $groupedAndSummedArray = array_reduce($sum_quantity_reality, function($result, $item) {
+                    $code = $item['code'];
+                    $quantity = $item['quantity_reality'];
+                
+                    if (!isset($result[$code])) {
+                        $result[$code] = 0;
+                    }
+                
+                    $result[$code] += $quantity;
+                
+                    return $result;
+                }, array());
+                $material = $modelRequest->material;
+                $isDone = false;
+                foreach($material as $item ) {
+                    if($item->dinh_luong <= $groupedAndSummedArray[$item->code]) {
+                        $isDone = true;
+                    } else {
+                        $isDone = false;
+                        break;
+                    }
+                }
+                if($isDone) {
+                    $this->requestRepo->doneRequest($model->request_id);
+                }
+            }
             \DB::commit();
             return redirect()->route('admin.warehouse-export.index')->with('success', 'Tạo phiếu xuất kho thành công!');
         } catch (\Exception $ex) {
             \DB::rollback();
-            report($ex);
+            dd($ex);
         }
         return redirect()->route('admin.warehouse-export.index')->with('error', 'Tạo phiếu xuất kho thất bại!');
     }

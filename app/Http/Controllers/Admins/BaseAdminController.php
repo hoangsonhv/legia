@@ -166,7 +166,7 @@ class BaseAdminController extends Controller
                                             $this->requestStepHistoryRepository->insertNextStep($type, $repository->request_id, $repository->request_id, CoStepHistory::ACTION_CREATE, $repository->step_id + 1);
                                             break;
                                         case 3:
-                                            $this->requestRepository->doneRequest($repository->request_id);
+                                            $this->requestStepHistoryRepository->insertNextStep('warehouse-receipt', $repository->request_id, $repository->request_id, CoStepHistory::ACTION_CREATE);
                                             break;
                                     }
                                 }

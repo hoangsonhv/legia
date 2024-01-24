@@ -171,6 +171,10 @@ class WarehouseService
                 $this->modelType = WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI;
                 $this->baseWarehouseReposiroty->setModel(WarehouseHelper::getModel(WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI));
                 break;
+            case 'supply':
+                $this->modelType = WarehouseHelper::KHO_VAT_DUNG;
+                $this->baseWarehouseReposiroty->setModel(WarehouseHelper::getModel(WarehouseHelper::KHO_VAT_DUNG));
+                break;
             default:
                 throw new Exception("Not Found Model");
         }

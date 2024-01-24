@@ -22,6 +22,7 @@
                     <div class="card form-root">
                         {!! Form::open(array('route' => 'admin.warehouse-export.store', 'method' => 'post', 'enctype' => 'multipart/form-data')) !!}
                         {!! Form::hidden('co_id', $coId) !!}
+                        {!! Form::hidden('request_id', $requestId) !!}
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="recipient_name">Họ tên người nhận hàng<b style="color: red;"> (*)</b></label>

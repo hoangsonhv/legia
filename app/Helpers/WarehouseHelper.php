@@ -17,6 +17,7 @@ use App\Models\Warehouse\Group9;
 use App\Models\Warehouse\Group1;
 use App\Models\Warehouse\Group12;
 use App\Models\Warehouse\Group13;
+use App\Models\Warehouse\Group14;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -73,6 +74,7 @@ class WarehouseHelper
     #End Group 11
     const KHO_THANH_PHAM_PHI_KIM_LOAI = 29;
     const KHO_THANH_PHAM_KIM_LOAI = 30;
+    const KHO_VAT_DUNG = 31;
 
     public const PRODUCT_WAREHOUSES = [
         Manufacture::MATERIAL_TYPE_NON_METAL => self::KHO_THANH_PHAM_PHI_KIM_LOAI,
@@ -83,7 +85,7 @@ class WarehouseHelper
     public static function getModel(string $type, array $attributes = []): Model
     {
         // type of model
-        $ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+        $ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
         if(!in_array($type,$ids))
         {
             throw new NotFoundHttpException('Not Found Type');
@@ -147,6 +149,8 @@ class WarehouseHelper
 
             case WarehouseHelper::CCDC:
                 return new Group12($attributes);
+            case WarehouseHelper::KHO_VAT_DUNG:
+                return new Group14($attributes);
 
             default:
                 throw new NotFoundHttpException('Not Found Model');
@@ -185,6 +189,7 @@ class WarehouseHelper
             WarehouseHelper::NHU_KY_THUAT_CAY_ONG => '/warehouse-remain/edit/nhuakythuatcayong',
             WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => '/warehouse-remain/edit/tpphikimloai',
             WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => '/warehouse-remain/edit/tpkimloai',
+            WarehouseHelper::KHO_VAT_DUNG => '/warehouse-supply/edit/supply',
         ];
 
         return $paths[$modelType];
@@ -222,6 +227,7 @@ class WarehouseHelper
             WarehouseHelper::NHU_KY_THUAT_CAY_ONG => '/warehouse-remain/create/nhuakythuatcayong',
             WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => '/warehouse-remain/create/tpphikimloai',
             WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => '/warehouse-remain/create/tpkimloai',
+            WarehouseHelper::KHO_VAT_DUNG => '/warehouse-supply/create/supply',
         ];
 
         return $paths[$modelType];
@@ -255,6 +261,7 @@ class WarehouseHelper
             WarehouseHelper::THANH_PHAM_SWG => 'ton_sl_cai',
             WarehouseHelper::GLAND_PACKING_LATTY => 'ton_sl_cai',
             WarehouseHelper::CCDC => 'ton_sl_cai',
+            WarehouseHelper::KHO_VAT_DUNG => 'ton_sl_cai',
             WarehouseHelper::PTFE_ENVELOP => 'ton_sl_cai',
             WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'ton_sl_cay',
             WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'sl_ton',
@@ -296,6 +303,7 @@ class WarehouseHelper
             WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'KHO NHỰA KỸ THUẬT CÂY ỐNG',
             WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'KHO THÀNH PHẨM PHI KIM LOẠI',
             WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'KHO THÀNH PHẨM KIM LOẠI',
+            WarehouseHelper::KHO_VAT_DUNG => 'KHO VẬT DỤNG',
         ];
 
         return $names[$modelType];
@@ -339,6 +347,9 @@ class WarehouseHelper
                 WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'KHO THÀNH PHẨM PHI KIM LOẠI',
                 WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'KHO THÀNH PHẨM KIM LOẠI',
             ],
+            'KHO VẬT DỤNG' => [
+                WarehouseHelper::KHO_VAT_DUNG => 'Kho vật dụng',
+            ],
         ];
     }
 
@@ -374,6 +385,7 @@ class WarehouseHelper
             WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'nhuakythuatcayong',
             WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'tpphikimloai',
             WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'tpkimloai',
+            WarehouseHelper::KHO_VAT_DUNG => 'supply',
         ];
 
         return $paths[$modelType];
@@ -410,6 +422,7 @@ class WarehouseHelper
                 WarehouseHelper::PHU_TUNG_DUNG_CU => 'admins._form-remain',
                 WarehouseHelper::GLAND_PACKING_LATTY => 'admins._form-remain',
                 WarehouseHelper::CCDC => 'admins._form-remain',
+                WarehouseHelper::KHO_VAT_DUNG => 'admins._form-supply',
                 WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'admins._form-remain',
                 WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI => 'admins._form-remain',
                 WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI => 'admins._form-remain',
@@ -471,6 +484,7 @@ class WarehouseHelper
             'ton_sl_m2' => 'Tồn (m2)',
             'lot_no' => 'Lot .no',
             'ghi_chu' => 'Ghi chú',
+            'mo_ta' => 'Mô tả',
             'date' => 'Date',
         ];
 

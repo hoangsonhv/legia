@@ -69,12 +69,12 @@ class RequestStepHistoryRepository extends AdminRepository
                             }
                             break;
                         case 3:
-                            // Nếu phiếu chi lần 4 == 0 thì xong
+                            // Nếu phiếu chi lần 4 == 0 thì chuyển nhập kho
                             $hasPercent = $this->requestRepo->checkPercentPayment($objectId, $stepId);
                             if ($hasPercent) {
                                 $step = RequestStepHistory::STEP_CREATE_PAYMENT_N4;
                             } else {
-                                $this->requestRepo->doneRequest($requestId);
+                                $this->insertNextStep('warehouse-receipt', $requestId, $objectId, RequestStepHistory::ACTION_CREATE);
                             }
                             break;
                     }
@@ -93,6 +93,16 @@ class RequestStepHistoryRepository extends AdminRepository
                             $step = RequestStepHistory::STEP_WAITING_APPROVE_PAYMENT_N4;
                             break;
                     }
+                }
+                break;
+            case 'warehouse-receipt':
+                if ($action == RequestStepHistory::ACTION_CREATE) {
+                    $step = RequestStepHistory::STEP_CREATE_WAREHOUSE_RECEIPT;
+                }
+                break;
+            case 'warehouse-export':
+                if ($action == RequestStepHistory::ACTION_CREATE) {
+                    $step = RequestStepHistory::STEP_CREATE_WAREHOUSE_EXPORT;
                 }
                 break;
             default:

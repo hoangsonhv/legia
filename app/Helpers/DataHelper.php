@@ -9,6 +9,7 @@ class DataHelper
     const DINH_KY        = 'dinh_ky';
     const VAN_PHONG_PHAM = 'van_phong_pham';
     const KHO            = 'kho';
+    const HOAT_DONG      = 'HOAT_DONG';
 
     public static function getCategoryPayment($type=null, $option=null) {
         $typeSpending = [
@@ -29,6 +30,17 @@ class DataHelper
                     self::VAN_PHONG_PHAM.'-do_dung'  => 'Đồ dùng văn phòng',
                     self::VAN_PHONG_PHAM.'-thiet_bi' => 'Thiết bị văn phòng',
                     self::VAN_PHONG_PHAM.'-khac'     => 'khác'
+                ]
+            ],
+            self::HOAT_DONG => [ // PYC, PC, Not CO
+                'label' => 'Phí sinh hoạt',
+                'option' => [
+                    self::HOAT_DONG.'-do_dung'             => 'Công tác phí',
+                    self::HOAT_DONG.'-cong_tac_xa_hoi'     => 'Công tác xã hội',
+                    self::HOAT_DONG.'-thue'                => 'Thuế',
+                    self::HOAT_DONG.'-dich_vu_hai_quan'    => 'Dịch vụ hải quan',
+                    self::HOAT_DONG.'-dich_vu_thue'        => 'Dịch vụ thuế',
+                    self::HOAT_DONG.'-khac'                => 'khác'
                 ]
             ],
             self::KHO => [  // PYC, PC, PT, CO
@@ -175,6 +187,9 @@ class DataHelper
                 'nkloaikhac'        => 'Kho NK loại khác',
                 'tpphikimloai'      => 'Kho thành phẩm phi kim loại',
                 // 'tpkimloai'      => 'Kho thành phẩm kim loại',
+            ],
+            'supply' => [
+                'supply'            => 'Kho vật dụng',
             ],
         ];
         if ($warehouse && isset($data[$warehouse])) {

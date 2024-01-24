@@ -21,7 +21,8 @@ class WarehouseExport extends Model
         'total_vat',
         'total_payment',
         'document',
-        'co_id'
+        'co_id',
+        'request_id'
     ];
 
     public function products() {

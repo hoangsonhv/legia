@@ -455,7 +455,13 @@
                 </a>
               </li>
               @endpermission
-              
+              @permission('admin.warehouse-remain.index')
+              <li class="nav-item">
+                <a href="{{ route('admin.warehouse-supply.index') }}" class="nav-link{{ (strpos(url()->current(), '/warehouse-supply/index') !== false) ? ' active' : '' }}">
+                  <p>Kho Vật Dụng</p>
+                </a>
+              </li>
+              @endpermission
             </ul>
           </li>
           @endpermission

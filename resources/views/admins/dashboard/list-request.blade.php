@@ -46,28 +46,36 @@
                             </div>
                             @elseif($request->status == \App\Enums\ProcessStatus::Pending)
                             <div class="co-alert-warning w-100">
-                                {{$steps[\App\Models\CoStepHistory::STEP_WAITING_APPROVE_REQUEST]['title']}}
+                                {{$steps[\App\Models\RequestStepHistory::STEP_WAITING_APPROVE_REQUEST]['title']}}
                             </div>
                             @endif
                         </td>
                         <td>
+                            @php
+                                $act_router = null;
+                                $params = null;
+                                if($request->currentStep->step == \App\Models\RequestStepHistory::STEP_CREATE_WAREHOUSE_EXPORT) {
+                                    $act_router = 'admin.warehouse-export.create';
+                                    $params = ['request_id' => $request->id];
+                                }
+                            @endphp
                             @if($request->currentStep && $steps[$request->currentStep->step]['act_router'])
-                                    <a target="_blank" href={{ route($steps[$request->currentStep->step]['act_router'],
-                                         ['id' => $request->currentStep->object_id]) }}>
+                                    <a target="_blank" href={{ route(($act_router ?? $steps[$request->currentStep->step]['act_router']),
+                                         ($params ?? ['id' => $request->currentStep->object_id])) }}>
                                         <button class="btn btn-success">
-                                            @if($steps[$request->currentStep->step]['action'] == \App\Models\CoStepHistory::ACTION_CREATE)
+                                            @if($steps[$request->currentStep->step]['action'] == \App\Models\RequestStepHistory::ACTION_CREATE)
                                                 Tạo
                                             @endif
-                                            @if($steps[$request->currentStep->step]['action'] == \App\Models\CoStepHistory::ACTION_APPROVE)
+                                            @if($steps[$request->currentStep->step]['action'] == \App\Models\RequestStepHistory::ACTION_APPROVE)
                                                 Duyệt
                                             @endif
-                                            @if($steps[$request->currentStep->step]['action'] == \App\Models\CoStepHistory::ACTION_SELECT)
+                                            @if($steps[$request->currentStep->step]['action'] == \App\Models\RequestStepHistory::ACTION_SELECT)
                                                 Kiểm tra
                                             @endif
                                         </button>
                                     </a>
                             @elseif($request->status == \App\Enums\ProcessStatus::Pending)
-                            <a target="_blank" href={{ route($steps[\App\Models\CoStepHistory::STEP_WAITING_APPROVE_REQUEST]['act_router'],
+                            <a target="_blank" href={{ route($steps[\App\Models\RequestStepHistory::STEP_WAITING_APPROVE_REQUEST]['act_router'],
                                  ['id' => $request->id]) }}>
                                 <button class="btn btn-success">
                                     Duyệt

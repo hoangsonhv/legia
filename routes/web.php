@@ -31,6 +31,7 @@ use App\Http\Controllers\Admins\WarehouseController;
 use App\Http\Controllers\Admins\WarehouseGroupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admins\WarehouseProductCodeController;
+use App\Http\Controllers\Admins\WarehouseSupplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -189,6 +190,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
 		Route::patch('/edit/{model}/{id}', [WarehouseRemainController::class, 'update'])->name('admin.warehouse-remain.update');
 		Route::get('/destroy/{model}/{id}', [WarehouseRemainController::class, 'destroy'])->name('admin.warehouse-remain.destroy');
 		Route::post('import/{model}', [WarehouseRemainController::class, 'import'])->name('admin.warehouse-remain.import');
+	});
+	Route::group(['prefix' => 'warehouse-supply'], function() {
+		Route::get('/index/{model?}', [WarehouseSupplyController::class, 'index'])->name('admin.warehouse-supply.index');
+		Route::get('create/{model}', [WarehouseSupplyController::class, 'create'])->name('admin.warehouse-supply.create');
+		Route::post('create/{model}', [WarehouseSupplyController::class, 'store'])->name('admin.warehouse-supply.store');
+		Route::get('/edit/{model}/{id}', [WarehouseSupplyController::class, 'edit'])->name('admin.warehouse-supply.edit');
+		Route::patch('/edit/{model}/{id}', [WarehouseSupplyController::class, 'update'])->name('admin.warehouse-supply.update');
+		Route::get('/destroy/{model}/{id}', [WarehouseSupplyController::class, 'destroy'])->name('admin.warehouse-supply.destroy');
+		Route::post('import/{model}', [WarehouseSupplyController::class, 'import'])->name('admin.warehouse-supply.import');
 	});
 	/* Config */
 	Route::group(['prefix' => 'config'], function() {

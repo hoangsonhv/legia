@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admins;
 
 use App\Enums\ProcessStatus;
+use App\Helpers\DataHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,7 @@ use App\Models\Repositories\CoRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Request as RequestModel;
 use App\Models\Repositories\CoStepHistoryRepository;
+use App\Models\Repositories\RequestStepHistoryRepository;
 use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\Warehouse\BaseWarehouseCommon;
 use Carbon\Carbon;
@@ -31,6 +33,7 @@ class WarehouseReceiptController extends Controller
     protected $whReceiptRepo;
     protected $coRepo;
     protected $coStepHisRepo;
+    protected $requestStepHisRepo;
 
     /**
      * @var array
@@ -39,11 +42,13 @@ class WarehouseReceiptController extends Controller
 
     function __construct(WarehouseReceiptRepository $whReceiptRepo,
                          CoRepository $coRepo,
-                         CoStepHistoryRepository $coStepHisRepo)
+                         CoStepHistoryRepository $coStepHisRepo,
+                         RequestStepHistoryRepository $requestStepHisRepo)
     {
         $this->whReceiptRepo    = $whReceiptRepo;
         $this->coRepo           = $coRepo;
         $this->coStepHisRepo    = $coStepHisRepo;
+        $this->requestStepHisRepo    = $requestStepHisRepo;
         $this->menu = [
             'root' => 'Quản lý Phiếu nhập kho',
             'data' => [
@@ -83,29 +88,30 @@ class WarehouseReceiptController extends Controller
         $titleForLayout = $breadcrumb['data']['list']['label'];
         $permissions = config('permission.permissions');
         $model = null;
+        $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
 
         $inputs = $request->input();
         $products = [];
         $coModel = null;
+        $request_id = $inputs['request_id'];
         if(!empty($inputs['request_id'])) {
             $request = RequestModel::find($inputs['request_id']);
-            if($request && $request->co_id) {
+            if($request && ($request->co_id || in_array($request->category, array_keys($categories)))) {
                 $queryCo    = $this->coRepo->getCoes([
                     'id'     => $request->co_id,
                     'status' => ProcessStatus::Approved
                 ])->limit(1);
                 $coModel = $queryCo->first();
                 $co = $queryCo->pluck('code', 'id')->toArray();
-                if (!$co) {
-                    return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
-                }
+                // if (!$co || !in_array($request->category, array_keys($categories))) {
+                //     return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
+                // }
                 if ($request->material) {
                     $currentLotNo = DB::table('base_warehouses')
                         ->select(DB::raw('MAX(REPLACE(lot_no,"NK","")) AS max_lot_no'))
                         ->where('lot_no', 'like', 'NK%')
                         ->first();
                     $nextLotNo = 'NK'.(intval($currentLotNo->max_lot_no)+1);
-
                     foreach ($request->material as $material) {
                         $price_survey = $material->price_survey->where('status', \App\Models\PriceSurvey::TYPE_BUY)->first();
                         $products[] = [
@@ -120,6 +126,7 @@ class WarehouseReceiptController extends Controller
                             'quantity_reality' => 0,
                             'unit_price' => ($price_survey->price / $material->dinh_luong),
                             'into_money' => $price_survey->price,
+                            'model_type' => in_array($request->category, array_keys($categories)) ? WarehouseHelper::KHO_VAT_DUNG : null,
                         ];
                     }
                 }
@@ -143,7 +150,7 @@ class WarehouseReceiptController extends Controller
         }
 
         return view('admins.warehouse_receipt.create', compact('breadcrumb', 'titleForLayout',
-            'permissions', 'products', 'model', 'coModel'));
+            'permissions', 'products', 'model', 'coModel','request_id'));
     }
 
     public function store(WarehouseReceiptRequest $request)
@@ -181,8 +188,10 @@ class WarehouseReceiptController extends Controller
                     $this->coStepHisRepo->insertNextStep('payment', $model->co_id, $co->request[0]->id, CoStepHistory::ACTION_CREATE, 3);
                 }
                 else {
-                    $this->coStepHisRepo->insertNextStep('warehouse_export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
+                    $this->coStepHisRepo->insertNextStep('warehouse-export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
                 }
+            } else if($model && $model->request_id && !$model->co_id) {
+                $this->requestStepHisRepo->insertNextStep('warehouse-export', $model->request_id, $model->request_id, CoStepHistory::ACTION_CREATE);
             }
 
             // Save many product

@@ -7,6 +7,7 @@ use App\Helpers\AdminHelper;
 use App\Helpers\DataHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\PermissionHelpers;
+use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestRequest;
 use App\Models\Admin;
@@ -15,6 +16,7 @@ use App\Models\Repositories\CoRepository;
 use App\Models\Repositories\RequestRepository;
 use App\Models\Repositories\SurveyPriceRepository;
 use App\Models\Request as RequestModel;
+use App\Models\Warehouse\BaseWarehouseCommon;
 use App\Services\CoService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,6 +24,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\RequestStepHistoryRepository;
+use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\RequestStepHistory;
 
 class RequestController extends Controller
@@ -132,7 +135,7 @@ class RequestController extends Controller
             $warehouses    = $queryCo->first()->warehouses;
             $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code')->toArray());
         } else {
-            $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM]);
+            $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM, DataHelper::HOAT_DONG]);
             $co            = array();
             $warehouses    = collect([]);
             $listWarehouse = collect([]);
@@ -145,6 +148,7 @@ class RequestController extends Controller
        try {
             $category = $request->input('category');
             $coId     = $request->input('co_id');
+            $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
             if ($coId) {
                 $co = $this->coRepository->find($request->input('co_id'));
                 if (!$co || $co->status !== ProcessStatus::Approved) {
@@ -187,23 +191,51 @@ class RequestController extends Controller
 
             \DB::beginTransaction();
             $inputMaterials = $request->input('material');
+            $baseWarehouseRepository = new BaseWarehouseRepository();
+            $baseWarehouseRepository->setModel(WarehouseHelper::getModel(WarehouseHelper::KHO_VAT_DUNG));
+
             foreach($inputMaterials['code'] as $key => $code) {
                 if (empty($code) || !$inputMaterials['dinh_luong'][$key]) {
                     continue;
                 }
-                $materials[] = [
-                    'merchandise_id'=> $inputMaterials['merchandise_id'][$key],
-                    'code'          => $inputMaterials['code'][$key],
-                    'mo_ta'         => $inputMaterials['mo_ta'][$key],
-                    'kich_thuoc'    => isset($inputMaterials['kich_thuoc']) ? $inputMaterials['kich_thuoc'][$key] : null,
-                    'quy_cach'      => isset($inputMaterials['quy_cach']) ? $inputMaterials['quy_cach'][$key] : null,
-                    'dv_tinh'       => $inputMaterials['dv_tinh'][$key],
-                    'dinh_luong'    => $inputMaterials['dinh_luong'][$key],
-                    'thoi_gian_can' => $inputMaterials['thoi_gian_can'][$key],
-                    'don_gia'       => isset($inputMaterials['don_gia']) ? $inputMaterials['don_gia'][$key] : 0,
-                    'thanh_tien'    => isset($inputMaterials['thanh_tien']) ? $inputMaterials['thanh_tien'][$key] : 0,
-                    'ghi_chu'       => $inputMaterials['ghi_chu'][$key],
-                ];
+                if(in_array($category, array_keys($categories))) {
+                    $wh = [
+                        'code'          => $inputMaterials['code'][$key],
+                        'mo_ta'         => $inputMaterials['mo_ta'][$key],
+                        'dvt'           => $inputMaterials['dv_tinh'][$key],
+                        'ghi_chu'       => $inputMaterials['ghi_chu'][$key],
+                        'model_type'    => WarehouseHelper::KHO_VAT_DUNG,
+                        'quantity'      => 0,
+                    ];
+                    $supply = $baseWarehouseRepository->create($wh, false);
+                    $materials[] = [
+                        'merchandise_id'=> $supply->l_id,
+                        'code'          => $inputMaterials['code'][$key],
+                        'mo_ta'         => $inputMaterials['mo_ta'][$key],
+                        'kich_thuoc'    => isset($inputMaterials['kich_thuoc']) ? $inputMaterials['kich_thuoc'][$key] : null,
+                        'quy_cach'      => isset($inputMaterials['quy_cach']) ? $inputMaterials['quy_cach'][$key] : null,
+                        'dv_tinh'       => $inputMaterials['dv_tinh'][$key],
+                        'dinh_luong'    => $inputMaterials['dinh_luong'][$key],
+                        'thoi_gian_can' => $inputMaterials['thoi_gian_can'][$key],
+                        'don_gia'       => isset($inputMaterials['don_gia']) ? $inputMaterials['don_gia'][$key] : 0,
+                        'thanh_tien'    => isset($inputMaterials['thanh_tien']) ? $inputMaterials['thanh_tien'][$key] : 0,
+                        'ghi_chu'       => $inputMaterials['ghi_chu'][$key],
+                    ];
+                } else {
+                    $materials[] = [
+                        'merchandise_id'=> $inputMaterials['merchandise_id'][$key],
+                        'code'          => $inputMaterials['code'][$key],
+                        'mo_ta'         => $inputMaterials['mo_ta'][$key],
+                        'kich_thuoc'    => isset($inputMaterials['kich_thuoc']) ? $inputMaterials['kich_thuoc'][$key] : null,
+                        'quy_cach'      => isset($inputMaterials['quy_cach']) ? $inputMaterials['quy_cach'][$key] : null,
+                        'dv_tinh'       => $inputMaterials['dv_tinh'][$key],
+                        'dinh_luong'    => $inputMaterials['dinh_luong'][$key],
+                        'thoi_gian_can' => $inputMaterials['thoi_gian_can'][$key],
+                        'don_gia'       => isset($inputMaterials['don_gia']) ? $inputMaterials['don_gia'][$key] : 0,
+                        'thanh_tien'    => isset($inputMaterials['thanh_tien']) ? $inputMaterials['thanh_tien'][$key] : 0,
+                        'ghi_chu'       => $inputMaterials['ghi_chu'][$key],
+                    ];
+                }
                 $money_total += (isset($inputMaterials['thanh_tien']) ? $inputMaterials['thanh_tien'][$key] : 0);
             }
             $input = [
@@ -318,6 +350,7 @@ class RequestController extends Controller
                         CoStepHistory::STEP_CREATE_PAYMENT_N3,
                         CoStepHistory::STEP_CREATE_PAYMENT_N4,
                     ]);
+                    $canCreateWarehouseReceipt = $currentStep->step == CoStepHistory::STEP_CREATE_WAREHOUSE_RECEIPT;
                 }
             }
 
