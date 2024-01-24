@@ -93,7 +93,7 @@ class WarehouseReceiptController extends Controller
         $inputs = $request->input();
         $products = [];
         $coModel = null;
-        $request_id = $inputs['request_id'];
+        $request_id = $inputs['request_id'] ?? null;
         if(!empty($inputs['request_id'])) {
             $request = RequestModel::find($inputs['request_id']);
             if($request && ($request->co_id || in_array($request->category, array_keys($categories)))) {
