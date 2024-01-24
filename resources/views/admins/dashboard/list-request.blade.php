@@ -54,9 +54,11 @@
                             @php
                                 $act_router = null;
                                 $params = null;
-                                if($request->currentStep->step == \App\Models\RequestStepHistory::STEP_CREATE_WAREHOUSE_EXPORT) {
-                                    $act_router = 'admin.warehouse-export.create';
-                                    $params = ['request_id' => $request->id];
+                                if($request->currentStep) {
+                                    if($request->currentStep->step == \App\Models\RequestStepHistory::STEP_CREATE_WAREHOUSE_EXPORT) {
+                                        $act_router = 'admin.warehouse-export.create';
+                                        $params = ['request_id' => $request->id];
+                                    }
                                 }
                             @endphp
                             @if($request->currentStep && $steps[$request->currentStep->step]['act_router'])
