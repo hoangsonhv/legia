@@ -40,7 +40,10 @@ class DataHelper
                     self::HOAT_DONG.'-thue'                => 'Thuế',
                     self::HOAT_DONG.'-dich_vu_hai_quan'    => 'Dịch vụ hải quan',
                     self::HOAT_DONG.'-dich_vu_thue'        => 'Dịch vụ thuế',
-                    self::HOAT_DONG.'-khac'                => 'khác'
+                    self::HOAT_DONG.'-bao_bi_dong_goi'     => 'Bao bì đóng gói',
+                    self::HOAT_DONG.'-dung_cu_do_luong'    => 'Dụng cụ đo lường',
+                    self::HOAT_DONG.'-nguyen_vat_lieu_du_tru_de_san_xuat_hang_hoa'  => 'Nguyên vật liệu dự trữ để sản xuất hàng hóa',
+                    self::HOAT_DONG.'-khac'                => 'khác',
                 ]
             ],
             self::KHO => [  // PYC, PC, PT, CO
