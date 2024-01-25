@@ -64,7 +64,7 @@ class ReportController extends Controller
 
         $bankLoans = $this->reportRepository->reportByMonthBankLoan();
         $bankLoanSummary = $this->reportRepository->summaryBankLoan();
-        $bankLoansByBank = $this->reportRepository->reportByMonthBankLoanWithParrent();
+        $bankLoansByBank = $this->reportRepository->reportByMonthBankLoanWithParrent()->groupBy('name_bank');
 
         // table
         $tableTmpCo = $this->reportRepository->getTmpCO($arrRequest);

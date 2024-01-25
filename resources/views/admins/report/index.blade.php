@@ -20,12 +20,18 @@
                             <div class="col-lg-6">
                                 @include('admins.report.includes.index.bank-loan-table')
                             </div>
-                            @php
-                                $col = 24/($bankLoansByBank->count());
-                            @endphp
-                            @foreach ($bankLoansByBank as $data)
-                                <div class="col-lg-{{$col}}">
-                                    @include('admins.report.includes.index.list-bank-loan-table', ['datas' => $data])
+                            @foreach ($bankLoansByBank as $name => $bank)
+                                <div class="col-lg-6">
+                                    <img class="rounded float-left img-fluid p-2" width="300px" src="{{\App\Helpers\DataHelper::logoBanks($name)}}" alt="{{$name}}">
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        @foreach ($bank as $data)
+                                        <div class="col-lg-{{12/ $bank->count()}}">
+                                            @include('admins.report.includes.index.list-bank-loan-table', ['datas' => $data])
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             @endforeach
                             

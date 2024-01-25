@@ -257,4 +257,16 @@ class DataHelper
         }
         return $arrDocuments;
     }
+
+    public static function logoBanks($name_bank) {
+        $name_bank = strtolower($name_bank);
+        switch ($name_bank) {
+            case 'vietinbank':
+                return asset('images/Logo-VietinBank-CTG-Te.png');
+            case 'vietcombank':
+                return asset('images/Logo-Vietcombank.png');
+            default:
+                return null;
+        }
+    }
 }
