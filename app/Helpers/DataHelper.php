@@ -29,10 +29,10 @@ class DataHelper
                 'option' => [
                     self::VAN_PHONG_PHAM.'-do_dung'  => 'Đồ dùng văn phòng',
                     self::VAN_PHONG_PHAM.'-thiet_bi' => 'Thiết bị văn phòng',
-                    self::VAN_PHONG_PHAM.'-khac'     => 'khác'
                     self::VAN_PHONG_PHAM.'-bao_bi_dong_goi'     => 'Bao bì đóng gói',
                     self::VAN_PHONG_PHAM.'-dung_cu_do_luong'    => 'Dụng cụ đo lường',
                     self::VAN_PHONG_PHAM.'-nguyen_vat_lieu_du_tru_de_san_xuat_hang_hoa'  => 'Nguyên vật liệu dự trữ để sản xuất hàng hóa',
+                    self::VAN_PHONG_PHAM.'-khac'     => 'khác'
                 ]
             ],
             self::HOAT_DONG => [ // PYC, PC, Not CO
