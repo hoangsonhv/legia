@@ -324,7 +324,7 @@ class RequestController extends Controller
                     $canCreateWarehouseReceipt = $coModel->currentStep->step == CoStepHistory::STEP_CREATE_WAREHOUSE_RECEIPT;
                 }
             } else {
-                $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM]);
+                $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM, DataHelper::HOAT_DONG]);
                 $co            = array();
                 $warehouses    = collect([]);
                 $listWarehouse = collect([]);
