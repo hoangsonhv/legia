@@ -32,6 +32,9 @@ class DataHelper
                     self::VAN_PHONG_PHAM.'-bao_bi_dong_goi'     => 'Bao bì đóng gói',
                     self::VAN_PHONG_PHAM.'-dung_cu_do_luong'    => 'Dụng cụ đo lường',
                     self::VAN_PHONG_PHAM.'-nguyen_vat_lieu_du_tru_de_san_xuat_hang_hoa'  => 'Nguyên vật liệu dự trữ để sản xuất hàng hóa',
+                    self::VAN_PHONG_PHAM.'-phu_tung_may_moc'    => 'Phụ tùng, máy móc',
+                    self::VAN_PHONG_PHAM.'-vat_tu_tieu_hao'    => 'Vật tư tiêu hao( phục vụ sản xuất)',
+                    self::VAN_PHONG_PHAM.'-thiet_bi_van_phong'    => 'Thiết bị văn phòng, văn phòng phẩm',
                     self::VAN_PHONG_PHAM.'-khac'     => 'khác'
                 ]
             ],
