@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admins\WarehouseProductCodeController;
 use App\Http\Controllers\Admins\WarehouseSupplyController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -341,5 +342,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
 	/* Get form create material */
 	Route::group(['prefix' => 'warehouse'], function() {
 		Route::get('show-form-create', [WarehouseController::class, 'showFormCreate'])->name('admin.warehouse.show-form-create');
+	});
+
+	Route::get('/test',function(){
+		// $pdf = PDF::loadView('admins.pdf.warehouse-export');
+		return view('admins.test.index');
 	});
 });
