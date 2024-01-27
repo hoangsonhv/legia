@@ -6,12 +6,12 @@
     <title>Lệnh sản xuất</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href={{asset('css/pdf/manufacture-check.css')}} />
+    {{-- <link rel="stylesheet" href={{asset('css/pdf/manufacture-check.css')}} /> --}}
 </head>
 
 <body>
-    <div id="pdf-manufacture" style=" transform: rotate(-90deg);">
-        <table border="0" cellspacing="0" cellpadding="0" >
+    <div id="pdf-warehouse-export">
+        <table border="0" cellspacing="0" cellpadding="0" style="font-family: Arial, sans-serif;">
             <tr>
                 <td rowspan="5" style="padding-right: 10px;">
                     <img width="220px" height="100px" src="{{ asset('images/logo.jpg') }}" />
@@ -55,53 +55,52 @@
             </tr>
         </table>
 
-        <table border="1" cellspacing="0" cellpadding="5" >
-            <tr>
-                <th>Số TT</th>
-                <th>Mã HH</th>
-                <th>Vật liệu</th>
-                <th>Độ dày (mm)</th>
-                <th>Tiêu chuẩn</th>
-                <th>K.Cỡ</th>
-                <th>Kích thước (mm)</th>
-                <th>Đ/v tính</th>
-                <th>Số lượng</th>
+        <table  cellspacing="0" cellpadding="5" style="font-family: Arial, sans-serif;margin-top: 20px">
+            <tr style="border: 1px solid black">
+                <th style="border: 1px solid black">Số TT</th>
+                <th style="border: 1px solid black">Mã HH</th>
+                <th style="border: 1px solid black">Loại Vật liệu</th>
+                <th style="border: 1px solid black">Độ dày (mm)</th>
+                <th style="border: 1px solid black">Tiêu chuẩn</th>
+                <th style="border: 1px solid black">K.Cỡ</th>
+                <th style="border: 1px solid black">Kích thước (mm)</th>
+                <th style="border: 1px solid black">Đ/v tính</th>
+                <th style="border: 1px solid black">Số lượng</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>VQ02 030</td>
-                <td>VS6602- Non Asbestos Gasket Sheet</td>
-                <td>3mm</td>
-                <td></td>
-                <td></td>
-                <td>1270 x 1270</td>
-                <td>Tấm</td>
-                <td>4</td>
+            <tr style="border: 1px solid black">
+                <td style="border: 1px solid black" >1</td>
+                <td style="border: 1px solid black">VQ02 030</td>
+                <td style="border: 1px solid black">VS6602- Non Asbestos Gasket Sheet</td>
+                <td style="border: 1px solid black">3mm</td>
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">1270 x 1270</td>
+                <td style="border: 1px solid black">Tấm</td>
+                <td style="border: 1px solid black" >4</td>
             </tr>
-        </table>
 
-        <table style="margin-top: 20px">
-            <tr>
-                <td style="width: 50px"></td>
-                <td>BÊN GIAO (kho)</td>
-                <td style="">
-
-                </td>
-                <td>BÊN NHẬN (sản xuất)</td>
+            <tr >
+                <th style="width: 50px"></th>
+                <th>BÊN GIAO (kho)</th>
+                <th colspan="3">
+                </th>
+                <th>BÊN NHẬN (sản xuất)</th>
             </tr>
             <tr>
                 <td></td>
                 <td>Bộ phận: </td>
-                <td></td>
+                <td colspan="3"></td>
                 <td>Bộ phận: </td>
             </tr>
             <tr>
                 <td></td>
                 <td>ký & họ tên </td>
-                <td></td>
+                <td colspan="3"></td>
                 <td>ký & họ tên </td>
             </tr>
         </table>
+
+       
     </div>
 </body>
 
