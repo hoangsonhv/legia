@@ -162,6 +162,7 @@
   }
   .container{
     width: 1000px;
+    rotate: -90deg;
   }
   .second_part-two{
     margin-left: 20px;
