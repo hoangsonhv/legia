@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="pdf-manufacture">
+    <div id="pdf-manufacture" style=" transform: rotate(-90deg);">
         <table border="0" cellspacing="0" cellpadding="0" style="font-family: Arial, sans-serif;">
             <tr>
                 <td rowspan="5" style="padding-right: 10px;">
