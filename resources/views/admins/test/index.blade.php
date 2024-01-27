@@ -1,187 +1,108 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Lệnh sản xuất</title>
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href={{asset('css/pdf/manufacture-check.css')}} /> --}}
 </head>
+
 <body>
-<div class="container">
-    <div class="header">
-        <div class="logo">
-            <img width="220px" height="100px" src="{{asset('images/logo.jpg')}}"/>
-        </div>
-        <div class="information">
-            <p style="font-weight: bold">
-                KÍN LÊ GIA
-            </p>
-            <p style="font-weight: bold">
-                Địa chỉ : 26/12E, Ấp Xuân Thới Đông 1, Xã Xuân Thới Đông, Huyện Hóc Môn, Tp.HCM
-            </p>
-          <div class="flex">
-            <div class="information__left">
-                <p style="font-weight: bold">
-                    Điện thoại :
-                </p>
-                <p style="font-weight: bold">
-                    Fax :  
-                </p>
-                <p style="font-weight: bold">
-                    Email :      
-                </p>
-                <p style="font-weight: bold">
-                    Web :    
-                </p>
-            </div>
-            <div class="information__right">
-                <p>
-                    +84 283 620 8651/620 8653/620 8654
-                </p>
-                <p>
-                    +84 283 811 1867	
-                </p>
-                <p>
-                    sales@legiaseal.com	      
-                </p>
-                <p>
-                    http://legia-sealingmaterial.vn		    
-                </p>
-            </div>
-          </div>
-        </div>
+    <div id="pdf-warehouse-export">
+        <table border="0" cellspacing="0" cellpadding="0" style="font-family: Arial, sans-serif;">
+            <tr>
+                <td rowspan="5" style="padding-right: 10px;">
+                    <img width="220px" height="100px" src="{{ asset('images/logo.jpg') }}" />
+                </td>
+                <td colspan="2" style="font-weight: bold;width: 800px">CÔNG TY TNHH SX TM DV VẬT LIỆU LÀM KÍN LÊ GIA
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-weight: bold;">Địa chỉ : 26/12E, Ấp Xuân Thới Đông 1, Xã Xuân Thới Đông,
+                    Huyện Hóc Môn, Tp.HCM </td>
+                {{-- <td>26/12E, Ấp Xuân Thới Đông 1, Xã Xuân</td> --}}
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Điện thoại :</td>
+                <td>+84 283 620 8651/620 8653/620 8654</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Fax :</td>
+                <td>+84 283 811 1867</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">Email:</td>
+                <td>sales@legiaseal.com</td>
+            </tr>
 
-       
-    </div>
-    <div class="second_part">
-        <p class="text-center" style="font-weight: bold">
-            PHIẾU XUẤT KHO NGUYÊN VẬT LIỆU SẢN XUẤT	
-        </p>
-        <div class="second_part-two">
-            <div class="second_part-left">
-                <p>
-                    Số:
-                </p>
-                <p>
-                    Ngày:
-                </p>
-                <p>
-                    Ref:
-                </p>
-            </div>
-            <div class="second_part-left">
-                <p>
-                    XKSX190001
-                </p>
-                <p>
-                    26/7/2019
-                </p>
-                <p>
-                    CO1900001
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="third-part">
-        <table  cellpadding="5" style="width: 100%;margin-top: 20px">
-  <tr>
-    <th>Số TT</th>
-    <th>Mã HH</th>
-    <th>Loại Vật liệu</th>
-    <th>Độ dày (mm)</th>
-    <th>Tiêu chuẩn</th>
-    <th>K.Cỡ</th>
-    <th>Kích thước (mm)</th>
-    <th>Đ/v tính</th>
-    <th>Số lượng</th>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>VQ02 030</td>
-    <td>VS6602- Non Asbestos Gasket Sheet</td>
-    <td>3mm</td>
-    <td></td> <!-- Điền thông tin tiêu chuẩn vào đây -->
-    <td></td> <!-- Điền thông tin kích cỡ vào đây -->
-    <td>1270 x 1270</td>
-    <td>Tấm</td>
-    <td>4</td>
-  </tr>
-</table>    
-    <div class="fourth-part">
-        <div class="fourth-part_left">
-            <p style="font-weight: bold">
-                BÊN GIAO: (kho)
-            </p>
-            <p>
-                Bộ phận:
-            </p>
-            <p>
-                Ký & họ tên
-            </p>
-        </div>
-        <div class="fourth-part_right">
-            <p style="font-weight: bold">
-                BÊN NHẬN: (sản xuất)
-            </p>
-            <p>
-                Bộ phận:
-            </p>
-            <p>
-                Ký & họ tên
-            </p>
-        </div>
-    </div>
-        </div>
+            <tr style="font-weight: bold; text-align: center;">
+                <td colspan="7" style="padding: 10px;font-size: 18px">PHIẾU XUẤT KHO NGUYÊN VẬT LIỆU SẢN XUẤT</td>
+            </tr>
+            <tr>
+                <td><span style="margin-left: 50px">Số:</span> <span style="margin-left: 50px">XKSX190001</span></td>
 
-</div>
+            </tr>
+            <tr>
+                <td><span style="margin-left: 50px"> Ngày: </span> <span style="margin-left: 50px">26/7/2019</span>
+                </td>
+
+            </tr>
+            <tr>
+                <td><span style="margin-left: 50px"> Ref: </span> <span style="margin-left: 50px"> CO1900001</span>
+                </td>
+            </tr>
+        </table>
+
+        <table border="1" cellspacing="0" cellpadding="5" style="font-family: Arial, sans-serif;margin-top: 20px">
+            <tr>
+                <th>Số TT</th>
+                <th>Mã HH</th>
+                <th>Loại Vật liệu</th>
+                <th>Độ dày (mm)</th>
+                <th>Tiêu chuẩn</th>
+                <th>K.Cỡ</th>
+                <th>Kích thước (mm)</th>
+                <th>Đ/v tính</th>
+                <th>Số lượng</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>VQ02 030</td>
+                <td>VS6602- Non Asbestos Gasket Sheet</td>
+                <td>3mm</td>
+                <td></td>
+                <td></td>
+                <td>1270 x 1270</td>
+                <td>Tấm</td>
+                <td>4</td>
+            </tr>
+        </table>
+
+        <table style="margin-top: 20px">
+            <tr>
+                <th style="width: 50px"></th>
+                <th>BÊN GIAO (kho)</th>
+                <th style="width: 600px">
+
+                </th>
+                <th>BÊN NHẬN (sản xuất)</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Bộ phận: </td>
+                <td></td>
+                <td>Bộ phận: </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>ký & họ tên </td>
+                <td></td>
+                <td>ký & họ tên </td>
+            </tr>
+        </table>
+    </div>
 </body>
-</html>
 
-<style>
-    p{
-        padding: 3px;
-        margin: 0;
-    }
-  .header{
-     display: flex;
-     width: 100%;
-  }
-  .flex{
-    display: flex;
-  }
-  .information__right{
-    margin-left: 100px;
-  }
-  .text-center{
-    text-align: center;
-  }
-  .flex-col{
-    flex-direction: column;
-  }
-  .second_part{
-    margin-top: 20px;
-  }
-  .container{
-    width: 1000px;
-    rotate: -90deg;
-  }
-  .second_part-two{
-    margin-left: 20px;
-    display: flex;
-  }
-  .second_part-left{
-    margin-left: 20px;  
-  }
-  /* table{
-    border: 1px solid black;
-  } */
-  table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-.fourth-part{
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 60px;
-}
-</style>
+</html>
