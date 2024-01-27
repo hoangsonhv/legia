@@ -75,4 +75,9 @@ class PDFController extends Controller
             report($ex);
         }
     }
+
+    public function warehouseExport($id){
+        $pdf = PDF::loadView('admins.pdf.warehouse-export');
+        return $pdf->download('Phieu_xuat_kho'. date("d-m-Y").'.pdf');
+    }
 }

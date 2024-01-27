@@ -296,6 +296,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
         Route::get('/manufacture/{id}', [PDFController::class, 'manufacture'])->name('admin.pdf.manufacture');
         Route::get('/manufacture-check/{id}', [PDFController::class, 'manufactureCheck'])->name('admin.pdf.manufacture-check');
         Route::get('/warehouse-export-sell/{id}', [PDFController::class, 'warehouseExportSell'])->name('admin.pdf.warehouse-export-sell');
+		Route::get('/warehouse-export/{id}', [PDFController::class, 'warehouseExport'])->name('admin.pdf.warehouse-export');
     });
 
     Route::group(['prefix' => 'report'], function() {
