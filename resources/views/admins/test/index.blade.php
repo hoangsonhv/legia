@@ -80,12 +80,11 @@
             </tr>
         </table>
 
-        <table style="margin-top: 20px">
+        <table border="0" style="margin-top: 20px">
             <tr>
                 <th style="width: 50px"></th>
                 <th>BÊN GIAO (kho)</th>
                 <th style="width: 600px">
-
                 </th>
                 <th>BÊN NHẬN (sản xuất)</th>
             </tr>

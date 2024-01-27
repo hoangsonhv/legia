@@ -55,11 +55,11 @@
             </tr>
         </table>
 
-        <table border="1" cellspacing="0" cellpadding="5" style="font-family: Arial, sans-serif;margin-top: 20px">
+        <table border="1" cellspacing="0" cellpadding="5" >
             <tr>
                 <th>Số TT</th>
                 <th>Mã HH</th>
-                <th>Loại Vật liệu</th>
+                <th>Vật liệu</th>
                 <th>Độ dày (mm)</th>
                 <th>Tiêu chuẩn</th>
                 <th>K.Cỡ</th>
