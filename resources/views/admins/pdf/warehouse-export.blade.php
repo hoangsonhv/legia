@@ -82,20 +82,20 @@
             <tr >
                 <td style="width: 50px"></td>
                 <td>BÊN GIAO (kho)</td>
-                <td colspan="5">
+                <td colspan="6">
                 </td>
                 <td>BÊN NHẬN (sản xuất)</td>
             </tr>
             <tr>
                 <td></td>
                 <td>Bộ phận: </td>
-                <td colspan="5"></td>
+                <td colspan="6"></td>
                 <td>Bộ phận: </td>
             </tr>
             <tr>
                 <td></td>
                 <td>ký & họ tên </td>
-                <td colspan="5"></td>
+                <td colspan="6"></td>
                 <td>ký & họ tên </td>
             </tr>
         </table>
