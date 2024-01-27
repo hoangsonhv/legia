@@ -84,7 +84,7 @@
             <tr>
                 <td style="width: 50px"></td>
                 <td>BÊN GIAO (kho)</td>
-                <td style="width: 600px">
+                <td style="">
 
                 </td>
                 <td>BÊN NHẬN (sản xuất)</td>
