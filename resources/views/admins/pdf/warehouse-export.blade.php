@@ -11,7 +11,7 @@
 
 <body>
     <div id="pdf-manufacture">
-        <table border="0" cellspacing="0" cellpadding="0" style="font-family: Arial, sans-serif;">
+        <table border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td rowspan="5" style="padding-right: 10px;">
                     <img width="220px" height="100px" src="{{ asset('images/logo.jpg') }}" />
@@ -55,7 +55,7 @@
             </tr>
         </table>
 
-        <table  cellspacing="0" cellpadding="5" style="font-family: Arial, sans-serif;margin-top: 20px">
+        <table  cellspacing="0" cellpadding="5">
             <tr style="border: 1px solid black">
                 <th style="border: 1px solid black">Số TT</th>
                 <th style="border: 1px solid black">Mã HH</th>
@@ -80,11 +80,11 @@
             </tr>
 
             <tr >
-                <th style="width: 50px"></th>
-                <th>BÊN GIAO (kho)</th>
-                <th colspan="3">
-                </th>
-                <th>BÊN NHẬN (sản xuất)</th>
+                <td style="width: 50px"></td>
+                <td>BÊN GIAO (kho)</td>
+                <td colspan="3">
+                </td>
+                <td>BÊN NHẬN (sản xuất)</td>
             </tr>
             <tr>
                 <td></td>
