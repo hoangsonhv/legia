@@ -6,7 +6,7 @@
     <title>Lệnh sản xuất</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href={{asset('css/pdf/manufacture-check.css')}} />
+    <link rel="stylesheet" href={{ asset('css/pdf/manufacture-check.css') }} />
 </head>
 
 <body>
@@ -45,17 +45,23 @@
 
             </tr>
             <tr>
-                <td><span style="margin-left: 50px"> Ngày: </span> <span style="margin-left: 50px">26/7/2019</span>
+                <td><span style="margin-left: 50px"> Ngày: </span> <span
+                        style="margin-left: 50px">{{ date('d/n/Y', strtotime(now())) }}
+                    </span>
                 </td>
 
             </tr>
             <tr>
-                <td><span style="margin-left: 50px"> Ref: </span> <span style="margin-left: 50px"> CO1900001</span>
+                <td>@if($co)
+                    <span style="margin-left: 50px"> Ref: </span> <span style="margin-left: 50px">
+                        {{ $co->code }}</span>
+                    @endif
+                    
                 </td>
             </tr>
         </table>
 
-        <table  cellspacing="0" cellpadding="5">
+        <table cellspacing="0" cellpadding="5" style="margin-top: 20px">
             <tr style="border: 1px solid black">
                 <th style="border: 1px solid black">Số TT</th>
                 <th style="border: 1px solid black">Mã HH</th>
@@ -67,19 +73,31 @@
                 <th style="border: 1px solid black">Đ/v tính</th>
                 <th style="border: 1px solid black">Số lượng</th>
             </tr>
-            <tr style="border: 1px solid black">
-                <td style="border: 1px solid black" >1</td>
-                <td style="border: 1px solid black">VQ02 030</td>
-                <td style="border: 1px solid black">VS6602- Non Asbestos Gasket Sheet</td>
-                <td style="border: 1px solid black">3mm</td>
-                <td style="border: 1px solid black"></td>
-                <td style="border: 1px solid black"></td>
-                <td style="border: 1px solid black">1270 x 1270</td>
-                <td style="border: 1px solid black">Tấm</td>
-                <td style="border: 1px solid black" >4</td>
-            </tr>
+            @if (!empty($products))
+                @foreach ($products as $index => $product)
+                
+                    @php
+                        $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])->first();
+                        $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
+                            ->where('l_id', $product['merchandise_id'])
+                            ->first();
+                    @endphp
+                    <tr style="border: 1px solid black">
+                        <td style="border: 1px solid black">{{ $index + 1 }}</td>
+                        <td style="border: 1px solid black">{{ $product['code'] }}</td>
+                        <td style="border: 1px solid black">{{$merchandise->vat_lieu}}</td>
+                        <td style="border: 1px solid black">{{$merchandise->do_day}}</td>
+                        <td style="border: 1px solid black">{{$merchandise->tieu_chuan}}</td>
+                        <td style="border: 1px solid black">{{$merchandise->kich_co}}</td>
+                        <td style="border: 1px solid black">{{$merchandise->kich_thuoc}}</td>
+                        <td style="border: 1px solid black">{{ $product['unit'] }}</td>
+                        <td style="border: 1px solid black">{{ $product['quantity_reality'] }}</td>
+                    </tr>
+                @endforeach
+            @endif
 
-            <tr >
+
+            <tr>
                 <td style="width: 50px"></td>
                 <td>BÊN GIAO (kho)</td>
                 <td colspan="6">
@@ -100,7 +118,7 @@
             </tr>
         </table>
 
-       
+
     </div>
 </body>
 

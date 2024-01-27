@@ -45,7 +45,8 @@
 
             </tr>
             <tr>
-                <td><span style="margin-left: 50px"> Ngày: </span> <span style="margin-left: 50px">26/7/2019</span>
+                <td><span style="margin-left: 50px"> Ngày: </span> <span style="margin-left: 50px">{{ date('d/n/Y', strtotime(now())) }}
+                </span>
                 </td>
 
             </tr>
