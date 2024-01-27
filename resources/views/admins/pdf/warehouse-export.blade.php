@@ -82,12 +82,12 @@
 
         <table style="margin-top: 20px">
             <tr>
-                <th style="width: 50px"></th>
-                <th>BÊN GIAO (kho)</th>
-                <th style="width: 600px">
+                <td style="width: 50px"></td>
+                <td>BÊN GIAO (kho)</td>
+                <td style="width: 600px">
 
-                </th>
-                <th>BÊN NHẬN (sản xuất)</th>
+                </td>
+                <td>BÊN NHẬN (sản xuất)</td>
             </tr>
             <tr>
                 <td></td>
