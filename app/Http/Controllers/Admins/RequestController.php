@@ -246,8 +246,40 @@ class RequestController extends Controller
                 'admin_id'              => Session::get('login')->id,
                 'note'                  => $request->input('note'),
                 'money_total'           => $money_total ?? null,
+                'thanh_toan'            => null,
                 'accompanying_document' => json_encode($documents)
             ];
+            if(in_array($category, array_keys(DataHelper::getCategoriesForIndex([DataHelper::DINH_KY, DataHelper::HOAT_DONG])))) {
+                $thanh_toan = [
+                    "percent" => [
+                        "truoc_khi_lam_hang" => null,
+                        "truoc_khi_giao_hang" => null,
+                        "ngay_khi_giao_hang" => null,
+                        "sau_khi_giao_hang_va_cttt" => "100",
+                        "thoi_gian_no" => null,
+                    ],
+                    "amount_money" => [
+                        "truoc_khi_lam_hang" => null,
+                        "truoc_khi_giao_hang" => null,
+                        "ngay_khi_giao_hang" => null,
+                        "sau_khi_giao_hang_va_cttt" => $input['money_total'],
+                        "thoi_gian_no" => null,
+                    ],
+                    "payment_document" => [
+                        "file_hoa_don" => [],
+                        "file_phieu_xuat_kho" => [],
+                        "file_bien_ban_ban_giao" => [],
+                        "file_bien_ban_nghiem_thu" => [],
+                        "file_giay_bao_hanh" => [],
+                        "file_chung_nhan_xuat_xuong" => [],
+                        "file_chung_chi_xuat_xu_vat_lieu" => [],
+                        "file_chung_chi_chat_luong_vat_lieu" => [],
+                        "file_test_report_vat_lieu" => [],
+                        "file_test_report_thuc_pham" => [],
+                    ],
+                ];
+                $input['thanh_toan'] = $thanh_toan;
+            }
             // Save request
             $requestModel = RequestModel::create($input);
             // Save co_step_history
@@ -328,22 +360,12 @@ class RequestController extends Controller
                 $co            = array();
                 $warehouses    = collect([]);
                 $listWarehouse = collect([]);
-                if (array_key_exists($requestModel->category, DataHelper::getCategoryPayment(DataHelper::DINH_KY)['option'])
-                    || (in_array($requestModel->category,array_keys(array_values(DataHelper::getCategories([DataHelper::VAN_PHONG_PHAM]))[0])) && $requestModel->status == ProcessStatus::Pending)) {
-                    $start      = Carbon::now()->startOfMonth()->toDatetimeString();
-                    $end        = Carbon::now()->endOfMonth()->toDatetimeString();
-                    $existsCat  = $this->requestRepository->getRequests([
-                        'id'         => $requestModel->id,
-                        'category'   => $requestModel->category,
-                        'status'     => ProcessStatus::Approved,
-                        'created_at' => ['created_at', 'between', [$start, $end]]
-                    ])->count();
-                    if($existsCat) {
-                        $canCreatePayment = true;
-                    }
-                } else if(in_array($requestModel->category,array_keys(array_values(DataHelper::getCategories([DataHelper::VAN_PHONG_PHAM]))[0]))) {
+                // if (!$requestModel->payments->count() && in_array($requestModel->category,array_keys( DataHelper::getCategoriesForIndex([DataHelper::DINH_KY, DataHelper::HOAT_DONG])))) {
+                //     $canCreatePayment = true;
+                // } else if(in_array($requestModel->category,array_keys( DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM])))) {
                     // dd($requestModel->currentStep->step);
-                    $currentStep = $requestModel->currentStep;
+                $currentStep = $requestModel->currentStep;
+                if($currentStep) {
                     $canCreatePayment = in_array($currentStep->step, [
                         CoStepHistory::STEP_CREATE_PAYMENT_N1,
                         CoStepHistory::STEP_CREATE_PAYMENT_N2,
@@ -352,6 +374,7 @@ class RequestController extends Controller
                     ]);
                     $canCreateWarehouseReceipt = $currentStep->step == CoStepHistory::STEP_CREATE_WAREHOUSE_RECEIPT;
                 }
+                // }
             }
 
             $materials = $requestModel->material;

@@ -134,6 +134,7 @@ class BaseAdminController extends Controller
                             break;
                         case 'payment':
                             if(!$repository->co_id && !in_array($repository->request->category, array_keys($categories))) {
+                                $this->requestRepository->doneRequest($repository->request->id);
                                 break;
                             }
                             $this->bankRepo->updateAccountBalance($repository);
@@ -227,11 +228,16 @@ class BaseAdminController extends Controller
                             break;
                         case 'request':
                             if(!$repository->co_id) {
-                                if(in_array($repository->category,array_keys(array_values(DataHelper::getCategories([DataHelper::VAN_PHONG_PHAM]))[0]))) {
+                                if(in_array($repository->category,array_keys(DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM, DataHelper::HOAT_DONG, DataHelper::DINH_KY])))) {
                                     if ($status == ProcessStatus::PendingSurveyPrice) {
                                         $this->requestStepHistoryRepository->insertNextStep($type, $repository->id, $repository->id, RequestStepHistory::ACTION_CREATE_PRICE_SURVEY);
                                     } else if ($status == ProcessStatus::Approved) {
-                                        $this->requestStepHistoryRepository->insertNextStep('payment', $repository->id, $repository->id, RequestStepHistory::ACTION_CREATE, 0);
+                                        // dd('123123');
+                                        if(in_array($repository->category,array_keys(DataHelper::getCategoriesForIndex([DataHelper::HOAT_DONG, DataHelper::DINH_KY])))) {
+                                            $this->requestStepHistoryRepository->insertNextStep('payment', $repository->id, $repository->id, RequestStepHistory::ACTION_CREATE, 3);
+                                        } else {
+                                            $this->requestStepHistoryRepository->insertNextStep('payment', $repository->id, $repository->id, RequestStepHistory::ACTION_CREATE, 0);
+                                        }
                                     } else if ($status == ProcessStatus::Unapproved) {
                                         $this->requestStepHistoryRepository->insertNextStep('request', $repository->id, $repository->id, RequestStepHistory::ACTION_CREATE);
                                     }

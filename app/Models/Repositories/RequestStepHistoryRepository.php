@@ -2,10 +2,12 @@
 
 namespace App\Models\Repositories;
 
+use App\Helpers\DataHelper;
 use App\Models\Repositories\CoRepository;
 use App\Models\Repositories\RequestRepository;
 use App\Models\Repositories\ManufactureRepository;
 use App\Models\Manufacture;
+use App\Models\Request as RequestModel;
 use App\Models\RequestStepHistory;
 
 class RequestStepHistoryRepository extends AdminRepository
@@ -25,6 +27,8 @@ class RequestStepHistoryRepository extends AdminRepository
         $params['request_id'] = $requestId;
         $params['object_type'] = $type;
         $params['object_id'] = $objectId;
+        $requestModel = RequestModel::find($requestId);
+        $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
         $step = null;
         switch ($type) {
             case 'request':
@@ -71,9 +75,9 @@ class RequestStepHistoryRepository extends AdminRepository
                         case 3:
                             // Nếu phiếu chi lần 4 == 0 thì chuyển nhập kho
                             $hasPercent = $this->requestRepo->checkPercentPayment($objectId, $stepId);
-                            if ($hasPercent) {
+                            if ($hasPercent || in_array($requestModel->category, array_keys(DataHelper::getCategoriesForIndex([DataHelper::HOAT_DONG, DataHelper::DINH_KY])))) {
                                 $step = RequestStepHistory::STEP_CREATE_PAYMENT_N4;
-                            } else {
+                            } else if(in_array($requestModel->category, array_keys($categories))) {
                                 $this->insertNextStep('warehouse-receipt', $requestId, $objectId, RequestStepHistory::ACTION_CREATE);
                             }
                             break;

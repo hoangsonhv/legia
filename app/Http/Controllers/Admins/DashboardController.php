@@ -294,7 +294,7 @@ class DashboardController extends Controller {
         $breadcrumb     = $this->menu;
         $titleForLayout = $this->menu['root'];
         $titleForChart  = 'Thống kê nguyên vật liệu';
-        $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
+        $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM, DataHelper::DINH_KY, DataHelper::HOAT_DONG]);
         $listRangeDate  = [
             'weeks'  => 'Biều đồ trên tuần',
             'months' => 'Biểu đồ trên tháng'

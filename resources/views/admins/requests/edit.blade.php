@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">Danh mục<b style="color: red;"> (*)</b></label>
-                                {!! Form::select('category', $categories, null, array('class' => 'form-control', 'required' => 'required')) !!}
+                                {!! Form::select('category', $categories, null, array('class' => 'form-control', 'required' => 'required', 'disabled'=> true)) !!}
                             </div>
                             <div class="form-group">
                                 <label for="note">Ghi chú</label>
@@ -278,8 +278,11 @@
                             </div>
                         @endif
                         @endpermission
-                    @if(\App\Enums\ProcessStatus::Pending != $requestModel->status)
-                        @include('admins.requests.includes.config_payment')
+                    @php
+                        $hidePercentPayment = in_array($requestModel->category, array_keys(\App\Helpers\DataHelper::getCategoriesForIndex([\App\Helpers\DataHelper::DINH_KY, \App\Helpers\DataHelper::HOAT_DONG])));
+                    @endphp
+                    @if(\App\Enums\ProcessStatus::Pending != $requestModel->status || $hidePercentPayment)
+                        @include('admins.requests.includes.config_payment', ['hidePercentPayment' => $hidePercentPayment])
                     @endif
                     <!-- /.card-body -->
                         <div class="card-footer text-right">

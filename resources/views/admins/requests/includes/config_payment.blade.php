@@ -2,6 +2,9 @@
 {!! Form::hidden('id', null) !!}
 {!! Form::hidden('is_request_payment', true) !!}
 {!! Form::hidden('category', $requestModel->category) !!}
+@php
+    $hide = !empty($hidePercentPayment) && $hidePercentPayment;
+@endphp
 <div class="card-body">
     <div class="form-group">
         <div class="row mb-3">
@@ -21,7 +24,7 @@
         <div class="table-responsive p-0">
             <table class="table table-bordered text-wrap">
                 <thead>
-                <tr class="text-center">
+                <tr class="text-center {{ $hide ? 'd-none' : ''}}">
                     <th>&nbsp</th>
                     <th class="align-middle">
                         Trước khi làm hàng
@@ -79,7 +82,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr class="{{ $hide ? 'd-none' : ''}}">
                     <td class="text-right" width="20%">% tổng giá trị đơn hàng</td>
                     <td>
                         {!! Form::text('thanh_toan[percent][truoc_khi_lam_hang]', null,
@@ -105,7 +108,7 @@
                         {!! Form::text('thanh_toan[percent][thoi_gian_no]', null, array('class' => 'form-control text-center')) !!}
                     </td>
                 </tr>
-                <tr class="text-center">
+                <tr class="text-center {{ $hide ? 'd-none' : ''}}">
                     <td class="text-right">Giá trị - VNĐ</td>
                     <td>
                         @php
