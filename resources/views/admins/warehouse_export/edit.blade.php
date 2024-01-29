@@ -102,7 +102,14 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer text-right">
+                                <a href={{ route('admin.pdf.warehouse-export', ['id' => $model->id]) }}>
+                                    <button class="btn btn-success">
+                                        <i class="nav-icon fas fa-file-export" aria-hidden="true"></i>
+                                        Phiếu xuất kho
+                                    </button>
+                                </a>
                                 <button type="submit" class="btn btn-primary">Lưu thông tin</button>
+                                
                                 <a href="{{ route('admin.warehouse-export.index') }}" class="btn btn-default">Quay lại</a>
                             </div>
                         {!! Form::close() !!}

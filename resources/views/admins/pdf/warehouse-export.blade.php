@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="pdf-manufacture">
+    <div id="pdf-manufacture" class="container">
         <table border="0" cellspacing="0" cellpadding="0">
             <tr>
                 <td rowspan="5" style="padding-right: 10px;">
@@ -123,3 +123,9 @@
 </body>
 
 </html>
+<style>
+    .container{
+        transform: rotate(0deg) !important;
+    }
+
+</style>
