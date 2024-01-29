@@ -27,7 +27,7 @@
                                 <div class="col-lg-12">
                                     <div class="row">
                                         @foreach ($bank as $data)
-                                        <div class="col-lg-{{12/ $bank->count()}}">
+                                        <div class="col-lg-12">
                                             @include('admins.report.includes.index.list-bank-loan-table', ['datas' => $data])
                                         </div>
                                         @endforeach

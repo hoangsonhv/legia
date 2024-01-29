@@ -85,5 +85,125 @@
             @endforeach
             </tbody>
         </table>
+        <hr>
+        @foreach ($datas->bankLoans as $key => $bankLoan)
+        <div class="p-4">
+
+            @php 
+            $type = '';
+            switch ($bankLoan->loan_type) {
+                case 1:
+                    $type = 'Trung hạn';
+                    break;
+                case 2:
+                    $type = 'Dài hạn';
+                break;
+                default:
+                    $type = 'Ngắn hạn';
+                    break;
+            }
+            @endphp 
+            <span class="badge bg-success m-2">
+                Khoản vay {{ $key + 1 }}
+            </span>
+            <table class="table table-hover text-nowrap">
+                <thead>
+                <tr>
+                    <th class="text-center">
+                        Nội dung vay
+                    </th>
+                    <th class="text-center">
+                        Hình thức vay
+                    </th>
+                    <th class="text-center">
+                        Nội dung chi tiết 
+                    </th>
+                    <th class="text-center">
+                        Ngày vay
+                    </th>
+                    <th class="text-center">
+                        Ngày đáo hạn
+                    </th>
+                    <th class="text-center">
+                        Tổng vay
+                    </th>
+                    <th class="text-center">
+                        Lãi xuất
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">{{ $bankLoan->lead }}</td>
+                        <td class="text-center">{{ $type }}</td>
+                        <td class="text-center">{{ $bankLoan->content }}</td>
+                        <td class="text-center">{{ $bankLoan->date }}</td>
+                        <td class="text-center">{{ $bankLoan->date_due }}</td>
+                        <td class="text-center">{{ number_format($bankLoan->amount_money)}}</td>
+                        <td class="text-center">{{ $bankLoan->profit_amount }}%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-hover text-nowrap">
+                <thead>
+                <tr>
+                    <th class="text-center">
+                        Tổng tiền đã vay
+                    </th>
+                    <th class="text-center">
+                        Tổng tiền đã trả
+                    </th>
+                    <th class="text-center">
+                        Số tiền còn nợ
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center bg-danger">{{ number_format($bankLoan->amount_money) }}</td>
+                    <td class="text-center bg-success">{{number_format($bankLoan->bankLoanDetails()->sum('total_amount')) }}</td>
+                    <td class="text-center bg-gray">{{ number_format($bankLoan->amount_money - $bankLoan->bankLoanDetails()->sum('debit_amount')) }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr class="text-center" style="background-color: yellow;"><th colspan="7">Chi tiết</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="text-center">
+                            Số tiền giao dịch
+                        </th>
+                        <th class="text-center">
+                            Số tiền lãi
+                        </th>
+                        <th class="text-center">
+                            Tổng cộng
+                        </th>
+                        <th class="text-center">
+                            Ghi chú
+                        </th>
+                        <th class="text-center">
+                            Ngày tạo
+                        </th>
+                        <th class="text-center">
+                            Người thực hiện
+                        </th>
+                    </tr>
+                    @foreach ($bankLoan->bankLoanDetails as $detail)
+                        <tr>
+                            <td class="text-center">{{ number_format($detail->debit_amount) }}</td>
+                            <td class="text-center">{{ number_format($detail->profit_amount) }}</td>
+                            <td class="text-center">{{ number_format($detail->total_amount) }}</td>
+                            <td class="text-center">{{ $detail->note }}</td>
+                            <td class="text-center">{{ dateTimeFormat($detail->created_at) }}</td>
+                            <td class="text-center">{{ $detail->admin ? $detail->admin->name : '' }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endforeach
     </div>
 </div>
