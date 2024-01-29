@@ -126,6 +126,7 @@
 <style>
     .container1{
         transform: rotate(0deg) !important;
+        width: 100% !important;
     }
 
 </style>
