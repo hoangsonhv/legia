@@ -18,6 +18,7 @@ use App\Models\Repositories\CoRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Request as RequestModel;
 use App\Models\Repositories\CoStepHistoryRepository;
+use App\Models\Repositories\RequestRepository;
 use App\Models\Repositories\RequestStepHistoryRepository;
 use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\Warehouse\BaseWarehouseCommon;
@@ -33,6 +34,7 @@ class WarehouseReceiptController extends Controller
     protected $whReceiptRepo;
     protected $coRepo;
     protected $coStepHisRepo;
+    protected $requestRepo;
     protected $requestStepHisRepo;
 
     /**
@@ -43,12 +45,14 @@ class WarehouseReceiptController extends Controller
     function __construct(WarehouseReceiptRepository $whReceiptRepo,
                          CoRepository $coRepo,
                          CoStepHistoryRepository $coStepHisRepo,
+                         RequestRepository $requestRepo,
                          RequestStepHistoryRepository $requestStepHisRepo)
     {
         $this->whReceiptRepo    = $whReceiptRepo;
         $this->coRepo           = $coRepo;
         $this->coStepHisRepo    = $coStepHisRepo;
         $this->requestStepHisRepo    = $requestStepHisRepo;
+        $this->requestRepo      = $requestRepo;
         $this->menu = [
             'root' => 'Quản lý Phiếu nhập kho',
             'data' => [
@@ -191,7 +195,8 @@ class WarehouseReceiptController extends Controller
                     $this->coStepHisRepo->insertNextStep('warehouse-export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
                 }
             } else if($model && $model->request_id && !$model->co_id) {
-                $this->requestStepHisRepo->insertNextStep('warehouse-export', $model->request_id, $model->request_id, CoStepHistory::ACTION_CREATE);
+                    $this->requestRepo->doneRequest($model->request_id);
+                    // $this->requestStepHisRepo->insertNextStep('warehouse-export', $model->request_id, $model->request_id, CoStepHistory::ACTION_CREATE);
             }
 
             // Save many product

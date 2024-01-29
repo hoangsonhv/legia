@@ -198,18 +198,18 @@ class WarehouseExportController extends Controller
                     return $result;
                 }, array());
                 $material = $modelRequest->material;
-                $isDone = false;
-                foreach($material as $item ) {
-                    if($item->dinh_luong <= $groupedAndSummedArray[$item->code]) {
-                        $isDone = true;
-                    } else {
-                        $isDone = false;
-                        break;
-                    }
-                }
-                if($isDone) {
-                    $this->requestRepo->doneRequest($model->request_id);
-                }
+                // $isDone = false;
+                // foreach($material as $item ) {
+                //     if($item->dinh_luong <= $groupedAndSummedArray[$item->code]) {
+                //         $isDone = true;
+                //     } else {
+                //         $isDone = false;
+                //         break;
+                //     }
+                // }
+                // if($isDone) {
+                //     $this->requestRepo->doneRequest($model->request_id);
+                // }
             }
             \DB::commit();
             return redirect()->route('admin.warehouse-export.index')->with('success', 'Tạo phiếu xuất kho thành công!');
