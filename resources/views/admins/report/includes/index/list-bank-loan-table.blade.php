@@ -151,6 +151,12 @@
                         Tổng tiền đã vay
                     </th>
                     <th class="text-center">
+                        Tổng tiền gốc đã trả
+                    </th>
+                    <th class="text-center">
+                        Tổng tiền lãi đã trả
+                    </th>
+                    <th class="text-center">
                         Tổng tiền đã trả
                     </th>
                     <th class="text-center">
@@ -161,6 +167,8 @@
                 <tbody>
                 <tr>
                     <td class="text-center bg-danger">{{ number_format($bankLoan->amount_money) }}</td>
+                    <td class="text-center bg-info">{{number_format($bankLoan->bankLoanDetails()->sum('debit_amount')) }}</td>
+                    <td class="text-center bg-dark">{{number_format($bankLoan->bankLoanDetails()->sum('profit_amount')) }}</td>
                     <td class="text-center bg-success">{{number_format($bankLoan->bankLoanDetails()->sum('total_amount')) }}</td>
                     <td class="text-center bg-gray">{{ number_format($bankLoan->amount_money - $bankLoan->bankLoanDetails()->sum('debit_amount')) }}</td>
                 </tr>
