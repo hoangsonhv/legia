@@ -86,6 +86,14 @@
                         </tr>
                     @endforeach
                     </tbody>
+                    <tfoot>
+                        <h>
+                            <th>Tổng</th>
+                            <th class="text-right">{{number_format($monthlyData->sum('total_debit_amount'))}}</th>
+                            <th class="text-right">{{number_format($monthlyData->sum('total_profit_amount'))}}</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

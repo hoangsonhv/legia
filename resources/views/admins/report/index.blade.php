@@ -32,9 +32,11 @@
                                 <div class="col-lg-12">
                                     <div class="row">
                                         @foreach ($bank as $data)
+                                        @if ($data->bankLoans->count())
                                         <div class="col-lg-12">
                                             @include('admins.report.includes.index.list-bank-loan-table', ['datas' => $data])
                                         </div>
+                                        @endif
                                         @endforeach
                                     </div>
                                 </div>
