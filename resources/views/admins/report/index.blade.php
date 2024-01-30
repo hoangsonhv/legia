@@ -4,6 +4,11 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('vendor/daterangepicker/daterangepicker.css') }}">
 @endsection
+<style>
+    .card {
+        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2)
+    }
+</style>
 <section class="content">
     <div class="container-fluid">
         <div class="card card-primary card-tabs">
