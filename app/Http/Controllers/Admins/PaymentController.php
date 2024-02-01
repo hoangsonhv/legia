@@ -197,7 +197,7 @@ class PaymentController extends Controller
             $coCode   = $requestModel->co_code;
             $category = $requestModel->category;
 
-            $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
+            $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM,DataHelper::DINH_KY,DataHelper::HOAT_DONG]);
             // Upload file
             $files     = $request->file('accompanying_document');
             $documents = [];
