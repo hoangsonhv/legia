@@ -70,6 +70,16 @@ class ReportController extends Controller
                 'sumCN' => $sumCN
             ];
         })->toArray();
+        $requestsMaterials = $this->reportRepository->reportReqeustMaterials($arrRequest);
+        $requestsMaterials = $requestsMaterials->map(function($reqM){
+            $sumPayment = $reqM->payments->count() ? $reqM->payments->sum('money_total') : 0;
+            return [
+                'code' => $reqM->code,
+                'sumBuy' => $reqM->money_total,
+                'sumPayment' => $sumPayment,
+                'sumCN' => $reqM->money_total - $sumPayment,
+            ];
+        })->toArray();
         $paymentReceipts = $this->reportRepository->reportPaymentReceipt($arrRequest);
         $arrPaymentReceipts = json_encode($paymentReceipts);
 
@@ -90,7 +100,7 @@ class ReportController extends Controller
         $request->flash();
         return view('admins.report.index', compact('breadcrumb', 'titleForLayout', 'arrBanks', 'arrCoes',
             'arrPaymentReceipts', 'bankLoans', 'bankLoanSummary', 'tableCo', 'arrRequest', 'tableTmpCo', 'tableRequest',
-            'tableCustomerTmpCo', 'tableCustomerCo', 'tablePayment', 'tableReceipt', 'categories','bankLoansByBank', 'coSummary'));
+            'tableCustomerTmpCo', 'tableCustomerCo', 'tablePayment', 'tableReceipt', 'categories','bankLoansByBank', 'coSummary', 'requestsMaterials'));
     }
 
     public function getTmpCo(Request $request)

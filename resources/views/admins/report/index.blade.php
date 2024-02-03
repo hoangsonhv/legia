@@ -52,6 +52,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="row card card-cyan p-3">
+                                    <div class="card-header">Tổng tiền mua hàng</div>
+                                    <div class="col-12">
+                                        @include('admins.report.includes.request.summary', ['requestsMaterials' => $requestsMaterials])
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

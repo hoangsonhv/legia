@@ -2,6 +2,7 @@
 
 namespace App\Models\Repositories;
 
+use App\Enums\ProcessStatus;
 use App\Helpers\DataHelper;
 use App\Models\Bank;
 use App\Models\BankLoan;
@@ -65,6 +66,14 @@ class ReportRepository extends BaseRepository
             }
         }
         return $result;
+    }
+
+    public function reportReqeustMaterials(array $arrRequest){
+        $requestQuery = Request::select(DB::raw("DATE_FORMAT(created_at,'%d/%m/%Y') AS date, money_total, code, id"))
+        ->whereIn('status',[ProcessStatus::Approved, ProcessStatus::DoneRequest])
+        ->whereIn('category',array_keys(DataHelper::getCategoriesForIndex([DataHelper::KHO, DataHelper::VAN_PHONG_PHAM])));
+        $this->setQueryCondition($requestQuery, $arrRequest);
+        return $requestQuery->get();
     }
 
     public function reportByMonthBankLoan()
