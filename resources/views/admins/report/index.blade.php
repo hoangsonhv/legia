@@ -41,9 +41,16 @@
                                     </div>
                                 </div>
                             @endforeach
-                            
                             <div class="col-lg-12">
                                 @include('admins.report.includes.index.co-chart')
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row card card-cyan p-3">
+                                    <div class="card-header">Tổng doanh thu CO</div>
+                                    <div class="col-12">
+                                        @include('admins.report.includes.co.summary', ['coSummary' => $coSummary])
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

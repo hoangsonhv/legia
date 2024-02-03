@@ -25,7 +25,7 @@ class ReportRepository extends BaseRepository
      */
     public function reportCo(array $arrRequest)
     {
-        $query = Co::select(DB::raw("DATE_FORMAT(created_at,'%d/%m/%Y') AS date, COUNT(*) AS total"));
+        $query = Co::select(DB::raw("DATE_FORMAT(created_at,'%d/%m/%Y') AS date, COUNT(*) AS total, code, id, tong_gia"));
         $this->setQueryCondition($query, $arrRequest);
         $query = $query->orderBy('created_at', 'ASC')
             ->groupBy('date');

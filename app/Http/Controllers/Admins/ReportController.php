@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admins;
 
+use App\Enums\ProcessStatus;
 use App\Helpers\DataHelper;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -57,7 +58,18 @@ class ReportController extends Controller
 
         $coes = $this->reportRepository->reportCo($arrRequest);
         $arrCoes = json_encode($coes->toArray());
-
+        $coSummary = $coes->map(function($co) {
+            $sumPayment = $co->payment->where('status' , ProcessStatus::Approved)->sum('money_total');
+            $sumReceipt = $co->receipt->where('status' , ProcessStatus::Approved)->sum('money_total');
+            $sumCN = $co->tong_gia - $sumReceipt;
+            return [
+                'code' => $co->code,
+                'sumPayment' => $sumPayment,
+                'sumReceipt' => $sumReceipt,
+                'tong_gia' => $co->tong_gia,
+                'sumCN' => $sumCN
+            ];
+        })->toArray();
         $paymentReceipts = $this->reportRepository->reportPaymentReceipt($arrRequest);
         $arrPaymentReceipts = json_encode($paymentReceipts);
 
@@ -78,7 +90,7 @@ class ReportController extends Controller
         $request->flash();
         return view('admins.report.index', compact('breadcrumb', 'titleForLayout', 'arrBanks', 'arrCoes',
             'arrPaymentReceipts', 'bankLoans', 'bankLoanSummary', 'tableCo', 'arrRequest', 'tableTmpCo', 'tableRequest',
-            'tableCustomerTmpCo', 'tableCustomerCo', 'tablePayment', 'tableReceipt', 'categories','bankLoansByBank'));
+            'tableCustomerTmpCo', 'tableCustomerCo', 'tablePayment', 'tableReceipt', 'categories','bankLoansByBank', 'coSummary'));
     }
 
     public function getTmpCo(Request $request)
