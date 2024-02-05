@@ -91,7 +91,7 @@
                             <th>Tổng</th>
                             <th class="text-right">{{number_format($monthlyData->sum('total_debit_amount'))}}</th>
                             <th class="text-right">{{number_format($monthlyData->sum('total_profit_amount'))}}</th>
-                            <th></th>
+                            <th class="text-right">{{number_format($monthlyData->sum(['total_amount']))}}</th>
                         </tr>
                     </tfoot>
                 </table>
