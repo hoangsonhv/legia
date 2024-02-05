@@ -190,7 +190,7 @@
                 </table>
                 <table class="table table-hover text-nowrap">
                     <thead>
-                        <tr class="text-center" style="background-color: yellow;"><th colspan="7">Chi tiết</th></tr>
+                        <tr class="text-center"><th colspan="7"><span class="badge bg-info">Chi tiết</span></th></tr>
                     </thead>
                     <tbody>
                         <tr>

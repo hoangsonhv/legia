@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="row card card-cyan p-3">
-                                    <div class="card-header">Tổng doanh thu CO</div>
+                                    <div class="p-2"><span class="badge bg-info">Tổng doanh thu CO</span></div>
                                     <div class="col-12">
                                         @include('admins.report.includes.co.summary', ['coSummary' => $coSummary])
                                     </div>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="row card card-cyan p-3">
-                                    <div class="card-header">Tổng tiền mua hàng</div>
+                                    <div class="p-2"><span class="badge bg-info ">ổng tiền mua hàng</span></div>
                                     <div class="col-12">
                                         @include('admins.report.includes.request.summary', ['requestsMaterials' => $requestsMaterials])
                                     </div>

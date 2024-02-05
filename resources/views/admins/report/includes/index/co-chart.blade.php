@@ -48,31 +48,31 @@
             </div>
         </div>
         <div class="row card card-cyan p-3">
-            <div class="card-header">Danh sách nhân viên đã chào giá</div>
+            <div class="p-2"><span class="badge bg-info">Danh sách nhân viên đã chào giá</span></div>
             <div class="col-12">
                 @include('admins.report.includes.tmp_co.table', ['datas' => $tableTmpCo, 'arrRequest' => $arrRequest])
             </div>
         </div>
         <div class="row card card-cyan p-3">
-            <div class="card-header">Danh sách nhân viên đã tạo CO</div>
+            <div class="p-2"><span class="badge bg-info">Danh sách nhân viên đã tạo CO</span></div>
             <div class="col-12">
                 @include('admins.report.includes.co.table', ['datas' => $tableCo, 'arrRequest' => $arrRequest])
             </div>
         </div>
         <div class="row card card-cyan p-3">
-            <div class="card-header">Danh sách nhân viên đã tạo phiếu yêu cầu</div>
+            <div class="p-2"><span class="badge bg-info">Danh sách nhân viên đã tạo phiếu yêu cầu</span></div>
             <div class="col-12">
                 @include('admins.report.includes.request.table', ['datas' => $tableRequest, 'arrRequest' => $arrRequest])
             </div>
         </div>
         <div class="row card card-cyan p-3">
-            <div class="card-header">Danh sách khách hàng đã yêu cầu chào giá</div>
+            <div class="p-2"><span class="badge bg-info">Danh sách khách hàng đã yêu cầu chào giá</span></div>
             <div class="col-12">
                 @include('admins.report.includes.customer_tmp_co.table', ['datas' => $tableCustomerTmpCo, 'arrRequest' => $arrRequest])
             </div>
         </div>
         <div class="row card card-cyan p-3">
-            <div class="card-header">Danh sách khách hàng đã mua hàng</div>
+            <div class="p-2"><span class="badge bg-info">Danh sách khách hàng đã mua hàng</span></div>
             <div class="col-12">
                 @include('admins.report.includes.customer_co.table', ['datas' => $tableCustomerCo, 'arrRequest' => $arrRequest])
             </div>
