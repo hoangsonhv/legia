@@ -61,6 +61,8 @@ class CoStepHistory extends Model
     const STEP_WAITING_APPROVE_PAYMENT_N3 = 'waiting_approve_payment_n3';
     const STEP_WAITING_APPROVE_PAYMENT_N4 = 'waiting_approve_payment_n4';
     const STEP_WAITING_APPROVE_MANUFACTURE = 'waiting_approve_manufacture';
+    const STEP_WAITING_APPROVE_QC = 'waiting_approve_qc';
+    const STEP_WAITING_HANDLE_QC = 'waiting_handle_qc';
     const STEP_WAITING_APPROVE_DELIVERY = 'waiting_approve_delivery';
 
     const STEP_CHECKWAREHOUSE = 'check_warehouse';

@@ -518,48 +518,60 @@ class CoService
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.manufacture.index',
             ],
+            CoStepHistory::STEP_WAITING_APPROVE_QC => [
+                'title' => 'B19. Đang chờ QC kiểm tra',
+                'action' => 'select',
+                'act_router' => 'admin.manufacture.index',
+            ],
+            CoStepHistory::STEP_WAITING_HANDLE_QC => [
+                // sửa lại => quay B18. Đang sản xuất
+                // hủy và sản xuất lại => quay lại B3. Kiểm kho
+                'title' => 'B20. Đang chờ xử lý của QC',
+                'action' => 'select',
+                'act_router' => 'admin.manufacture.index',
+            ],
             CoStepHistory::STEP_CREATE_RECEIPT_N2 => [
-                'title' => 'B19. Đang chờ tạo phiếu thu '. self::paymentStep()[1],
+                'title' => 'B21. Đang chờ tạo phiếu thu '. self::paymentStep()[1],
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.co.edit',
             ],
             CoStepHistory::STEP_CREATE_WAREHOUSE_EXPORT_SELL => [
-                'title' => 'B20. Đang chờ tạo phiếu xuất kho bán hàng',
+                'title' => 'B22. Đang chờ tạo phiếu xuất kho bán hàng',
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.co.edit',
             ],
             CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_N2 => [
-                'title' => 'B21. Đang chờ duyệt phiếu thu '. self::paymentStep()[1],
+                'title' => 'B23. Đang chờ duyệt phiếu thu '. self::paymentStep()[1],
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.receipt.edit',
             ],
             CoStepHistory::STEP_CREATE_RECEIPT_N3 => [
-                'title' => 'B22. Đang chờ tạo phiếu thu '. self::paymentStep()[2],
+                'title' => 'B24. Đang chờ tạo phiếu thu '. self::paymentStep()[2],
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.co.edit',
             ],
             CoStepHistory::STEP_CREATE_DELIVERY => [
-                'title' => 'B23. Đang chờ tạo giao hàng',
+                'title' => 'B25. Đang chờ tạo giao hàng',
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.co.edit',
             ],
             CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_N3 => [
-                'title' => 'B24. Đang chờ duyệt phiếu thu '. self::paymentStep()[2],
+                'title' => 'B26. Đang chờ duyệt phiếu thu '. self::paymentStep()[2],
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.receipt.edit',
             ],
             CoStepHistory::STEP_WAITING_APPROVE_DELIVERY => [
-                'title' => 'B25. Đơn hàng đang vận chuyển',
+                'title' => 'B27. Đơn hàng đang vận chuyển',
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.delivery.edit',
             ],
             CoStepHistory::STEP_CREATE_RECEIPT_N4 => [
-                'title' => 'B26. KH đã nhận được hàng. Đang đợi phiếu thu '. self::paymentStep()[3],
+                'title' => 'B28. KH đã nhận được hàng. Đang đợi phiếu thu '. self::paymentStep()[3],
                 'action' => CoStepHistory::ACTION_CREATE,
                 'act_router' => 'admin.co.edit',
             ],
             CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_N4 => [
-                'title' => 'B27. Đang chờ duyệt phiếu thu '. self::paymentStep()[3],
+                'title' => 'B29. Đang chờ duyệt phiếu thu '. self::paymentStep()[3],
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.receipt.edit',
             ]

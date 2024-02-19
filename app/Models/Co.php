@@ -34,8 +34,9 @@ use Illuminate\Database\Eloquent\Model;
 class Co extends Model
 {
 
-    const ENOUGH_MATERIAL = 1;
-    const LACK_MATERIAL = 2;
+    //default enough_material = 0;
+    const ENOUGH_MATERIAL = 1; //đủ nvl 
+    const LACK_MATERIAL = 2;  // kh đủ nvl 
 
     protected $table = 'co';
 
