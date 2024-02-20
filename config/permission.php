@@ -187,6 +187,9 @@ return [
         'manufacture' => [
             'label' => 'Quản lý sản xuất',
             'routes' => [
+                'admin.manufacture.confirm-quantity' => [
+                    'label' => 'Xác nhận số lượng'
+                ],
                 'admin.manufacture.non-metal' => [
                     'label' => 'Phi kim loại'
                 ],

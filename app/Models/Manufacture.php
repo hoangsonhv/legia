@@ -17,6 +17,7 @@ class Manufacture extends Model
         'co_id',
         'note',
         'is_completed',
+        'qc_check',
         'material_type',
         'admin_id'
     ];

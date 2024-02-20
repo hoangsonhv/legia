@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admins;
 
 use App\Enums\ProcessStatus;
+use App\Enums\QCCheckStatus;
 use App\Helpers\DataHelper;
 use App\Http\Controllers\Controller;
 use App\Models\CoStepHistory;
@@ -100,9 +101,60 @@ class BaseAdminController extends Controller
                 case 'receipt':
                     $repository = $this->receiptRepository->find($id);
                     break;
+                case 'manufacture':
+                    $repository = $this->manufactureRepository->find($id);
+                    break;
                 default:
                     return redirect()->back()->with('error', 'Không tìm thấy thông tin xét duyệt!');
             }
+
+            if ($type == 'manufacture') {
+                $qcCheck = $request->input('qc_check');
+
+                if ($qcCheck == \App\Enums\QCCheckStatus::FIX) {
+                    $repository->is_completed = 1;
+                }
+
+                $repository->qc_check = $qcCheck;
+                $repository->save();
+
+                if ($repository->save()) {
+                    $stepBack = '';
+
+                    if ($qcCheck == \App\Enums\QCCheckStatus::FIX) {
+                        $stepBack = CoStepHistory::STEP_WAITING_APPROVE_MANUFACTURE;
+                    }
+                    else if ($qcCheck == \App\Enums\QCCheckStatus::REMAKE) {
+                        $stepBack = CoStepHistory::STEP_CHECKWAREHOUSE;
+                        \DB::table('receipts')->where('co_id', $repository->co_id)->update(['status' => 1]);
+                    }
+
+                    if (!empty($stepBack)) {
+                        $stepBack = CoStepHistory::where('co_id', $repository->co_id)->where('step', $stepBack)->first();
+                        CoStepHistory::where('co_id', $repository->co_id)->where('id', '>', $stepBack->id)->delete();
+                    }
+                    else {
+                        $manufacture = Manufacture::where('co_id', $repository->co_id)->get();
+                        $qcCheckDone = 1;
+
+                        if ($manufacture->isNotEmpty()) {
+                            foreach ($manufacture as $v) {
+                                if ($v->qc_check != \App\Enums\QCCheckStatus::DONE) {
+                                    $qcCheckDone = 0;
+                                }
+                            }
+                        }
+
+                        if ($qcCheckDone) {
+                            $this->coStepHistoryRepo->insertNextStep('qc-check', $repository->co_id, $repository->co_id, CoStepHistory::ACTION_APPROVE, 2);
+                        }
+                    }
+                }
+
+                \DB::commit();
+                return redirect()->back()->with('success', 'Quá trình xét duyệt thành công!');
+            }
+
             if ($repository && array_key_exists($status, ProcessStatus::all())) {
                 $repository->status = $status;
                 $repository->note = $note;

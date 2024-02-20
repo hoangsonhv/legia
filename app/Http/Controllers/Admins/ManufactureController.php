@@ -155,6 +155,7 @@ class ManufactureController extends Controller
                 $details[$index]['so_luong'] = $warehouse->so_luong;
                 $details[$index]['need_quantity'] = $warehouse->so_luong;
                 $details[$index]['reality_quantity'] = 0;
+                $details[$index]['error_quantity'] = 0;
                 $details[$index]['material_type'] = $warehouse->material_type;
             }
         }
@@ -181,6 +182,7 @@ class ManufactureController extends Controller
                     $row = [
                         'offer_price_id' => $offerPrice,
                         'reality_quantity' => $input['reality_quantity'][$index],
+                        'error_quantity' => $input['error_quantity'][$index],
                         'need_quantity' => $input['need_quantity'][$index],
                         'lot_no' => $input['lot_no'][$index],
                     ];
@@ -273,6 +275,8 @@ class ManufactureController extends Controller
                 $details[$index]['so_luong'] = $detail->offerPrice ? $detail->offerPrice->so_luong : '';
                 $details[$index]['so_luong_san_xuat'] = $detail->offerPrice ? $detail->offerPrice->so_luong_san_xuat : '';
                 $details[$index]['reality_quantity'] = $detail->reality_quantity;
+                $details[$index]['error_quantity'] = $detail->error_quantity;
+                $details[$index]['error_quantity'] = $detail->error_quantity;
                 $details[$index]['need_quantity'] = $detail->need_quantity;
                 $details[$index]['material_type'] = $detail->material_type;
             }
@@ -288,6 +292,11 @@ class ManufactureController extends Controller
         $model = $this->manufactureRepo->find($id);
         if ($model) {
             $inputs = $request->input();
+            
+            if ($model->is_completed == 1 && $model->qc_check != 1) {
+                $inputs['qc_check'] = 1;
+            }
+
 //            try {
                 $co = $this->coRepo->find($model->co_id);
                 if (!$co) {
@@ -298,15 +307,17 @@ class ManufactureController extends Controller
                 $offerPriceIds = $request->input('offer_price_id');
                 if($offerPriceIds) {
                     foreach ($offerPriceIds as $index => $offerPriceId) {
+                        $dataUpdate = [];
                         $dataUpdate = [
                             'reality_quantity' => $inputs['reality_quantity'][$index],
+                            'error_quantity' => @$inputs['error_quantity'][$index] ?? 0,
                             'need_quantity' => $inputs['need_quantity'][$index],
                             'material_type' => in_array($offerPriceId, $inputs['material_type'] ?? []) ?
                                 ManufactureDetail::MATERIAL_TYPE_METAL : ManufactureDetail::MATERIAL_TYPE_NON_METAL,
                             'lot_no' => $inputs['lot_no'][$index],
                             'updated_at' => Date('Y-m-d H:i:s')
                         ];
-                        ManufactureDetail::updateOrCreate(['id' => $inputs['id'][$index]],$dataUpdate);
+                        ManufactureDetail::updateOrCreate(['id' => $inputs['id'][$index]], $dataUpdate);
                     }
                 }
                 $this->manufactureRepo->updateIsCompleted($id);

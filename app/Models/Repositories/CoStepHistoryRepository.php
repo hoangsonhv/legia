@@ -209,6 +209,21 @@ class CoStepHistoryRepository extends AdminRepository
                     $step = CoStepHistory::STEP_CREATE_WAREHOUSE_EXPORT_SELL;
                 }
                 break;
+            case 'qc-check':
+                switch ($stepId) {
+                    case 1:
+                        $step = CoStepHistory::STEP_WAITING_APPROVE_QC;
+                        break;
+                    case 2:
+                        $step = CoStepHistory::STEP_CREATE_RECEIPT_N2;
+                        break;
+                    case 3:
+                        $step = CoStepHistory::STEP_WAITING_APPROVE_MANUFACTURE;
+                        break;
+                    case 4: 
+                        $step = CoStepHistory::STEP_CHECKWAREHOUSE;
+                }
+                break;
             default:
                 break;
         }

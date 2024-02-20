@@ -194,7 +194,7 @@
                         <td>
                             @if($co->currentStep && $steps[$co->currentStep->step]['act_router'])
                                     <a target="_blank" href={{ route($steps[$co->currentStep->step]['act_router'],
-                                        $co->currentStep->step == \App\Models\CoStepHistory::STEP_WAITING_APPROVE_MANUFACTURE ?
+                                        in_array($co->currentStep->step, [\App\Models\CoStepHistory::STEP_WAITING_APPROVE_MANUFACTURE, \App\Models\CoStepHistory::STEP_WAITING_APPROVE_QC]) ?
                                             ['co_id' => $co->currentStep->object_id] :
                                          ['id' => $co->currentStep->object_id]) }}>
                                         <button class="btn btn-success">

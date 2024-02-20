@@ -144,7 +144,7 @@ class ManufactureRepository extends AdminRepository
                 ->where('is_completed', Manufacture::IS_COMPLETED)
                 ->first();
             if($modelDiff && $modelDiff->is_completed && $co->currentStep && $co->currentStep->step == CoStepHistory::STEP_WAITING_APPROVE_MANUFACTURE) {
-                $this->coStepHisRepo->insertNextStep('receipt', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE, 1);
+                $this->coStepHisRepo->insertNextStep('qc-check', $model->co_id, $model->co_id, CoStepHistory::ACTION_APPROVE, 1);
             }
         }
     }

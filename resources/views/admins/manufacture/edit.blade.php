@@ -3,6 +3,28 @@
     @include('admins.breadcrumb')
     <section class="content">
         <div class="container-fluid">
+            @if ($model->is_completed == 2)
+                @permission('admin.manufacture.confirm-quantity')
+                    @php
+                        $hasErrorQuantity = 0;
+
+                        foreach ($details as $v) {
+                            if ($v['error_quantity'] > 0) {
+                                $hasErrorQuantity = 1;
+                                break;
+                            }
+                        }
+                    @endphp
+
+                    @if ($hasErrorQuantity)
+                        @include('admins.includes.approval', [
+                            'id' => $model->id,
+                            'type' => 'manufacture',
+                            'status' => $model->qc_check
+                        ])
+                    @endif
+                @endpermission
+            @endif
             <div class="row">
                 <div class="col-12">
                     @include('admins.message')
@@ -54,6 +76,26 @@
                                     @else
                                         <span class="badge bg-warning">Đang chờ</span>
                                     @endif
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="code">QC kiểm tra:
+                                    @php
+                                        $qcCheckColor = 'bg-warning';
+
+                                        if($model->qc_check == \App\Enums\QCCheckStatus::DONE) {
+                                            $qcCheckColor = 'bg-success';
+                                        }
+                                        elseif($model->qc_check == \App\Enums\QCCheckStatus::FIX)
+                                        {
+                                            $qcCheckColor = 'bg-danger';
+                                        }
+                                        elseif($model->qc_check == \App\Enums\QCCheckStatus::REMAKE)
+                                        {
+                                            $qcCheckColor = 'bg-danger';
+                                        }
+                                    @endphp
+                                    <span class="badge {{ $qcCheckColor }}">{{ \App\Enums\QCCheckStatus::all()[$model->qc_check] }}</span>
                                 </label>
                             </div>
                         </div>

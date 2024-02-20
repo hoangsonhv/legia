@@ -38,6 +38,7 @@
                                     <th>Mô tả</th>
                                     <th>Loại</th>
                                     <th>Tình trạng</th>
+                                    <th>QC kiểm tra</th>
                                     <th>Ngày tạo</th>
                                     <th>Người thực hiện</th>
                                     <th>&nbsp</th>
@@ -70,6 +71,25 @@
                                             @else
                                                 <span class="badge bg-warning">Đang chờ</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @php
+                                                $qcCheckColor = 'bg-warning';
+
+                                                if($data->qc_check == \App\Enums\QCCheckStatus::DONE) {
+                                                    $qcCheckColor = 'bg-success';
+                                                }
+                                                elseif($data->qc_check == \App\Enums\QCCheckStatus::FIX)
+                                                {
+                                                    $qcCheckColor = 'bg-danger';
+                                                }
+                                                elseif($data->qc_check == \App\Enums\QCCheckStatus::REMAKE)
+                                                {
+                                                    $qcCheckColor = 'bg-danger';
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $qcCheckColor }}">{{ \App\Enums\QCCheckStatus::all()[$data->qc_check] }}</span>
+                                            
                                         </td>
                                         <td>{{$data->created_at}}</td>
                                         <td>{{$data->admin ? $data->admin->name : ''}}</td>
