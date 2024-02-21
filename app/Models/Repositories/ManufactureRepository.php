@@ -154,6 +154,9 @@ class ManufactureRepository extends AdminRepository
         $warehouses = $co->warehouses;
         $dataInsertMetals = [];
         $dataInsertNonMetals = [];
+        $commerceProductMetals = [];
+        $commerceProductNonMetals = [];
+
         foreach ($warehouses as $index => $warehouse) {
             // $modelAttributes = [
             //     'code' => $warehouse->code,
@@ -167,9 +170,6 @@ class ManufactureRepository extends AdminRepository
             //     'dvt'   => $warehouse->dv_tinh,
             //     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$warehouse->material_type],
             // ];
-            if ($warehouse->manufacture_type != WarehouseGroup::TYPE_MANUFACTURE) {
-                continue;
-            }
 
             $row = [
                 'offer_price_id' => $warehouse->id,
@@ -178,21 +178,46 @@ class ManufactureRepository extends AdminRepository
                 'manufacture_quantity' => $warehouse->so_luong_san_xuat,
                 'lot_no' => $co->raw_code,
             ];
+
             if($warehouse->material_type == Manufacture::MATERIAL_TYPE_METAL) {
                 $row['material_type'] = Manufacture::MATERIAL_TYPE_METAL;
-                array_push($dataInsertMetals, $row);
             }
+
             if($warehouse->material_type == Manufacture::MATERIAL_TYPE_NON_METAL) {
                 $row['material_type'] = Manufacture::MATERIAL_TYPE_NON_METAL;
-                array_push($dataInsertNonMetals, $row);
+            }
+
+            if ($warehouse->manufacture_type == WarehouseGroup::TYPE_COMMERCE) {
+                if($warehouse->material_type == Manufacture::MATERIAL_TYPE_METAL) {
+                    array_push($commerceProductMetals, $row);
+                }
+
+                if($warehouse->material_type == Manufacture::MATERIAL_TYPE_NON_METAL) {
+                    array_push($commerceProductNonMetals, $row);
+                }
+                
+                continue;
+            }
+            else {
+                if($warehouse->material_type == Manufacture::MATERIAL_TYPE_METAL) {
+                    array_push($dataInsertMetals, $row);
+                }
+
+                if($warehouse->material_type == Manufacture::MATERIAL_TYPE_NON_METAL) {
+                    array_push($dataInsertNonMetals, $row);
+                }
             }
         }
 
+        // Manufacture product
+        $input = [];
         $input['co_id'] = $co->id;
         $input['is_completed'] = Manufacture::WAITING;
         $input['admin_id'] = Session::get('login')->id;
+        $input['manufacture_type'] = WarehouseGroup::TYPE_MANUFACTURE;
         $input['material_type'] = Manufacture::MATERIAL_TYPE_METAL;
         $modelMetal = Manufacture::create($input);
+
         if($modelMetal) {
             $modelMetal->details()->createMany($dataInsertMetals);
         }
@@ -201,6 +226,23 @@ class ManufactureRepository extends AdminRepository
         $modelNonMetal = Manufacture::create($input);
         if($modelNonMetal) {
             $modelNonMetal->details()->createMany($dataInsertNonMetals);
+        }
+
+        // Commerce product
+        $input['is_completed'] = Manufacture::IS_COMPLETED;
+        $input['manufacture_type'] = WarehouseGroup::TYPE_COMMERCE;
+        $input['material_type'] = Manufacture::MATERIAL_TYPE_METAL;
+        $modelCommerceMetals = Manufacture::create($input);
+
+        if($modelCommerceMetals) {
+            $modelCommerceMetals->details()->createMany($commerceProductMetals);
+        }
+        
+        $input['material_type'] = Manufacture::MATERIAL_TYPE_NON_METAL;
+        $modelCommerceNonMetals = Manufacture::create($input);
+
+        if($modelCommerceNonMetals) {
+            $modelCommerceNonMetals->details()->createMany($commerceProductNonMetals);
         }
     }
 

@@ -37,6 +37,7 @@
                                     <th>Mã CO</th>
                                     <th>Mô tả</th>
                                     <th>Loại</th>
+                                    <th>Thương Mại/Sản Xuất</th>
                                     <th>Tình trạng</th>
                                     <th>QC kiểm tra</th>
                                     <th>Ngày tạo</th>
@@ -63,6 +64,7 @@
                                                 <span class="badge bg-info">Phi kim loại</span>
                                             @endif
                                         </td>
+                                        <td><span>{{ \App\Models\WarehouseGroup::ARR_TYPE[$data->manufacture_type] }}</span></td>
                                         <td>
                                             @if($data->is_completed == \App\Models\Manufacture::IS_COMPLETED)
                                                 <span class="badge bg-success">Đã xong</span>

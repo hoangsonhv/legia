@@ -19,6 +19,7 @@ class Manufacture extends Model
         'is_completed',
         'qc_check',
         'material_type',
+        'manufacture_type',
         'admin_id'
     ];
 

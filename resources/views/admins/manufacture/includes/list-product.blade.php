@@ -13,9 +13,11 @@
             <th class="align-middle">Chuẩn gasket</th>
             <th class="align-middle">Đ/v tính</th>
             <th class="align-middle">Số lượng CO</th>
-            <th class="align-middle">Số lượng sản xuất</th>
+            @if ($isManufactureProduct)
+                <th class="align-middle">Số lượng sản xuất</th>
+            @endif
             <th class="align-middle">SL xác nhận</th>
-            @if($model->is_completed == 2 || $model->qc_check == \App\Enums\QCCheckStatus::FIX)
+            @if ($isManufactureProduct && $enableQCCheck)
                 <th class="align-middle">SL lỗi</th>
             @endif
             <th class="align-middle">Lot No</th>
@@ -51,7 +53,9 @@
                         <input hidden value="{{$detail['material_type']}}" name="offer_price_material_type[]" />
                         {{$detail['material_type'] == \App\Models\Manufacture::MATERIAL_TYPE_METAL ? 'Kim loại' : 'Phi kim loại'}}
                     </td> --}}
-                    <td>{{ $detail['so_luong_san_xuat'] }}</td>
+                    @if ($isManufactureProduct)
+                        <td>{{ $detail['so_luong_san_xuat'] }}</td>
+                    @endif
                     <td>
                         @if($is_processing)
                             <input value="{{$detail['reality_quantity']}}" name="reality_quantity[]" class="form-control" style="width: 80px" />
@@ -60,7 +64,7 @@
                             <input value="{{$detail['reality_quantity']}}" name="reality_quantity[]" hidden />
                         @endif
                     </td>
-                    @if($model->is_completed == 2 || $model->qc_check == \App\Enums\QCCheckStatus::FIX)
+                    @if ($isManufactureProduct && $enableQCCheck)
                         <td>
                             @if($model->qc_check == \App\Enums\QCCheckStatus::WAITING)
                                 @permission('admin.manufacture.confirm-quantity')

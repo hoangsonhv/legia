@@ -3,6 +3,18 @@
     @include('admins.breadcrumb')
     <section class="content">
         <div class="container-fluid">
+            @php
+                $isManufactureProduct = 0;
+                $enableQCCheck = 0;
+
+                if ($model->manufacture_type == \App\Models\WarehouseGroup::TYPE_MANUFACTURE) {
+                    $isManufactureProduct = 1;
+                }
+
+                if ($model->is_completed == 2 || $model->qc_check == \App\Enums\QCCheckStatus::FIX) {
+                    $enableQCCheck = 1;
+                }
+            @endphp
             @if ($model->is_completed == 2)
                 @permission('admin.manufacture.confirm-quantity')
                     @php
@@ -20,7 +32,8 @@
                         'id' => $model->id,
                         'type' => 'manufacture',
                         'status' => $model->qc_check,
-                        'hasErrorQuantity' => $hasErrorQuantity
+                        'hasErrorQuantity' => $hasErrorQuantity,
+                        'isManufactureProduct' => $isManufactureProduct,
                     ])
                 @endpermission
             @endif
@@ -67,6 +80,15 @@
                                 </label>
                             </div>
                             <div class="form-group">
+                                <label for="code">Thương mại/Sản xuất:
+                                    @if($model->manufacture_type == \App\Models\WarehouseGroup::TYPE_MANUFACTURE)
+                                        <span class="badge bg-info">Sản xuất</span>
+                                    @else
+                                        <span class="badge bg-gray">Thương mại</span>
+                                    @endif
+                                </label>
+                            </div>
+                            <div class="form-group">
                                 <label for="code">Trạng thái:
                                     @if($model->is_completed == \App\Models\Manufacture::IS_COMPLETED)
                                         <span class="badge bg-success">Đã xong</span>
@@ -100,9 +122,13 @@
                         </div>
                         <div class="card-body">
                             @include('admins.manufacture.includes.list-product',
-                                ['co' => $co,
-                                 'is_wait' => $model->is_completed == \App\Models\Manufacture::WAITING,
-                                 'is_processing' => $model->is_completed == \App\Models\Manufacture::PROCESSING])
+                                [
+                                    'co' => $co,
+                                    'is_wait' => $model->is_completed == \App\Models\Manufacture::WAITING,
+                                    'is_processing' => $model->is_completed == \App\Models\Manufacture::PROCESSING,
+                                    'isManufactureProduct' => $isManufactureProduct,
+                                    'enableQCCheck' => $enableQCCheck,
+                                ])
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer text-right">
