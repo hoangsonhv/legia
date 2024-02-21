@@ -14,7 +14,7 @@ class AddColumnForQCToManufactureTable extends Migration
     public function up()
     {
         Schema::table('manufactures', function (Blueprint $table) {
-            $table->addColumn('tinyint', 'qc_check')->default(1)->after('is_completed');
+            $table->addColumn('integer', 'qc_check')->default(1)->after('is_completed');
         });
         Schema::table('manufacture_details', function (Blueprint $table) {
             $table->addColumn('integer', 'error_quantity')->default(0)->after('reality_quantity');
