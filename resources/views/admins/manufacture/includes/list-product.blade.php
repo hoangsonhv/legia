@@ -15,7 +15,7 @@
             <th class="align-middle">Số lượng CO</th>
             <th class="align-middle">Số lượng sản xuất</th>
             <th class="align-middle">SL xác nhận</th>
-            @if($model->is_completed == 2)
+            @if($model->is_completed == 2 || $model->qc_check == \App\Enums\QCCheckStatus::FIX)
                 <th class="align-middle">SL lỗi</th>
             @endif
             <th class="align-middle">Lot No</th>
@@ -60,7 +60,7 @@
                             <input value="{{$detail['reality_quantity']}}" name="reality_quantity[]" hidden />
                         @endif
                     </td>
-                    @if($model->is_completed == 2)
+                    @if($model->is_completed == 2 || $model->qc_check == \App\Enums\QCCheckStatus::FIX)
                         <td>
                             @if($model->qc_check == \App\Enums\QCCheckStatus::WAITING)
                                 @permission('admin.manufacture.confirm-quantity')

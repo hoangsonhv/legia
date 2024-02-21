@@ -55,20 +55,22 @@
       <p class="approve">
         <a href="{{ route('admin.base-admin.approval', ['id' => $id, 'type' => $type, 'qc_check' => \App\Enums\QCCheckStatus::DONE]) }}" class="btn btn-success btn-block" onclick="return confirm('Bạn có chắc chắn muốn duyệt thông tin này ?')">DUYỆT</a>
       </p>
-      <p class="un-approve">
-          <a href="{{ route('admin.base-admin.approval', ['id' => $id, 'type' => $type, 'qc_check' => \App\Enums\QCCheckStatus::FIX]) }}" class="btn btn-default btn-block"
-              onclick="return confirm('Bạn có chắc chắn xác nhận sửa lại ?')"
-          >
-              SỬA LẠI
-          </a>
-      </p>
-      <p class="un-approve">
-          <a href="{{ route('admin.base-admin.approval', ['id' => $id, 'type' => $type, 'qc_check' => \App\Enums\QCCheckStatus::REMAKE]) }}" class="btn btn-default btn-block"
-              onclick="return confirm('Bạn có chắc chắn xác nhận hủy và sản xuất lại ?')"
-          >
-              HỦY VÀ SẢN XUẤT LẠI
-          </a>
-      </p>
+      @if (!empty($hasErrorQuantity))
+        <p class="un-approve">
+            <a href="{{ route('admin.base-admin.approval', ['id' => $id, 'type' => $type, 'qc_check' => \App\Enums\QCCheckStatus::FIX]) }}" class="btn btn-default btn-block"
+                onclick="return confirm('Bạn có chắc chắn xác nhận sửa lại ?')"
+            >
+                SỬA LẠI
+            </a>
+        </p>
+        <p class="un-approve">
+            <a href="{{ route('admin.base-admin.approval', ['id' => $id, 'type' => $type, 'qc_check' => \App\Enums\QCCheckStatus::REMAKE]) }}" class="btn btn-default btn-block"
+                onclick="return confirm('Bạn có chắc chắn xác nhận hủy và sản xuất lại ?')"
+            >
+                HỦY VÀ SẢN XUẤT LẠI
+            </a>
+        </p>
+      @endif
       @else
       <p style="color: #FFF;" class="mb-0">
         {{ \App\Enums\QCCheckStatus::all()[$status] }}

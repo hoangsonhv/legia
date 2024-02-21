@@ -16,13 +16,12 @@
                         }
                     @endphp
 
-                    @if ($hasErrorQuantity)
-                        @include('admins.includes.approval', [
-                            'id' => $model->id,
-                            'type' => 'manufacture',
-                            'status' => $model->qc_check
-                        ])
-                    @endif
+                    @include('admins.includes.approval', [
+                        'id' => $model->id,
+                        'type' => 'manufacture',
+                        'status' => $model->qc_check,
+                        'hasErrorQuantity' => $hasErrorQuantity
+                    ])
                 @endpermission
             @endif
             <div class="row">
