@@ -126,7 +126,7 @@ class BaseAdminController extends Controller
                     }
                     else if ($qcCheck == \App\Enums\QCCheckStatus::REMAKE) {
                         $stepBack = CoStepHistory::STEP_CHECKWAREHOUSE;
-                        \DB::table('receipts')->where('co_id', $repository->co_id)->update(['status' => 1]);
+                        Co::where('id', $repository->co_id)->update(['enough_material' => 0]);
                     }
 
                     if (!empty($stepBack)) {
