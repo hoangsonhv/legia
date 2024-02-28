@@ -126,7 +126,7 @@ class BaseAdminController extends Controller
                     }
                     else if ($qcCheck == \App\Enums\QCCheckStatus::REMAKE) {
                         $stepBack = CoStepHistory::STEP_CHECKWAREHOUSE;
-                        Co::where('id', $repository->co_id)->update(['enough_material' => 0]);
+                        Co::where('id', $repository->co_id)->update(['enough_material' => 0, 'is_remake' => 1]);
                     }
 
                     if (!empty($stepBack)) {

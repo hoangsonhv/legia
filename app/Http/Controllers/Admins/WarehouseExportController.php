@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admins;
 
+use App\Enums\QCCheckStatus;
 use App\Helpers\PermissionHelper;
 use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use App\Http\Requests\WarehouseReceiptRequest;
 use App\Models\Admin;
 use App\Models\Co;
 use App\Models\CoStepHistory;
+use App\Models\Manufacture;
 use App\Models\WarehouseHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -18,6 +20,7 @@ use App\Models\Repositories\CoRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Repositories\WarehouseExportRepository;
 use App\Models\Repositories\CoStepHistoryRepository;
+use App\Models\Repositories\ManufactureRepository;
 use App\Models\Repositories\RequestRepository;
 use App\Models\Repositories\RequestStepHistoryRepository;
 use App\Models\Repositories\WarehouseHistoryRepository;
@@ -35,6 +38,7 @@ class WarehouseExportController extends Controller
     protected $coStepHisRepo;
     protected $requestRepo;
     protected $warehouseHistoryRepo;
+    protected $manufactureRepo;
     protected $coService;
 
     /**
@@ -46,9 +50,11 @@ class WarehouseExportController extends Controller
                         CoStepHistoryRepository $coStepHisRepo,
                         RequestRepository $requestRepo,
                         CoService $coService,
+                        ManufactureRepository $manufactureRepo,
                         WarehouseHistoryRepository $warehouseHistoryRepo)
     {
         $this->whExportRepo = $whExportRepo;
+        $this->manufactureRepo = $manufactureRepo;
         $this->coStepHisRepo = $coStepHisRepo;
         $this->coService             = $coService;
         $this->requestRepo             = $requestRepo;
@@ -140,6 +146,15 @@ class WarehouseExportController extends Controller
             $input['document'] = json_encode($documents);
             $model = $this->whExportRepo->insert($input);
             if($model && $model->co_id) {
+                $co = Co::find($model->co_id);
+                if($co->is_remake) {
+                    $manufactures = $this->manufactureRepo->findExtend([
+                        'co_id' => $model->co_id
+                    ])->update([
+                        'qc_check' => QCCheckStatus::WAITING
+                    ]);
+                    $this->manufactureRepo->checkNeedQuantity($model->co_id);
+                }
                 $this->coStepHisRepo->insertNextStep('manufacture', $model->co_id, $model->co_id, CoStepHistory::ACTION_APPROVE);
             }
             // Save many product

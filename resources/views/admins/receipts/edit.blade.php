@@ -72,7 +72,7 @@
               </div>
               <div class="form-group">
                 <label for="money_total">Tổng tiền<b style="color: red;"> (*)</b></label>
-                {!! Form::text('tmp_money_total', number_format(old('money_total', $receipt->money_total)), array('class' => 'form-control', 'required' => 'required')) !!}
+                {!! Form::text('tmp_money_total', number_format(old('actual_money', $receipt->actual_money)), array('class' => 'form-control', 'required' => 'required')) !!}
                 {!! Form::hidden('money_total', old('money_total', $receipt->money_total)) !!}
               </div>
             </div>
@@ -199,6 +199,62 @@
                         </td>
                       </tr>
                       <tr class="text-center">
+                        <td class="text-right">Giá trị thực thu - VNĐ</td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[0]) ? number_format($receipts[0]['actual_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[1]) ? number_format($receipts[1]['actual_money']) : null;
+
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[2]) ? number_format($receipts[2]['actual_money']) : null;
+                          @endphp
+                         {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[3]) ? number_format($receipts[3]['actual_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                      </tr>
+                      <tr class="text-center">
+                        <td class="text-right">Giá trị còn nợ - VNĐ</td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[0]) ? number_format($receipts[0]['debt_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[1]) ? number_format($receipts[1]['debt_money']) : null;
+
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[2]) ? number_format($receipts[2]['debt_money']) : null;
+                          @endphp
+                         {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[3]) ? number_format($receipts[3]['debt_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                      </tr>
+                      <tr class="text-center">
                         <td class="text-right">Thời gian xét duyệt</td>
                         <td>
                           @if(isset($receipts[0]))
@@ -246,7 +302,9 @@
           <!-- /.card-body -->
         </div>
         <!-- /.card -->
-        @include('admins.includes.approval', ['id' => $receipt->id, 'type' => 'receipt', 'status' => $receipt->status])
+        @if(str_contains($co->currentStep, 'waiting_approve')) 
+          @include('admins.includes.approval', ['id' => $receipt->id, 'type' => 'receipt', 'status' => $receipt->status])
+        @endif
         <div class="modal fade" id="accompanying_document_modal">
           <div class="modal-dialog">
             <div class="modal-content">

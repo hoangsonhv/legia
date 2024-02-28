@@ -574,7 +574,27 @@ class CoService
                 'title' => 'B29. Đang chờ duyệt phiếu thu '. self::paymentStep()[3],
                 'action' => CoStepHistory::ACTION_APPROVE,
                 'act_router' => 'admin.receipt.edit',
-            ]
+            ],
+            CoStepHistory::STEP_WAITING_UPDATE_RECEIPT_N1 => [
+                'title' => 'Phiếu thu '. self::paymentStep()[0] . ' chưa thu đủ. Đang đợi cập nhật',
+                'action' => CoStepHistory::ACTION_UPDATE,
+                'act_router' => 'admin.receipt.edit',
+            ],
+            CoStepHistory::STEP_WAITING_UPDATE_RECEIPT_N2 => [
+                'title' => 'Phiếu thu '. self::paymentStep()[1] . ' chưa thu đủ. Đang đợi cập nhật',
+                'action' => CoStepHistory::ACTION_UPDATE,
+                'act_router' => 'admin.receipt.edit',
+            ],
+            CoStepHistory::STEP_WAITING_UPDATE_RECEIPT_N3 => [
+                'title' => 'Phiếu thu '. self::paymentStep()[2] . ' chưa thu đủ. Đang đợi cập nhật',
+                'action' => CoStepHistory::ACTION_UPDATE,
+                'act_router' => 'admin.receipt.edit',
+            ],
+            CoStepHistory::STEP_WAITING_UPDATE_RECEIPT_N4 => [
+                'title' => 'Phiếu thu '. self::paymentStep()[3] . ' chưa thu đủ. Đang đợi cập nhật',
+                'action' => CoStepHistory::ACTION_UPDATE,
+                'act_router' => 'admin.receipt.edit',
+            ],
         ];
     }
 

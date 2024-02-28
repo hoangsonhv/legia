@@ -23,6 +23,8 @@ class Receipt extends Model
         'name_receiver',
         'accompanying_document',
         'money_total',
+        'actual_money',
+        'debt_money',
         'status',
         'bank_id',
         'step_id'

@@ -176,6 +176,7 @@ function getNumberFormatQuantity(_this) {
     var unitPrice = $(_this).parent().parent().find('.data-unit-price').val();
     var intoMoney = Number(value) * Number(unitPrice);
     var intoMoneyFormat = formatCurrent(String(intoMoney));
+    console.log(intoMoneyFormat, Number(value), Number(unitPrice));
     $(_this).parent().parent().find('.data-into-money').val(intoMoneyFormat['format']);
     $(_this).parent().parent().find('.data-origin-into-money').val(intoMoneyFormat['original']);
 

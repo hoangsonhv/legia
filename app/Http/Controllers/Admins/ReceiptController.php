@@ -11,6 +11,7 @@ use App\Http\Requests\ReceiptRequest;
 use App\Models\Admin;
 use App\Models\CoStepHistory;
 use App\Models\Receipt;
+use App\Models\Repositories\ConfigRepository;
 use App\Models\Repositories\CoRepository;
 use App\Models\Repositories\PaymentRepository;
 use App\Models\Repositories\ReceiptRepository;
@@ -29,15 +30,19 @@ class ReceiptController extends Controller
     protected $receiptRepository;
     protected $coRepository;
     protected $coStepHisRepo;
+    protected $configRepository;
 
     public $menu;
 
     function __construct(PaymentRepository $paymentRepository,
                          ReceiptRepository $receiptRepository,
                          CoRepository $coRepository,
-                         CoStepHistoryRepository $coStepHisRepo)
+                         CoStepHistoryRepository $coStepHisRepo,
+                         ConfigRepository $configRepository
+                         )
     {
         $this->paymentRepository = $paymentRepository;
+        $this->configRepository  = $configRepository;
         $this->receiptRepository = $receiptRepository;
         $this->coRepository      = $coRepository;
         $this->coStepHisRepo     = $coStepHisRepo;
@@ -240,6 +245,8 @@ class ReceiptController extends Controller
             }
 
             \DB::beginTransaction();
+            $actual_money = (int)str_replace(',', '', $request->input('tmp_money_total'));
+            $debt_money = $request->input('money_total') - $actual_money;
             $input = [
                 'co_id'                 => $coId,
                 'co_code'               => $coCode,
@@ -251,19 +258,28 @@ class ReceiptController extends Controller
                 'name_receiver'         => $request->input('name_receiver'),
                 'accompanying_document' => json_encode($documents),
                 'money_total'           => $request->input('money_total'),
+                'debt_money'            => (string)$debt_money,
+                'actual_money'          => (string)$actual_money,
                 'bank_id'           => $request->input('bank_id'),
                 'step_id'           => $request->input('step_id'),
             ];
             // Save receipt
             $receipt = Receipt::create($input);
+            // Save receipt
             // Save co_step_history
+            $limitApprovalRc = $this->configRepository->getConfigs(['key' => 'limit_approval_rc'])->first()->value;
+            $moneyLimitApprove = $request->input('money_total') * $limitApprovalRc / 100;
             if($request->input('co_id')) {
                 //dd($request->input());
-                if($request->input('step_id') == 1) {
-                    //dd('here');
-                    $this->coStepHisRepo->insertNextStep('warehouse-export-sell', $request->input('co_id'), $request->input('co_id'), CoStepHistory::ACTION_CREATE);
+                if($debt_money <= $moneyLimitApprove) {
+                    if($request->input('step_id') == 1) {
+                        //dd('here');
+                        $this->coStepHisRepo->insertNextStep('warehouse-export-sell', $request->input('co_id'), $request->input('co_id'), CoStepHistory::ACTION_CREATE);
+                    } else {
+                        $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'),$request->input('step_id') == 2 ? $request->input('co_id') :  $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );
+                    }
                 } else {
-                    $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'),$request->input('step_id') == 2 ? $request->input('co_id') :  $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );
+                    $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_UPDATE, $request->input('step_id') );
                 }
             }
             // \DB::rollBack();
@@ -396,6 +412,8 @@ class ReceiptController extends Controller
                     }
                 }
                 $documents = array_merge(json_decode($receipt->accompanying_document, true), $documents);
+                $actual_money = (int)str_replace(',', '', $request->input('tmp_money_total'));
+                $debt_money = $request->input('money_total') - $actual_money;
 
                 \DB::beginTransaction();
                 // Save receipt
@@ -407,6 +425,8 @@ class ReceiptController extends Controller
                 $receipt->name_receiver         = $request->input('name_receiver');
                 $receipt->accompanying_document = json_encode($documents);
                 $receipt->money_total           = $request->input('money_total');
+                $receipt->actual_money          = $actual_money;
+                $receipt->debt_money            = $request->input('money_total') - $actual_money;
                 $receipt->bank_id               = $request->input('bank_id');
                 $receipt->save();
                 // Save relationship
@@ -415,10 +435,26 @@ class ReceiptController extends Controller
                     $receipt->co()->sync($co);
                 }*/
                 \DB::commit();
+                $limitApprovalRc = $this->configRepository->getConfigs(['key' => 'limit_approval_rc'])->first()->value;
+                $moneyLimitApprove = $request->input('money_total') * $limitApprovalRc / 100;
+                if($request->input('co_id')) {
+                    //dd($request->input());
+                    if($debt_money <= $moneyLimitApprove && (str_contains($co->currentStep->step, 'create') || str_contains($co->currentStep->step, 'update'))) {
+                        if($request->input('step_id') == 1) {
+                            //dd('here');
+                            $this->coStepHisRepo->insertNextStep('warehouse-export-sell', $request->input('co_id'), $request->input('co_id'), CoStepHistory::ACTION_CREATE);
+                        } else {
+                            $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'),$request->input('step_id') == 2 ? $request->input('co_id') :  $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );
+                        }
+                    } else if(!str_contains($co->currentStep->step, 'update')) {
+                        $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_UPDATE, $request->input('step_id') );
+                    }
+                }
                 return redirect()->route('admin.receipt.edit', ['id' => $id])->with('success','Cập nhật Phiếu Thu thành công!');
             }
         } catch(\Exception $ex) {
             \DB::rollback();
+            dd($ex);
             report($ex);
         }
         return redirect()->back()->with('error', 'Phiếu Thu không tồn tại!');

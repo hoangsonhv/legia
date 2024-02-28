@@ -125,7 +125,7 @@
                       }
                     }
                     if($co->delivery()->count()) {
-                      $sumPayment += $co->delivery->first()->shipping_fee;
+                      $sumPayment += $co->delivery->shipping_fee;
                     }
                   @endphp
                   <tr>
@@ -185,6 +185,10 @@
                         <span class="badge bg-success">CO đã xong</span>
                       @else
                         <span class="badge bg-danger">CO chưa xong</span>
+                      @endif
+
+                      @if($co->is_remake)
+                        <span class="badge bg-warning">Huỷ và sản xuất lại</span>
                       @endif
                     </td>
                     <td>{{ $co->created_at }}</td>

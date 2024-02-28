@@ -65,7 +65,7 @@ $(function () {
   $('[name="tmp_money_total"]').keyup(function(){
     var data = formatCurrent(this.value);
     $(this).val(data.format);
-    $('[name="money_total"]').val(data.original);
+    // $('[name="money_total"]').val(data.original);
   });
 });
 

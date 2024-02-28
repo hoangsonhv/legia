@@ -207,6 +207,9 @@
                                             @if($steps[$co->currentStep->step]['action'] == \App\Models\CoStepHistory::ACTION_SELECT)
                                                 Kiểm tra
                                             @endif
+                                            @if($steps[$co->currentStep->step]['action'] == \App\Models\CoStepHistory::ACTION_UPDATE)
+                                                Cập nhật
+                                            @endif
                                         </button>
                                     </a>
                                 @endif

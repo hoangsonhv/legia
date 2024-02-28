@@ -57,7 +57,7 @@
                     </td>
                     <td class="">
                         <input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]"
-                               value="{{ $material->dv_tinh }}" readonly>
+                               value="{{ $material->dv_tinh }}">
                     </td>
                     <td class="">
                         <input class="form-control" style="width: 120px" min="1" type="text"

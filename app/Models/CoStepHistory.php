@@ -54,6 +54,10 @@ class CoStepHistory extends Model
     const STEP_WAITING_APPROVE_RECEIPT_N2 = 'waiting_approve_receipt_n2';
     const STEP_WAITING_APPROVE_RECEIPT_N3 = 'waiting_approve_receipt_n3';
     const STEP_WAITING_APPROVE_RECEIPT_N4 = 'waiting_approve_receipt_n4';
+    const STEP_WAITING_UPDATE_RECEIPT_N1 = 'waiting_update_receipt_n1';
+    const STEP_WAITING_UPDATE_RECEIPT_N2 = 'waiting_update_receipt_n2';
+    const STEP_WAITING_UPDATE_RECEIPT_N3 = 'waiting_update_receipt_n3';
+    const STEP_WAITING_UPDATE_RECEIPT_N4 = 'waiting_update_receipt_n4';
     const STEP_WAITING_APPROVE_REQUEST = 'waiting_approve_request';
     const STEP_WAITING_APPROVE_PRICE_SURVEY = 'waiting_approve_price_survey';
     const STEP_WAITING_APPROVE_PAYMENT_N1 = 'waiting_approve_payment_n1';
@@ -69,6 +73,7 @@ class CoStepHistory extends Model
 
     const ACTION_APPROVE = 'approve';
     const ACTION_CREATE = 'create';
+    const ACTION_UPDATE = 'update';
     const ACTION_SELECT = 'select';
     const ACTION_APPROVE_PRICE_SURVEY = 'approve_price_survey';
     const ACTION_CREATE_PRICE_SURVEY = 'create_price_survey';

@@ -258,6 +258,7 @@ class ManufactureRepository extends AdminRepository
             foreach ($manufactures as $manufacture){
                 if(!$manufacture->details->count()) {
                     $manufacture->is_completed = Manufacture::IS_COMPLETED;
+                    $manufacture->qc_check = Manufacture::IS_COMPLETED;
                     $manufacture->save();
                 }
             }

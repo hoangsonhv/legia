@@ -25,13 +25,16 @@ function randomString(length) {
 }
 
 function formatCurrent(number) {
-  number = number.replace(/\D/g,'');
-  number = number.replace(/^0+/, '').replace(/,/g, ''); // remove 0
-  var res = {'original': number, 'format': number};
-  if (number.length > 3) {
-    number       = number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    res.format   = number;
+  var original = parseFloat(number.replace(/[^0-9.]/g, '')).toFixed(0);
+  var res = {'original': original, 'format': original};
+  
+  if (number.includes('.')) {
+    var integerPart = original.split('.')[0];
+    res.format = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  } else if (original.length > 3) {
+    res.format = original.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+
   return res;
 }
 

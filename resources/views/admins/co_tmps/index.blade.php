@@ -49,7 +49,7 @@
                   <th>STT</th>
                   <th>Mã khách hàng</th>
                   <th>Tên khách hàng</th>
-                  <th>Số báo giá</th>
+                  <th>Mã báo giá</th>
                   <th>Tổng tiền</th>
                   <th>Lợi nhuận</th>
                   <th>Trạng thái</th>
@@ -64,7 +64,7 @@
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $co->core_customer ? $co->core_customer->code : '' }}</td>
                     <td>{{ $co->customer ? $co->customer->ten : 0 }}</td>
-                    <td>{{ $co->so_bao_gia }}</td>
+                    <td>{{ $co->code }}</td>
                     <td>
                       <span class="badge bg-danger">
                         {{ number_format($co->tong_gia + $co->vat) }}
