@@ -5,6 +5,9 @@
   .delete-item {
     cursor: pointer;
   }
+  .divider {
+    border-top: 50px solid #dee2e6 !important; /* Đường kẻ chia phần */
+  }
 </style>
 <div class="table-responsive p-0" id="content_table">
   <table class="table table-head-fixed table-bordered table-hover">
@@ -63,6 +66,12 @@
               <input class="form-control data-origin-into-money" type="hidden" name="product[into_money][]" value="{{$product['into_money']}}">
             </td>
           </tr>
+          @if ($index > 0)
+            @if($product['code'] !== $products[$index - 1]['code'])
+              </tbody>
+              <tbody class="divider">
+            @endif
+          @endif
         @endforeach
       @endif
     </tbody>
