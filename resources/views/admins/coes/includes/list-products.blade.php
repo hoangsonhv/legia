@@ -7,6 +7,7 @@
     <table class="table table-head-fixed table-bordered table-hover text-wrap data-products {{ !empty($is_co) ? ($is_co ? 'data-product-co' : '') : '' }} ">
         @php
             $total = 0;
+            $vatTotal = 0;
             $materials = isset($material) ? $material->toArray() : [];
             $hiddenShowPrice = !\App\Helpers\PermissionHelper::hasPermission('admin.co.show-price');
         @endphp
@@ -52,6 +53,8 @@
             @endif
             <th class="align-middle {{$hiddenShowPrice ? 'd-none' : ''}}">Đơn giá (VNĐ)</th>
             <th class="align-middle {{$hiddenShowPrice ? 'd-none' : ''}}">Thành tiền (VNĐ)</th>
+            <th class="align-middle {{$hiddenShowPrice ? 'd-none' : ''}}">VAT (%)</th>
+            <th class="align-middle {{$hiddenShowPrice ? 'd-none' : ''}}">VAT (VNĐ)</th>
         </tr>
         </thead>
         <tbody>
@@ -73,6 +76,8 @@
                     $dvTinh      = !empty($collect) ? $warehouse->dv_tinh : $warehouse[9];
                     $soLuong     = !empty($collect) ? $warehouse->so_luong : $warehouse[10];
                     $donGia      = !empty($collect) ? $warehouse->don_gia : $warehouse[11];
+                    $vatPer      = $warehouse->vat ;
+                    $vatM        = $warehouse->vat_money ;
                     $soLuongSanXuat = !empty($collect) ? $warehouse->so_luong_san_xuat : $warehouse[18];
                     $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
                     $materialType = !empty($collect) ? $warehouse->material_type : $detectCode['material_type'];
@@ -192,6 +197,14 @@
                             {{ number_format($donGia) }}
                         </td>
                         <td class="total {{$hiddenShowPrice ? 'd-none' : ''}}">{{ number_format($soLuong * $donGia) }}</td>
+                        <td class="{{$hiddenShowPrice ? 'd-none' : ''}}">
+                            <input type="hidden" name="vat_per[]" value="{{ $vatPer }}">
+                            {{ number_format($vatPer) }}
+                        </td>
+                        <td class="{{$hiddenShowPrice ? 'd-none' : ''}}">
+                            <input type="hidden" name="vat_money[]" value="{{ $vatM }}">
+                            {{ number_format($vatM) }}
+                        </td>
                     @else
                         <td class="sequence">{{ $sequence }}</td>
                         <td class="code">
@@ -236,20 +249,24 @@
                         <td class="{{$hiddenShowPrice ? 'd-none' : ''}}">
                             {{ number_format($soLuong * $donGia) }}
                         </td>
+                        <td class="{{$hiddenShowPrice ? 'd-none' : ''}}">
+                            {{ number_format($vatPer) }}
+                        </td>
+                        <td class="{{$hiddenShowPrice ? 'd-none' : ''}}">
+                            {{ number_format($vatM) }}
+                        </td>
                     @endif
                 </tr>
                 @include('admins.coes.includes.inventory-by-warehouse', compact('warehouse'))
                 @php
                     $sequence ++;
                     $total += $soLuong * $donGia;
+                    $vatTotal += $vatM;
                 @endphp
             @endforeach
         @endif
         </tbody>
         <tfoot class="{{$hiddenShowPrice ? 'd-none' : ''}}">
-        @php
-            $vat = ($total * 10) / 100;
-        @endphp
         @if(empty($notAction))
             <tr align="right">
                 <td colspan="{{ $colspan }}">Tổng giá (VNĐ):</td>
@@ -259,15 +276,15 @@
                 </td>
             </tr>
             <tr align="right">
-                <td colspan="{{ $colspan }}">VAT 10% (VNĐ):</td>
+                <td colspan="{{ $colspan }}">VAT (VNĐ):</td>
                 <td class="vat">
-                    <input type="hidden" name="vat" value="{{ $vat }}">
-                    <b>{{ number_format($vat) }}</b>
+                    <input type="hidden" name="vat" value="{{ $vatTotal }}">
+                    <b>{{ number_format($vatTotal) }}</b>
                 </td>
             </tr>
             <tr align="right">
                 <td colspan="{{ $colspan }}">Thành tiền (VNĐ):</td>
-                <td class="money_total"><b>{{ number_format($total + $vat) }}</b></td>
+                <td class="money_total"><b>{{ number_format($total + $vatTotal) }}</b></td>
             </tr>
         @else
             <tr align="right">
@@ -277,14 +294,14 @@
                 </td>
             </tr>
             <tr align="right">
-                <td colspan="{{ $colspan }}">VAT 10% (VNĐ):</td>
+                <td colspan="{{ $colspan }}">VAT (VNĐ):</td>
                 <td>
-                    <b>{{ number_format($vat) }}</b>
+                    <b>{{ number_format($vatTotal) }}</b>
                 </td>
             </tr>
             <tr align="right">
                 <td colspan="{{ $colspan }}">Thành tiền (VNĐ):</td>
-                <td><b>{{ number_format($total + $vat) }}</b></td>
+                <td><b>{{ number_format($total + $vatTotal) }}</b></td>
             </tr>
         @endif
         </tfoot>

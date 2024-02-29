@@ -21,6 +21,8 @@ class OfferPriceTmp extends Model
         'so_luong',
         'don_gia',
         'type',
+        'vat',
+        'vat_money',
         'manufacture_type',
         'warehouse_group_id',
         'material_type'

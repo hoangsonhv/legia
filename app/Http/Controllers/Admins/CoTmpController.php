@@ -163,6 +163,8 @@ class CoTmpController extends Controller
             $dvTinh      = $request->input('dv_tinh');
             $soLuong     = $request->input('so_luong');
             $donGia      = $request->input('don_gia');
+            $vat            = $request->input('vat_per');
+            $vatMoney       = $request->input('vat_money');
             $manufactureType = $request->input('manufacture_type');
             $warehouseGroupId = $request->input('warehouse_group_id');
             $materialType = $request->input('material_type');
@@ -180,6 +182,8 @@ class CoTmpController extends Controller
                     'dv_tinh'       => $dvTinh[$key],
                     'so_luong'      => $soLuong[$key],
                     'don_gia'       => $donGia[$key],
+                    'vat'           => $vat[$key],
+                    'vat_money'     => $vatMoney[$key],
                     'manufacture_type' => $manufactureType[$key],
                     'warehouse_group_id' => $warehouseGroupId[$key],
                     'material_type' => $materialType[$key],
@@ -411,19 +415,20 @@ class CoTmpController extends Controller
                                     $more['thoi_gian_giao_hang'] = $val[3];
                                     break;
                                 case 7:
+
                                     $valPercent = !empty($val[3]) ? ($val[3] * 100) : null;
                                     $more['thanh_toan[percent][truoc_khi_lam_hang]']        = $valPercent;
 
-                                    $valPercent = !empty($val[4]) ? ($val[4] * 100): null;
+                                    $valPercent = !empty($val[5]) ? ($val[5] * 100): null;
                                     $more['thanh_toan[percent][truoc_khi_giao_hang]']       = $valPercent;
 
-                                    $valPercent = !empty($val[5]) ? ($val[5] * 100) : null;
+                                    $valPercent = !empty($val[7]) ? ($val[7] * 100) : null;
                                     $more['thanh_toan[percent][ngay_khi_giao_hang]']        = $valPercent;
 
-                                    $valPercent = !empty($val[6]) ? ($val[6] * 100): null;
+                                    $valPercent = !empty($val[9]) ? ($val[9] * 100): null;
                                     $more['thanh_toan[percent][sau_khi_giao_hang_va_cttt]'] = $valPercent;
 
-                                    $valPercent = !empty($val[7]) ? ($val[7] * 100) : null;
+                                    $valPercent = !empty($val[12]) ? ($val[12] * 100) : null;
                                     $more['thanh_toan[percent][thoi_gian_no]']              = $valPercent;
                                     break;
                                 case 8:
@@ -431,15 +436,15 @@ class CoTmpController extends Controller
                                     $more['tmp[amount_money][truoc_khi_lam_hang]']        = $valAmount ? number_format($valAmount) : null;
                                     $more['thanh_toan[amount_money][truoc_khi_lam_hang]'] = $valAmount;
 
-                                    $valAmount = !empty($val[4]) ? $val[4] : null;
+                                    $valAmount = !empty($val[5]) ? $val[5] : null;
                                     $more['tmp[amount_money][truoc_khi_giao_hang]']        = $valAmount ? number_format($valAmount) : null;
                                     $more['thanh_toan[amount_money][truoc_khi_giao_hang]'] = $valAmount;
 
-                                    $valAmount = !empty($val[5]) ? $val[5] : null;
+                                    $valAmount = !empty($val[7]) ? $val[7] : null;
                                     $more['tmp[amount_money][ngay_khi_giao_hang]']        = $valAmount ? number_format($valAmount) : null;
                                     $more['thanh_toan[amount_money][ngay_khi_giao_hang]'] = $valAmount;
 
-                                    $valAmount = !empty($val[6]) ? $val[6] : null;
+                                    $valAmount = !empty($val[9]) ? $val[9] : null;
                                     $more['tmp[amount_money][sau_khi_giao_hang_va_cttt]']        = $valAmount ? number_format($valAmount) : null;
                                     $more['thanh_toan[amount_money][sau_khi_giao_hang_va_cttt]'] = $valAmount;
 
@@ -457,6 +462,7 @@ class CoTmpController extends Controller
                 }
                 // Get warehouse
                 $codes = [];
+                // dd($warehouses);
                 foreach($warehouses as $key => $val) {
                     $codes[] = $val[1];
                 }
