@@ -72,7 +72,7 @@ class ReportController extends Controller
         })->toArray();
         $requestsMaterials = $this->reportRepository->reportReqeustMaterials($arrRequest);
         $requestsMaterials = $requestsMaterials->map(function($reqM){
-            $sumPayment = $reqM->payments->count() ? $reqM->payments->sum('money_total') : 0;
+            $sumPayment = $reqM->payments->count() ? $reqM->payments->where('status', ProcessStatus::Approved)->sum('money_total') : 0;
             return [
                 'code' => $reqM->code,
                 'sumBuy' => $reqM->money_total,

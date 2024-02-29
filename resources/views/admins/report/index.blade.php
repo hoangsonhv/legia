@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="row card card-cyan p-3">
-                                    <div class="p-2"><span class="badge bg-info ">ổng tiền mua hàng</span></div>
+                                    <div class="p-2"><span class="badge bg-info ">Tổng tiền mua hàng</span></div>
                                     <div class="col-12">
                                         @include('admins.report.includes.request.summary', ['requestsMaterials' => $requestsMaterials])
                                     </div>
