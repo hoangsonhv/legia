@@ -27,10 +27,10 @@
       @if(!empty($products))
         @foreach($products as $index => $product)
           @php
-            $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])
+            $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['id'])
               ->first();
             $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
-              ->where('l_id', $product['merchandise_id'])->first();
+              ->where('l_id', $product['id'])->first();
           @endphp
           <tr align="center">
             <td class="">
