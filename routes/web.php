@@ -350,9 +350,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
 		return view('admins.test.index');
 	});
 
-	Route::get('/happy-ending', function () {
-		Artisan::call('remove:files');
-		Artisan::call('clear:database');
-		return 'Files removal command executed.';
-	});
 });
