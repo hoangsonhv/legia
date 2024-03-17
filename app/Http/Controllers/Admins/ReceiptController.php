@@ -446,7 +446,7 @@ class ReceiptController extends Controller
                         } else {
                             $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'),$request->input('step_id') == 2 ? $request->input('co_id') :  $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );
                         }
-                    } else if(!str_contains($co->currentStep->step, 'update')) {
+                    } else if($debt_money > $moneyLimitApprove && !str_contains($co->currentStep->step, 'update')) {
                         $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_UPDATE, $request->input('step_id') );
                     }
                 }

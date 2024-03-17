@@ -55,6 +55,7 @@
                   <th>Mã Phiếu Thu</th>
                   <th>Người thực hiện</th>
                   <th>Phương thức thanh toán</th>
+                  <th>Thực thu</th>
                   <th>Tổng tiền</th>
                   <th>Trạng thái</th>
                   <th>&nbsp</th>
@@ -72,6 +73,7 @@
                       @endif
                     </td>
                     <td>{!! isset($paymentMethods[$receipt->payment_method]) ? $paymentMethods[$receipt->payment_method] : '' !!}</td>
+                    <td>{{ number_format($receipt->actual_money) }}</td>
                     <td>{{ number_format($receipt->money_total) }}</td>
                     <td>
                       @if($receipt->status == \App\Enums\ProcessStatus::Approved)
