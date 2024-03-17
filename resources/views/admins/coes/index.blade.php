@@ -110,7 +110,7 @@
                     if($co->receipt->count()) {
                       foreach($co->receipt as $val) {
                         if($val->status == \App\Enums\ProcessStatus::Approved) {
-                          $sumReceipt += $val->money_total;
+                          $sumReceipt += $val->actual_money;
                         }
                       }
                     }

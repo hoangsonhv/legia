@@ -576,22 +576,22 @@ class CoService
                 'act_router' => 'admin.receipt.edit',
             ],
             CoStepHistory::STEP_WAITING_UPDATE_RECEIPT_N1 => [
-                'title' => 'Phiếu thu '. self::paymentStep()[0] . ' chưa thu đủ. Đang đợi cập nhật',
+                'title' => 'Phiếu thu '. self::paymentStep()[0] . ' chưa thu đủ. Số tiền chênh lệch còn thiếu/ Số tiền phải thanh toán >2% : Kiểm tra lại',
                 'action' => CoStepHistory::ACTION_UPDATE,
                 'act_router' => 'admin.receipt.edit',
             ],
             CoStepHistory::STEP_WAITING_UPDATE_RECEIPT_N2 => [
-                'title' => 'Phiếu thu '. self::paymentStep()[1] . ' chưa thu đủ. Đang đợi cập nhật',
+                'title' => 'Phiếu thu '. self::paymentStep()[1] . ' chưa thu đủ. Số tiền chênh lệch còn thiếu/ Số tiền phải thanh toán >2% : Kiểm tra lại',
                 'action' => CoStepHistory::ACTION_UPDATE,
                 'act_router' => 'admin.receipt.edit',
             ],
             CoStepHistory::STEP_WAITING_UPDATE_RECEIPT_N3 => [
-                'title' => 'Phiếu thu '. self::paymentStep()[2] . ' chưa thu đủ. Đang đợi cập nhật',
+                'title' => 'Phiếu thu '. self::paymentStep()[2] . ' chưa thu đủ. Số tiền chênh lệch còn thiếu/ Số tiền phải thanh toán >2% : Kiểm tra lại',
                 'action' => CoStepHistory::ACTION_UPDATE,
                 'act_router' => 'admin.receipt.edit',
             ],
             CoStepHistory::STEP_WAITING_UPDATE_RECEIPT_N4 => [
-                'title' => 'Phiếu thu '. self::paymentStep()[3] . ' chưa thu đủ. Đang đợi cập nhật',
+                'title' => 'Phiếu thu '. self::paymentStep()[3] . ' chưa thu đủ. Số tiền chênh lệch còn thiếu/ Số tiền phải thanh toán >2% : Kiểm tra lại',
                 'action' => CoStepHistory::ACTION_UPDATE,
                 'act_router' => 'admin.receipt.edit',
             ],

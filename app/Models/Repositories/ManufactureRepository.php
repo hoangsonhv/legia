@@ -2,6 +2,7 @@
 
 namespace App\Models\Repositories;
 
+use App\Enums\QCCheckStatus;
 use App\Helpers\WarehouseHelper;
 use App\Models\Co;
 use App\Models\CoStepHistory;
@@ -208,7 +209,6 @@ class ManufactureRepository extends AdminRepository
                 }
             }
         }
-
         // Manufacture product
         $input = [];
         $input['co_id'] = $co->id;
@@ -216,6 +216,11 @@ class ManufactureRepository extends AdminRepository
         $input['admin_id'] = Session::get('login')->id;
         $input['manufacture_type'] = WarehouseGroup::TYPE_MANUFACTURE;
         $input['material_type'] = Manufacture::MATERIAL_TYPE_METAL;
+        $input['qc_check'] = QCCheckStatus::WAITING;
+        if(!$dataInsertMetals) {
+            $input['is_completed'] = Manufacture::IS_COMPLETED;
+            $input['qc_check'] = QCCheckStatus::DONE;
+        }
         $modelMetal = Manufacture::create($input);
 
         if($modelMetal) {
@@ -223,6 +228,12 @@ class ManufactureRepository extends AdminRepository
         }
 
         $input['material_type'] = Manufacture::MATERIAL_TYPE_NON_METAL;
+        $input['qc_check'] = QCCheckStatus::WAITING;
+        $input['is_completed'] = Manufacture::WAITING;
+        if(!$dataInsertNonMetals) {
+            $input['is_completed'] = Manufacture::IS_COMPLETED;
+            $input['qc_check'] = QCCheckStatus::DONE;
+        }
         $modelNonMetal = Manufacture::create($input);
         if($modelNonMetal) {
             $modelNonMetal->details()->createMany($dataInsertNonMetals);
@@ -232,6 +243,11 @@ class ManufactureRepository extends AdminRepository
         $input['is_completed'] = Manufacture::IS_COMPLETED;
         $input['manufacture_type'] = WarehouseGroup::TYPE_COMMERCE;
         $input['material_type'] = Manufacture::MATERIAL_TYPE_METAL;
+        $input['qc_check'] = QCCheckStatus::WAITING;
+        if(!$commerceProductMetals) {
+            $input['is_completed'] = Manufacture::IS_COMPLETED;
+            $input['qc_check'] = QCCheckStatus::DONE;
+        }
         $modelCommerceMetals = Manufacture::create($input);
 
         if($modelCommerceMetals) {
@@ -239,6 +255,11 @@ class ManufactureRepository extends AdminRepository
         }
         
         $input['material_type'] = Manufacture::MATERIAL_TYPE_NON_METAL;
+        $input['qc_check'] = QCCheckStatus::WAITING;
+        if(!$commerceProductNonMetals) {
+            $input['is_completed'] = Manufacture::IS_COMPLETED;
+            $input['qc_check'] = QCCheckStatus::DONE;
+        }
         $modelCommerceNonMetals = Manufacture::create($input);
 
         if($modelCommerceNonMetals) {

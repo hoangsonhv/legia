@@ -192,6 +192,62 @@
                         </td>
                       </tr>
                       <tr class="text-center">
+                        <td class="text-right">Giá trị thực thu - VNĐ</td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[0]) ? number_format($receipts[0]['actual_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[1]) ? number_format($receipts[1]['actual_money']) : null;
+
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[2]) ? number_format($receipts[2]['actual_money']) : null;
+                          @endphp
+                         {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[3]) ? number_format($receipts[3]['actual_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                      </tr>
+                      <tr class="text-center">
+                        <td class="text-right">Giá trị còn nợ - VNĐ</td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[0]) ? number_format($receipts[0]['debt_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[1]) ? number_format($receipts[1]['debt_money']) : null;
+
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[2]) ? number_format($receipts[2]['debt_money']) : null;
+                          @endphp
+                         {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[3]) ? number_format($receipts[3]['debt_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                      </tr>
+                      <tr class="text-center">
                         <td class="text-right">Thời gian xét duyệt</td>
                         <td>
                           @if(isset($receipts[0]))
