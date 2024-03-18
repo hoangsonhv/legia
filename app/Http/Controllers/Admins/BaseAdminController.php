@@ -149,7 +149,7 @@ class BaseAdminController extends Controller
                         }
 
                         if ($qcCheckDone) {
-                            $this->coStepHistoryRepo->insertNextStep('qc-check', $repository->co_id, $repository->co_id, CoStepHistory::ACTION_APPROVE, 2);
+                            $this->coStepHistoryRepo->insertNextStep('warehouse-export-sell', $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE);
                         }
                     }
                 }

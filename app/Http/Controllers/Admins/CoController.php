@@ -280,6 +280,8 @@ class CoController extends Controller
             $soLuong     = $request->input('so_luong');
             $soLuongSanXuat = $request->input('so_luong_san_xuat');
             $donGia      = $request->input('don_gia');
+            $vat            = $request->input('vat_per');
+            $vatMoney       = $request->input('vat_money');
             $manufactureType = $request->input('manufacture_type');
             $warehouseGroupId = $request->input('warehouse_group_id');
             $materialType = $request->input('material_type');
@@ -298,6 +300,8 @@ class CoController extends Controller
                     'so_luong'      => $soLuong[$key],
                     'don_gia'       => $donGia[$key],
                     'so_luong_san_xuat' => $soLuongSanXuat[$key],
+                    'vat'           => $vat[$key],
+                    'vat_money'     => $vatMoney[$key],
 //                    'material_type' => in_array($key, $request->input('material_type') ?? [])
 //                        ? OfferPrice::MATERIAL_TYPE_METAL : OfferPrice::MATERIAL_TYPE_NON_METAL
                     'manufacture_type' => $manufactureType[$key],

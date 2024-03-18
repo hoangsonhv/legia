@@ -23,6 +23,8 @@ class OfferPrice extends Model
         'dv_tinh',
         'so_luong',
         'don_gia',
+        'vat',
+        'vat_money',
         'material_type',
         'manufacture_type',
         'warehouse_group_id',

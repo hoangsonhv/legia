@@ -190,9 +190,13 @@ class WarehouseExportSellController extends Controller
                     ->where('step_id', 1)
                     ->where('status', ProcessStatus::Pending)
                     ->first();
+                // Nếu phiếu thu lần 3 == 0 thì chuyển xuất kho bán hàng
+                $hasPercent = $this->coRepo->checkPercentPayment($model->co_id, 2);
                 if($receipt) {
                     $this->coStepHisRepo->insertNextStep( 'receipt', $model->co_id, $receipt->id, CoStepHistory::ACTION_APPROVE, 1);
-                } else {
+                } else if(!$hasPercent) {
+                    $this->coStepHisRepo->insertNextStep('delivery', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
+                }else {
                     $this->coStepHisRepo->insertNextStep( 'receipt', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE, 2);
                 }
             }
