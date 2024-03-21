@@ -53,7 +53,7 @@
                                 <div class="col-sm-12 col-xl-3">
                                     <div class="form-group">
                                         <label for="core_customer_id">Mã khách hàng<b style="color: red;"> (*)</b></label>
-                                        {!! Form::select('core_customer_id', $coreCustomers, null, array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
+                                        {!! Form::select('core_customer_id', $coreCustomers, null, array('class' => 'form-control', 'required' => 'required', 'disabled' => true)) !!}
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-xl-9">

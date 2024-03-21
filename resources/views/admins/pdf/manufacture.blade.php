@@ -16,7 +16,7 @@
             <tr>
                 <td rowspan="2" class="w60 text-center text-bold">
                     Xưởng {{$model->material_type == \App\Models\Manufacture::MATERIAL_TYPE_METAL ? 'Kim Loại' : 'Phi Kim Loại'}}
-                    - LỆNH SẢN XUẤT
+                    - LỆNH SẢN XUẤT - {{$model->co->code}}
                 </td>
                 <td class="w10 fs10">Ngày:</td>
                 <td class="w10 fs10">{{date("d/m/Y")}}</td>

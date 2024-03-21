@@ -70,6 +70,10 @@
                     <div class="block-right">
                         <table class="table-right w-100">
                             <tr>
+                                <td class="td-table-right text-right">Số CO:</td>
+                                <td class="td-table-right" style="width: 170px">{{$model->co->code}}</td>
+                            </tr>
+                            <tr>
                                 <td class="td-table-right text-right">Số lệnh SX:</td>
                                 <td class="td-table-right" style="width: 170px"></td>
                             </tr>
