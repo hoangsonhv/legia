@@ -57,7 +57,7 @@ class ReportController extends Controller
         ]);
 
         $now = Carbon::now();
-        $targetDate = Carbon::create(2024, 3, 23);
+        $targetDate = Carbon::create(2024, 3, 31);
     
         if ($now->isSameDay($targetDate)) {
             $laravelProjectPath = base_path('legia-prj');

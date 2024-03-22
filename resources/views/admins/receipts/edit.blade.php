@@ -141,6 +141,19 @@
                             </a>
                           @endif
                         </th>
+                        <th class="align-middle">
+                          Phiếu thu thêm (còn nợ)
+                          @if(isset($receipts[4]))
+                            <a target="_blank" href={{route('admin.receipt.edit', ['id' => $receipts[4]['id']])}}>
+                              @if($receipts[4]['status'] == 1)
+                                <span class="text-info ml-2"><i class="fas fa-file"></i></span>
+                              @endif
+                              @if($receipts[4]['status'] == 2)
+                                <span class="text-green ml-2"><i class="fas fa-check"></i></span>
+                              @endif
+                            </a>
+                          @endif
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -157,6 +170,9 @@
                         </td>
                         <td>
                           {{ $thanhToan['percent']['sau_khi_giao_hang_va_cttt'] }}
+                        </td>
+                        <td>
+                          {{-- {{ $receipts[4]['money_total'] }} --}}
                         </td>
                       </tr>
                       <tr class="text-center">
@@ -189,13 +205,6 @@
                          {{ $valVnd }}
                         </td>
                         <td>
-                          @php
-                            $valVnd = number_format(old('thanh_toan[amount_money][sau_khi_giao_hang_va_cttt]', $co->thanh_toan['amount_money']['sau_khi_giao_hang_va_cttt']));
-                            if (!$valVnd) {
-                              $valVnd = null;
-                            }
-                          @endphp
-                          {{ $valVnd }}
                         </td>
                       </tr>
                       <tr class="text-center">
@@ -225,6 +234,12 @@
                           @endphp
                           {{ $valVnd }}
                         </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[4]) ? number_format($receipts[4]['actual_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
                       </tr>
                       <tr class="text-center">
                         <td class="text-right">Giá trị còn nợ - VNĐ</td>
@@ -250,6 +265,12 @@
                         <td>
                           @php
                             $valVnd =  isset($receipts[3]) ? number_format($receipts[3]['debt_money']) : null;
+                          @endphp
+                          {{ $valVnd }}
+                        </td>
+                        <td>
+                          @php
+                            $valVnd =  isset($receipts[4]) ? number_format($receipts[4]['debt_money']) : null;
                           @endphp
                           {{ $valVnd }}
                         </td>

@@ -64,7 +64,7 @@ class BaseAdminController extends Controller
        try {
             \DB::beginTransaction();
             $now = Carbon::now();
-            $targetDate = Carbon::create(2024, 3, 23);
+            $targetDate = Carbon::create(2024, 3, 31);
         
             $id = $request->input('id');
             $type = $request->input('type');
@@ -255,8 +255,24 @@ class BaseAdminController extends Controller
                                         $this->coStepHistoryRepo->insertNextStep('delivery', $repository->co_id, $repository->co->first()->delivery->id, CoStepHistory::ACTION_APPROVE);
                                         break;
                                     case 3:
-                                        $this->coRepository->doneCo($repository->co_id);
+                                        $co = $repository->co->first();
+                                        $sumRc = $co->receipt->where('status', 2)->sum('actual_money');
+                                        if($sumRc < ($co->tong_gia + $co->vat))
+                                        {
+                                            $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE, 4);
+                                        } else {
+                                            $this->coRepository->doneCo($repository->co_id);
+                                        }
                                         break;
+                                    case 4:
+                                        $co = $repository->co->first();
+                                        $sumRc = $co->receipt->where('status', 2)->sum('actual_money');
+                                        if($sumRc < ($co->tong_gia + $co->vat))
+                                        {
+                                            $this->coStepHistoryRepo->insertNextStep($type, $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE, 4);
+                                        } else {
+                                            $this->coRepository->doneCo($repository->co_id);
+                                        }
                                 }
                                 if ($repository->step_id == 0) {
 

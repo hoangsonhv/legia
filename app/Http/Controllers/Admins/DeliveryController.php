@@ -137,9 +137,9 @@ class DeliveryController extends Controller
             $input['admin_id'] = Session::get('login')->id;
             $input['status_customer_received'] = (int) $request->input('status_customer_received');
             $delivery          = Delivery::create($input);
-            $receipt = $delivery->co->receipt()->orderBy('step_id', 'desc')->first();
+            $receipt = $delivery->co->receipt()->where('status', 1)->orderBy('step_id', 'desc')->first();
             if($delivery) {
-                if($receipt){
+                if($receipt && $receipt->step == 2){
                     $this->coStepHisRepo->insertNextStep('receipt', $delivery->co_id, $receipt->id, CoStepHistory::ACTION_APPROVE,4);
                 } else {
                     $this->coStepHisRepo->insertNextStep('delivery', $delivery->co_id, $delivery->id, CoStepHistory::ACTION_APPROVE);
@@ -216,7 +216,6 @@ class DeliveryController extends Controller
                 // Save delivery
                 $input['status_customer_received'] = (int) $request->input('status_customer_received');
                 $delivery = $this->deliRepo->update($inputs, $id);
-
                 if($delivery->status_customer_received && $co->currentStep && $co->currentStep->step == CoStepHistory::STEP_WAITING_APPROVE_DELIVERY){
                     $this->coStepHisRepo->insertNextStep('receipt', $co->id, $co->id, CoStepHistory::ACTION_CREATE, 3);
                 }

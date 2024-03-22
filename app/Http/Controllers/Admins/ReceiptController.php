@@ -138,6 +138,8 @@ class ReceiptController extends Controller
                                 if(!$receipt || !in_array($receipt->status, [ProcessStatus::Pending, ProcessStatus::Approved])) {
                                     break;
                                 }
+                            } else if ($step['field'] == "thanh_toan_no") {
+                                break;
                             }
                             $indexStepPay += 1;
                         }
@@ -158,15 +160,14 @@ class ReceiptController extends Controller
                                 return redirect()->route('admin.co.edit', ['id' => $repository->id])->with('error','Chưa đủ chứng từ thanh toán!');
                             }
                         }
-
                         if(!isset($steps[$indexStepPay])) {
                             return redirect()->back()->with('error','Chỉ được tạo 4 phiếu thu cho 1 CO');
                         }
+                        $sumRc = $co->receipt->where('status', 2)->sum('actual_money');
                         $receipt = new Receipt;
-                        $receipt->money_total = $thanhToan['amount_money'][$steps[$indexStepPay]['field']];
+                        $receipt->money_total = $steps[$indexStepPay]['field'] !== "thanh_toan_no" ? $thanhToan['amount_money'][$steps[$indexStepPay]['field']] : (($co->tong_gia + $co->vat) - $sumRc);
                         $receipt->note = 'Tạo phiếu thu cho ' . $repository->code . ' ' . $steps[$indexStepPay]['text'];
                         $receipt->step_id = $indexStepPay;
-
                         $arrReceipts = $repository->receipt()->get()->toArray();
                         foreach ($arrReceipts as $recod) {
                             if(in_array($recod['status'], [ProcessStatus::Pending, ProcessStatus::Approved])) {
@@ -275,7 +276,10 @@ class ReceiptController extends Controller
                     if($request->input('step_id') == 1) {
                         //dd('here');
                         $this->coStepHisRepo->insertNextStep('warehouse-export-sell', $request->input('co_id'), $request->input('co_id'), CoStepHistory::ACTION_CREATE);
-                    } else {
+                    } else if($request->input('step_id') == 4) {
+                        $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_APPROVE,5);
+                    }
+                    else {
                         $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'),$request->input('step_id') == 2 ? $request->input('co_id') :  $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );
                     }
                 } else {
@@ -443,10 +447,15 @@ class ReceiptController extends Controller
                         if($request->input('step_id') == 1) {
                             //dd('here');
                             $this->coStepHisRepo->insertNextStep('warehouse-export-sell', $request->input('co_id'), $request->input('co_id'), CoStepHistory::ACTION_CREATE);
+                        } else if($receipt->step_id == 4) {
+                            $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_APPROVE,5);
                         } else {
-                            $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'),$request->input('step_id') == 2 ? $request->input('co_id') :  $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id') );
+                            $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'),$request->input('step_id') == 2 ? $request->input('co_id') :  $receipt->id, CoStepHistory::ACTION_APPROVE, $request->input('step_id'));
                         }
                     } else if($debt_money > $moneyLimitApprove && !str_contains($co->currentStep->step, 'update')) {
+                        if($receipt->step_id == 4) {
+                            $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_UPDATE,5);
+                        } 
                         $this->coStepHisRepo->insertNextStep( 'receipt', $request->input('co_id'), $receipt->id, CoStepHistory::ACTION_UPDATE, $request->input('step_id') );
                     }
                 }

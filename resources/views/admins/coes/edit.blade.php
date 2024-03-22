@@ -297,27 +297,27 @@
                       <div class="col-sm-12 col-xl-4">
                         <div class="form-group">
                           <label for="customer[code]">Mã khách hàng<b style="color: red;"> (*)</b></label>
-                          {!! Form::text('customer[code]', null, array('class' => 'form-control', 'required' => 'required')) !!}
+                          {!! Form::text('core_customer[code]', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         </div>
                       </div>
                       <div class="col-sm-12 col-xl-8">
                         <div class="form-group">
-                          <label for="customer[ten]">Tên khách hàng<b style="color: red;"> (*)</b></label>
-                          {!! Form::text('customer[ten]', null, array('class' => 'form-control', 'required' => 'required')) !!}
+                          <label for="core_customer[ten]">Tên khách hàng<b style="color: red;"> (*)</b></label>
+                          {!! Form::text('core_customer[name]', null, array('class' => 'form-control', 'required' => 'required')) !!}
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-sm-12 col-xl-8">
                         <div class="form-group">
-                          <label for="customer[dia_chi]">Địa chỉ</label>
-                          {!! Form::text('customer[dia_chi]', null, array('class' => 'form-control')) !!}
+                          <label for="core_customer[dia_chi]">Địa chỉ</label>
+                          {!! Form::text('core_customer[address]', null, array('class' => 'form-control')) !!}
                         </div>
                       </div>
                       <div class="col-sm-12 col-xl-4">
                         <div class="form-group">
-                          <label for="customer[mst]">MST</label>
-                          {!! Form::text('customer[mst]', null, array('class' => 'form-control')) !!}
+                          <label for="core_customer[mst]">MST</label>
+                          {!! Form::text('core_customer[tax_code]', null, array('class' => 'form-control')) !!}
                         </div>
                       </div>
                     </div>
@@ -1079,6 +1079,7 @@
                       \App\Models\CoStepHistory::STEP_CREATE_RECEIPT_N2,
                       \App\Models\CoStepHistory::STEP_CREATE_RECEIPT_N3,
                       \App\Models\CoStepHistory::STEP_CREATE_RECEIPT_N4,
+                      \App\Models\CoStepHistory::STEP_CREATE_RECEIPT_EXTRA,
                     ]))
                     @permission('admin.receipt.create')
                       <a href="{{ route('admin.receipt.create', ['type' => 'co', 'id' => $co->id]) }}" class="btn btn-success">Tạo Phiếu Thu</a>

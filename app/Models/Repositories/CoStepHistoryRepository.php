@@ -84,9 +84,19 @@ class CoStepHistoryRepository extends AdminRepository
                             if ($hasPercent) {
                                 $step = CoStepHistory::STEP_CREATE_RECEIPT_N4;
                             } else {
-                                $this->coRepo->doneCo($coId);
+                                $co = $this->coRepo->find($coId);
+                                $sumRc = $co->receipt->where('status', 2)->sum('actual_money');
+                                if($sumRc < ($co->tong_gia + $co->vat))
+                                {
+                                    $this->insertNextStep('receipt', $coId, $objectId, CoStepHistory::ACTION_CREATE, 4);
+                                } else {
+                                    $this->coRepo->doneCo($coId);
+                                }
                             }
                             break;
+                        case 4:
+                            $step = CoStepHistory::STEP_CREATE_RECEIPT_EXTRA;
+
                     }
                 } else if ($action == CoStepHistory::ACTION_APPROVE) {
                     switch ($stepId) {
@@ -104,6 +114,8 @@ class CoStepHistoryRepository extends AdminRepository
                             break;
                         case 4: 
                             $step = CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_N3;
+                        case 5:
+                            $step = CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_EXTRA;
                     }
                 } else if ($action == CoStepHistory::ACTION_UPDATE) {
                     switch ($stepId) {

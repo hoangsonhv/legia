@@ -43,6 +43,7 @@ class CoStepHistory extends Model
     const STEP_CREATE_PAYMENT_N2 = 'create_payment_n2';
     const STEP_CREATE_PAYMENT_N3 = 'create_payment_n3';
     const STEP_CREATE_PAYMENT_N4 = 'create_payment_n4';
+    const STEP_CREATE_RECEIPT_EXTRA = 'waiting_create_receipt_extra';
     const STEP_CREATE_WAREHOUSE_RECEIPT = 'create_warehouse_receipt';
     const STEP_CREATE_WAREHOUSE_EXPORT = 'create_warehouse_export';
     const STEP_CREATE_MANUFACTURE = 'create_manufacture';
@@ -58,7 +59,9 @@ class CoStepHistory extends Model
     const STEP_WAITING_UPDATE_RECEIPT_N2 = 'waiting_update_receipt_n2';
     const STEP_WAITING_UPDATE_RECEIPT_N3 = 'waiting_update_receipt_n3';
     const STEP_WAITING_UPDATE_RECEIPT_N4 = 'waiting_update_receipt_n4';
+    const STEP_WAITING_UPDATE_RECEIPT_EXTRA = 'waiting_update_receipt_extra';
     const STEP_WAITING_APPROVE_REQUEST = 'waiting_approve_request';
+    const STEP_WAITING_APPROVE_RECEIPT_EXTRA = 'waiting_approve_receipt_extra';
     const STEP_WAITING_APPROVE_PRICE_SURVEY = 'waiting_approve_price_survey';
     const STEP_WAITING_APPROVE_PAYMENT_N1 = 'waiting_approve_payment_n1';
     const STEP_WAITING_APPROVE_PAYMENT_N2 = 'waiting_approve_payment_n2';

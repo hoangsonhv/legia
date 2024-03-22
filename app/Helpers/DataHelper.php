@@ -248,6 +248,10 @@ class DataHelper
                 'field' => 'sau_khi_giao_hang_va_cttt',
                 'text' => 'sau khi giao hàng và chứng từ thanh toán'
             ],
+            4 => [
+                'field' => 'thanh_toan_no',
+                'text' => 'Thanh toán nợ còn lại'
+            ],
         ];
     }
 

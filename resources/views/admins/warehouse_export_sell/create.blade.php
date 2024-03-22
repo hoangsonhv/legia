@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label for="core_customer_id">Mã khách hàng<b style="color: red;"> (*)</b></label>
                                 {!! Form::select('core_customer_id', $coreCustomers, $coModel->core_customer_id,
-                                array('class' => 'form-control', 'required' => 'required', 'disabled' => true)) !!}
+                                array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
                             </div>
                             <div class="form-group">
                                 <label for="buyer_name">Tên khách hàng<b style="color: red;"> (*)</b></label>
