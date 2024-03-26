@@ -16,7 +16,7 @@
 </script>
 <h3 class="text-primary">Danh sách vật liệu kho</h3>
 @php
-    $warehouseGroup = $warehouses->groupBy('model_type');
+    $warehouseGroup = count($warehouses) ? $warehouses->groupBy('model_type') : [];
     $index = 0;
 @endphp
 <ul class="nav nav-tabs" id="myTabs">
