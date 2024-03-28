@@ -9,6 +9,8 @@ use App\Http\Requests\WarehouseGroupRequest;
 use App\Http\Requests\WarehouseReceiptRequest;
 use App\Models\Admin;
 use App\Models\CoStepHistory;
+use App\Models\MerchandiseCode;
+use App\Models\MerchandiseGroup;
 use App\Models\Repositories\WarehouseGroupRepository;
 use App\Models\WarehouseGroup;
 use App\Models\WarehouseHistory;
@@ -86,8 +88,15 @@ class WarehouseGroupController extends Controller
         }
         try {
             \DB::beginTransaction();
+            $paramsMerchandise = [
+                'code' => $inputs['code'],
+                'name' => $inputs['name'],
+                'factory_type' => $inputs['manufacture_type'] ? MerchandiseGroup::METAL : MerchandiseGroup::NON_METAL,
+                'operation_type' => $inputs['type'],
+            ];
             $inputs['admin_id'] = Session::get('login')->id;
             $model = $this->warehouseGroupRepo->insert($inputs);
+            $model = MerchandiseGroup::create($paramsMerchandise);
             \DB::commit();
             return redirect()->route('admin.warehouse-group.index')->with('success', 'Tạo nhóm hàng hóa thành công!');
         } catch (\Exception $ex) {
@@ -123,8 +132,16 @@ class WarehouseGroupController extends Controller
                 $inputs['warehouse_ingredient'] = implode(',', array_keys($inputs['warehouse_ingredient']));
             }
 //            try {
+                $code = $this->warehouseGroupRepo->find($id)->code;
                 \DB::beginTransaction();
                 // Save request
+                $paramsMerchandise = [
+                    'code' => $inputs['code'],
+                    'name' => $inputs['name'],
+                    'factory_type' => $inputs['manufacture_type'] ? MerchandiseGroup::METAL : MerchandiseGroup::NON_METAL,
+                    'operation_type' => $inputs['type'],
+                ];
+                $merCode = MerchandiseGroup::where('code', $code)->first()->update($paramsMerchandise);
                 $model = $this->warehouseGroupRepo->update($inputs, $id);
                 \DB::commit();
                 return redirect()->route('admin.warehouse-group.edit', ['id' => $id])->with('success', 'Cập nhật Phiếu xuất kho thành công!');
@@ -140,8 +157,10 @@ class WarehouseGroupController extends Controller
     public function destroy($id)
     {
         $model = $this->warehouseGroupRepo->find($id);
-        if ($model) {
+        $merCode = MerchandiseGroup::where('code', $model->code)->first();
+        if ($model && $merCode ) {
             $model->delete();
+            $merCode->delete(); 
             return redirect()->route('admin.warehouse-group.index')->with('success', 'Xóa nhóm hàng hóa thành công!');
         }
         return redirect()->back()->with('error', 'Nhóm hàng hóa không tồn tại!');

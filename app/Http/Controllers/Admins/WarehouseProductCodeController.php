@@ -8,6 +8,7 @@ use App\Http\Requests\WarehouseExportRequest;
 use App\Http\Requests\WarehouseProductCodeRequest;
 use App\Models\Admin;
 use App\Models\CoStepHistory;
+use App\Models\MerchandiseCode;
 use App\Models\WarehouseGroup;
 use App\Models\WarehouseHistory;
 use App\Models\WarehouseProductCode;
@@ -75,6 +76,13 @@ class WarehouseProductCodeController extends Controller
         try {
             \DB::beginTransaction();
             $input['admin_id'] = Session::get('login')->id;
+            $codeGroup = WarehouseGroup::find($input['warehouse_group_id'])->code;
+            $paramsMerchandisecode = [
+                'code' => $input['code'],
+                'infix_code' => $codeGroup,
+                'summary' => $input['name'],
+            ];
+            MerchandiseCode::create($paramsMerchandisecode);
             $model = $this->warehouseProductCodeRepository->insert($input);
             \DB::commit();
             return redirect()->route('admin.warehouse-product-code.index')->with('success', 'Tạo mã hàng hóa thành công!');
