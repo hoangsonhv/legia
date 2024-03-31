@@ -91,7 +91,7 @@ class WarehouseGroupController extends Controller
             $paramsMerchandise = [
                 'code' => $inputs['code'],
                 'name' => $inputs['name'],
-                'factory_type' => $inputs['manufacture_type'] ? MerchandiseGroup::METAL : MerchandiseGroup::NON_METAL,
+                'factory_type' => $inputs['manufacture_type'] ? MerchandiseGroup::NON_METAL : MerchandiseGroup::METAL,
                 'operation_type' => $inputs['type'],
             ];
             $inputs['admin_id'] = Session::get('login')->id;
