@@ -11,6 +11,68 @@
       border-radius: 5px;
       padding: 12px;
     }
+    .step-progress-bar-vertical {
+        list-style: none;
+        counter-reset: step;
+    }
+    .step-progress-bar-vertical li {
+        position: relative;
+        padding-left: 30px;
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    .step-progress-bar-vertical li:before {
+        content: counter(step);
+        counter-increment: step;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        border: 1px solid #ddd;
+        display: block;
+        text-align: center;
+        margin: 0 auto 10px 0;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #fff;
+    }
+    .step-progress-bar-vertical li:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background-color: #ddd;
+        top: 20px;
+        left: 10px;
+    }
+    .step-progress-bar-vertical li:last-child:after {
+        content: none;
+    }
+    .step-progress-bar-vertical li.active:before {
+        border-color: red;
+        background-color: red;
+    }
+    .step-progress-bar-vertical li.completed:before {
+        border-color: #28a745;
+        background-color: #28a745;
+    }
+    .step-progress-bar-vertical li.completed + li:after {
+        background-color: #28a745;
+    }
+    .step-progress-bar-vertical li.completed {
+        color: #888;
+    }
+
+    .step-progress-bar-vertical li .date {
+        position: absolute;
+        left: -150px;
+        top: 0;
+    }
+    .bordered-cell {
+        border-bottom: 2px solid #000;
+    }
   </style>
 @endsection
 <!-- Main content -->
@@ -19,8 +81,7 @@
     <!-- Main row -->
     <div class="row">
       <section class="col-lg-12">
-        @include('admins.dashboard.list-co-tmps')
-        @include('admins.dashboard.list-coes')
+        {{-- @include('admins.dashboard.list-co-tmps') --}}
         @include('admins.dashboard.list-treking-co')
 {{--        <div class="card card-success">--}}
 {{--          <div class="card-header">--}}

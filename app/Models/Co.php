@@ -35,8 +35,8 @@ class Co extends Model
 {
 
     //default enough_material = 0;
-    const ENOUGH_MATERIAL = 1; //đủ nvl 
-    const LACK_MATERIAL = 2;  // kh đủ nvl 
+    const ENOUGH_MATERIAL = 1; //đủ nvl
+    const LACK_MATERIAL = 2;  // kh đủ nvl
 
     protected $table = 'co';
 
@@ -123,5 +123,10 @@ class Co extends Model
 
     public function currentStep() {
         return $this->hasOne(CoStepHistory::class, 'co_id')->latest();
+    }
+    
+    public function stepHistories()
+    {
+        return $this->hasMany('App\Models\CoStepHistory', 'co_id', 'id');
     }
 }
