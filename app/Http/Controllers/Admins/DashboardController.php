@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Admins;
 
 use App\Enums\ProcessStatus;
@@ -60,7 +60,7 @@ class DashboardController extends Controller {
 
 	public function index(Request $request)
 	{
-       
+
 	}
 
     public function coTmp(Request $request)
@@ -100,13 +100,13 @@ class DashboardController extends Controller {
 
         $last = Carbon::parse("Now -1 {$rangeDate}");
         $now  = Carbon::now();
-       
+
         $code = '';
         if(isset($request->code))
         {
             $code = $request->code;
         }
-        
+
         // $queryDataset = $this->requestRepository->getRequests([
         //         'category' => DataHelper::KHO.'-nguyen_vat_lieu',
         //         'created_at' => [ 'requests.created_at', 'between', [$last->format('Y-m-d H:i:s'), $now->format('Y-m-d H:i:s')] ],
@@ -166,7 +166,7 @@ class DashboardController extends Controller {
                 ->where('co.status', ProcessStatus::Unapproved);
         })
         ->orderBy('created_at', 'DESC')->paginate(10);
-        
+
         $coes = $this->coRepo->getCoes([
             'confirm_done' => 0,
             ['status', '!=', ProcessStatus::Unapproved]
@@ -285,7 +285,7 @@ class DashboardController extends Controller {
                 ['status', '!=', ProcessStatus::Unapproved],
             ])->orderBy('created_at', 'DESC')->paginate(10);
         }
-       
+
 		return view('admins.dashboard.co.list', compact('breadcrumb', 'titleForLayout', 'titleForChart',
             'listRangeDate', 'coTmps', 'coes'));
     }
@@ -330,5 +330,56 @@ class DashboardController extends Controller {
 
         return view('admins.dashboard.request.list', compact('breadcrumb', 'titleForLayout', 'titleForChart',
             'listRangeDate', 'requests'));
+    }
+
+    public function trekingCo(Request $request)
+    {
+        $breadcrumb     = $this->menu;
+        $titleForLayout = $this->menu['root'];
+        $titleForChart  = 'Thống kê nguyên vật liệu';
+
+        $listRangeDate  = [
+            'weeks'  => 'Biều đồ trên tuần',
+            'months' => 'Biểu đồ trên tháng'
+		];
+        $rangeDate = $request->input('range_date');
+        if (!$rangeDate) {
+            $rangeDate = 'weeks';
+        }
+
+        $code = '';
+        if(isset($request->code))
+        {
+            $code = $request->code;
+        }
+
+        $last = Carbon::parse("Now -1 {$rangeDate}");
+        $now  = Carbon::now();
+        $request->flash();
+        $coTmps = CoTmp::select('co_tmps.*')->leftJoin('co', 'co.id', 'co_tmps.co_id')
+        ->where(function($sql) {
+            $sql = $sql->where('co_tmps.status', ProcessStatus::Approved)
+                ->where('co_tmps.co_id', 0);
+        })->orWhere(function($sql) {
+            $sql = $sql->where('co_tmps.co_not_approved_id', '>', 0)
+                ->where('co.status', ProcessStatus::Unapproved);
+        })->get();
+        if($code)
+        {
+            $coes = $this->coRepo->getCoes([
+                'confirm_done' => 0,
+                ['status', '!=', ProcessStatus::Unapproved],
+                ['code' ,'like', $code]
+            ])->orderBy('created_at', 'DESC')->paginate(10);
+        }
+        else {
+            $coes = $this->coRepo->getCoes([
+                'confirm_done' => 0,
+                ['status', '!=', ProcessStatus::Unapproved],
+            ])->orderBy('created_at', 'DESC')->paginate(10);
+        }
+
+		return view('admins.dashboard.treking.list', compact('breadcrumb', 'titleForLayout', 'titleForChart',
+            'listRangeDate', 'coTmps', 'coes'));
     }
 }

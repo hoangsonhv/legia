@@ -60,6 +60,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
     /* Dashboard */
     Route::get('/dashboard/index/co-tmps', [DashboardController::class, 'coTmp'])->name('admin.dashboard.co-tmp');
 	Route::get('/dashboard/index/coes', [DashboardController::class, 'co'])->name('admin.dashboard.co');
+    Route::get('/dashboard/index/treking', [DashboardController::class, 'trekingCo'])->name('admin.dashboard.treking');
 	Route::get('/dashboard/index/requests', [DashboardController::class, 'requests'])->name('admin.dashboard.request');
     /* Administrator */
     Route::group(['prefix' => 'administrator'], function() {
