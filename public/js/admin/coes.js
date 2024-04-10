@@ -145,23 +145,27 @@ function sumTotal(eleForm) {
       }
     });
   }
-  if (total) {
-    var vat = (total * 10) / 100;
-    totalMoney = total + vat;
-    $($classProductCo + '.price_total input').val(total);
-    $($classProductCo + '.price_total b').text(formatCurrent(total.toString())['format']);
-    $($classProductCo + '.vat input').val(vat);
-    $($classProductCo + '.vat b').text(formatCurrent(vat.toString())['format']);
-    $($classProductCo + '.money_total b').text(formatCurrent((total + vat).toString())['format']);
-    $('span.money_total b').text(formatCurrent((total + vat).toString())['format']);
-  } else {
-    $($classProductCo + '.price_total input').val(0);
-    $($classProductCo + '.price_total b').text(0);
-    $($classProductCo + '.vat input').val(0);
-    $($classProductCo + '.vat b').text(0);
-    $($classProductCo + '.money_total b').text(0);
-    $('span.money_total b').text(0);
-  }
+  var vat = $('.vat').first().val();
+  totalMoney = total + vat;
+  // if (total) {
+  //   var vat = (total * 10) / 100;
+  //   console.log(vat);
+  //   totalMoney = total + vat;
+  //   $($classProductCo + '.price_total input').val(total);
+  //   $($classProductCo + '.price_total b').text(formatCurrent(total.toString())['format']);
+  //   $($classProductCo + '.vat input').val(vat);
+  //   $($classProductCo + '.vat b').text(formatCurrent(vat.toString())['format']);
+  //   $($classProductCo + '.money_total b').text(formatCurrent((total + vat).toString())['format']);
+  //   $('span.money_total b').text(formatCurrent((total + vat).toString())['format']);
+  // } else {
+  //   console.log(vat);
+  //   $($classProductCo + '.price_total input').val(0);
+  //   $($classProductCo + '.price_total b').text(0);
+  //   $($classProductCo + '.vat input').val(0);
+  //   $($classProductCo + '.vat b').text(0);
+  //   $($classProductCo + '.money_total b').text(0);
+  //   $('span.money_total b').text(0);
+  // }
   updateGiaiDoanThanhToan(totalMoney);
 }
 

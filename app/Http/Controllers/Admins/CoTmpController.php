@@ -472,7 +472,6 @@ class CoTmpController extends Controller
                 if (!$resWarehouse['success']) {
                     return $result;
                 }
-                // dd($warehouses);
                 $resWarehouse['data'] = $resWarehouse['data'];
                 // Get material
                 $contentMaterial = view('admins.co_tmps.includes.list-warehouses',['warehouses' => $resWarehouse['data']])->render();
