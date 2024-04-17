@@ -244,7 +244,7 @@ class WarehouseHelper
             WarehouseHelper::PTFE => 'ton_sl_tam',
             WarehouseHelper::TAM_NHUA => 'ton_sl_tam',
             WarehouseHelper::FILLER => 'ton_sl_cuon',
-            WarehouseHelper::GLAND_PACKING => 'ton_sl_cuon',
+            WarehouseHelper::GLAND_PACKING => 'ton_sl_kg',
             WarehouseHelper::HOOP => 'ton_sl_cuon',
             WarehouseHelper::DAY_CAO_SU_VA_SILICON => 'ton_sl_cuon',
             WarehouseHelper::ONG_GLASS_EXPOXY => 'ton_sl_cay',
