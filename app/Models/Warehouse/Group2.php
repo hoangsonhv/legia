@@ -45,8 +45,8 @@ class Group2 extends BaseWarehouseCommon
     
     public function getTonKhoAttribute() {
         return [
-            'ton_sl_cuon' => $this->ton_sl_cuon,
             'ton_sl_kg' => self::acreage($this->ton_sl_cuon),
+            'ton_sl_cuon' => $this->ton_sl_cuon,
         ];
     }
 

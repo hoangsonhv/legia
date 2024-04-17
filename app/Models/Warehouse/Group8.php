@@ -34,21 +34,21 @@ class Group8 extends BaseWarehouseCommon
 
     public function getTonKhoAttribute() {
         return [
-            'ton_sl_cai' => $this->ton_sl_cai,
+            'ton_sl_cuon' => $this->ton_sl_cuon,
         ];
     }
 
     public function setQuantity($qty, $accumulate = true) {
         if ($accumulate) {
-            $this->ton_sl_cai += $qty;
+            $this->ton_sl_cuon += $qty;
         }
         else
         {
-            $this->ton_sl_cai = $qty;
+            $this->ton_sl_cuon = $qty;
         }
     }
 
     public function getQuantityAttribute() {
-        return $this->ton_sl_cai;
+        return $this->ton_sl_cuon;
     }
 }
