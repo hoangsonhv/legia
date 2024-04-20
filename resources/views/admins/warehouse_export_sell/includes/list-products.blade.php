@@ -48,7 +48,7 @@
             </td>
             <td class="">
               <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{ 
-                $product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])]
+                isset($product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])]) ? $product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])] : 0
               }}">
             </td>
             <td class="">
