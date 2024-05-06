@@ -47,7 +47,7 @@
             </td>
             <td>
                 <div class="icheck-success">
-                    {!! Form::checkbox('status[]' , true, ( $priceSurvey->status == \App\Models\PriceSurvey::TYPE_BUY) ? true : false, array('id' => 'status_' .$material->id.'_'.$index)) !!}
+                    {!! Form::checkbox('status[]' , \App\Models\PriceSurvey::TYPE_BUY === $priceSurvey->status, $priceSurvey->status === \App\Models\PriceSurvey::TYPE_BUY, array('id' => 'status_' .$material->id.'_'.$index)) !!}
                     <label for={{'status_'.$material->id.'_'.$index}}></label>
                 </div>
             </td>

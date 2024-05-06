@@ -82,6 +82,57 @@
                 </tr>
             @endforeach
         @endif
+        @if(!empty($filterWarehouses) && $filterWarehouses->count())
+            @foreach($filterWarehouses as $index => $filterWarehouse)
+                <tr style="background-color: #fff;">
+                    <td colspan="8">
+
+                    </td>
+                </tr>
+                <tr align="center" style="background-color: #f4f6f9">
+                    <td class="">
+                        <i class="fas fa-minus-circle text-danger delete-item" title="Xoá hàng hoá"
+                            onclick="deteleItem(this)"></i>
+                    </td>
+                    <td class="sequence">{{ $index + 1 }}</td>
+                    <td class="code">
+
+                        <input class="form-control" type="text" name="filterWarehouse[code][]" value="{{ $filterWarehouse->code }}" readonly>
+                    </td>
+                    <td class="">
+                        <textarea class="form-control" name="filterWarehouse[loai_vat_lieu][]"
+                                  rows="1">{{ $filterWarehouse->loai_vat_lieu }}</textarea>
+                    </td>
+                    <td class="">
+                        <textarea class="form-control" name="filterWarehouse[quy_cach][]"
+                                  rows="1">{{ $filterWarehouse->quy_cach }}</textarea>
+                    </td>
+                    <td class="">
+                        <textarea class="form-control" name="filterWarehouse[quy_cach][]"
+                                  rows="1">{{ $filterWarehouse->quy_cach }}</textarea>
+                    </td>
+                    <td class="">
+                        <input class="form-control" style="width: 70px" type="text" name="filterWarehouse[dv_tinh][]"
+                               value="{{ $filterWarehouse->dv_tinh }}">
+                    </td>
+                    <td>
+                        <input class="form-control" style="width: 120px" min="1" name="filterWarehouse[so_luong][]"
+                               value="{{ $filterWarehouse->so_luong }}">
+                    </td>
+                    <td class="">
+                        <input class="form-control calendar-date" style="width: 120px" type="text"
+                               name="filterWarehouse[thoi_gian_can][]" value="{{ $filterWarehouse->thoi_gian_can }}">
+                    </td>
+                    <td class="">
+                        <textarea class="form-control" name="filterWarehouse[quy_cach][]"
+                                  rows="1">{{ $filterWarehouse->quy_cach }}</textarea>
+                    </td>
+
+                    <!-- Add more fields here as per your requirement -->
+                </tr>
+
+            @endforeach
+        @endif
         </tbody>
         <tfoot>
             <tr align="left">

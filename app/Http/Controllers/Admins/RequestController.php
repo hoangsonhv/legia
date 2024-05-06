@@ -26,6 +26,7 @@ use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\RequestStepHistoryRepository;
 use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\RequestStepHistory;
+use App\Models\WarehouseGroup;
 
 class RequestController extends Controller
 {
@@ -133,14 +134,29 @@ class RequestController extends Controller
                 return redirect()->back()->with('error','Vui lòng kiểm tra lại CO!');
             }
             $warehouses    = $queryCo->first()->warehouses;
+
+            $filterWarehouses = $warehouses->filter(function ($warehouse) {
+                $detectCode = \App\Helpers\AdminHelper::detectProductCode($warehouse->code);
+                $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($warehouse->code, $detectCode['model_type']);
+                if($warehouse->so_luong > $tonKho && $detectCode['manufacture_type'] == WarehouseGroup::TYPE_COMMERCE) {
+                    $model = WarehouseHelper::getModel($detectCode['model_type']);
+                    $model->setQuantity(0, false);
+                    $model->code = $warehouse->code;
+                    $model->vat_lieu = $warehouse->loai_vat_lieu;
+                    $model->save();
+                    return true;
+                }
+                return false;
+            });
             $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code')->toArray());
         } else {
             $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM, DataHelper::HOAT_DONG]);
             $co            = array();
             $warehouses    = collect([]);
             $listWarehouse = collect([]);
+            $filterWarehouses = collect([]);
         }
-        return view('admins.requests.create',compact('steps', 'coStep', 'breadcrumb', 'titleForLayout', 'permissions', 'categories', 'co', 'warehouses', 'listWarehouse'));
+        return view('admins.requests.create',compact('steps', 'coStep', 'breadcrumb', 'titleForLayout', 'permissions', 'categories', 'co', 'warehouses','filterWarehouses', 'listWarehouse'));
     }
 
     public function store(RequestRequest $request)
@@ -312,7 +328,7 @@ class RequestController extends Controller
         $requestModel               = $this->requestRepository->find($id);
         $corePriceSurvey            = AdminHelper::getCorePriceSurvey();
         $steps = \App\Services\CoService::stepCo();
-        
+
         if ($requestModel) {
             $user = Session::get('login');
             if(!PermissionHelper::hasPermission('admin.request.index-all') && $requestModel->admin_id != $user->id) {
@@ -324,7 +340,7 @@ class RequestController extends Controller
             $canCreatePayment = false;
             $canCreateWarehouseReceipt = false;
             $coStep = '';
-            
+
             if ($requestModel->co_id) {
                 $categories = DataHelper::getCategories([DataHelper::KHO]);
                 $queryCo    = $this->coRepository->getCoes([
@@ -541,7 +557,7 @@ class RequestController extends Controller
                 $requestModel->material()->delete();
                 if (!empty($materials)) {
                     $requestModel->material()->createMany($materials);
-                    
+
                     /*$requestModel->co()->detach();
                     if (!empty($co)) {
                         $requestModel->co()->sync($co);
@@ -621,6 +637,7 @@ class RequestController extends Controller
 
     public function updateSurveyPrice(Request $request, $id)
     {
+        // dd($request->all());
 //        try {
 //            \DB::beginTransaction();
             $requestModel = $this->requestRepository->find($id);
@@ -637,6 +654,7 @@ class RequestController extends Controller
                                 'is_accept'             => isset($value['is_accept']) ? $value['is_accept'] : false,
                                 'note'                  => $value['note'],
                                 'core_price_survey_id'  => isset($value['core_price_survey_id']) ? $value['core_price_survey_id'] : $surveyPrice->core_price_survey_id,
+                                'status'                => isset($value['status']) ? \App\Models\PriceSurvey::TYPE_BUY : \App\Models\PriceSurvey::TYPE_FAIL,
                             ];
                         }
                     } elseif (!empty($value['accompanying_document'])) {
@@ -689,7 +707,7 @@ class RequestController extends Controller
                         foreach($oldFiles as $key => $file) {
                             Storage::disk($this->disk)->delete($file);
                         }
-                    } 
+                    }
                     return redirect()->route('admin.request.edit', ['id' => $id])->with('success','Cập nhật Khảo Sát Giá thành công!');
                 } else {
                     return redirect()->back()->with('error', 'Chứng từ Khảo Sát Giá không tồn tại!');
