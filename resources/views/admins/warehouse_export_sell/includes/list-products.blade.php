@@ -28,6 +28,12 @@
     <tbody>
       @if(!empty($products))
         @foreach($products as $index => $product)
+          @if ($index > 0)
+            @if($product['code'] !== $products[$index - 1]['code'])
+              </tbody>
+              <tbody class="divider">
+            @endif
+          @endif
           <tr align="center">
             <td class="">
               <i class="fas fa-minus-circle text-danger delete-item" title="Xoá hàng hoá" onclick="deteleItem(this)"></i>
@@ -66,12 +72,6 @@
               <input class="form-control data-origin-into-money" type="hidden" name="product[into_money][]" value="{{$product['into_money']}}">
             </td>
           </tr>
-          @if ($index > 0)
-            @if($product['code'] !== $products[$index - 1]['code'])
-              </tbody>
-              <tbody class="divider">
-            @endif
-          @endif
         @endforeach
       @endif
     </tbody>

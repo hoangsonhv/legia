@@ -129,4 +129,9 @@ class Co extends Model
     {
         return $this->hasMany('App\Models\CoStepHistory', 'co_id', 'id');
     }
+
+    public function warehouseExports() 
+    {
+        return $this->hasMany(WarehouseExport::class, 'co_id', 'id');
+    }
 }

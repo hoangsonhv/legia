@@ -85,19 +85,28 @@ class CoService
 
                 $merchandises = $this->baseWarehouseRepository->model
                     ->where('model_type' , $base_warehouse->model_type)
-                    ->where('code', $code)
+                    ->where('code', $code);
+
+                if ($lot_no != null && strlen($lot_no) > 0) {
+                    $merchandises = $merchandises->where('lot_no', $lot_no);
+                }
+                $result = $merchandises->get();
+                $tonKho = 0;
+                foreach ($result as $merchandise) {
+                    $tonKho += $merchandise['ton_kho'][array_keys($merchandise['ton_kho'])[0]];
+                }
+                if($tonKho) {
+                    $merchandises = $merchandises
                     ->where(function($query) use ($nonZeroConditions) {
                         foreach ($nonZeroConditions as $cnd) {
                             $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
                         }
                         return $query;
                     });
-
-                if ($lot_no != null && strlen($lot_no) > 0) {
-                    $merchandises = $merchandises->where('lot_no', $lot_no);
+                    return $merchandises->get();
+                } else {
+                    return $results;
                 }
-
-                return $merchandises->get();
             }
         } catch(\Exception $ex) {
             dd($ex);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admins;
 
 use App\Enums\QCCheckStatus;
+use App\Helpers\AdminHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\WarehouseHelper;
 use App\Http\Controllers\Controller;
@@ -111,9 +112,10 @@ class WarehouseExportController extends Controller
             $warehouses    = $co->warehouses;
             $listWarehouse = $this->coService->getProductMaterialsInWarehouses($warehouses->pluck('code', 'id')->toArray());
         }
-
+        $listCo = Co::where('status', 2)->where('confirm_done', 0)->orderBy('id', 'DESC')->get()->pluck('code', 'id');
+        $listCo = $listCo->prepend('Chọn mã CO', 0);
         return view('admins.warehouse_export.create', compact('breadcrumb', 'titleForLayout',
-            'permissions', 'products', 'model', 'coId', 'co', 'listWarehouse', 'warehouses','requestId'));
+            'permissions', 'products', 'model', 'coId', 'listCo', 'co', 'listWarehouse', 'warehouses','requestId'));
     }
 
     public function store(WarehouseExportRequest $request)
@@ -145,8 +147,8 @@ class WarehouseExportController extends Controller
             $input['created_by'] = Session::get('login')->id;
             $input['document'] = json_encode($documents);
             $model = $this->whExportRepo->insert($input);
-            if($model && $model->co_id) {
-                $co = Co::find($model->co_id);
+            if(($model && $model->co_id) || (isset($input['co_id']) && $input['co_id'])) {
+                $co = Co::find($model->co_id ?? $input['co_id']);
                 if($co->is_remake) {
                     $manufactures = $this->manufactureRepo->findExtend([
                         'co_id' => $model->co_id

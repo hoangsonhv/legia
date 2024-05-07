@@ -14,12 +14,14 @@ use App\Enums\ProcessStatus;
 use App\Helpers\WarehouseHelper;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\WarehouseExportSellRequest;
+use App\Models\Co;
 use App\Models\Repositories\WarehouseExportSellRepository;
 use App\Models\Repositories\CoRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\CoStepHistory;
 use App\Models\MerchandiseGroup;
+use App\Models\Repositories\Warehouse\BaseWarehouseRepository;
 use App\Models\Warehouse\BaseWarehouseCommon;
 use App\Models\Warehouse\Group11;
 
@@ -184,6 +186,7 @@ class WarehouseExportSellController extends Controller
             $input['created_by'] = Session::get('login')->id;
             $input['document'] = json_encode($documents);
             $model = $this->whExportSellRepo->insert($input);
+            $inputProducts = $request->input('product');
 
             if($model && $model->co_id) {
                 $receipt = Receipt::where('co_id', $model->co_id)
@@ -199,25 +202,53 @@ class WarehouseExportSellController extends Controller
                 }else {
                     $this->coStepHisRepo->insertNextStep( 'receipt', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE, 2);
                 }
+                $co = Co::find($model->co_id);
+                // dd($co->warehouseExports->flatMap);
+                $productsExportPre = $co->warehouseExports->flatMap->products;
+                foreach ($inputProducts['code'] as $key => $code) {
+                    if (empty($code)) {
+                        continue;
+                    }
+                    $isExported = $productsExportPre->first(function($pro) use($inputProducts, $key) {
+                        return $pro->code == $inputProducts['code'][$key] && $pro->lot_no === $inputProducts['code'][$key];
+                    });
+                    if($isExported) {
+                        $base_warehouse = BaseWarehouseCommon::find($inputProducts['merchandise_id'][$key]);
+                        $group_warehouse = WarehouseHelper::getModel($base_warehouse->model_type)
+                            ->find($inputProducts['merchandise_id'][$key]);
+                        $group_warehouse->setQuantity($isExported->quantity_reality);
+                    }
+                    $products[] = [
+                        'code' => $inputProducts['code'][$key],
+                        'name' => $inputProducts['name'][$key],
+                        'unit' => $inputProducts['unit'][$key],
+                        'quantity' => $inputProducts['quantity'][$key],
+                        'unit_price' => $inputProducts['unit_price'][$key],
+                        'into_money' => $inputProducts['into_money'][$key],
+                        'lot_no' => $inputProducts['lot_no'][$key],
+                        'merchandise_id' => $inputProducts['merchandise_id'][$key],
+                    ];
+                }
+            }
+            else {
+                // Save many product
+                foreach ($inputProducts['code'] as $key => $code) {
+                    if (empty($code)) {
+                        continue;
+                    }
+                    $products[] = [
+                        'code' => $inputProducts['code'][$key],
+                        'name' => $inputProducts['name'][$key],
+                        'unit' => $inputProducts['unit'][$key],
+                        'quantity' => $inputProducts['quantity'][$key],
+                        'unit_price' => $inputProducts['unit_price'][$key],
+                        'into_money' => $inputProducts['into_money'][$key],
+                        'lot_no' => $inputProducts['lot_no'][$key],
+                        'merchandise_id' => $inputProducts['merchandise_id'][$key],
+                    ];
+                }
             }
 
-            // Save many product
-            $inputProducts = $request->input('product');
-            foreach ($inputProducts['code'] as $key => $code) {
-                if (empty($code)) {
-                    continue;
-                }
-                $products[] = [
-                    'code' => $inputProducts['code'][$key],
-                    'name' => $inputProducts['name'][$key],
-                    'unit' => $inputProducts['unit'][$key],
-                    'quantity' => $inputProducts['quantity'][$key],
-                    'unit_price' => $inputProducts['unit_price'][$key],
-                    'into_money' => $inputProducts['into_money'][$key],
-                    'lot_no' => $inputProducts['lot_no'][$key],
-                    'merchandise_id' => $inputProducts['merchandise_id'][$key],
-                ];
-            }
 
             if (!empty($products)) {
                 $model->products()->createMany($products);

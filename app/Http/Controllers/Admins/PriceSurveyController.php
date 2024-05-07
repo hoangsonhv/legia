@@ -201,7 +201,7 @@ class PriceSurveyController extends Controller
                 'request_id' => $requestId,
                 'material_id' => $materialId,
                 'co_id' => $coId,
-                'status' => (isset($status[$key]) && $status[$key]) ? PriceSurvey::TYPE_BUY : PriceSurvey::TYPE_FAIL
+                'status' => (isset($status[$key]) && $status[$key]) ? $status[$key] : 0,
             ];
             if(!$ids[$key]) {
                 $dataInsert[] = $data;

@@ -410,14 +410,12 @@ class AdminHelper
         $baseWarehouseRepository = new BaseWarehouseRepository();
         $baseWarehouseRepository->setModel(WarehouseHelper::getModel($model_type));
         $results = $baseWarehouseRepository->model->where('code', $codeInWareHouse)
-            ->where('model_type' , $model_type)->get();
-    
+            ->where('model_type', $model_type)->get();
         if ($results != null) {
             foreach ($results as $result) {
                 $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];
             }
         }
-
         return $tonKho;
     }
 
