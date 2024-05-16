@@ -138,6 +138,7 @@ class RequestController extends Controller
             $filterWarehouses = $warehouses->filter(function ($warehouse) {
                 $detectCode = \App\Helpers\AdminHelper::detectProductCode($warehouse->code);
                 $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($warehouse->code, $detectCode['model_type']);
+		if($detectCode['model_type'] == null) return false;
                 if($warehouse->so_luong > $tonKho && $detectCode['manufacture_type'] == WarehouseGroup::TYPE_COMMERCE) {
                     $model = WarehouseHelper::getModel($detectCode['model_type']);
                     $model->setQuantity(0, false);
