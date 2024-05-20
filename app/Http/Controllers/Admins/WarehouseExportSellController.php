@@ -159,7 +159,8 @@ class WarehouseExportSellController extends Controller
     public function store(WarehouseExportSellRequest $request)
     {
         $input = $request->input();
-        try {
+       	dump($input);
+	try {
             // Upload file
             $files     = $request->file('document');
             $documents = [];
@@ -268,7 +269,8 @@ class WarehouseExportSellController extends Controller
             }
         } catch (\Exception $ex) {
             \DB::rollback();
-            report($ex);
+            dd($ex);
+	    report($ex);
         }
         return redirect()->route('admin.warehouse-export-sell.index')->with('error', 'Tạo phiếu xuất kho bán hàng thất bại!');
     }
