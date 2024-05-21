@@ -115,7 +115,7 @@
                                value="{{ $filterWarehouse->dv_tinh }}">
                     </td>
                     <td>
-                        <input class="form-control" style="width: 120px" min="1" name="material[so_luong][]"
+                        <input class="form-control" style="width: 120px" min="1" name="material[dinh_luong][]"
                                value="{{ $filterWarehouse->so_luong }}">
                     </td>
                     <td class="">
