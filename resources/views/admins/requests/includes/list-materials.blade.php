@@ -100,11 +100,11 @@
                         <input class="form-control" type="text" name="material[code][]" value="{{ $filterWarehouse->code }}" readonly>
                     </td>
                     <td class="">
-                        <textarea class="form-control" name="material[loai_vat_lieu][]"
+                        <textarea class="form-control" name="material[mota][]"
                                   rows="1">{{ $filterWarehouse->loai_vat_lieu }}</textarea>
                     </td>
                     <td class="">
-                        <textarea class="form-control" name="material[quy_cach][]"
+                        <textarea class="form-control" name="material[kich_thuoc][]"
                                   rows="1">{{ $filterWarehouse->quy_cach }}</textarea>
                     </td>
                     <td class="">
@@ -124,8 +124,8 @@
                                name="material[thoi_gian_can][]" value="{{ $filterWarehouse->thoi_gian_can }}">
                     </td>
                     <td class="">
-                        <textarea class="form-control" name="material[quy_cach][]"
-                                  rows="1">{{ $filterWarehouse->quy_cach }}</textarea>
+                        <textarea class="form-control" name="material[ghi_chu][]"
+                                  rows="1">{{ $filterWarehouse->ghi_chu }}</textarea>
                     </td>
 
                     <!-- Add more fields here as per your requirement -->
