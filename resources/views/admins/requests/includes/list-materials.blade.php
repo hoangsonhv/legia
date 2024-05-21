@@ -100,7 +100,7 @@
                         <input class="form-control" type="text" name="material[code][]" value="{{ $filterWarehouse->code }}" readonly>
                     </td>
                     <td class="">
-                        <textarea class="form-control" name="material[mota][]"
+                        <textarea class="form-control" name="material[mo_ta][]"
                                   rows="1">{{ $filterWarehouse->loai_vat_lieu }}</textarea>
                     </td>
                     <td class="">
