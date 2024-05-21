@@ -81,7 +81,7 @@ class CoService
 
                 $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($base_warehouse->model_type));
                 
-                $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
+                // $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
 
                 $merchandises = $this->baseWarehouseRepository->model
                     ->where('model_type' , $base_warehouse->model_type)
@@ -96,14 +96,27 @@ class CoService
                     $tonKho += $merchandise['ton_kho'][array_keys($merchandise['ton_kho'])[0]];
                 }
                 if($tonKho) {
-                    $merchandises = $merchandises
-                    ->where(function($query) use ($nonZeroConditions) {
-                        foreach ($nonZeroConditions as $cnd) {
-                            $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+                    // $merchandises = $merchandises
+                    // ->where(function($query) use ($nonZeroConditions) {
+                    //     foreach ($nonZeroConditions as $cnd) {
+                    //         $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+                    //     }
+                    //     return $query;
+                    // });
+                    $merchandises = $merchandises->get();
+                    $merchandises = $merchandises->groupBy('lot_no')->map(function ($group) {
+                        $totalQuantity = $group->sum('sl_ton');
+                        if ($totalQuantity > 0) {
+                            // Thêm thuộc tính `totalQuantity` cho mỗi instance
+                            $group->each(function ($product) use ($totalQuantity) {
+                                $product->totalQuantity = $totalQuantity;
+                            });
+                            return $group;
                         }
-                        return $query;
-                    });
-                    return $merchandises->get();
+                        return null;
+                    })->filter()->flatten();
+                    // dd($merchandises);
+                    return $merchandises->values();
                 } else {
                     return $results;
                 }

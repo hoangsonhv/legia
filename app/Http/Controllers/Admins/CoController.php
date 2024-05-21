@@ -765,7 +765,6 @@ class CoController extends Controller
             $lot_no = $request->input('lot_no', '');
             if ($code) {
                 $materials = $this->coService->searchProductMaterialsInWarehouses($code, $lot_no);
-
                 $content   = view('admins.requests.includes.list-materials-full',compact('materials', 'action'))->render();
             }
         } catch(\Exception $ex) {
