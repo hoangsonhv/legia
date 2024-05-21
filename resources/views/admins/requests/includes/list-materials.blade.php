@@ -96,35 +96,34 @@
                     </td>
                     <td class="sequence">{{ $index + 1 }}</td>
                     <td class="code">
-
-                        <input class="form-control" type="text" name="filterWarehouse[code][]" value="{{ $filterWarehouse->code }}" readonly>
+                        <input class="form-control" type="text" name="material[code][]" value="{{ $filterWarehouse->code }}" readonly>
                     </td>
                     <td class="">
-                        <textarea class="form-control" name="filterWarehouse[loai_vat_lieu][]"
+                        <textarea class="form-control" name="material[loai_vat_lieu][]"
                                   rows="1">{{ $filterWarehouse->loai_vat_lieu }}</textarea>
                     </td>
                     <td class="">
-                        <textarea class="form-control" name="filterWarehouse[quy_cach][]"
+                        <textarea class="form-control" name="material[quy_cach][]"
                                   rows="1">{{ $filterWarehouse->quy_cach }}</textarea>
                     </td>
                     <td class="">
-                        <textarea class="form-control" name="filterWarehouse[quy_cach][]"
+                        <textarea class="form-control" name="material[quy_cach][]"
                                   rows="1">{{ $filterWarehouse->quy_cach }}</textarea>
                     </td>
                     <td class="">
-                        <input class="form-control" style="width: 70px" type="text" name="filterWarehouse[dv_tinh][]"
+                        <input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]"
                                value="{{ $filterWarehouse->dv_tinh }}">
                     </td>
                     <td>
-                        <input class="form-control" style="width: 120px" min="1" name="filterWarehouse[so_luong][]"
+                        <input class="form-control" style="width: 120px" min="1" name="material[so_luong][]"
                                value="{{ $filterWarehouse->so_luong }}">
                     </td>
                     <td class="">
                         <input class="form-control calendar-date" style="width: 120px" type="text"
-                               name="filterWarehouse[thoi_gian_can][]" value="{{ $filterWarehouse->thoi_gian_can }}">
+                               name="material[thoi_gian_can][]" value="{{ $filterWarehouse->thoi_gian_can }}">
                     </td>
                     <td class="">
-                        <textarea class="form-control" name="filterWarehouse[quy_cach][]"
+                        <textarea class="form-control" name="material[quy_cach][]"
                                   rows="1">{{ $filterWarehouse->quy_cach }}</textarea>
                     </td>
 

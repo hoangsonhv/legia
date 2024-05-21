@@ -146,6 +146,7 @@ $(function () {
       dvTinh = $(this).attr('data-dvTinh');
     }
     submitFormMaterial(eleForm.find('form').first().attr('action'), eleForm.find('form').first().serializeArray(), function(res) {
+      console.log(res);
       ele.append(getItem(index, 'Tấm', { code: codeMaterial, vat_lieu: motaMaterial, merchandise_id: res.l_id }));
       reloadDatepicker();
       $('#modal-another-material').modal('hide');
@@ -204,13 +205,14 @@ function reloadDatepicker() {
 }
 
 function getItem(index, unit, opts, readonly = true) {
+  console.log(opts);
   $readonly = readonly ? 'readonly' : '';
   return '<tr align="center">'
     + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá vật liệu" onclick="deteleItem(this)"></i></td>'
     + '<td class="sequence">'+index+'</td>'
     + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input '+$readonly+' class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
     + '<td class=""><textarea '+$readonly+' class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
-    + '<td class=""><textarea class="form-control" name="material[kich_thuoc][]" rows="1"></textarea></textarea></td>'
+    + '<td class=""><textarea class="form-control" name="material[kich_thuoc][]" rows="1"></textarea></td>'
     + '<td class=""><textarea class="form-control" name="material[quy_cach][]" rows="1"></textarea></td>'
     + '<td class=""><input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="'+unit+'"></td>'
     + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'
