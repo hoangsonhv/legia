@@ -38,8 +38,8 @@ class CoRequest extends FormRequest
             'don_gia'                => 'required',
             'tong_gia'               => 'required',
             'vat'                    => 'required',
-            'customer.code'          => 'required',
-            'customer.ten'           => 'required',
+            // 'customer.code'          => 'required',
+            // 'customer.ten'           => 'required',
         ];
     }
 
@@ -59,8 +59,8 @@ class CoRequest extends FormRequest
             'don_gia.required'          => 'Vui lòng nhập Đơn giá!',
             'tong_gia.required'         => 'Vui lòng nhập Tổng giá!',
             'vat.required'              => 'Vui lòng nhập Thuế VAT!',
-            // 'customer.code.required'    => 'Vui lòng nhập Mã khách hàng!',
-            // 'customer.ten.required'     => 'Vui lòng nhập Tên khách hàng!',
+            'customer.code.required'    => 'Vui lòng nhập Mã khách hàng!',
+            'customer.ten.required'     => 'Vui lòng nhập Tên khách hàng!',
         ];
 	}
 }
