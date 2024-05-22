@@ -273,6 +273,7 @@ class BaseAdminController extends Controller
                                         } else {
                                             $this->coRepository->doneCo($repository->co_id);
                                         }
+                                        break;
                                 }
                                 if ($repository->step_id == 0) {
 
