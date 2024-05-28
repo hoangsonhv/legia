@@ -139,7 +139,7 @@ class DeliveryController extends Controller
             $delivery          = Delivery::create($input);
             $receipt = $delivery->co->receipt()->where('status', 1)->orderBy('step_id', 'desc')->first();
             if($delivery) {
-                if($receipt && $receipt->step == 2){
+                if($receipt && $receipt->step_id == 2){
                     $this->coStepHisRepo->insertNextStep('receipt', $delivery->co_id, $receipt->id, CoStepHistory::ACTION_APPROVE,4);
                 } else {
                     $this->coStepHisRepo->insertNextStep('delivery', $delivery->co_id, $delivery->id, CoStepHistory::ACTION_APPROVE);

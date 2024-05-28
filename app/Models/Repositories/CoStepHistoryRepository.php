@@ -114,8 +114,10 @@ class CoStepHistoryRepository extends AdminRepository
                             break;
                         case 4: 
                             $step = CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_N3;
+                            break;
                         case 5:
                             $step = CoStepHistory::STEP_WAITING_APPROVE_RECEIPT_EXTRA;
+                            break;
                     }
                 } else if ($action == CoStepHistory::ACTION_UPDATE) {
                     switch ($stepId) {
