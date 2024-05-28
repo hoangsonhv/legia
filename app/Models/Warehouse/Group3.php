@@ -39,7 +39,9 @@ class Group3 extends BaseWarehouseCommon
     public function acreage($sl_cuon) {
         return $this->m_cuon * $sl_cuon;
     }
-    
+    public function getDvTinhAttribute() {
+        return 'Cuộn';
+    }
     public function getTonKhoAttribute() {
         return [
             'ton_sl_cuon' => $this->ton_sl_cuon,

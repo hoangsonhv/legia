@@ -105,7 +105,7 @@ class CoService
                     // });
                     $merchandises = $merchandises->get();
                     $merchandises = $merchandises->groupBy('lot_no')->map(function ($group) {
-                        $totalQuantity = $group->sum('sl_ton');
+                        $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
                         if ($totalQuantity > 0) {
                             // Thêm thuộc tính `totalQuantity` cho mỗi instance
                             $group->each(function ($product) use ($totalQuantity) {

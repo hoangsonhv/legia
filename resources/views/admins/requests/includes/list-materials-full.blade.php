@@ -29,6 +29,7 @@
           <th class="align-middle">Lot No</th>
           <th class="align-middle">Date</th>
           <th class="align-middle">Tồn kho</th>
+          {{-- <th class="align-middle">Dv tính</th> --}}
         @endif
         {{-- <th class="align-middle">Tồn SL - Tấm</th>
         <th class="align-middle">Tồn SL - m2</th> --}}
@@ -54,6 +55,9 @@
             </td>
             <td class="lot_no d-none">
               <input type="hidden" value="{{ $material->lot_no }}">
+            </td>
+            <td class="dv_tinh d-none">
+              <input type="hidden" value="{{ $material->dv_tinh }}">
             </td>
             <td class="ton_kho d-none">
               <input type="hidden" value="{{

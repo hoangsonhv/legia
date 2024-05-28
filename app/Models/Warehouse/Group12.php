@@ -33,7 +33,9 @@ class Group12 extends BaseWarehouseCommon
     public function getAcreageAttribute() {
         return null;
     }
-
+    public function getDvTinhAttribute() {
+        return 'Cái';
+    }
     public function getTonKhoAttribute() {
         return [
             'ton_sl_cai' => $this->ton_sl_cai,

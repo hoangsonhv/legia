@@ -31,7 +31,9 @@ class Group8 extends BaseWarehouseCommon
     public function getAcreageAttribute() {
         return null;
     }
-
+    public function getDvTinhAttribute() {
+        return 'Cuộn';
+    }
     public function getTonKhoAttribute() {
         return [
             'ton_sl_cuon' => $this->ton_sl_cuon,

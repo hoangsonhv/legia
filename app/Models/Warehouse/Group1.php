@@ -59,6 +59,9 @@ class Group1 extends BaseWarehouseCommon
         }
     }
 
+    public function getDvTinhAttribute() {
+        return 'Tấm';
+    }
     public function getTonKhoAttribute() {
         return [
             'ton_sl_tam' => $this->ton_sl_tam,

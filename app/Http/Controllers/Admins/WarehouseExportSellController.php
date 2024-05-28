@@ -171,8 +171,8 @@ class WarehouseExportSellController extends Controller
     public function store(WarehouseExportSellRequest $request)
     {
         $input = $request->input();
-       	//dump($input);
-	try {
+       	// dd($input);
+        try {
             // Upload file
             $files     = $request->file('document');
             $documents = [];

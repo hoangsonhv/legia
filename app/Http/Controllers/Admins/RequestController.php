@@ -146,6 +146,7 @@ class RequestController extends Controller
                     $model->vat_lieu = $warehouse->loai_vat_lieu;
                     $model->model_type = $detectCode['model_type'];
                     $model->save();
+                    $warehouse->l_id = $model->l_id;
                     return true;
                 }
                 return false;

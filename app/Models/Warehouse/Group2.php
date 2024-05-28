@@ -41,7 +41,9 @@ class Group2 extends BaseWarehouseCommon
     public function acreage($sl_cuon) {
         return $this->trong_luong_cuon * $sl_cuon;
     }
-
+    public function getDvTinhAttribute() {
+        return 'kg';
+    }
     
     public function getTonKhoAttribute() {
         return [

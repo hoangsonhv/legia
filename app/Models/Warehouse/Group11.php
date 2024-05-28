@@ -43,7 +43,9 @@ class Group11 extends BaseWarehouseCommon
     public function getAcreageAttribute() {
         return null;
     }
-
+    public function getDvTinhAttribute() {
+        return $this->dvt;
+    }
     public function getTonKhoAttribute() {
         return [
             'sl_ton' => $this->sl_ton,

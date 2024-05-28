@@ -39,7 +39,9 @@ class Group10 extends BaseWarehouseCommon
     public function acreage($sl_cay) {
         return $this->m_cay * $sl_cay;
     }
-
+    public function getDvTinhAttribute() {
+        return 'Cây';
+    }
     public function getTonKhoAttribute() {
         return [
             'ton_sl_cay' => $this->ton_sl_cay,
