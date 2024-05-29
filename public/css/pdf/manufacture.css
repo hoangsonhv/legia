@@ -107,4 +107,4 @@ body {
 .table-material td {
   line-height: 1.0;
 }
-td.breakNow { page-break-inside:avoid;  page-break-after:always;}
+.breakNow {  page-break-after:always;}

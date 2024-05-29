@@ -225,7 +225,7 @@
                     <td></td>
                 </tr>
                 <?php 
-                    if( $i % 12 == 0 ){ echo '<td class="breakNow"></td>';}
+                    if( $i % 12 == 0 ){ echo '<tr class="breakNow"></tr>';}
                 ?>
             @endforeach
             @for($i = 0; $i + count($details) <= 12; $i++)
