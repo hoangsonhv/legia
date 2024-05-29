@@ -114,8 +114,10 @@ class CoService
                             return $group;
                         }
                         return null;
-                    })->filter()->flatten();
-                    // dd($merchandises);
+                    })->filter()->flatten()
+                    ->filter(function($item) {
+                        return $item->ton_kho[array_keys($item->ton_kho)[0]] > 0;
+                    });
                     return $merchandises->values();
                 } else {
                     return $results;

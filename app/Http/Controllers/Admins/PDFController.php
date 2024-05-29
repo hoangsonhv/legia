@@ -15,6 +15,8 @@ class PDFController extends Controller
     /**
      * @var
      */
+    protected $manufactureRepo;
+    protected $warehouseExportSellRepository;
     protected $coManufactureRepo;
     protected $configRepository;
     protected $whExportRepo;

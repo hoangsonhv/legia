@@ -768,7 +768,6 @@ class CoController extends Controller
                 $content   = view('admins.requests.includes.list-materials-full',compact('materials', 'action'))->render();
             }
         } catch(\Exception $ex) {
-            dd($ex);
             return [
                 'success' => false,
                 'content' => $content,

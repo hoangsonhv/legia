@@ -191,7 +191,10 @@
             </tr>
             </thead>
             <tbody>
+            <?php $i=0 ?>
             @foreach($details as $key => $detail)
+                <?php $i++;
+                ?>
                 @php
                     $offerPrice = new \App\Models\OfferPrice;
                     $kichThuot = [];
@@ -221,6 +224,9 @@
                     <td></td>
                     <td></td>
                 </tr>
+                <?php 
+                    if( $i % 12 == 0 ){ echo '<div class="breakNow"></div>';}
+                ?>
             @endforeach
             @for($i = 0; $i + count($details) <= 12; $i++)
                 <tr>
