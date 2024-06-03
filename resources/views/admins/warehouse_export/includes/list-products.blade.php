@@ -74,6 +74,56 @@
           </tr>
         @endforeach
       @endif
+      @if(!empty($merchadiseEcomerceExport))
+        @foreach($merchadiseEcomerceExport as $index => $product)
+          @php
+            $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])
+              ->first();
+            $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
+              ->where('l_id', $product['merchandise_id'])->first();
+          @endphp
+          <tr align="center">
+            <td class="">
+              <i class="fas fa-minus-circle text-danger delete-item" title="Xoá hàng hoá" onclick="deteleItem(this)"></i>
+            </td>
+            <td class="sequence">{{ $index + 1 }}</td>
+            <td class="">
+              <textarea class="form-control" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
+            </td>
+            <td class="code">
+              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly>
+            </td>
+            <td class="">
+              <input class="form-control" type="text" name="product[lot_no][]" value="{{ $merchandise->lot_no }}" readonly>
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
+            </td>
+            <td class="">
+              <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+                $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
+              }}">
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 70px" name="product[quantity_doc][]" value="{{ $product['quantity_doc'] }}">
+            </td>
+            <td class="">
+              <input class="form-control data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
+                     onKeyUp="return getNumberFormatQuantity(this)">
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 120px" min="1" type="text" name="tmp_product[unit_price][]"
+                     onKeyUp="return getNumberFormatUnitPrice(this)" value="{{ number_format($product['unit_price']) }}">
+              <input class="form-control data-origin data-unit-price" type="hidden" name="product[unit_price][]" value="{{ $product['unit_price'] }}">
+            </td>
+            <td class="">
+              <input class="form-control data-into-money" style="width: 120px" min="1" type="text" name="tmp_product[into_money][]"
+                     onKeyUp="return getNumberFormat(this)" value="{{ number_format($product['into_money']) }}">
+              <input class="form-control data-origin-into-money" type="hidden" name="product[into_money][]" value="{{$product['into_money']}}">
+            </td>
+          </tr>
+        @endforeach
+      @endif
     </tbody>
     <tfoot>
       <tr align="left">

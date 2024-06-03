@@ -11,24 +11,6 @@ use App\Models\OfferPrice;
 use App\Models\Payment;
 use App\Models\Receipt;
 use App\Models\Request;
-use App\Models\WarehousePlates\WarehouseBia;
-use App\Models\WarehousePlates\WarehouseCaosu;
-use App\Models\WarehousePlates\WarehouseCaosuvnza;
-use App\Models\WarehousePlates\WarehouseCeramic;
-use App\Models\WarehousePlates\WarehouseGraphite;
-use App\Models\WarehousePlates\WarehousePtfe;
-use App\Models\WarehousePlates\WarehouseTamkimloai;
-use App\Models\WarehousePlates\WarehouseTamnhua;
-use App\Models\WarehouseSpws\WarehouseFiller;
-use App\Models\WarehouseSpws\WarehouseGlandpackinglatty;
-use App\Models\WarehouseSpws\WarehouseHoop;
-use App\Models\WarehouseSpws\WarehouseOring;
-use App\Models\WarehouseSpws\WarehousePtfeenvelope;
-use App\Models\WarehouseSpws\WarehousePtfetape;
-use App\Models\WarehouseSpws\WarehouseRtj;
-use App\Models\WarehouseSpws\WarehouseThanhphamswg;
-use App\Models\WarehouseSpws\WarehouseVanhtinhinnerswg;
-use App\Models\WarehouseSpws\WarehouseVanhtinhouterswg;
 use Illuminate\Database\Eloquent\Model;
 
 class Co extends Model

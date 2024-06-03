@@ -128,7 +128,7 @@ class WarehouseExportSellController extends Controller
                 $base_warehouse = BaseWarehouseCommon::where('l_id', $merchandise_id)->first();
                 $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)->where('code', $warehouse['code'])->get()
                     ->groupBy('lot_no')->map(function ($group) {
-                        $totalQuantity = $group->sum('sl_ton');
+                        $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
                         if ($totalQuantity > 0) {
                             // Thêm thuộc tính `totalQuantity` cho mỗi instance
                             $group->each(function ($product) use ($totalQuantity) {
