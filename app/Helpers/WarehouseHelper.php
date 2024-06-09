@@ -259,7 +259,7 @@ class WarehouseHelper
             WarehouseHelper::RTJ => 'ton_sl_cai',
             WarehouseHelper::PHU_TUNG_DUNG_CU => 'ton_sl_cai',
             WarehouseHelper::THANH_PHAM_SWG => 'ton_sl_cai',
-            WarehouseHelper::GLAND_PACKING_LATTY => 'ton_sl_cai',
+            WarehouseHelper::GLAND_PACKING_LATTY => 'ton_sl_cuon',
             WarehouseHelper::CCDC => 'ton_sl_cai',
             WarehouseHelper::KHO_VAT_DUNG => 'ton_sl_cai',
             WarehouseHelper::PTFE_ENVELOP => 'ton_sl_cai',

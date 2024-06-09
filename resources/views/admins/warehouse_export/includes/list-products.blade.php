@@ -5,6 +5,9 @@
   .delete-item {
     cursor: pointer;
   }
+  .divider {
+    border-top: 50px solid #dee2e6 !important; /* Đường kẻ chia phần */
+  }
 </style>
 <div class="table-responsive p-0" id="content_table">
   <table class="table table-head-fixed table-bordered table-hover">
@@ -81,13 +84,23 @@
               ->first();
             $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
               ->where('l_id', $product['merchandise_id'])->first();
+              if(!isset($merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)])) {
+                dump($merchandise, $merchandise->ton_kho, \App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type), $merchandise->model_type);
+              }
           @endphp
+          @if ($index > 0)
+            @if($product['code'] !== $merchadiseEcomerceExport[$index - 1]['code'])
+              </tbody>
+              <tbody class="divider">
+            @endif
+          @endif
           <tr align="center">
             <td class="">
               <i class="fas fa-minus-circle text-danger delete-item" title="Xoá hàng hoá" onclick="deteleItem(this)"></i>
             </td>
             <td class="sequence">{{ $index + 1 }}</td>
             <td class="">
+              <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}">
               <textarea class="form-control" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
             </td>
             <td class="code">

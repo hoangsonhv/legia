@@ -160,7 +160,7 @@ class WarehouseExportController extends Controller
             }
 
         }
-        // dd($merchadiseEcomerceExport);
+        // dump($merchadiseEcomerceExport);
         $listCo = Co::where('status', 2)->where('confirm_done', 0)->orderBy('id', 'DESC')->get()->pluck('code', 'id');
         $listCo = $listCo->prepend('Chọn mã CO', 0);
         return view('admins.warehouse_export.create', compact('breadcrumb', 'titleForLayout',
@@ -226,7 +226,7 @@ class WarehouseExportController extends Controller
                         'into_money' => $inputProducts['into_money'][$key],
                         'merchandise_id' => $inputProducts['merchandise_id'][$key],
                         'lot_no' => $inputProducts['lot_no'][$key],
-                        'table_name' => $inputProducts['table_name'][$key],
+                        // 'table_name' => $inputProducts['table_name'][$key],
                     ];
                     $sum_quantity_reality[] = [
                         'code' => $inputProducts['code'][$key],
