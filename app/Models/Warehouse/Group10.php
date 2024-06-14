@@ -40,12 +40,12 @@ class Group10 extends BaseWarehouseCommon
         return $this->m_cay * $sl_cay;
     }
     public function getDvTinhAttribute() {
-        return 'Cây';
+        return 'Mét';
     }
     public function getTonKhoAttribute() {
         return [
-            'ton_sl_cay' => $this->ton_sl_cay,
             'ton_sl_m'  => self::acreage($this->ton_sl_cay),
+            'ton_sl_cay' => $this->ton_sl_cay,
         ];
     }
 

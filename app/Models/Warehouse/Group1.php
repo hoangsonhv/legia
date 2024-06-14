@@ -60,12 +60,12 @@ class Group1 extends BaseWarehouseCommon
     }
 
     public function getDvTinhAttribute() {
-        return 'Tấm';
+        return 'm2';
     }
     public function getTonKhoAttribute() {
         return [
-            'ton_sl_tam' => $this->ton_sl_tam,
             'ton_sl_m2' => $this->acreage($this->ton_sl_tam),
+            'ton_sl_tam' => $this->ton_sl_tam,
         ];
     }
 
