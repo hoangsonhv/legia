@@ -224,7 +224,7 @@
                     <td></td>
                     <td></td>
                 </tr>
-                <div class="{{ ( $i % 10 == 0 ) ? 'breakNow':''}}"></div>
+                <div class="{{ ( $i == 5 ) ? 'page-break':''}}"></div>
             @endforeach
             @for($i = 0; $i + count($details) <= 12; $i++)
                 <tr>
