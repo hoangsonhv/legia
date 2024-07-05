@@ -414,9 +414,9 @@ class AdminHelper
         if ($results != null) {
             foreach ($results as $result) {
                 if($support) {
-                    $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];
-                } else {
                     $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[1]];
+                } else {
+                    $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];
                 }
 
             }
