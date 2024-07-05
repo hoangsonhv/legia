@@ -41,13 +41,16 @@
             <th class="align-middle">Kim loại/ Phi kim loại</th>
             <th class="align-middle">Thương mại/ Sản xuất</th>
             <th class="align-middle">Đ/v tính</th>
-{{--            @if(empty($notAction) && empty($isCoTmp))--}}
-{{--                <th class="align-middle">Kim loại/ Phi kim loại</th>--}}
-{{--            @endif--}}
+            {{--            @if(empty($notAction) && empty($isCoTmp))--}}
+            {{--                <th class="align-middle">Kim loại/ Phi kim loại</th>--}}
+            {{--            @endif--}}
             <th class="align-middle">Số lượng cần</th>
             @if(empty($notAction))
-                <th class="align-middle">Tồn kho</th>
-                @if(empty($isCoTmp))
+            <th class="align-middle">Đ/v chính tồn kho</th>
+            <th class="align-middle">Tồn kho (Đv chính)</th>
+            <th class="align-middle">Đ/v phụ tồn kho</th>
+            <th class="align-middle">Tồn kho (Đv phụ)</th>
+            @if(empty($isCoTmp))
                     <th class="align-middle">Số lượng sản xuất</th>
                 @endif
             @endif
@@ -90,6 +93,18 @@
                         else {
                             $soLuongSanXuat = $soLuong - $tonKho;
                         }
+                    }
+                    $tonKhoSupport = 0;
+                    $merchandisePro = \App\Helpers\WarehouseHelper::getModel($detectCode['model_type'])->find($detectCode['merchandise_id']);
+                    $dv_chinh = '';
+                    $dv_phu = '';
+                    $arDvTinh = array_keys($merchandisePro->ton_kho);
+                    if(count($merchandisePro->ton_kho) > 1) {
+                        $dv_chinh =  \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[1]);
+                        $dv_phu = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
+                        $tonKhoSupport = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], true);
+                    } else {
+                        $dv_chinh = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
                     }
                 @endphp
                 <tr align="center">
@@ -183,7 +198,16 @@
                                    name="so_luong[]" value="{{ $soLuong }}">
                         </td>
                         <td>
+                            {{ $dv_chinh }}
+                        </td>
+                        <td>
                             <span class="text-danger"><b>{{$tonKho}}</b></span>
+                        </td>
+                        <td>
+                            {{ $dv_phu }}
+                        </td>
+                        <td>
+                            <span class="text-danger"><b>{{$tonKhoSupport}}</b></span>
                         </td>
                         @if(empty($isCoTmp))
                             <td>

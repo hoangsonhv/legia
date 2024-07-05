@@ -135,22 +135,7 @@ class RequestController extends Controller
             }
             $warehouses    = $queryCo->first()->warehouses;
 
-            $filterWarehouses = $warehouses->filter(function ($warehouse) {
-                $detectCode = \App\Helpers\AdminHelper::detectProductCode($warehouse->code);
-                $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($warehouse->code, $detectCode['model_type']);
-		        if($detectCode['model_type'] == null) return false;
-                if($warehouse->so_luong > $tonKho && $detectCode['manufacture_type'] == WarehouseGroup::TYPE_COMMERCE) {
-                    $model = WarehouseHelper::getModel($detectCode['model_type']);
-                    $model->setQuantity(0, false);
-                    $model->code = $warehouse->code;
-                    $model->vat_lieu = $warehouse->loai_vat_lieu;
-                    $model->model_type = $detectCode['model_type'];
-                    $model->save();
-                    $warehouse->l_id = $model->l_id;
-                    return true;
-                }
-                return false;
-            });
+            $filterWarehouses = collect([]);
             $listWarehouse = $this->coService->getProductMaterialsInWarehouses($queryCo->first()->warehouses->pluck('code')->toArray());
         } else {
             $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM, DataHelper::HOAT_DONG]);

@@ -42,13 +42,13 @@ class Group2 extends BaseWarehouseCommon
         return $this->trong_luong_cuon * $sl_cuon;
     }
     public function getDvTinhAttribute() {
-        return 'kg';
+        return 'Cuộn';
     }
     
     public function getTonKhoAttribute() {
         return [
-            'ton_sl_kg' => self::acreage($this->ton_sl_cuon),
             'ton_sl_cuon' => $this->ton_sl_cuon,
+            'ton_sl_kg' => self::acreage($this->ton_sl_cuon),
         ];
     }
 

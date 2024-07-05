@@ -401,7 +401,7 @@ class AdminHelper
     }
 
     //product and merchandise
-    public static function countProductMerchanInWarehouse($codeInWareHouse, $model_type) {
+    public static function countProductMerchanInWarehouse($codeInWareHouse, $model_type, $support = 0) {
         $tonKho = 0;
         if ($model_type == null || $codeInWareHouse == null) {
             return $tonKho;
@@ -413,7 +413,12 @@ class AdminHelper
             ->where('model_type', $model_type)->get();
         if ($results != null) {
             foreach ($results as $result) {
-                $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];
+                if($support) {
+                    $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];
+                } else {
+                    $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[1]];
+                }
+
             }
         }
         return $tonKho;
