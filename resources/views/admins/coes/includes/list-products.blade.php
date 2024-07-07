@@ -198,16 +198,16 @@
                                    name="so_luong[]" value="{{ $soLuong }}">
                         </td>
                         <td>
-                            {{ $dv_chinh }}
+                            {{ customRound($dv_chinh) }}
                         </td>
                         <td>
-                            <span class="text-danger"><b>{{$tonKho}}</b></span>
+                            <span class="text-danger"><b>{{$tonKhoSupport}}</b></span>
                         </td>
                         <td>
                             {{ $dv_phu }}
                         </td>
                         <td>
-                            <span class="text-danger"><b>{{$tonKhoSupport}}</b></span>
+                            <span class="text-danger"><b>{{$tonKho}}</b></span>
                         </td>
                         @if(empty($isCoTmp))
                             <td>
