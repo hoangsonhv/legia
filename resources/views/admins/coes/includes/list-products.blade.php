@@ -198,10 +198,10 @@
                                    name="so_luong[]" value="{{ $soLuong }}">
                         </td>
                         <td>
-                            {{ customRound($dv_chinh) }}
+                            {{ $dv_chinh }}
                         </td>
                         <td>
-                            <span class="text-danger"><b>{{$tonKhoSupport}}</b></span>
+                            <span class="text-danger"><b>{{customRound($tonKhoSupport)}}</b></span>
                         </td>
                         <td>
                             {{ $dv_phu }}
