@@ -201,13 +201,13 @@
                             {{ $dv_chinh }}
                         </td>
                         <td>
-                            <span class="text-danger"><b>{{customRound($tonKhoSupport)}}</b></span>
+                            <span class="text-danger"><b>{{customRound($tonKho)}}</b></span>
                         </td>
                         <td>
                             {{ $dv_phu }}
                         </td>
                         <td>
-                            <span class="text-danger"><b>{{$tonKho}}</b></span>
+                            <span class="text-danger"><b>{{customRound($tonKhoSupport)}}</b></span>
                         </td>
                         @if(empty($isCoTmp))
                             <td>
