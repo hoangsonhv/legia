@@ -22,6 +22,7 @@
         <div class="card">
           {!! Form::model($receipt, array('route' => ['admin.receipt.update', $receipt->id], 'method' => 'patch', 'enctype' => 'multipart/form-data')) !!}
             {!! Form::hidden('id', null) !!}
+            {!! Form::hidden('step_id', $receipt ? $receipt->step_id : null) !!}
             <div class="card-body">
               <div class="form-group">
                 @switch($type)
