@@ -208,17 +208,17 @@ function reloadDatepicker() {
 function getItem(index, unit, opts,readonly = true) {
   console.log(opts);
   let result = '';
-    if(Array.isArray(opts.kich_thuoc)) {
-      // Lặp qua tất cả các key-value trong detail
-      $.each(opts.kich_thuoc, function(key, value) {
-          result += `${key}: ${value}, `;
-      });
+  if (typeof opts.kich_thuoc === 'string' || opts.kich_thuoc instanceof String) {
+    result = opts.kich_thuoc
+  } else {
+    // Lặp qua tất cả các key-value trong detail
+    $.each(opts.kich_thuoc, function(key, value) {
+        result += `${key}: ${value}, `;
+    });
   
-      // Loại bỏ dấu phẩy cuối cùng nếu có
-      result = result.slice(0, -2);
-    } else {
-      result = opts.kich_thuoc
-    }
+    // Loại bỏ dấu phẩy cuối cùng nếu có
+    result = result.slice(0, -2);
+  }
 
   $readonly = readonly ? 'readonly' : '';
   return '<tr align="center">'
