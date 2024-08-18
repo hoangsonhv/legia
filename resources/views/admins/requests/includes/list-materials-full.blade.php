@@ -70,12 +70,19 @@
               <input type="hidden" name="material[mo_ta][]" value="{{ $material->vat_lieu }}">
               {{ $material->vat_lieu }}
             </td>
-            <td align="left">
+            <td class="chi-tiet" align="left">
               <ul style="list-style: circle">
+                @php
+                  $detail = "";   
+                @endphp
                 @foreach ($material->detail as $properties => $item)
+                  @php
+                    $detail .= \App\Helpers\WarehouseHelper::translateAtt($properties) . " : " . $item;
+                  @endphp
                   <li> {{ \App\Helpers\WarehouseHelper::translateAtt($properties) }} : {{ $item }} </li>
                 @endforeach
               </ul>
+              <input type="hidden" name="material[detail][]" value="{{$detail}}">
             </td>
             <input type="hidden" name="material[vat_lieu][]" value="{{ $material->vat_lieu }}">
             {{-- <td class="">{{ $material->do_day }}</td>

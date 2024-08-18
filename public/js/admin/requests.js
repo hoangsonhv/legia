@@ -119,7 +119,8 @@ $(function () {
                   merchandise_id: eleRow.find('td.merchandise_id input').val(),
                   code: eleRow.find('td.code input').val(),
                   vat_lieu: eleRow.find('td.vat-lieu input').val(),
-                  dv_tinh: eleRow.find('td.dv_tinh input').val()
+                  dv_tinh: eleRow.find('td.dv_tinh input').val(),
+                  kich_thuoc: eleRow.find('td.chi-tiet input').val(),
                 };
                 $(eleForm).append(getItem(lengthTrForm, 'Tấm', opts));
                 // Add code
@@ -147,8 +148,7 @@ $(function () {
       dvTinh = $(this).attr('data-dvTinh');
     }
     submitFormMaterial(eleForm.find('form').first().attr('action'), eleForm.find('form').first().serializeArray(), function(res) {
-      console.log(res);
-      ele.append(getItem(index, 'Tấm', { code: codeMaterial, vat_lieu: motaMaterial, merchandise_id: res.l_id }));
+      ele.append(getItem(index, 'Tấm', { code: codeMaterial, vat_lieu: motaMaterial, merchandise_id: res.l_id, kich_thuoc: res.detail, dv_tinh: res.dv_tinh }));
       reloadDatepicker();
       $('#modal-another-material').modal('hide');
     });
@@ -205,15 +205,28 @@ function reloadDatepicker() {
   });
 }
 
-function getItem(index, unit, opts, readonly = true) {
+function getItem(index, unit, opts,readonly = true) {
   console.log(opts);
+  let result = '';
+    if(Array.isArray(opts.kich_thuoc)) {
+      // Lặp qua tất cả các key-value trong detail
+      $.each(opts.kich_thuoc, function(key, value) {
+          result += `${key}: ${value}, `;
+      });
+  
+      // Loại bỏ dấu phẩy cuối cùng nếu có
+      result = result.slice(0, -2);
+    } else {
+      result = opts.kich_thuoc
+    }
+
   $readonly = readonly ? 'readonly' : '';
   return '<tr align="center">'
     + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá vật liệu" onclick="deteleItem(this)"></i></td>'
     + '<td class="sequence">'+index+'</td>'
     + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input '+$readonly+' class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
     + '<td class=""><textarea '+$readonly+' class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
-    + '<td class=""><textarea class="form-control" name="material[kich_thuoc][]" rows="1"></textarea></td>'
+    + '<td class=""><textarea class="form-control" name="material[kich_thuoc][]" rows="1">'+result+'</textarea></td>'
     + '<td class=""><textarea class="form-control" name="material[quy_cach][]" rows="1"></textarea></td>'
     + '<td class=""><input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="'+opts.dv_tinh+'"></td>'
     + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'
