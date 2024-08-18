@@ -22,6 +22,12 @@ class Group6 extends BaseWarehouseCommon
         'model_type'
     ];
 
+    public function getDetailAttribute() {
+        return [
+            'mo_ta' => $this->mo_ta,
+            'cho_may_moc_thiet_bi' => $this->cho_may_moc_thiet_bi,
+        ];
+    }
     public function setDetailAttribute() {
         return [
             'mo_ta' => $this->mo_ta,
