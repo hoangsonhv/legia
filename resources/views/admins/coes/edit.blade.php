@@ -774,13 +774,14 @@
                                                                                         <div class="row">
                                                                                             @if (isset($co->thanh_toan['payment_document']['document_id_' . $key]))
                                                                                                 @foreach ($co->thanh_toan['payment_document']['document_id_' . $key] as $item)
+                                                                                                {{-- @dd($item); --}}
                                                                                                     <a type="button"
                                                                                                         target="_blank"
-                                                                                                        class="btn btn-success col-sm mb-2"
+                                                                                                        class="btn btn-success col-sm m-2"
                                                                                                         id="document_display"
-                                                                                                        href="{{ asset($item->path) }}"
-                                                                                                        content="{{ $item->name }}">
-                                                                                                        {{$item->name}}
+                                                                                                        href="{{ asset($item['path']) }}"
+                                                                                                        content="{{ $item['name'] }}">
+                                                                                                        {{$item['name']}}
                                                                                                     </a>
                                                                                                 @endforeach
                                                                                             @endif
@@ -803,11 +804,11 @@
                                                                                   @foreach ($co->thanh_toan['payment_document']['khac'] as $item)
                                                                                       <a type="button"
                                                                                           target="_blank"
-                                                                                          class="btn btn-success col-sm mb-2"
+                                                                                          class="btn btn-success col-sm m-2"
                                                                                           id="document_display"
-                                                                                          href="{{ asset($item->path) }}"
-                                                                                          content="{{ $item->name }}">
-                                                                                          {{$item->name}}
+                                                                                          href="{{ asset($item['path']) }}"
+                                                                                          content="{{ $item['name'] }}">
+                                                                                          {{$item['name']}}
                                                                                       </a>
                                                                                   @endforeach
                                                                                 @endif

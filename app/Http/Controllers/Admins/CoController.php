@@ -382,8 +382,31 @@ class CoController extends Controller
             // }
             $co = $this->coRepository->find($id);
             if ($co) {
+                
                 if($request->has('update_thanh_toan') && $request->update_thanh_toan) {
-                    $co->thanh_toan = $request->input('thanh_toan');
+                    $thanh_toan_data = $request->thanh_toan;
+                    if(isset($request->thanh_toan['payment_document'])) {
+                        $paymentDocument = isset($co->thanh_toan['payment_document']) ? $co->thanh_toan['payment_document'] : [];
+                        $fileKhac = [];
+                        foreach($request->thanh_toan['payment_document'] as $key => $document ) {
+                            $path = 'uploads/documents/documents';
+                            $fileSave = Storage::disk($this->disk)->put($path, $document);
+                            if (!$fileSave) {
+                                if ($paymentDocument) {
+                                    foreach($paymentDocument as $document) {
+                                        Storage::disk($this->disk)->delete($document);
+                                    }
+                                }
+                                return redirect()->back()->withInput()->with('error','File upload hợp đồng bị lỗi! Vui lòng kiểm tra lại file.');
+                            }
+                            if($key != 'khac') {
+                                $paymentDocument[$key]= [];
+                            }
+                            $paymentDocument[$key][] = ['name' => $document->getClientOriginalName(), 'path' => $fileSave];
+                        }
+                        $thanh_toan_data['payment_document'] = $paymentDocument;
+                    }
+                    $co->thanh_toan = $thanh_toan_data;
                     $co->save();
                     return redirect()->route('admin.co.edit', ['id' => $id])->with('success','Cập nhật CO thành công!');
                 }
@@ -450,7 +473,6 @@ class CoController extends Controller
                 if ($co->invoice_document) {
                     $invoiceDocument = array_merge(json_decode($co->invoice_document, true), $invoiceDocument);
                 }
-
                 \DB::beginTransaction();
                 $co->description            = $request->input('description');
                 $co->so_bao_gia             = $request->input('so_bao_gia');
