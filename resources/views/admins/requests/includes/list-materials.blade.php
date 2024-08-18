@@ -134,14 +134,16 @@
             @endforeach
         @endif
         </tbody>
-        <tfoot>
-            <tr align="left">
-                <td colspan="11">
-                        <button type="button" class="btn btn-success" id="display-material">+ Thêm vật liệu từ KHO
-                        </button>
-                        <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>
-                </td>
-            </tr>
-        </tfoot>
+        @if (str_contains($coStep['title'], "Đang chờ tạo phiếu yêu cầu" ) || str_contains($coStep['title'], "duyệt phiếu yêu cầu" ))
+            <tfoot>
+                <tr align="left">
+                    <td colspan="11">
+                            <button type="button" class="btn btn-success" id="display-material">+ Thêm vật liệu từ KHO
+                            </button>
+                            <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>
+                    </td>
+                </tr>
+            </tfoot>
+        @endif
     </table>
 </div>

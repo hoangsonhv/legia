@@ -10,6 +10,7 @@
         {{-- <td class="align-middle">IMPO/DOME</td>
         <td class="align-middle">Nhóm sản phẩm</td> --}}
         <td class="align-middle">Deadline cần hàng</td>
+        <td class="align-middle">File đính kèm</td>
         <td class="align-middle">Giá trị (VAT)</td>
         <td class="align-middle">Số ngày quá hạn thanh toán</td>
         <td class="align-middle"></td>
@@ -30,7 +31,7 @@
                 <input name="product_group[]" value="{{$priceSurvey->product_group}}" class="form-control" hidden placeholder="Nhóm sản phẩm"/>
             </td> --}}
             <td>
-                <input value="{{$priceSurvey->deadline}}" class="form-control calendar-date" style="width: 120px" type="text"
+                <input value="{{$priceSurvey->deadline}}" class="form-control calendar-date" type="text"
                        name="deadline[]" value="{{ null }}">
             </td>
             <td>

@@ -90,7 +90,7 @@
                             @endif
                         </div>
                         @if($co)                         
-                        @include('admins.requests.includes.list-materials', ['co' => $co, 'materials' => $materials])
+                        @include('admins.requests.includes.list-materials', ['co' => $co, 'coStep' => $coStep , 'materials' => $materials])
                         @endif
                         @permission('admin.request.update-survey-price')
                         @php
@@ -103,7 +103,7 @@
                             \App\Enums\ProcessStatus::Unapproved,
                             ];
                         @endphp
-                        @if(($co || in_array($requestModel->category,array_keys(array_values(\App\Helpers\DataHelper::getCategories([\App\Helpers\DataHelper::VAN_PHONG_PHAM]))[0]))) && in_array($requestModel->status, $statusAcceptRequest))
+                        {{-- @if(($co || in_array($requestModel->category,array_keys(array_values(\App\Helpers\DataHelper::getCategories([\App\Helpers\DataHelper::VAN_PHONG_PHAM]))[0]))) && in_array($requestModel->status, $statusAcceptRequest))
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="title text-primary mb-4">Khảo sát giá
@@ -276,7 +276,7 @@
                                 </div>
                                 {!! Form::close() !!}
                             </div>
-                        @endif
+                        @endif --}}
                         @endpermission
                     @php
                         $hidePercentPayment = in_array($requestModel->category, array_keys(\App\Helpers\DataHelper::getCategoriesForIndex([\App\Helpers\DataHelper::DINH_KY, \App\Helpers\DataHelper::HOAT_DONG])));

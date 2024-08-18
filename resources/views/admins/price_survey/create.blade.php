@@ -80,6 +80,17 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="form-group">
+                                        <label for="phone">File đính kèm</label>
+                                        {{-- <div class="input-group" id="deadline" data-target-input="nearest">
+                                            {!! Form::text('deadline', null, array('class' => 'form-control datetimepicker-input', 'data-target' => '#deadline')) !!}
+                                            <div class="input-group-append" data-target="#deadline" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
                                         <label for="phone">Ngày hỏi NCC</label>
                                         <div class="input-group" id="question_date" data-target-input="nearest">
                                             {!! Form::text('question_date', null, array('class' => 'form-control datetimepicker-input', 'data-target' => '#question_date')) !!}

@@ -5,6 +5,7 @@
         {{-- <td class="align-middle">IMPO/DOME</td>
         <td class="align-middle">Nhóm sản phẩm</td> --}}
         <td class="align-middle">Deadline cần hàng</td>
+        <td class="align-middle">File đính kèm</td>
         <td class="align-middle">Giá trị (VAT)</td>
         <td class="align-middle">Số ngày quá hạn thanh toán</td>
         <td class="align-middle"></td>
