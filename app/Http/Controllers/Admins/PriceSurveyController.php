@@ -192,8 +192,8 @@ class PriceSurveyController extends Controller
         foreach ($ids as $key => $id) {
             $data = [
                 'supplier' => $supplier[$key],
-                'type' => $type[$key],
-                'product_group' => $productGroup[$key],
+                'type' => 1,
+                'product_group' => '',
                 'deadline' => $deadline[$key],
                 'price' => $price[$key],
                 'number_date_wait_pay' => $numberDateWaitPay[$key],
