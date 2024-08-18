@@ -23,6 +23,7 @@ class Group3 extends BaseWarehouseCommon
         'ton_sl_m',
         'model_type'
     ];
+    protected $appends = ['detail', 'dv_tinh'];
 
     public function getDetailAttribute() {
         return [

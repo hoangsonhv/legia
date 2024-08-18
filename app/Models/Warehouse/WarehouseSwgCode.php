@@ -11,9 +11,14 @@ class WarehouseSwgCode extends Model
         'inner',
         'outer',
     ];
+    protected $appends = ['detail', 'dv_tinh'];
+
     public function getDetailAttribute() {
         return [
         ];
+    }
+    public function getDvTinhAttribute() {
+        return 'Cái';
     }
     protected $table = 'warehouse_swg_codes';
 }

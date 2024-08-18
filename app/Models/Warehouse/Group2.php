@@ -24,6 +24,7 @@ class Group2 extends BaseWarehouseCommon
         'ton_sl_kg',
         'model_type'
     ];
+    protected $appends = ['detail', 'dv_tinh'];
 
     public function getDetailAttribute() {
         return [

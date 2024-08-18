@@ -20,6 +20,7 @@ class Group8 extends BaseWarehouseCommon
         'ton_sl_cuon',
         'model_type'
     ];
+    protected $appends = ['detail', 'dv_tinh'];
 
     public function getDetailAttribute() {
         return [
