@@ -11,6 +11,9 @@ class WarehouseSwgCode extends Model
         'inner',
         'outer',
     ];
-
+    public function getDetailAttribute() {
+        return [
+        ];
+    }
     protected $table = 'warehouse_swg_codes';
 }

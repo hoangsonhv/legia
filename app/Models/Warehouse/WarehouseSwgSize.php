@@ -10,6 +10,9 @@ class WarehouseSwgSize extends Model
         'code_size',
         'rim_size',
     ];
-
+    public function getDetailAttribute() {
+        return [
+        ];
+    }
     protected $table = 'warehouse_swg_sizes';
 }
