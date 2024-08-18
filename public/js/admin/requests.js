@@ -303,16 +303,16 @@ async function checkCodeExists(eleModal, aCode) {
       "        <td>\n" +
       "            <input name=\"supplier[]\" class=\"form-control\" placeholder=\"Nhà cung cấp\"/>\n" +
       "        </td>\n" +
-      // "        <td>\n" +
-      // "            <select name=\"type[]\" class=\"form-control\">\n" +
-      // "                <option value=\"1\">NVLNK</option>\n" +
-      // "                <option value=\"2\">NVLND</option>\n" +
-      // "                <option value=\"3\">Khác</option>\n" +
-      // "            </select>\n" +
-      // "        </td>\n" +
-      // "        <td>\n" +
-      // "            <input name=\"product_group[]\" class=\"form-control\" placeholder=\"Nhóm sản phẩm\"/>\n" +
-      // "        </td>\n" +
+      "        <td>\n" +
+      "            <select name=\"type[]\" class=\"form-control\">\n" +
+      "                <option value=\"1\">NVLNK</option>\n" +
+      "                <option value=\"2\">NVLND</option>\n" +
+      "                <option value=\"3\">Khác</option>\n" +
+      "            </select>\n" +
+      "        </td>\n" +
+      "        <td>\n" +
+      "            <input name=\"product_group[]\" class=\"form-control\" placeholder=\"Nhóm sản phẩm\"/>\n" +
+      "        </td>\n" +
       "        <td>\n" +
       "            <input class=\"form-control calendar-date\" style=\"width: 120px\" type=\"text\"\n" +
       "                   name=\"deadline[]\">\n" +
