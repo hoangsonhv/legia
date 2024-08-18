@@ -34,7 +34,12 @@
         <th class="align-middle">Thương mại/Sản xuất</th>
         <th class="align-middle">Đ/v tính</th>
         <th class="align-middle">Số lượng</th>
-        <th class="align-middle">Tồn kho</th>
+        @if(empty($notAction))
+        <th class="align-middle">Đ/v chính tồn kho</th>
+        <th class="align-middle">Tồn kho (Đv chính)</th>
+        <th class="align-middle">Đ/v phụ tồn kho</th>
+        <th class="align-middle">Tồn kho (Đv phụ)</th>
+        @endif
         <th class="align-middle">Đơn giá (VNĐ)</th>
         <th class="align-middle">Thành tiền (VNĐ)</th>
         <th class="align-middle">VAT (%)</th>
@@ -66,7 +71,17 @@
             $vatPer      = $warehouse[13];
             $vatM        = $warehouse[14];
             $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], 1);
-
+            $merchandisePro = \App\Helpers\WarehouseHelper::getModel($detectCode['model_type'])->find($detectCode['merchandise_id']);
+                    $dv_chinh = '';
+                    $dv_phu = '';
+                    $arDvTinh = array_keys($merchandisePro->ton_kho);
+                    if(count($merchandisePro->ton_kho) > 1) {
+                        $dv_chinh =  \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[1]);
+                        $dv_phu = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
+                        $tonKhoSupport = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], true);
+                    } else {
+                        $dv_chinh = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
+                    }
           @endphp
           <tr align="center">
             @if(empty($notAction))
@@ -123,7 +138,16 @@
                 <input style="width: 100%;" class="form-control" onChange="caclTotalMoney(this)" type="number" min="1" name="so_luong[]" value="{{ $soLuong }}">
               </td>
               <td>
-                <span class="text-danger"><b>{{$tonKho}}</b></span>
+                {{ $dv_chinh }}
+              </td>
+              <td>
+                  <span class="text-danger"><b>{{customRound($tonKho)}}</b></span>
+              </td>
+              <td>
+                  {{ $dv_phu }}
+              </td>
+              <td>
+                  <span class="text-danger"><b>{{customRound($tonKhoSupport)}}</b></span>
               </td>
               <td class="price" data-price="{{ $donGia }}">
                 <input type="hidden" name="don_gia[]" value="{{ $donGia }}">
