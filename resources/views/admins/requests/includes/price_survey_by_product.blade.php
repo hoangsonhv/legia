@@ -23,12 +23,12 @@
             <td>
                 <input name="supplier[]" class="form-control" placeholder="Nhà cung cấp" value="{{$priceSurvey->supplier}}"/>
             </td>
-            <td>
+            {{-- <td>
                 {!! Form::select('type[]', \App\Models\PriceSurvey::ARR_TYPE, $priceSurvey->type, array('class' => 'form-control hidden')) !!}
             </td>
             <td>
                 <input name="product_group[]" value="{{$priceSurvey->product_group}}" class="form-control" hidden placeholder="Nhóm sản phẩm"/>
-            </td>
+            </td> --}}
             <td>
                 <input value="{{$priceSurvey->deadline}}" class="form-control calendar-date" style="width: 120px" type="text"
                        name="deadline[]" value="{{ null }}">

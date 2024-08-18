@@ -21,12 +21,12 @@
             <td>
                 {{$priceSurvey->supplier}}
             </td>
-            <td>
+            {{-- <td>
                 {{ \App\Models\PriceSurvey::ARR_TYPE[$priceSurvey->type] }}
             </td>
             <td>
                 {{$priceSurvey->product_group}}
-            </td>
+            </td> --}}
             <td>
                 {{$priceSurvey->deadline}}
             </td>
