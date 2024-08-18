@@ -14,4 +14,5 @@ class BaseWarehouseCommon extends Model
     protected $fillable = [ 
         "l_id"
     ];
+    protected $appends = ['detail', 'dv_tinh'];
 }
