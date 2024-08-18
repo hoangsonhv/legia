@@ -58,7 +58,8 @@
               }}">
             </td>
             <td class="">
-              <input class="form-control data-quantity" style="width: 120px" name="product[quantity][]" value="{{ $product['quantity'] }}"
+              <input type="number" max="{{ 
+                isset($product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])]) ? $product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])] : 0}}" class="form-control data-quantity" style="width: 120px" name="product[quantity][]" value="{{ $product['quantity'] }}"
                 onKeyUp="return getNumberFormatQuantity(this)">
             </td>
             <td class="">

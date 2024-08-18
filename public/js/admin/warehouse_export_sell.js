@@ -1,3 +1,5 @@
+const { isBuffer } = require("lodash");
+
 // Global
 var aCode = [];
 
@@ -178,6 +180,7 @@ function getNumberFormatUnitPrice(_this) {
 
 function getNumberFormatQuantity(_this) {
     var value = $(_this).val();
+    if(parseInt(value) > parseInt($(_this).attr('max'))) {$(_this).val($(_this).attr('max')); return;}
     var unitPrice = $(_this).parent().parent().find('.data-unit-price').val();
     var intoMoney = Number(value) * Number(unitPrice);
     var intoMoneyFormat = formatCurrent(String(intoMoney));

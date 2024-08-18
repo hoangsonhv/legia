@@ -104,7 +104,10 @@ class CoService
                     //     return $query;
                     // });
                     $merchandises = $merchandises->get();
-                    $merchandises = $merchandises->groupBy('lot_no')->map(function ($group) {
+                    $merchandises = $merchandises->groupBy(function($item) {
+                            $chiTietKey = implode('-', $item->detail);
+                            return trim($item->lot_no) . '-' . trim($chiTietKey);
+                        })->map(function ($group) {
                         $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
                         if ($totalQuantity > 0) {
                             // Thêm thuộc tính `totalQuantity` cho mỗi instance

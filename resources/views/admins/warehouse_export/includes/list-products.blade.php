@@ -61,7 +61,9 @@
               <input class="form-control" style="width: 70px" name="product[quantity_doc][]" value="{{ $product['quantity_doc'] }}">
             </td>
             <td class="">
-              <input class="form-control data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
+              <input type="number" max="{{ 
+                $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
+              }}" class="form-control data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
                      onKeyUp="return getNumberFormatQuantity(this)">
             </td>
             <td class="">
@@ -121,7 +123,9 @@
               <input class="form-control" style="width: 70px" name="product[quantity_doc][]" value="{{ $product['quantity_doc'] }}">
             </td>
             <td class="">
-              <input class="form-control data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
+              <input type="number" max="{{ 
+                $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
+              }}" class="form-control data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
                      onKeyUp="return getNumberFormatQuantity(this)">
             </td>
             <td class="">
