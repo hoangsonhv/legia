@@ -65,7 +65,7 @@
             $donGia      = !empty($collect) ? $warehouse->don_gia : $warehouse[11];
             $vatPer      = $warehouse[13];
             $vatM        = $warehouse[14];
-            $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type']);
+            $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], 1);
 
           @endphp
           <tr align="center">
