@@ -32,24 +32,24 @@
                                         {!! Form::select('request_id', $arrRequest, null, array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <div class="form-group">
                                         <label for="name">IMPO/DOME<b style="color: red;"> (*)</b></label>
                                         {!! Form::select('type', $types, null, array('class' => 'form-control', 'required' => 'required')) !!}
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="tax_code">Nhà cung cấp<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('supplier', null, array('class' => 'form-control', 'required' => 'required', 'placeholder' => 'Nhà cung cấp')) !!}
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <div class="form-group">
                                         <label for="tax_code">Nhóm sản phẩm<b style="color: red;"> (*)</b></label>
                                         {!! Form::text('product_group', null, array('class' => 'form-control', 'required' => 'required', 'placeholder' => 'Nhóm sản phẩm')) !!}
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="address">Người yêu cầu</label>

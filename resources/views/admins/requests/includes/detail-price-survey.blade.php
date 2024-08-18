@@ -2,18 +2,18 @@
         <span class="btn btn-sm btn-info">Xem chi tiết</span>
     </a>
 <div class="card-body w-100" style="max-height: 400px; overflow-y: scroll">
-    <div class="form-group">
+    {{-- <div class="form-group">
         <label for="name">IMPO/DOME<b style="color: red;"> (*)</b></label>
         {!! Form::select('type', \App\Models\PriceSurvey::ARR_TYPE, $surveyPrice->type, array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
-    </div>
+    </div> --}}
     <div class="form-group">
         <label for="tax_code">Nhà cung cấp<b style="color: red;"> (*)</b></label>
         {!! Form::text('supplier', $surveyPrice->supplier, array('class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly')) !!}
     </div>
-    <div class="form-group">
+    {{-- <div class="form-group">
         <label for="tax_code">Nhóm sản phẩm<b style="color: red;"> (*)</b></label>
         {!! Form::text('product_group', $surveyPrice->product_group, array('class' => 'form-control', 'required' => 'required', 'placeholder' => 'Nhóm sản phẩm', 'readonly' => 'readonly')) !!}
-    </div>
+    </div> --}}
     <div class="form-group">
         <label for="address">Người yêu cầu</label>
         {!! Form::text('request_person', $surveyPrice->request_person, array('class' => 'form-control', 'placeholder' => 'Người yêu cầu', 'readonly' => 'readonly')) !!}

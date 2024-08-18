@@ -43,7 +43,7 @@ class PriceSurveyRequest extends FormRequest
         return  [
             'co_id'      => 'required',
             'request_id'      => 'required',
-            'type'   => 'required',
+            // 'type'   => 'required',
             'supplier' => 'required',
             'product_group' => 'required',
             'price' => 'required',

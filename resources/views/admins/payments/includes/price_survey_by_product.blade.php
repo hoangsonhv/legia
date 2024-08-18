@@ -2,8 +2,8 @@
     <thead>
     <tr align="center" style="font-weight: bold">
         <td class="align-middle">Nhà cung cấp</td>
-        <td class="align-middle">IMPO/DOME</td>
-        <td class="align-middle">Nhóm sản phẩm</td>
+        {{-- <td class="align-middle">IMPO/DOME</td>
+        <td class="align-middle">Nhóm sản phẩm</td> --}}
         <td class="align-middle">Deadline cần hàng</td>
         <td class="align-middle">Giá trị (VAT)</td>
         <td class="align-middle">Số ngày quá hạn thanh toán</td>
