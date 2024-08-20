@@ -44,6 +44,10 @@ class PriceSurvey extends Model
         self::TYPE_BUY => 'Buy',
     ];
 
+    public function surveyPrices()
+    {
+        return $this->hasMany(SurveyPrice::class, 'core_price_survey_id', 'id');
+    }
     public function co()
     {
         return $this->belongsTo(Co::class, 'co_id', 'id');

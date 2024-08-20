@@ -20,6 +20,7 @@
         <th class="align-middle">Lot No</th>
         <th class="align-middle">Đ/v tính</th>
         <th class="align-middle">Tồn kho</th>
+        <th class="align-middle">Tồn kho (đơn vị phụ)</th>
         <th class="align-middle">Số lượng (Yêu cầu)</th>
         <th class="align-middle">Số lượng (Thực xuất)</th>
         <th class="align-middle">Đơn giá</th>
@@ -117,6 +118,11 @@
             <td class="">
               <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{ 
                 $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
+              }}">
+            </td>
+            <td class="">
+              <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+                isset(array_values($merchandise->ton_kho)[1]) ? array_values($merchandise->ton_kho)[1] : 0
               }}">
             </td>
             <td class="">

@@ -35,6 +35,75 @@
                        name="deadline[]" value="{{ null }}">
             </td>
             <td>
+                <input type="file" name="accompanying_document[]" id="" class="form-control">
+                <div class="d-block">
+                    @php
+                        $surveyPrice = $priceSurvey->surveyPrices()->first();
+                    @endphp
+                    @if($surveyPrice)
+                        <button type="button" class="btn btn-success"
+                                data-toggle="modal"
+                                data-target="#accompanying_document_survey_price_modal{{ $surveyPrice->id }}">
+                            Hiển thị chứng từ đã
+                            tồn tại
+                        </button>
+                    @else
+                        Không tồn tại chứng từ
+                    @endif
+                    <div class="modal fade"
+                        id="accompanying_document_survey_price_modal{{ $surveyPrice->id }}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-success">
+                                    <h4 class="modal-title">Chứng từ khảo sát
+                                        giá</h4>
+                                    <button type="button" class="close"
+                                            data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    @php
+                                        $statusAcceptRequest = [
+                                        \App\Enums\ProcessStatus::Approved,
+                                        \App\Enums\ProcessStatus::PendingSurveyPrice,
+                                        ];
+                                        $statusNotEdit = [
+                                        \App\Enums\ProcessStatus::Approved,
+                                        \App\Enums\ProcessStatus::Unapproved,
+                                        ];
+                                    @endphp
+                                    @foreach(json_decode($surveyPrice->accompanying_document, true) as $index => $file)
+                                        <div class="data-file">
+                                            {!! \App\Helpers\AdminHelper::checkFile($file) !!}
+                                            @if(!in_array($requestModel->status, $statusNotEdit))
+                                                <div class="mt-2">
+                                                    <button type="button"
+                                                            class="btn btn-danger form-control"
+                                                            onclick="removeFile(this)"
+                                                            data-path="{{ $file['path'] }}">
+                                                        Xoá file
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button"
+                                            class="btn btn-outline-dark"
+                                            data-dismiss="modal">Đóng
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                </div>
+            </td>
+            <td>
                 <input name="tmp_price[]" value="{{number_format($priceSurvey->price)}}" class="form-control" placeholder="giá trị báo giá"/>
                 <input name="price[]" value="{{$priceSurvey->price}}" type="hidden"/>
             </td>
@@ -88,7 +157,7 @@
 {{--        <td></td>--}}
 {{--    </tr>--}}
     </tbody>
-    {{-- @if($requestModel->status == \App\Enums\ProcessStatus::PendingSurveyPrice) --}}
+    @if($requestModel->status == \App\Enums\ProcessStatus::PendingSurveyPrice)
         <tfoot>
         @if (\App\Enums\ProcessStatus::PendingSurveyPrice == $requestModel->status)
         <tr>
@@ -103,6 +172,6 @@
         </tr>
         @endif
         </tfoot>
-    {{-- @endif --}}
+    @endif
 </table>
 {!! Form::close() !!}

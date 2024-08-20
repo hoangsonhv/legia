@@ -19,6 +19,7 @@ use App\Models\Repositories\PriceSurveyRepository;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\CoStepHistory;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class PriceSurveyController extends Controller
 {
@@ -32,6 +33,7 @@ class PriceSurveyController extends Controller
     protected $requestHisRepo;
 
     public $menu;
+    private $disk = 'local';
 
     function __construct(
         PriceSurveyRepository $priceSurveyRepo,
@@ -174,7 +176,6 @@ class PriceSurveyController extends Controller
         if ($ids == null) {
             return redirect()->back()->with('error', 'Vui lòng nhập khảo sát giá!');
         }
-
         $supplier = $request->input('supplier');
         $type = $request->input('type');
         $productGroup = $request->input('product_group');
@@ -187,9 +188,20 @@ class PriceSurveyController extends Controller
         $coId = $request->input('co_id');
         $user = Session::get('login');
         $categories    = DataHelper::getCategoriesForIndex([DataHelper::VAN_PHONG_PHAM]);
-
-        $dataInsert = [];
+        $accompanyingDocuments = $request->file('accompanying_document');
+        // $dataInsert = [];
+        $documents = [];
         foreach ($ids as $key => $id) {
+            $path = 'uploads/requests/accompanying_document';
+            $fileSave = Storage::disk($this->disk)->put($path, $accompanyingDocuments[$key]);
+            if (!$fileSave) {
+                if ($documents) {
+                    foreach($documents as $document) {
+                        Storage::disk($this->disk)->delete($document);
+                    }
+                }
+                return redirect()->back()->withInput()->with('error','File upload bị lỗi! Vui lòng kiểm tra lại file.');
+            }
             $data = [
                 'supplier' => $supplier[$key],
                 'type' => 1,
@@ -204,36 +216,46 @@ class PriceSurveyController extends Controller
                 'status' => (isset($status[$key]) && $status[$key]) ? $status[$key] : 0,
             ];
             if(!$ids[$key]) {
-                $dataInsert[] = $data;
+                try{
+                    $priceSurvey = PriceSurvey::create($data);
+                    $surveyPrice = [
+                        'accompanying_document' => json_encode(array([
+                            'name' => $accompanyingDocuments[$key]->getClientOriginalName(),
+                            'path' => $fileSave,
+                        ])),
+                        'request_id' => $requestId,
+                        'core_customer_id' => $priceSurvey->id,
+                    ];
+                    $priceSurvey->surveyPrices()->create($surveyPrice);
+                }
+                catch (\Exception $ex) {
+                    dd($ex);
+                }
             } else {
                 PriceSurvey::where('id', $ids[$key])->update($data);
             }
         }
-        $priceSurvey  = PriceSurvey::insert($dataInsert);
 
-
-        if ($priceSurvey) {
-            $requestModel = RequestModel::find($requestId);
-            if ($requestModel->co_id != null || in_array($requestModel->category, array_keys($categories))) {
-                // Check if all request materials have checked price survey
-                $materials = $requestModel->material;
-                $materialsCount = count($materials);
-                $selectedPriceSurveyCount = 0;
-                foreach ($materials as $material) {
-                    $selectedPriceSurvey = $material->price_survey()->where('status', '1')->first();
-                    if ($selectedPriceSurvey != null) {
-                        $selectedPriceSurveyCount++;
-                    }
-                }
-                if ($selectedPriceSurveyCount == $materialsCount) {
-                    if($requestModel->co_id) {
-                        $this->coStepHisRepo->insertNextStep( 'request', $requestModel->co_id, $requestModel->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
-                    } else if (in_array($requestModel->category, array_keys($categories))) {
-                        $this->requestHisRepo->insertNextStep( 'request', $requestModel->id, $requestModel->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
-                    }
+        $requestModel = RequestModel::find($requestId);
+        if ($requestModel->co_id != null || in_array($requestModel->category, array_keys($categories))) {
+            // Check if all request materials have checked price survey
+            $materials = $requestModel->material;
+            $materialsCount = count($materials);
+            $selectedPriceSurveyCount = 0;
+            foreach ($materials as $material) {
+                $selectedPriceSurvey = $material->price_survey()->where('status', '1')->first();
+                if ($selectedPriceSurvey != null) {
+                    $selectedPriceSurveyCount++;
                 }
             }
-            return redirect()->route('admin.request.edit', ['id' => $requestId])->with('success','Thêm khảo sát giá thành công!');
+            if ($selectedPriceSurveyCount == $materialsCount) {
+                if($requestModel->co_id) {
+                    $this->coStepHisRepo->insertNextStep( 'request', $requestModel->co_id, $requestModel->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
+                } else if (in_array($requestModel->category, array_keys($categories))) {
+                    $this->requestHisRepo->insertNextStep( 'request', $requestModel->id, $requestModel->id, CoStepHistory::ACTION_APPROVE_PRICE_SURVEY);
+                }
+            }
         }
+        return redirect()->route('admin.request.edit', ['id' => $requestId])->with('success','Thêm khảo sát giá thành công!');
     }
 }
