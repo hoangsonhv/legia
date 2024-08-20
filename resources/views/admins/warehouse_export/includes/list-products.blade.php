@@ -122,7 +122,7 @@
             </td>
             <td class="">
               <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{ 
-                isset(array_values($merchandise->ton_kho)[1]) ? array_values($merchandise->ton_kho)[1] : 0
+                isset(array_values($merchandise->ton_kho)[1]) ? customRound(array_values($merchandise->ton_kho)[1]) : 0
               }}">
             </td>
             <td class="">

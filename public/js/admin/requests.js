@@ -318,6 +318,9 @@ async function checkCodeExists(eleModal, aCode) {
       "                   name=\"deadline[]\">\n" +
       "        </td>\n" +
       "        <td>\n" +
+      "            <input type=\"file\" name=\"accompanying_document[]\" class=\"form-control\" placeholder=\"Nhà cung cấp\"/>\n" +
+      "        </td>\n" +
+      "        <td>\n" +
       "            <input name=\"tmp_price[]\" class=\"form-control\" placeholder=\"giá trị báo giá\"/>\n" +
       "            <input name=\"price[]\" type=\"hidden\"/>\n" +
       "        </td>\n" +
