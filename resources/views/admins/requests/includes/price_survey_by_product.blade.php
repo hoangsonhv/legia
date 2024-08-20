@@ -40,7 +40,7 @@
                     @php
                         $surveyPrice = $priceSurvey->surveyPrices()->first();
                     @endphp
-                    @if($surveyPrice)
+                    @if($surveyPrice->accompanying_document != "[]")
                         <button type="button" class="btn btn-success"
                                 data-toggle="modal"
                                 data-target="#accompanying_document_survey_price_modal{{ $surveyPrice->id }}">
@@ -82,6 +82,7 @@
                                                     <button type="button"
                                                             class="btn btn-danger form-control"
                                                             onclick="removeFile(this)"
+                                                            data-id = {{ $surveyPrice->id }}
                                                             data-path="{{ $file['path'] }}">
                                                         Xoá file
                                                     </button>

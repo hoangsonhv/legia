@@ -412,7 +412,14 @@
 
         function removeFile(_this) {
             var route = "{{ route('admin.request.remove-file') }}";
-            if ($(_this).parents('.modal:first').attr('id').indexOf('accompanying_document_survey_price') !== -1) {
+            // console.log($(_this).attr('data-id') !== "",$(_this).parents('.modal:first').attr('id').indexOf('accompanying_document_survey_price') !== -1)
+            if($(_this).attr('data-id') !== "") {
+                var route = "{{ route('admin.request.remove-file-survey-price') }}";
+                var data = {
+                    id: $(_this).attr('data-id'),
+                    path: $(_this).attr('data-path')
+                };
+            } else if ($(_this).parents('.modal:first').attr('id').indexOf('accompanying_document_survey_price') !== -1) {
                 var route = "{{ route('admin.request.remove-file-survey-price') }}";
                 var data = {
                     id: $(_this).parents('.item-survey-price:first').find('.survey_price_id').val(),

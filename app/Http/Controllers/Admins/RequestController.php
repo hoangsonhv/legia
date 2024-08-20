@@ -714,7 +714,7 @@ class RequestController extends Controller
             $data = $this->surveyPriceRepository->find($id);
             if ($data) {
                 $files = json_decode($data->accompanying_document, true);
-                if ($files && count($files) > 1) {
+                if ($files && count($files) > 0) {
                     $path = $request->input('path');
                     foreach($files as $key => $file) {
                         if ($file['path'] === $path) {
