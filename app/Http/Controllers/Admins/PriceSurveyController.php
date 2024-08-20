@@ -192,16 +192,6 @@ class PriceSurveyController extends Controller
         // $dataInsert = [];
         $documents = [];
         foreach ($ids as $key => $id) {
-            $path = 'uploads/requests/accompanying_document';
-            $fileSave = Storage::disk($this->disk)->put($path, $accompanyingDocuments[$key]);
-            if (!$fileSave) {
-                if ($documents) {
-                    foreach($documents as $document) {
-                        Storage::disk($this->disk)->delete($document);
-                    }
-                }
-                return redirect()->back()->withInput()->with('error','File upload bị lỗi! Vui lòng kiểm tra lại file.');
-            }
             $data = [
                 'supplier' => $supplier[$key],
                 'type' => 1,
@@ -218,14 +208,27 @@ class PriceSurveyController extends Controller
             if(!$ids[$key]) {
                 try{
                     $priceSurvey = PriceSurvey::create($data);
-                    $surveyPrice = [
-                        'accompanying_document' => json_encode(array([
-                            'name' => $accompanyingDocuments[$key]->getClientOriginalName(),
-                            'path' => $fileSave,
-                        ])),
-                        'request_id' => $requestId,
-                        'core_customer_id' => $priceSurvey->id,
-                    ];
+                    $path = 'uploads/requests/accompanying_document';
+                    if($accompanyingDocuments[$key]) {
+                        $fileSave = Storage::disk($this->disk)->put($path, $accompanyingDocuments[$key]);
+                        if (!$fileSave) {
+                            if ($documents) {
+                                foreach($documents as $document) {
+                                    Storage::disk($this->disk)->delete($document);
+                                }
+                            }
+                            return redirect()->back()->withInput()->with('error','File upload bị lỗi! Vui lòng kiểm tra lại file.');
+                        }
+                        $surveyPrice = [
+                            'accompanying_document' => json_encode(array([
+                                'name' => $accompanyingDocuments[$key]->getClientOriginalName(),
+                                'path' => $fileSave,
+                            ])),
+                            'request_id' => $requestId,
+                            'core_customer_id' => $priceSurvey->id,
+                        ];
+                    }
+                    
                     $priceSurvey->surveyPrices()->create($surveyPrice);
                 }
                 catch (\Exception $ex) {
