@@ -209,7 +209,7 @@ class PriceSurveyController extends Controller
                 try{
                     $priceSurvey = PriceSurvey::create($data);
                     $path = 'uploads/requests/accompanying_document';
-                    if($accompanyingDocuments[$key]) {
+                    if(isset($accompanyingDocuments[$key])) {
                         $fileSave = Storage::disk($this->disk)->put($path, $accompanyingDocuments[$key]);
                         if (!$fileSave) {
                             if ($documents) {
@@ -236,6 +236,33 @@ class PriceSurveyController extends Controller
                 }
             } else {
                 PriceSurvey::where('id', $ids[$key])->update($data);
+                $priceSurvey = PriceSurvey::where('id', $ids[$key])->first();
+                $path = 'uploads/requests/accompanying_document';
+                if(isset($accompanyingDocuments[$key])) {
+                    $fileSave = Storage::disk($this->disk)->put($path, $accompanyingDocuments[$key]);
+                    if (!$fileSave) {
+                        if ($documents) {
+                            foreach($documents as $document) {
+                                Storage::disk($this->disk)->delete($document);
+                            }
+                        }
+                        return redirect()->back()->withInput()->with('error','File upload bị lỗi! Vui lòng kiểm tra lại file.');
+                    }
+                    $surveyPrice = [
+                        'accompanying_document' => json_encode(array([
+                            'name' => $accompanyingDocuments[$key]->getClientOriginalName(),
+                            'path' => $fileSave,
+                        ])),
+                        'request_id' => $requestId,
+                        'core_customer_id' => $ids[$key],
+                    ];
+                    if($priceSurvey->surveyPrices()->count() > 0 ) {
+                        $priceSurvey->surveyPrices()->first()->update($surveyPrice);
+                    } else {
+                        $priceSurvey->surveyPrices()->create($surveyPrice);
+    
+                    }
+                }
             }
         }
 
