@@ -687,6 +687,27 @@
                                                                     {!! Form::hidden('thanh_toan[amount_money][thoi_gian_no]', null, ['class' => 'form-control data-origin']) !!}
                                                                 </td>
                                                             </tr>
+                                                            @php
+                                                                $receipt = $co->receipt;
+                                                            @endphp
+                                                            <tr class="text-center">
+                                                                <td class="text-right">Giá trị thực thu</td>
+                                                                <td>
+                                                                    {{isset($receipts[0]) ? number_format($receipts[0]['actual_money']) : null}}
+                                                                </td>
+                                                                <td>
+                                                                    {{isset($receipts[1]) ? number_format($receipts[1]['actual_money']) : null}}
+                                                                </td>
+                                                                <td>
+                                                                    {{isset($receipts[2]) ? number_format($receipts[2]['actual_money']) : null}}
+                                                                </td>
+                                                                <td>
+                                                                    {{isset($receipts[3]) ? number_format($receipts[3]['actual_money']) : null}}
+                                                                </td>
+                                                                <td>
+                                                                    {{-- {{isset($receipts[0]) ? number_format($receipts[0]['actual_money']) : null}} --}}
+                                                                </td>
+                                                            </tr>
                                                             <tr class="text-center">
                                                                 <td class="text-right">Thời gian xét duyệt</td>
                                                                 <td>
