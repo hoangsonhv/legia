@@ -69,63 +69,71 @@ class CoService
         return $result;
     }
 
-    public function searchProductMaterialsInWarehouses($code, $lot_no)
+    public function searchProductMaterialsInWarehouses($code, $lot_no, $mo_ta = "")
     {
         $results = collect([]);
         try {
-            if ($code) {
-                $base_warehouse = BaseWarehouseCommon::where('code', $code)->first();
-                if ($base_warehouse == null) {
-                    return $results;
-                }
-
-                $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($base_warehouse->model_type));
-                
-                // $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
-
-                $merchandises = $this->baseWarehouseRepository->model
-                    ->where('model_type' , $base_warehouse->model_type)
-                    ->where('code', $code);
-
-                if ($lot_no != null && strlen($lot_no) > 0) {
-                    $merchandises = $merchandises->where('lot_no', $lot_no);
-                }
-                $result = $merchandises->get();
-                $tonKho = 0;
-                foreach ($result as $merchandise) {
-                    $tonKho += $merchandise['ton_kho'][array_keys($merchandise['ton_kho'])[0]];
-                }
-                if($tonKho) {
-                    // $merchandises = $merchandises
-                    // ->where(function($query) use ($nonZeroConditions) {
-                    //     foreach ($nonZeroConditions as $cnd) {
-                    //         $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
-                    //     }
-                    //     return $query;
-                    // });
-                    $merchandises = $merchandises->get();
-                    $merchandises = $merchandises->groupBy(function($item) {
-                            $chiTietKey = implode('-', $item->detail);
-                            return trim($item->lot_no) . '-' . trim($chiTietKey);
-                        })->map(function ($group) {
-                        $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
-                        if ($totalQuantity > 0) {
-                            // Thêm thuộc tính `totalQuantity` cho mỗi instance
-                            $group->each(function ($product) use ($totalQuantity) {
-                                $product->totalQuantity = $totalQuantity;
-                            });
-                            return $group;
-                        }
-                        return null;
-                    })->filter()->flatten()
-                    ->filter(function($item) {
-                        return $item->ton_kho[array_keys($item->ton_kho)[0]] > 0;
-                    });
-                    return $merchandises->values();
-                } else {
-                    return $results;
-                }
+            $query = BaseWarehouseCommon::query();
+            if($mo_ta) {
+                $base_warehouse = $query->where('vat_lieu', 'like', '%' . $mo_ta . '%')->first();
             }
+            if ($code) {
+                $base_warehouse = $query->where('code', $code)->first();
+            }
+            if ($base_warehouse == null) {
+                return $results;
+            }
+            $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($base_warehouse->model_type));
+            
+            // $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
+
+            $merchandises = $this->baseWarehouseRepository->model
+                ->where('model_type' , $base_warehouse->model_type)
+                ->when($mo_ta, function ($q) use($mo_ta) {
+                    return $q->where('vat_lieu', 'like', '%' . $mo_ta . '%');
+                }, function($q) use($code) {
+                    return $q->where('code', $code);
+                });
+
+            if ($lot_no != null && strlen($lot_no) > 0) {
+                $merchandises = $merchandises->where('lot_no', $lot_no);
+            }
+            $result = $merchandises->get();
+            $tonKho = 0;
+            foreach ($result as $merchandise) {
+                $tonKho += $merchandise['ton_kho'][array_keys($merchandise['ton_kho'])[0]];
+            }
+            if($tonKho) {
+                // $merchandises = $merchandises
+                // ->where(function($query) use ($nonZeroConditions) {
+                //     foreach ($nonZeroConditions as $cnd) {
+                //         $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+                //     }
+                //     return $query;
+                // });
+                $merchandises = $merchandises->get();
+                $merchandises = $merchandises->groupBy(function($item) {
+                        $chiTietKey = implode('-', $item->detail);
+                        return trim($item->lot_no) . '-' . trim($chiTietKey);
+                    })->map(function ($group) {
+                    $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
+                    if ($totalQuantity > 0) {
+                        // Thêm thuộc tính `totalQuantity` cho mỗi instance
+                        $group->each(function ($product) use ($totalQuantity) {
+                            $product->totalQuantity = $totalQuantity;
+                        });
+                        return $group;
+                    }
+                    return null;
+                })->filter()->flatten()
+                ->filter(function($item) {
+                    return $item->ton_kho[array_keys($item->ton_kho)[0]] > 0;
+                });
+                return $merchandises->values();
+            } else {
+                return $results;
+            } 
+            
         } catch(\Exception $ex) {
             dd($ex);
         }

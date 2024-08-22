@@ -122,47 +122,47 @@ class WarehouseExportSellController extends Controller
             }
 
             $products = [];
-            foreach ($warehouses as $warehouse) {
-                $merchandise_id = $warehouse['merchandise_id'];
-                $need_quantity = $warehouse['so_luong'];
-                $base_warehouse = BaseWarehouseCommon::where('l_id', $merchandise_id)->first();
-                $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)->where('code', $warehouse['code'])->get()
-                    ->groupBy('lot_no')->map(function ($group) {
-                        $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
-                        if ($totalQuantity > 0) {
-                            // Thêm thuộc tính `totalQuantity` cho mỗi instance
-                            $group->each(function ($product) use ($totalQuantity) {
-                                $product->totalQuantity = $totalQuantity;
-                            });
-                            return $group;
-                        }
-                        return null;
-                    })->filter()->flatten()->values()
-                    ->map(function($item) use($warehouse, $merchandise_id, &$products, &$need_quantity){
-                        if($item->quantity > 0) {
-                            if($item->quantity >= $need_quantity) {
-                                $quantity = $need_quantity;
-                                $need_quantity = 0;
-                            } else {
-                                $quantity = $item->quantity;
-                                $need_quantity = $need_quantity - $item->quantity;
-                            }
-                            array_push($products, [
-                                'code' => $warehouse['code'],
-                                'name' => $warehouse['loai_vat_lieu'],
-                                'unit' => $warehouse['dv_tinh'],
-                                'lot_no' => $item->lot_no,
-                                'model_type' => $item->model_type,
-                                'ton_kho' => $item->ton_kho,
-                                'quantity' => $quantity,
-                                'unit_price' => $warehouse['don_gia'],
-                                'into_money' => $warehouse['don_gia']*$quantity,
-                                'merchandise_id' => $merchandise_id,
-                            ]);
+            // foreach ($warehouses as $warehouse) {
+            //     $merchandise_id = $warehouse['merchandise_id'];
+            //     $need_quantity = $warehouse['so_luong'];
+            //     $base_warehouse = BaseWarehouseCommon::where('l_id', $merchandise_id)->first();
+            //     $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)->where('code', $warehouse['code'])->get()
+            //         ->groupBy('lot_no')->map(function ($group) {
+            //             $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
+            //             if ($totalQuantity > 0) {
+            //                 // Thêm thuộc tính `totalQuantity` cho mỗi instance
+            //                 $group->each(function ($product) use ($totalQuantity) {
+            //                     $product->totalQuantity = $totalQuantity;
+            //                 });
+            //                 return $group;
+            //             }
+            //             return null;
+            //         })->filter()->flatten()->values()
+            //         ->map(function($item) use($warehouse, $merchandise_id, &$products, &$need_quantity){
+            //             if($item->quantity > 0) {
+            //                 if($item->quantity >= $need_quantity) {
+            //                     $quantity = $need_quantity;
+            //                     $need_quantity = 0;
+            //                 } else {
+            //                     $quantity = $item->quantity;
+            //                     $need_quantity = $need_quantity - $item->quantity;
+            //                 }
+            //                 array_push($products, [
+            //                     'code' => $warehouse['code'],
+            //                     'name' => $warehouse['loai_vat_lieu'],
+            //                     'unit' => $warehouse['dv_tinh'],
+            //                     'lot_no' => $item->lot_no,
+            //                     'model_type' => $item->model_type,
+            //                     'ton_kho' => $item->ton_kho,
+            //                     'quantity' => $quantity,
+            //                     'unit_price' => $warehouse['don_gia'],
+            //                     'into_money' => $warehouse['don_gia']*$quantity,
+            //                     'merchandise_id' => $merchandise_id,
+            //                 ]);
 
-                        }
-                    });
-            }
+            //             }
+            //         });
+            // }
         }
         return view('admins.warehouse_export_sell.create', compact('breadcrumb', 'titleForLayout',
             'permissions', 'warehouses', 'coreCustomers', 'coreCustomerOrigin', 'coModel', 'co', 'products', 'model'));

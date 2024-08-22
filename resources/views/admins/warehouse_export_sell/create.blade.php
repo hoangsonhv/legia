@@ -87,7 +87,8 @@
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                    @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material', ['action' => 'warehouse_export'])])
+                    {{-- @dd($coModel) --}}
+                    @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material', ['action' => 'warehouse_export'], ['coModel' => $coModel])])
                 </div>
             </div>
         </div>

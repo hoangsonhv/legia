@@ -1,4 +1,4 @@
-const { isBuffer } = require("lodash");
+// const { isBuffer } = require("lodash");
 
 // Global
 var aCode = [];
@@ -71,6 +71,8 @@ $(function () {
             data: {
                 code: $(this).parents('.modal-body:first').find('[name=code]').val(),
                 lot_no: $(this).parents('.modal-body:first').find('[name=lot_no]').val(),
+                vat_lieu: $(this).parents('.modal-body:first').find('[name=vat_lieu]').val(),
+                do_day: $(this).parents('.modal-body:first').find('[name=do_day]').val(),
             }
         })
             .done(function( data ) {

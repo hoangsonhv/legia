@@ -789,8 +789,9 @@ class CoController extends Controller
         try {
             $code = $request->input('code');
             $lot_no = $request->input('lot_no', '');
-            if ($code) {
-                $materials = $this->coService->searchProductMaterialsInWarehouses($code, $lot_no);
+            $vat_lieu = $request->input('vat_lieu', '');
+            if ($code || $vat_lieu) {
+                $materials = $this->coService->searchProductMaterialsInWarehouses($code, $lot_no, $vat_lieu);
                 $content   = view('admins.requests.includes.list-materials-full',compact('materials', 'action'))->render();
             }
         } catch(\Exception $ex) {
