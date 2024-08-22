@@ -389,20 +389,24 @@ class CoController extends Controller
                         $paymentDocument = isset($co->thanh_toan['payment_document']) ? $co->thanh_toan['payment_document'] : [];
                         $fileKhac = [];
                         foreach($request->thanh_toan['payment_document'] as $key => $document ) {
-                            $path = 'uploads/documents/documents';
-                            $fileSave = Storage::disk($this->disk)->put($path, $document);
-                            if (!$fileSave) {
-                                if ($paymentDocument) {
-                                    foreach($paymentDocument as $document) {
-                                        Storage::disk($this->disk)->delete($document);
+                            if(!str_contains($key, "required") && !str_contains($key, "finished")) {
+                                $path = 'uploads/documents/documents';
+                                $fileSave = Storage::disk($this->disk)->put($path, $document);
+                                if (!$fileSave) {
+                                    if ($paymentDocument) {
+                                        foreach($paymentDocument as $document) {
+                                            Storage::disk($this->disk)->delete($document);
+                                        }
                                     }
+                                    return redirect()->back()->withInput()->with('error','File upload hợp đồng bị lỗi! Vui lòng kiểm tra lại file.');
                                 }
-                                return redirect()->back()->withInput()->with('error','File upload hợp đồng bị lỗi! Vui lòng kiểm tra lại file.');
+                                if($key != 'khac') {
+                                    $paymentDocument[$key]= [];
+                                }
+                                $paymentDocument[$key][] = ['name' => $document->getClientOriginalName(), 'path' => $fileSave];
+                            } else {
+                                $paymentDocument[$key] = $document;
                             }
-                            if($key != 'khac') {
-                                $paymentDocument[$key]= [];
-                            }
-                            $paymentDocument[$key][] = ['name' => $document->getClientOriginalName(), 'path' => $fileSave];
                         }
                         $thanh_toan_data['payment_document'] = $paymentDocument;
                     }
