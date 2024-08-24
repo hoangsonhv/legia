@@ -108,6 +108,7 @@ $(function () {
                                     merchandise_id: eleRow.find('td.merchandise_id input').val(),
                                     lot_no: eleRow.find('td.lot_no input').val(),
                                     ton_kho: eleRow.find('td.ton_kho input').val(),
+                                    ton_kho_phu: eleRow.find('td.ton_kho_phu input').val(),
                                 };
                                 $(eleForm).append(getItem(lengthTrForm, 'Tấm', opts));
                                 // Add code
@@ -245,6 +246,7 @@ function getItem(index, unit, opts) {
         + '<td class="code"><input readonly class="form-control" type="text" name="product[lot_no][]" value="'+opts.lot_no+'"></td>'
         + '<td class=""><input readonly class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
         + '<td class="code"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho+'"></td>'
+        + '<td class="code"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho_phu+'"></td>'
         + '<td class=""><input class="form-control" style="width: 70px" type="number" name="product[quantity_doc][]"/> </td>'
         + '<td class=""><input class="form-control data-quantity" style="width: 120px" type="number" name="product[quantity_reality][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
         + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[unit_price][]" onKeyUp="return getNumberFormatUnitPrice(this)" min="1" value="">'

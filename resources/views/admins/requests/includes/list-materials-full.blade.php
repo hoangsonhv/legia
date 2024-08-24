@@ -62,6 +62,11 @@
                 $material->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($material->model_type)]
               }}">
             </td>
+            <td class="ton_kho_phu d-none">
+              <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+                isset(array_values($material->ton_kho)[1]) ? customRound(array_values($material->ton_kho)[1], 3) : 0
+              }}">
+            </td>
             <td class="code">
               <input type="hidden" name="material[code][]" value="{{ $material->code }}">
               {{ $material->code }}
