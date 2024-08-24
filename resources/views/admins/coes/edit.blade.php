@@ -813,7 +813,6 @@
                                                                                         <div class="row">
                                                                                             @if (isset($co->thanh_toan['payment_document']['document_id_' . $key]))
                                                                                                 @foreach ($co->thanh_toan['payment_document']['document_id_' . $key] as $item)
-                                                                                                {{-- @dd($item); --}}
                                                                                                     <a type="button"
                                                                                                         target="_blank"
                                                                                                         class="btn btn-success col-sm m-2"
