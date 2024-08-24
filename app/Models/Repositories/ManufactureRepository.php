@@ -100,10 +100,12 @@ class ManufactureRepository extends AdminRepository
                 ];
 
                 if ($detail->reality_quantity >= $material->need_quantity) {
-                    $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->where('lot_no', $material->lot_no)->first();
+                    $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->where('lot_no', $detail->lot_no)->first();
                     if($base_warehouse != null) {
-                        $base_warehouse->setQuantity($detail->reality_quantity, accumulate: false);
-                        $base_warehouse->save();
+                        $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
+                                ->find($base_warehouse->l_id);
+                        $merchandise->setQuantity($detail->reality_quantity, accumulate: false);
+                        $merchandise->save();
                     } else {
                         $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->first();
                         $warehouseModelId = 0;
