@@ -9,7 +9,7 @@ if (!function_exists('dateTimeFormat')) {
     }
 }
 if (!function_exists('customRound')) {
-    function customRound($number) {
+    function customRound($number, $precision = 1) {
         // Tách phần nguyên và phần thập phân
         $parts = explode('.', $number);
     
@@ -21,17 +21,18 @@ if (!function_exists('customRound')) {
         // Phần nguyên
         $integerPart = $parts[0];
     
-        // Phần thập phân đầu tiên
-        $decimalPart = $parts[1][0];
+        // Phần thập phân
+        $decimalPart = substr($parts[1], 0, $precision);
     
-        // Kiểm tra phần thập phân đầu tiên
-        if ($decimalPart >= 5) {
-            $newDecimal = 5;
-        } else {
-            $newDecimal = 0;
+        // Kiểm tra phần thập phân cuối cùng
+        if (strlen($parts[1]) > $precision && $parts[1][$precision] >= 5) {
+            $decimalPart = (string)((int)$decimalPart + 1);
         }
     
+        // Làm tròn phần thập phân nếu cần thiết
+        $decimalPart = str_pad($decimalPart, $precision, '0');
+    
         // Kết hợp phần nguyên với phần thập phân mới
-        return $integerPart . '.' . $newDecimal;
+        return $integerPart . '.' . $decimalPart;
     }
 }
