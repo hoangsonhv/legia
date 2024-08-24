@@ -444,13 +444,13 @@
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <div class="icheck-success">
-                                                                        {!! Form::checkbox('thanh_toan[payment_document][required_khac]' , true, null, array('id' => 'required_' . $key)) !!}
+                                                                        {!! Form::checkbox('thanh_toan[payment_document][required_khac]' , true, null, array('id' => 'required_khac')) !!}
                                                                         <label for={{'required_khac'}}></label>
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <div class="icheck-success">
-                                                                        {!! Form::checkbox('thanh_toan[payment_document][finished_khac]' , true, null, array('id' => 'finished_' .$key)) !!}
+                                                                        {!! Form::checkbox('thanh_toan[payment_document][finished_khac]' , true, null, array('id' => 'finished_khac')) !!}
                                                                         <label for={{'finished_khac'}}></label>
                                                                     </div>
                                                                 </td>
