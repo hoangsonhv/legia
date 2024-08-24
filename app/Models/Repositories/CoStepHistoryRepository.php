@@ -244,7 +244,12 @@ class CoStepHistoryRepository extends AdminRepository
                         $step = CoStepHistory::STEP_WAITING_APPROVE_QC;
                         break;
                     case 2:
-                        $step = CoStepHistory::STEP_CREATE_RECEIPT_N2;
+                        $hasPercent = $this->coRepo->checkPercentPayment($coId, 1);
+                        if ($hasPercent) {
+                            $step = CoStepHistory::STEP_CREATE_RECEIPT_N2;
+                        } else {
+                            $this->insertNextStep('warehouse-export-sell', $coId, $coId, CoStepHistory::ACTION_CREATE);
+                        }
                         break;
                     case 3:
                         $step = CoStepHistory::STEP_WAITING_APPROVE_MANUFACTURE;
