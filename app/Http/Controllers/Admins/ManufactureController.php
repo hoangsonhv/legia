@@ -308,8 +308,9 @@ class ManufactureController extends Controller
                 if($offerPriceIds) {
                     foreach ($offerPriceIds as $index => $offerPriceId) {
                         $dataUpdate = [];
+                        $reality = $inputs['reality_quantity'][$index] - (@$inputs['error_quantity'][$index] ?? 0);
                         $dataUpdate = [
-                            'reality_quantity' => $inputs['reality_quantity'][$index],
+                            'reality_quantity' => $reality > 0 ? $reality : 0,
                             'error_quantity' => @$inputs['error_quantity'][$index] ?? 0,
                             'need_quantity' => $inputs['need_quantity'][$index],
                             'material_type' => in_array($offerPriceId, $inputs['material_type'] ?? []) ?
