@@ -88,7 +88,7 @@
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                    @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material', ['action' => 'warehouse_export'])])
+                    @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material', ['action' => 'warehouse_export', 'coModel' => $co])])
                 </div>
             </div>
         </div>
