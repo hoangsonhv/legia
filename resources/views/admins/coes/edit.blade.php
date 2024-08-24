@@ -709,6 +709,24 @@
                                                                 </td>
                                                             </tr>
                                                             <tr class="text-center">
+                                                                <td class="text-right">Còn nợ</td>
+                                                                <td>
+                                                                    {{isset($receipts[0]) ? number_format($receipts[0]['debt_money']) : null}}
+                                                                </td>
+                                                                <td>
+                                                                    {{isset($receipts[1]) ? number_format($receipts[1]['debt_money']) : null}}
+                                                                </td>
+                                                                <td>
+                                                                    {{isset($receipts[2]) ? number_format($receipts[2]['debt_money']) : null}}
+                                                                </td>
+                                                                <td>
+                                                                    {{isset($receipts[3]) ? number_format($receipts[3]['debt_money']) : null}}
+                                                                </td>
+                                                                <td>
+                                                                    {{-- {{isset($receipts[0]) ? number_format($receipts[0]['actual_money']) : null}} --}}
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="text-center">
                                                                 <td class="text-right">Thời gian xét duyệt</td>
                                                                 <td>
                                                                     @if (isset($receipts[0]))
@@ -1309,6 +1327,10 @@
                                                                     <tr>
                                                                         <td>Thực thu</td>
                                                                         <td>{{ number_format($receipt->actual_money) }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Còn nợ</td>
+                                                                        <td>{{ number_format($receipt->debt_money) }}</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
