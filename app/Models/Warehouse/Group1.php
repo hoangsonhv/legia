@@ -47,7 +47,7 @@ class Group1 extends BaseWarehouseCommon
         return $this->acreage($this->sl_tam);
     }
     public function acreage($sl_tam) {
-        switch ($this->hinh_dang) {
+        switch (strtoupper($this->hinh_dang) ) {
             case WarehouseHelper::SHAPE_CICLE :
                 return ((pi()/4 * pow($this->dia_w_w1, 2))/pow(10,6)) * $sl_tam;
             case WarehouseHelper::SHAPE_SQUARE :

@@ -113,51 +113,51 @@ class WarehouseExportController extends Controller
             $listWarehouse = $this->coService->getProductMaterialsInWarehouses($warehouses->pluck('code', 'id')->toArray());
             $coMaterial = $warehouses->pluck('code', 'id')->toArray();
             $merchadiseEcomerceExport = [];
-            foreach ($warehouses as $warehouse) {
-                if($warehouse['manufacture_type'] == 1) {
-                    continue;   
-                }
-                $merchandise_id = $warehouse['merchandise_id'];
-                $need_quantity = $warehouse['so_luong'];
-                $base_warehouse = AdminHelper::detectProductCode($warehouse['code']);
-                $merchandise = WarehouseHelper::getModel($base_warehouse['model_type'])->where('code', $warehouse['code'])->get()
-                    ->groupBy('lot_no')->map(function ($group) {
-                        $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
-                        if ($totalQuantity > 0) {
-                            // Thêm thuộc tính `totalQuantity` cho mỗi instance
-                            $group->each(function ($product) use ($totalQuantity) {
-                                $product->totalQuantity = $totalQuantity;
-                            });
-                            return $group;
-                        }
-                        return null;
-                    })->filter()->flatten()->values()
-                    ->map(function($item) use($warehouse, $merchandise_id, &$merchadiseEcomerceExport, &$need_quantity){
-                        if($item->quantity > 0) {
-                            if($item->quantity >= $need_quantity) {
-                                $quantity = $need_quantity;
-                                $need_quantity = 0;
-                            } else {
-                                $quantity = $item->quantity;
-                                $need_quantity = $need_quantity - $item->quantity;
-                            }
-                            array_push($merchadiseEcomerceExport, [
-                                'code' => $warehouse['code'],
-                                'name' => $warehouse['loai_vat_lieu'],
-                                'unit' => $warehouse['dv_tinh'],
-                                'lot_no' => $item->lot_no,
-                                'model_type' => $item->model_type,
-                                'ton_kho' => $item->ton_kho,
-                                'quantity_doc' => $warehouse['so_luong'],
-                                'quantity_reality' => $quantity,
-                                'unit_price' => $warehouse['don_gia'],
-                                'into_money' => $warehouse['don_gia']*$quantity,
-                                'merchandise_id' => $item->l_id,
-                            ]);
+            // foreach ($warehouses as $warehouse) {
+            //     if($warehouse['manufacture_type'] == 1) {
+            //         continue;   
+            //     }
+            //     $merchandise_id = $warehouse['merchandise_id'];
+            //     $need_quantity = $warehouse['so_luong'];
+            //     $base_warehouse = AdminHelper::detectProductCode($warehouse['code']);
+            //     $merchandise = WarehouseHelper::getModel($base_warehouse['model_type'])->where('code', $warehouse['code'])->get()
+            //         ->groupBy('lot_no')->map(function ($group) {
+            //             $totalQuantity = $group->sum(array_keys($group[0]->ton_kho)[0]);
+            //             if ($totalQuantity > 0) {
+            //                 // Thêm thuộc tính `totalQuantity` cho mỗi instance
+            //                 $group->each(function ($product) use ($totalQuantity) {
+            //                     $product->totalQuantity = $totalQuantity;
+            //                 });
+            //                 return $group;
+            //             }
+            //             return null;
+            //         })->filter()->flatten()->values()
+            //         ->map(function($item) use($warehouse, $merchandise_id, &$merchadiseEcomerceExport, &$need_quantity){
+            //             if($item->quantity > 0) {
+            //                 if($item->quantity >= $need_quantity) {
+            //                     $quantity = $need_quantity;
+            //                     $need_quantity = 0;
+            //                 } else {
+            //                     $quantity = $item->quantity;
+            //                     $need_quantity = $need_quantity - $item->quantity;
+            //                 }
+            //                 array_push($merchadiseEcomerceExport, [
+            //                     'code' => $warehouse['code'],
+            //                     'name' => $warehouse['loai_vat_lieu'],
+            //                     'unit' => $warehouse['dv_tinh'],
+            //                     'lot_no' => $item->lot_no,
+            //                     'model_type' => $item->model_type,
+            //                     'ton_kho' => $item->ton_kho,
+            //                     'quantity_doc' => $warehouse['so_luong'],
+            //                     'quantity_reality' => $quantity,
+            //                     'unit_price' => $warehouse['don_gia'],
+            //                     'into_money' => $warehouse['don_gia']*$quantity,
+            //                     'merchandise_id' => $item->l_id,
+            //                 ]);
 
-                        }
-                    });
-            }
+            //             }
+            //         });
+            // }
 
         }
         // dump($merchadiseEcomerceExport);

@@ -1306,6 +1306,10 @@
                                                                         <td>Tổng tiền</td>
                                                                         <td>{{ number_format($receipt->money_total) }}</td>
                                                                     </tr>
+                                                                    <tr>
+                                                                        <td>Thực thu</td>
+                                                                        <td>{{ number_format($receipt->actual_money) }}</td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>

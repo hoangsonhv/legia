@@ -22,14 +22,79 @@
             <td>
                 {{$priceSurvey->supplier}}
             </td>
-            {{-- <td>
-                {{ \App\Models\PriceSurvey::ARR_TYPE[$priceSurvey->type] }}
-            </td>
-            <td>
-                {{$priceSurvey->product_group}}
-            </td> --}}
             <td>
                 {{$priceSurvey->deadline}}
+            </td>
+            <td>
+                <div class="d-block">
+                    @php
+                        $surveyPrice = $priceSurvey->surveyPrices()->first();
+                    @endphp
+                    @if($surveyPrice) 
+                        @if($surveyPrice->accompanying_document != "[]")
+                            <button type="button" class="btn btn-success"
+                                    data-toggle="modal"
+                                    data-target="#accompanying_document_survey_price_modal{{ $surveyPrice->id }}">
+                                Hiển thị chứng từ đã
+                                tồn tại
+                            </button>
+                        @else
+                            Không tồn tại chứng từ
+                        @endif
+                        <div class="modal fade"
+                            id="accompanying_document_survey_price_modal{{ $surveyPrice->id }}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-success">
+                                        <h4 class="modal-title">Chứng từ khảo sát
+                                            giá</h4>
+                                        <button type="button" class="close"
+                                                data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{-- @php
+                                            $statusAcceptRequest = [
+                                            \App\Enums\ProcessStatus::Approved,
+                                            \App\Enums\ProcessStatus::PendingSurveyPrice,
+                                            ];
+                                            $statusNotEdit = [
+                                            \App\Enums\ProcessStatus::Approved,
+                                            \App\Enums\ProcessStatus::Unapproved,
+                                            ];
+                                        @endphp
+                                        @foreach(json_decode($surveyPrice->accompanying_document, true) as $index => $file)
+                                            <div class="data-file">
+                                                {!! \App\Helpers\AdminHelper::checkFile($file) !!}
+                                                @if(!in_array($requestModel->status, $statusNotEdit))
+                                                    <div class="mt-2">
+                                                        <button type="button"
+                                                                class="btn btn-danger form-control"
+                                                                onclick="removeFile(this)"
+                                                                data-id = {{ $surveyPrice->id }}
+                                                                data-path="{{ $file['path'] }}">
+                                                            Xoá file
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach --}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                                class="btn btn-outline-dark"
+                                                data-dismiss="modal">Đóng
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                    @endif
+                </div>
             </td>
             <td>
                 {{number_format($priceSurvey->price)}}
