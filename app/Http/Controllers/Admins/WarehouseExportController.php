@@ -107,12 +107,12 @@ class WarehouseExportController extends Controller
         $listWarehouse = null;
         $coId = $request->has('co_id') ? $request->co_id : null;
         $requestId = $request->has('request_id') ? $request->request_id : null;
+        $merchadiseEcomerceExport = [];
         if ($coId) {
             $co = Co::find($coId);
             $warehouses    = $co->warehouses;
             $listWarehouse = $this->coService->getProductMaterialsInWarehouses($warehouses->pluck('code', 'id')->toArray());
             $coMaterial = $warehouses->pluck('code', 'id')->toArray();
-            $merchadiseEcomerceExport = [];
             // foreach ($warehouses as $warehouse) {
             //     if($warehouse['manufacture_type'] == 1) {
             //         continue;   
