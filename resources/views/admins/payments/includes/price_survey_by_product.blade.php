@@ -55,7 +55,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        {{-- @php
+                                        @php
                                             $statusAcceptRequest = [
                                             \App\Enums\ProcessStatus::Approved,
                                             \App\Enums\ProcessStatus::PendingSurveyPrice,
@@ -80,7 +80,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                        @endforeach --}}
+                                        @endforeach
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button"
