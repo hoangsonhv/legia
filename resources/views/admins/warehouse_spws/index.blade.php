@@ -169,14 +169,14 @@
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->sl_cai }}</td>
-                                <td>{{ $warehouseSpw->ton_sl_cai }}</td>
+                                <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('ptfeenvelope')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->do_day }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->sl_cai }}</td>
-                                <td>{{ $warehouseSpw->ton_sl_cai }}</td>
+                                <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('ptfetape')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
@@ -190,7 +190,7 @@
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->sl_cai }}</td>
-                                <td>{{ $warehouseSpw->ton_sl_cai }}</td>
+                                <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('thanhphamswg')
                                 <td>{{ $warehouseSpw->inner }}</td>
@@ -198,7 +198,7 @@
                                 <td>{{ $warehouseSpw->filler }}</td>
                                 <td>{{ $warehouseSpw->outer }}</td>
                                 <td>{{ $warehouseSpw->thick }}</td>
-                                <td>{{ $warehouseSpw->ton_sl_cai }}</td>
+                                <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('vanhtinhinnerswg')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
@@ -206,7 +206,7 @@
                                 <td>{{ $warehouseSpw->d1 }}</td>
                                 <td>{{ $warehouseSpw->d2 }}</td>
                                 <td>{{ $warehouseSpw->sl_cai }}</td>
-                                <td>{{ $warehouseSpw->ton_sl_cai }}</td>
+                                <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('vanhtinhouterswg')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
@@ -214,7 +214,7 @@
                                 <td>{{ $warehouseSpw->d3 }}</td>
                                 <td>{{ $warehouseSpw->d4 }}</td>
                                 <td>{{ $warehouseSpw->sl_cai }}</td>
-                                <td>{{ $warehouseSpw->ton_sl_cai }}</td>
+                                <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                              @endswitch
                              <td>{{ $warehouseSpw->lot_no }}</td>

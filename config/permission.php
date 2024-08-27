@@ -695,6 +695,9 @@ return [
                 'admin.config.store' => [
                     'label' => 'Lưu thông tin'
                 ],
+                'admin.config.price' => [
+                    'label' => 'Thông tin đơn giá'
+                ],
             ]
         ],
 	],

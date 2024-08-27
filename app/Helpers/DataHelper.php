@@ -162,9 +162,7 @@ class DataHelper
                 'bia'        => 'Kho BIA',
                 'caosuvnza'  => 'Kho CAO SU Viet Nam ZA',
                 'caosu'      => 'Kho CAO SU',
-                'ceramic'    => 'Kho CERAMIC',
                 'graphite'   => 'Kho Graphite',
-                'ptfe'       => 'Kho PTFE',
                 'tamkimloai' => 'Kho Tấm Kim Loại',
                 'tamnhua'    => 'Kho Tấm nhựa'
             ],
@@ -191,7 +189,7 @@ class DataHelper
                 'ptfecayong'        => 'Kho PTFE Cây Ống',
                 'ndloaikhac'        => 'Kho ND loại khác',
                 'nkloaikhac'        => 'Kho NK loại khác',
-                'tpphikimloai'      => 'Kho thành phẩm phi kim loại',
+                'tpphikimloai'      => 'Kho thành phẩm phi kim loại'
                 // 'tpkimloai'      => 'Kho thành phẩm kim loại',
             ],
             'supply' => [

@@ -835,8 +835,24 @@
                                                                             @endforeach
                                                                             <tr>
                                                                               <td>Khác</td>
-                                                                              <td></td>
-                                                                              <td></td>
+                                                                              <td class="text-center">
+                                                                                <div class="icheck-success">
+                                                                                    {!! Form::checkbox('thanh_toan[payment_document][' . 'required_' . 'khac' . ']', true, null, [
+                                                                                        'id' => 'required_' . 'khac',
+                                                                                    ]) !!}
+                                                                                    <label
+                                                                                        for={{ 'required_' . 'khac' }}></label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <div class="icheck-success">
+                                                                                    {!! Form::checkbox('thanh_toan[payment_document][' . 'finished_' . 'khac' . ']', true, null, [
+                                                                                        'id' => 'finished_' . 'khac',
+                                                                                    ]) !!}
+                                                                                    <label
+                                                                                        for={{ 'finished_' . 'khac' }}></label>
+                                                                                </div>
+                                                                            </td>
                                                                               <td>
                                                                                 @if (isset($co->thanh_toan['payment_document']['khac']))
                                                                                   @foreach ($co->thanh_toan['payment_document']['khac'] as $item)
