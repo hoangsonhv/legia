@@ -239,6 +239,7 @@ class WarehouseExportSellController extends Controller
                         'unit_price' => $inputProducts['unit_price'][$key],
                         'into_money' => $inputProducts['into_money'][$key],
                         'lot_no' => $inputProducts['lot_no'][$key],
+                        'vat' => $inputProducts['vat'][$key],
                         'merchandise_id' => $inputProducts['merchandise_id'][$key],
                     ];
                 }
@@ -256,6 +257,7 @@ class WarehouseExportSellController extends Controller
                         'quantity' => $inputProducts['quantity'][$key],
                         'unit_price' => $inputProducts['unit_price'][$key],
                         'into_money' => $inputProducts['into_money'][$key],
+                        'vat' => $inputProducts['vat'][$key],
                         'lot_no' => $inputProducts['lot_no'][$key],
                         'merchandise_id' => $inputProducts['merchandise_id'][$key],
                     ];

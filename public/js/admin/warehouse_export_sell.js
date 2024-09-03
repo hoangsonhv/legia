@@ -158,7 +158,44 @@ function getNumberFormatUnitPrice(_this) {
      * @type {*|jQuery|string|undefined}
      */
     var quantity = $(_this).parent().parent().find('.data-quantity').val();
-    var intoMoney = Number(number['original']) * quantity;
+    var vatPer = $(_this).parent().parent().find('.data-origin.data-vat-per').val();
+    var intoMoney = Number(number['original']) * quantity - (Number(number['original']) * quantity * vatPer/100);
+    var intoMoneyFormat = formatCurrent(String(intoMoney));
+    $(_this).parent().parent().find('.data-into-money').val(intoMoneyFormat['format']);
+    $(_this).parent().parent().find('.data-origin-into-money').val(intoMoneyFormat['original']);
+
+    /**
+     * Tính tổng tiền
+     * @type {HTMLCollectionOf<Element>}
+     */
+    const elementTotalMoney = document.getElementsByClassName("data-origin-into-money");
+    let totalMoney = 0;
+    for(let i=0; i <= elementTotalMoney.length -1; i++) {
+        totalMoney += Number(elementTotalMoney[i].value);
+    }
+    var totalMoneyFormat = formatCurrent(String(totalMoney));
+    $('[name=tmp_price_total]').val(totalMoneyFormat['format']);
+    $('[name=price_total]').val(totalMoneyFormat['original']);
+
+    let vat = $('#data-vat');
+    formatTotalVat(vat)
+}
+function getNumberFormatVatPer(_this) {
+    /**
+     * Format số tiền
+     * @type {{original, format}}
+     */
+    var number = formatCurrent($(_this).val());
+    $(_this).val(number['format']);
+    $(_this).parent().find('.data-origin').val(number['original']);
+
+    /**
+     * Tính thành tiền
+     * @type {*|jQuery|string|undefined}
+     */
+    var quantity = $(_this).parent().parent().find('.data-quantity').val();
+    var unitPrice = $(_this).parent().parent().find('.data-origin.data-unit-price').val();
+    var intoMoney = unitPrice * quantity - (unitPrice * quantity*Number(number['original'])/100);
     var intoMoneyFormat = formatCurrent(String(intoMoney));
     $(_this).parent().parent().find('.data-into-money').val(intoMoneyFormat['format']);
     $(_this).parent().parent().find('.data-origin-into-money').val(intoMoneyFormat['original']);
@@ -184,7 +221,8 @@ function getNumberFormatQuantity(_this) {
     var value = $(_this).val();
     if(parseInt(value) > parseInt($(_this).attr('max'))) {$(_this).val($(_this).attr('max')); return;}
     var unitPrice = $(_this).parent().parent().find('.data-unit-price').val();
-    var intoMoney = Number(value) * Number(unitPrice);
+    var vatPrice = $(_this).parent().parent().find('.data-vat-per').val();
+    var intoMoney = Number(value) * Number(unitPrice) * Number(vatPrice)/100;
     var intoMoneyFormat = formatCurrent(String(intoMoney));
     $(_this).parent().parent().find('.data-into-money').val(intoMoneyFormat['format']);
     $(_this).parent().parent().find('.data-origin-into-money').val(intoMoneyFormat['original']);
@@ -246,6 +284,8 @@ function getItem(index, unit, opts) {
         + '<td class=""><input class="form-control data-quantity" style="width: 120px" type="number" name="product[quantity][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
         + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[unit_price][]" onKeyUp="return getNumberFormatUnitPrice(this)" min="1" value="">'
         + '<input class="form-control data-origin data-unit-price" type="hidden" name="product[unit_price][]" value=""></td>'
+        + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[vat][]" onKeyUp="return getNumberFormatVatPer(this)" min="0" value="">'
+        + '<input class="form-control data-origin data-vat-per" type="hidden" name="product[vat][]" value=""></td>'
         + '<td class=""><input class="form-control data-into-money" style="width: 120px" type="text" name="tmp_product[into_money][]" onKeyUp="return getNumberFormat(this)" min="1" value="">'
         + '<input class="form-control data-origin data-origin-into-money" type="hidden" name="product[into_money][]" value=""></td>'
         + '</tr>';

@@ -12,6 +12,7 @@ class WarehouseExportSellProduct extends Model
         'warehouse_export_sell_id',
         'code',
         'name',
+        'vat',
         'unit',
         'quantity',
         'unit_price',

@@ -22,6 +22,7 @@
         <th class="align-middle">Tồn kho</th>
         <th class="align-middle">Số lượng</th>
         <th class="align-middle">Đơn giá</th>
+        <th class="align-middle">VAT</th>
         <th class="align-middle">Thành tiền</th>
       </tr>
     </thead>
@@ -68,6 +69,11 @@
               <input class="form-control data-origin data-unit-price" type="hidden" name="product[unit_price][]" value="{{ $product['unit_price'] }}">
             </td>
             <td class="">
+              <input class="form-control" style="width: 120px" min="1" type="text" name="tmp_product[vat][]"
+                     onKeyUp="return getNumberFormatVatPer(this)" value="{{ number_format($product['vat']) }}">
+              <input class="form-control data-origin data-vat-per" type="hidden" name="product[vat][]" value="{{ $product['vat'] }}">
+            </td>
+            <td class="">
               <input class="form-control data-into-money" style="width: 120px" min="1" type="text" name="tmp_product[into_money][]"
                      onKeyUp="return getNumberFormat(this)" value="{{ number_format($product['into_money']) }}">
               <input class="form-control data-origin-into-money" type="hidden" name="product[into_money][]" value="{{$product['into_money']}}">
@@ -92,19 +98,19 @@
                 });
             }
         @endphp
-        <td colspan="8">Tổng giá (VNĐ): </td>
+        <td colspan="9">Tổng giá (VNĐ): </td>
         <td colspan="2">
           <input class="form-control" name="tmp_price_total" value="{{ number_format($priceTotal) }}">
           <input type="hidden" name="price_total" value="{{$priceTotal}}">
         </td>
       </tr>
-      <tr align="right">
+      <tr align="right" hidden>
         <td colspan="2">Thuế (%): </td>
         <td colspan="1">
           <input style="width: 70px" id="data-vat" class="form-control" name="vat" onKeyUp="return formatTotalVat(this)"
-            value="{{$model ? $model->vat : null}}"/>
+            value="0"/>
         </td>
-        <td colspan="5">
+        <td colspan="6">
           Tiền thuế (VNĐ):
         </td>
         <td colspan="2">
@@ -113,20 +119,20 @@
         </td>
       </tr>
       <tr align="right">
-        <td colspan="8">Tổng tiền thanh toán (VNĐ): </td>
+        <td colspan="9">Tổng tiền thanh toán (VNĐ): </td>
         <td colspan="2">
           <input class="form-control" name="tmp_total_payment" value="{{$model ? number_format($model->total_payment) : null}}">
           <input type="hidden" name="total_payment" value="{{$model ? $model->total_payment : null}}">
         </td>
       </tr>
       <tr align="right">
-        <td colspan="8">Số tiền bằng chữ (VNĐ): </td>
+        <td colspan="9">Số tiền bằng chữ (VNĐ): </td>
         <td colspan="2" style="width: 30%">
           <b class="total_payment_vnese">{{$model ? \App\Helpers\AdminHelper::VndText(floatval($model->total_payment)) : null}}</b>
         </td>
       </tr>
       <tr align="right">
-        <td colspan="8">Nợ (VNĐ): </td>
+        <td colspan="9">Nợ (VNĐ): </td>
         <td colspan="2">
           <input class="form-control" name="tmp_amount_owed" onKeyUp="return getNumberFormat(this)"
             value="{{ $model ? number_format($model->amount_owed) : null }}">
@@ -134,7 +140,7 @@
         </td>
       </tr>
       <tr align="right">
-        <td colspan="8">Có (VNĐ): </td>
+        <td colspan="9">Có (VNĐ): </td>
         <td colspan="2">
           <input class="form-control" name="tmp_amount_paid" onKeyUp="return getNumberFormat(this)"
                  value="{{ $model ? number_format($model->amount_paid) : null }}">
