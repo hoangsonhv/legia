@@ -159,7 +159,7 @@ function getNumberFormatUnitPrice(_this) {
      */
     var quantity = $(_this).parent().parent().find('.data-quantity').val();
     var vatPer = $(_this).parent().parent().find('.data-origin.data-vat-per').val();
-    var intoMoney = Number(number['original']) * quantity - (Number(number['original']) * quantity * vatPer/100);
+    var intoMoney = Number(number['original']) * quantity + (Number(number['original']) * quantity * vatPer/100);
     var intoMoneyFormat = formatCurrent(String(intoMoney));
     $(_this).parent().parent().find('.data-into-money').val(intoMoneyFormat['format']);
     $(_this).parent().parent().find('.data-origin-into-money').val(intoMoneyFormat['original']);
@@ -195,7 +195,7 @@ function getNumberFormatVatPer(_this) {
      */
     var quantity = $(_this).parent().parent().find('.data-quantity').val();
     var unitPrice = $(_this).parent().parent().find('.data-origin.data-unit-price').val();
-    var intoMoney = unitPrice * quantity - (unitPrice * quantity*Number(number['original'])/100);
+    var intoMoney = unitPrice * quantity + (unitPrice * quantity*Number(number['original'])/100);
     var intoMoneyFormat = formatCurrent(String(intoMoney));
     $(_this).parent().parent().find('.data-into-money').val(intoMoneyFormat['format']);
     $(_this).parent().parent().find('.data-origin-into-money').val(intoMoneyFormat['original']);
@@ -222,7 +222,7 @@ function getNumberFormatQuantity(_this) {
     if(parseInt(value) > parseInt($(_this).attr('max'))) {$(_this).val($(_this).attr('max')); return;}
     var unitPrice = $(_this).parent().parent().find('.data-unit-price').val();
     var vatPrice = $(_this).parent().parent().find('.data-vat-per').val();
-    var intoMoney = Number(value) * Number(unitPrice) * Number(vatPrice)/100;
+    var intoMoney = Number(value) * Number(unitPrice) + Number(value) * Number(unitPrice) * Number(vatPrice)/100;
     var intoMoneyFormat = formatCurrent(String(intoMoney));
     $(_this).parent().parent().find('.data-into-money').val(intoMoneyFormat['format']);
     $(_this).parent().parent().find('.data-origin-into-money').val(intoMoneyFormat['original']);
