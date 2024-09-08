@@ -53,181 +53,181 @@
                   <div class="tab-pane fade show active" role="tabpanel">
                     {!! Form::open(array('route' => ['admin.warehouse-remain.index', $model], 'method' => 'get')) !!}
                     <div class="input-group p-2">
-                      <input type="number" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
-                      <input type="number" name="vat_lieu" class="form-control float-right" placeholder="Tên Vật liệu" value="{{old('vat_lieu')}}">
-                      <input type="number" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
+                      <input type="text" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
+                      <input type="text" name="vat_lieu" class="form-control float-right" placeholder="Tên Vật liệu" value="{{old('vat_lieu')}}">
+                      <input type="text" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
                     </div>
                     @switch($model)
                       @case ('ccdc')
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho từ" value="{{old('from_ton_sl_cai')}}">
-                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho đến" value="{{old('to_ton_sl_cai')}}">
+                          <input type="text" name="from_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="text" name="to_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho đến" value="{{old('to_ton_sl_cai')}}">
                         </div>
                         @break
                       @case ('daycaosusilicone')
                         <div class="input-group p-2">
-                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
-                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                          <input type="text" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="text" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_m_cuon" class="form-control float-right" placeholder="M/ cuộn từ" value="{{old('from_m_cuon')}}">
-                          <input type="number" name="to_m_cuon" class="form-control float-right" placeholder="M/ cuộn đến" value="{{old('to_m_cuon')}}">
+                          <input type="text" name="from_m_cuon" class="form-control float-right" placeholder="M/ cuộn từ" value="{{old('from_m_cuon')}}">
+                          <input type="text" name="to_m_cuon" class="form-control float-right" placeholder="M/ cuộn đến" value="{{old('to_m_cuon')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
-                          <input type="number" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
+                          <input type="text" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
+                          <input type="text" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
-                          <input type="number" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
+                          <input type="text" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
+                          <input type="text" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
                         </div>
                         @break
                       @case ('dayceramic')
                         <div class="input-group p-2">
-                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
-                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                          <input type="text" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="text" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_m_cuon" class="form-control float-right" placeholder="M/ cuộn từ" value="{{old('from_m_cuon')}}">
-                          <input type="number" name="to_m_cuon" class="form-control float-right" placeholder="M/ cuộn đến" value="{{old('to_m_cuon')}}">
+                          <input type="text" name="from_m_cuon" class="form-control float-right" placeholder="M/ cuộn từ" value="{{old('from_m_cuon')}}">
+                          <input type="text" name="to_m_cuon" class="form-control float-right" placeholder="M/ cuộn đến" value="{{old('to_m_cuon')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
-                          <input type="number" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
+                          <input type="text" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
+                          <input type="text" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
-                          <input type="number" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
+                          <input type="text" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
+                          <input type="text" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
                         </div>
                         @break
                       @case ('glandpacking')
                         <div class="input-group p-2">
-                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
-                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                          <input type="text" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="text" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_m_cuon" class="form-control float-right" placeholder="M/ cuộn từ" value="{{old('from_m_cuon')}}">
-                          <input type="number" name="to_m_cuon" class="form-control float-right" placeholder="M/ cuộn đến" value="{{old('to_m_cuon')}}">
+                          <input type="text" name="from_m_cuon" class="form-control float-right" placeholder="M/ cuộn từ" value="{{old('from_m_cuon')}}">
+                          <input type="text" name="to_m_cuon" class="form-control float-right" placeholder="M/ cuộn đến" value="{{old('to_m_cuon')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_trong_luong_cuon" class="form-control float-right" placeholder="Kg/ cuộn từ" value="{{old('from_trong_luong_cuon')}}">
-                          <input type="number" name="to_trong_luong_cuon" class="form-control float-right" placeholder="Kg/ cuộn đến" value="{{old('to_trong_luong_cuon')}}">
+                          <input type="text" name="from_trong_luong_cuon" class="form-control float-right" placeholder="Kg/ cuộn từ" value="{{old('from_trong_luong_cuon')}}">
+                          <input type="text" name="to_trong_luong_cuon" class="form-control float-right" placeholder="Kg/ cuộn đến" value="{{old('to_trong_luong_cuon')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
-                          <input type="number" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
+                          <input type="text" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
+                          <input type="text" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_kg" class="form-control float-right" placeholder="Tồn kho KG từ" value="{{old('from_ton_sl_kg')}}">
-                          <input type="number" name="to_ton_sl_kg" class="form-control float-right" placeholder="Tồn kho KG đến" value="{{old('to_ton_sl_kg')}}">
+                          <input type="text" name="from_ton_sl_kg" class="form-control float-right" placeholder="Tồn kho KG từ" value="{{old('from_ton_sl_kg')}}">
+                          <input type="text" name="to_ton_sl_kg" class="form-control float-right" placeholder="Tồn kho KG đến" value="{{old('to_ton_sl_kg')}}">
                         </div>
                         @break
                       @case ('nhuakythuatcayong')
                         <div class="input-group p-2">
-                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
-                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                          <input type="text" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="text" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_m_cay" class="form-control float-right" placeholder="M/ cây từ" value="{{old('from_m_cay')}}">
-                          <input type="number" name="to_m_cay" class="form-control float-right" placeholder="M/ cây đến" value="{{old('to_m_cay')}}">
+                          <input type="text" name="from_m_cay" class="form-control float-right" placeholder="M/ cây từ" value="{{old('from_m_cay')}}">
+                          <input type="text" name="to_m_cay" class="form-control float-right" placeholder="M/ cây đến" value="{{old('to_m_cay')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây từ" value="{{old('from_ton_sl_cay')}}">
-                          <input type="number" name="to_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây đến" value="{{old('to_ton_sl_cay')}}">
+                          <input type="text" name="from_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây từ" value="{{old('from_ton_sl_cay')}}">
+                          <input type="text" name="to_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây đến" value="{{old('to_ton_sl_cay')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
-                          <input type="number" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
+                          <input type="text" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
+                          <input type="text" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
                         </div>
                         @break
                       @case ('ongglassepoxy')
                         <div class="input-group p-2">
-                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
-                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                          <input type="text" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="text" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_m_cay" class="form-control float-right" placeholder="M/ cây từ" value="{{old('from_m_cay')}}">
-                          <input type="number" name="to_m_cay" class="form-control float-right" placeholder="M/ cây đến" value="{{old('to_m_cay')}}">
+                          <input type="text" name="from_m_cay" class="form-control float-right" placeholder="M/ cây từ" value="{{old('from_m_cay')}}">
+                          <input type="text" name="to_m_cay" class="form-control float-right" placeholder="M/ cây đến" value="{{old('to_m_cay')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây từ" value="{{old('from_ton_sl_cay')}}">
-                          <input type="number" name="to_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây đến" value="{{old('to_ton_sl_cay')}}">
+                          <input type="text" name="from_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây từ" value="{{old('from_ton_sl_cay')}}">
+                          <input type="text" name="to_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây đến" value="{{old('to_ton_sl_cay')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
-                          <input type="number" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
+                          <input type="text" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
+                          <input type="text" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
                         </div>
                         @break
                       @case ('phutungdungcu')
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
-                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                          <input type="text" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="text" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
                         </div>
                         @break
                       @case ('ptfecayong')
                         <div class="input-group p-2">
-                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
-                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                          <input type="text" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="text" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_m_cay" class="form-control float-right" placeholder="M/ cây từ" value="{{old('from_m_cay')}}">
-                          <input type="number" name="to_m_cay" class="form-control float-right" placeholder="M/ cây đến" value="{{old('to_m_cay')}}">
+                          <input type="text" name="from_m_cay" class="form-control float-right" placeholder="M/ cây từ" value="{{old('from_m_cay')}}">
+                          <input type="text" name="to_m_cay" class="form-control float-right" placeholder="M/ cây đến" value="{{old('to_m_cay')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây từ" value="{{old('from_ton_sl_cay')}}">
-                          <input type="number" name="to_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây đến" value="{{old('to_ton_sl_cay')}}">
+                          <input type="text" name="from_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây từ" value="{{old('from_ton_sl_cay')}}">
+                          <input type="text" name="to_ton_sl_cay" class="form-control float-right" placeholder="Tồn kho cây đến" value="{{old('to_ton_sl_cay')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
-                          <input type="number" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
+                          <input type="text" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
+                          <input type="text" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
                         </div>
                         @break
                       @case ('ndloaikhac')
                         <div class="input-group p-2">
-                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
-                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                          <input type="text" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="text" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
-                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                          <input type="text" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="text" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
                         </div>
                         @break
                       @case ('nkloaikhac')
                         <div class="input-group p-2">
-                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
-                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                          <input type="text" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="text" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
-                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                          <input type="text" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="text" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
                         </div>
                         @break
                       @case ('tpphikimloai')
                         <div class="input-group p-2">
-                          <input type="number" name="from_do_day" class="form-control float-right" placeholder="Độ dày từ" value="{{old('from_do_day')}}">
-                          <input type="number" name="to_do_day" class="form-control float-right" placeholder="Độ dày đến" value="{{old('to_do_day')}}">
+                          <input type="text" name="from_do_day" class="form-control float-right" placeholder="Độ dày từ" value="{{old('from_do_day')}}">
+                          <input type="text" name="to_do_day" class="form-control float-right" placeholder="Độ dày đến" value="{{old('to_do_day')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="from_sl_ton" class="form-control float-right" placeholder="SL từ" value="{{old('from_sl_ton')}}">
-                          <input type="number" name="to_sl_ton" class="form-control float-right" placeholder="SL đến" value="{{old('to_sl_ton')}}">
+                          <input type="text" name="from_sl_ton" class="form-control float-right" placeholder="SL từ" value="{{old('from_sl_ton')}}">
+                          <input type="text" name="to_sl_ton" class="form-control float-right" placeholder="SL đến" value="{{old('to_sl_ton')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="muc_ap_luc" class="form-control float-right" placeholder="Mức áp lực" value="{{old('muc_ap_luc')}}">
+                          <input type="text" name="muc_ap_luc" class="form-control float-right" placeholder="Mức áp lực" value="{{old('muc_ap_luc')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="tieu_chuan" class="form-control float-right" placeholder="Tiêu chuẩn" value="{{old('tieu_chuan')}}">
+                          <input type="text" name="tieu_chuan" class="form-control float-right" placeholder="Tiêu chuẩn" value="{{old('tieu_chuan')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="kich_co" class="form-control float-right" placeholder="Kích cỡ" value="{{old('kich_co')}}">
+                          <input type="text" name="kich_co" class="form-control float-right" placeholder="Kích cỡ" value="{{old('kich_co')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="kich_thuoc" class="form-control float-right" placeholder="Kích thước" value="{{old('kich_thuoc')}}">
+                          <input type="text" name="kich_thuoc" class="form-control float-right" placeholder="Kích thước" value="{{old('kich_thuoc')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="chuan_mat_bich" class="form-control float-right" placeholder="Chuẩn mặt bích" value="{{old('chuan_mat_bich')}}">
+                          <input type="text" name="chuan_mat_bich" class="form-control float-right" placeholder="Chuẩn mặt bích" value="{{old('chuan_mat_bich')}}">
                         </div>
                         <div class="input-group p-2">
-                          <input type="number" name="chuan_gasket" class="form-control float-right" placeholder="Chuẩn Gasket" value="{{old('chuan_gasket')}}">
+                          <input type="text" name="chuan_gasket" class="form-control float-right" placeholder="Chuẩn Gasket" value="{{old('chuan_gasket')}}">
                         </div>
                         @break
                             

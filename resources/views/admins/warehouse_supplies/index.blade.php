@@ -53,14 +53,14 @@
                   <div class="tab-pane fade show active" role="tabpanel">
                     {!! Form::open(array('route' => ['admin.warehouse-remain.index', $model], 'method' => 'get')) !!}
                     <div class="input-group p-2">
-                      <input type="number" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
-                      <input type="number" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
+                      <input type="text" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
+                      <input type="text" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
                     </div>
                     @switch($model)
                       @case ('supply')
                         <div class="input-group p-2">
-                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho từ" value="{{old('from_ton_sl_cai')}}">
-                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho đến" value="{{old('to_ton_sl_cai')}}">
+                          <input type="text" name="from_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="text" name="to_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho đến" value="{{old('to_ton_sl_cai')}}">
                         </div>
                         @break
                     @endswitch

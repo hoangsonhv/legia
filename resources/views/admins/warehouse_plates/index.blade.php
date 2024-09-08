@@ -53,29 +53,29 @@
                   <div class="tab-pane fade show active" role="tabpanel">
                     {!! Form::open(array('route' => ['admin.warehouse-plate.index', $model], 'method' => 'get')) !!}
                     <div class="input-group p-2">
-                      <input type="number" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
-                      <input type="number" name="vat_lieu" class="form-control float-right" placeholder="Tên Vật liệu" value="{{old('vat_lieu')}}">
-                      <input type="number" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
+                      <input type="text" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
+                      <input type="text" name="vat_lieu" class="form-control float-right" placeholder="Tên Vật liệu" value="{{old('vat_lieu')}}">
+                      <input type="text" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
                     </div>
                     <div class="input-group p-2">
-                      <input type="number" name="from_do_day" class="form-control float-right" placeholder="Độ dày từ" value="{{old('from_do_day')}}">
-                      <input type="number" name="to_do_day" class="form-control float-right" placeholder="Độ dày đến" value="{{old('to_do_day')}}">
+                      <input type="text" name="from_do_day" class="form-control float-right" placeholder="Độ dày từ" value="{{old('from_do_day')}}">
+                      <input type="text" name="to_do_day" class="form-control float-right" placeholder="Độ dày đến" value="{{old('to_do_day')}}">
                     </div>
                     <div class="input-group p-2">
-                      <input type="number" name="from_dia_w_w1" class="form-control float-right" placeholder="Dia W W1 từ" value="{{old('from_dia_w_w1')}}">
-                      <input type="number" name="to_dia_w_w1" class="form-control float-right" placeholder="Dia W W1 đến" value="{{old('to_dia_w_w1')}}">
+                      <input type="text" name="from_dia_w_w1" class="form-control float-right" placeholder="Dia W W1 từ" value="{{old('from_dia_w_w1')}}">
+                      <input type="text" name="to_dia_w_w1" class="form-control float-right" placeholder="Dia W W1 đến" value="{{old('to_dia_w_w1')}}">
                     </div>
                     <div class="input-group p-2">
-                      <input type="number" name="from_l_l1" class="form-control float-right" placeholder="l l1 từ" value="{{old('from_l_l1')}}">
-                      <input type="number" name="to_l_l1" class="form-control float-right" placeholder="l l1 đến" value="{{old('to_l_l1')}}">
+                      <input type="text" name="from_l_l1" class="form-control float-right" placeholder="l l1 từ" value="{{old('from_l_l1')}}">
+                      <input type="text" name="to_l_l1" class="form-control float-right" placeholder="l l1 đến" value="{{old('to_l_l1')}}">
                     </div>
                     <div class="input-group p-2">
-                      <input type="number" name="from_w2" class="form-control float-right" placeholder="w2 từ" value="{{old('from_w2')}}">
-                      <input type="number" name="to_w2" class="form-control float-right" placeholder="w2 đến" value="{{old('to_w2')}}">
+                      <input type="text" name="from_w2" class="form-control float-right" placeholder="w2 từ" value="{{old('from_w2')}}">
+                      <input type="text" name="to_w2" class="form-control float-right" placeholder="w2 đến" value="{{old('to_w2')}}">
                     </div>
                     <div class="input-group p-2">
-                      <input type="number" name="from_l2" class="form-control float-right" placeholder="l2 từ" value="{{old('from_l2')}}">
-                      <input type="number" name="to_l2" class="form-control float-right" placeholder="l2 đến" value="{{old('to_l2')}}">
+                      <input type="text" name="from_l2" class="form-control float-right" placeholder="l2 từ" value="{{old('from_l2')}}">
+                      <input type="text" name="to_l2" class="form-control float-right" placeholder="l2 đến" value="{{old('to_l2')}}">
                     </div>
                     <div class="input-group-append p-2">
                       <button type="submit" class="btn btn-default">
