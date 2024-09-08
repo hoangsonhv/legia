@@ -7,7 +7,7 @@
   }
 </style>
 <div class="table-responsive data-materials p-0">
-  <table class="table table-head-fixed table-bordered table-hover">
+  <table id="dataTable" class="table table-head-fixed table-bordered table-hover">
     <thead>
       <tr align="center">
         <th class="align-middle">&nbsp</th>
@@ -118,5 +118,31 @@
         </tr>
       @endif
     </tbody>
+    <tfoot>
+      <tr align="center">
+        <th class="align-middle">&nbsp</th>
+        <th class="align-middle"></th>
+        <th class="align-middle">#ID</th>
+        <th class="align-middle">Mã HH</th>
+        <th class="align-middle">Vật liệu</th>
+        <th class="align-middle">Chi tiết</th>
+        {{-- 
+        <th class="align-middle">Độ dày</th>
+        <th class="align-middle">Hình dạng</th>
+        <th class="align-middle">Dia W W1</th>
+        <th class="align-middle">L L1</th>
+        <th class="align-middle">W2</th>
+        <th class="align-middle">L2</th> --}}
+        {{-- <th class="align-middle">SL - Tấm</th> --}}
+        {{-- <th class="align-middle">Diện tích</th> --}}
+          <th class="align-middle">Lot No</th>
+          <th class="align-middle">Date</th>
+          <th class="align-middle">Tồn kho</th>
+          {{-- <th class="align-middle">Dv tính</th> --}}
+        {{-- <th class="align-middle">Tồn SL - Tấm</th>
+        <th class="align-middle">Tồn SL - m2</th> --}}
+      </tr>
+    </tfoot>
   </table>
 </div>
+<script type="text/javascript" src="{{ asset('js/admin/dataTable.js') }}" scoped></script>

@@ -51,7 +51,39 @@
               <div class="card-body overflow-auto">
                 <div class="tab-content">
                   <div class="tab-pane fade show active" role="tabpanel">
-                     <table class="table table-hover text-nowrap">
+                    {!! Form::open(array('route' => ['admin.warehouse-plate.index', $model], 'method' => 'get')) !!}
+                    <div class="input-group p-2">
+                      <input type="number" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
+                      <input type="number" name="vat_lieu" class="form-control float-right" placeholder="Tên Vật liệu" value="{{old('vat_lieu')}}">
+                      <input type="number" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
+                    </div>
+                    <div class="input-group p-2">
+                      <input type="number" name="from_do_day" class="form-control float-right" placeholder="Độ dày từ" value="{{old('from_do_day')}}">
+                      <input type="number" name="to_do_day" class="form-control float-right" placeholder="Độ dày đến" value="{{old('to_do_day')}}">
+                    </div>
+                    <div class="input-group p-2">
+                      <input type="number" name="from_dia_w_w1" class="form-control float-right" placeholder="Dia W W1 từ" value="{{old('from_dia_w_w1')}}">
+                      <input type="number" name="to_dia_w_w1" class="form-control float-right" placeholder="Dia W W1 đến" value="{{old('to_dia_w_w1')}}">
+                    </div>
+                    <div class="input-group p-2">
+                      <input type="number" name="from_l_l1" class="form-control float-right" placeholder="l l1 từ" value="{{old('from_l_l1')}}">
+                      <input type="number" name="to_l_l1" class="form-control float-right" placeholder="l l1 đến" value="{{old('to_l_l1')}}">
+                    </div>
+                    <div class="input-group p-2">
+                      <input type="number" name="from_w2" class="form-control float-right" placeholder="w2 từ" value="{{old('from_w2')}}">
+                      <input type="number" name="to_w2" class="form-control float-right" placeholder="w2 đến" value="{{old('to_w2')}}">
+                    </div>
+                    <div class="input-group p-2">
+                      <input type="number" name="from_l2" class="form-control float-right" placeholder="l2 từ" value="{{old('from_l2')}}">
+                      <input type="number" name="to_l2" class="form-control float-right" placeholder="l2 đến" value="{{old('to_l2')}}">
+                    </div>
+                    <div class="input-group-append p-2">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search">Tìm kiếm</i>
+                      </button>
+                    </div>
+                    {!! Form::close() !!}
+                     <table id="dataTable" class="table table-hover text-nowrap">
                        <thead>
                          <tr>
                            <th>ID</th>
@@ -59,11 +91,13 @@
                            <th>Vật liệu</th>
                            <th>Hình dạng</th>
                            <th>Độ dày</th>
-                           <th>SL - Tấm</th>
-                           <th>SL - m2</th>
                            <th>Lot no</th>
                            <th>Ghi chú</th>
                            <th>Date</th>
+                           <th>{{\App\Helpers\WarehouseHelper::translateAtt('dia_w_w1')}}</th>
+                           <th>{{\App\Helpers\WarehouseHelper::translateAtt('l_l1')}}</th>
+                           <th>{{\App\Helpers\WarehouseHelper::translateAtt('w2')}}</th>
+                           <th>{{\App\Helpers\WarehouseHelper::translateAtt('l2')}}</th>
                            <th>Tồn SL - Tấm</th>
                            <th>Tồn SL - m2</th>
                            <th>&nbsp</th>
@@ -77,11 +111,13 @@
                              <td>{{ $warehousePlate->vat_lieu }}</td>
                              <td>{{ $warehousePlate->hinh_dang }}</td>
                              <td>{{ $warehousePlate->do_day }}</td>
-                             <td>{{ $warehousePlate->sl_tam }}</td>
-                             <td>{{ $warehousePlate->sl_m2 }}</td>
                              <td>{{ $warehousePlate->lot_no }}</td>
                              <td>{{ $warehousePlate->ghi_chu }}</td>
                              <td>{{ $warehousePlate->date }}</td>
+                             <td>{{ $warehousePlate->dia_w_w1 }}</td>
+                             <td>{{ $warehousePlate->l_l1 }}</td>
+                             <td>{{ $warehousePlate->w2 }}</td>
+                             <td>{{ $warehousePlate->l2 }}</td>
                              <td>{{ $warehousePlate->ton_kho['ton_sl_tam'] }}</td>
                              <td>{{ $warehousePlate->ton_kho['ton_sl_m2'] }}</td>
                              <td>
@@ -95,6 +131,21 @@
                            </tr>
                          @endforeach
                        </tbody>
+                       <tfoot>
+                        <tr>
+                          <th>ID</th>
+                          <th>Mã hàng hoá</th>
+                          <th>Vật liệu</th>
+                          <th>Hình dạng</th>
+                          <th>Độ dày</th>
+                          <th>Lot no</th>
+                          <th>Ghi chú</th>
+                          <th>Date</th>
+                          <th>Tồn SL - Tấm</th>
+                          <th>Tồn SL - m2</th>
+                          <th>&nbsp</th>
+                        </tr>
+                      </tfoot>
                      </table>
                      <div class="d-flex justify-content-center">
                        {!! $warehousePlates->appends(session()->getOldInput())->links() !!}
@@ -149,6 +200,7 @@
 @endsection
 
 @section('js')
+<script type="text/javascript" src="{{ asset('js/admin/dataTable.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script type="text/javascript">
   $( document ).ready(function() {

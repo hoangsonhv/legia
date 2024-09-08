@@ -2,15 +2,37 @@
     .list-materials {
         max-height: 500px;
     }
+    tfoot {
+        display: table-header-group;
+    }
 </style>
 <script>
     $(document).ready(function() {
         $('.select2').select2();
-        $('.dataTable').dataTable({
-            "bPaginate": false,
-            "oLanguage": {
-                "sSearch": "Tìm kiếm"
-            }
+        
+        $('.dataTable tfoot th').each(function (i) {
+            var title = $('.dataTable thead th')
+                .eq($(this).index())
+                .text();
+            $(this).html(
+                '<input type="text" placeholder="' + title + '" data-index="' + i + '" />'
+            );
+        });
+        $('.dataTable').each(function () {
+            var table = $(this).DataTable({
+                "paging": false,
+                "language": {
+                    "search": "Tìm kiếm"
+                }
+            });
+
+            // Event handler for searching in each table
+            $(table.table().container()).on('keyup', 'tfoot input', function () {
+                table
+                    .column($(this).data('index'))
+                    .search(this.value)
+                    .draw();
+            });
         });
     });
 </script>
@@ -40,6 +62,17 @@
             @foreach ($warehouseGroup as $key => $item)
                 <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="warehouse-{{ $key }}">
                     <table class="table table-bordered table-striped dataTable dtr-inline data-products">
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Mã HH</th>
+                                <th>Chi tiết</th>
+                                <th>Lot no</th>
+                                <th>Ghi chú</th>
+                                <th>Date</th>
+                                <th>Tồn kho</th>
+                            </tr>
+                        </tfoot>
                         <thead>
                             <tr align="center">
                                 <th class="align-middle">Số TT</th>

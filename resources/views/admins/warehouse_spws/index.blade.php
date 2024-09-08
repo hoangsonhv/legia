@@ -51,7 +51,169 @@
               <div class="card-body overflow-auto">
                 <div class="tab-content">
                   <div class="tab-pane fade show active" role="tabpanel">
-                     <table class="table table-hover text-nowrap">
+                    {!! Form::open(array('route' => ['admin.warehouse-remain.index', $model], 'method' => 'get')) !!}
+                    <div class="input-group p-2">
+                      <input type="number" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
+                      <input type="number" name="vat_lieu" class="form-control float-right" placeholder="Tên Vật liệu" value="{{old('vat_lieu')}}">
+                      <input type="number" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
+                    </div>
+                    @switch($model)
+                      @case ('filler')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
+                          <input type="number" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_kg" class="form-control float-right" placeholder="Tồn kho KG từ" value="{{old('from_ton_sl_kg')}}">
+                          <input type="number" name="to_ton_sl_kg" class="form-control float-right" placeholder="Tồn kho KG đến" value="{{old('to_ton_sl_kg')}}">
+                        </div>
+                        @break
+                      @case ('glandpackinglatty')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
+                          <input type="number" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
+                        </div>
+                        @break
+                      @case ('hoop')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
+                          <input type="number" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_kg" class="form-control float-right" placeholder="Tồn kho KG từ" value="{{old('from_ton_sl_kg')}}">
+                          <input type="number" name="to_ton_sl_kg" class="form-control float-right" placeholder="Tồn kho KG đến" value="{{old('to_ton_sl_kg')}}">
+                        </div>
+                        @break
+                      @case ('oring')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                        </div>
+                        @break
+                      @case ('ptfeenvelope')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_do_day" class="form-control float-right" placeholder="Độ dày từ" value="{{old('from_do_day')}}">
+                          <input type="number" name="to_do_day" class="form-control float-right" placeholder="Độ dày đến" value="{{old('to_do_day')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                        </div>
+                        @break
+                      @case ('ptfetape')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn từ" value="{{old('from_ton_sl_cuon')}}">
+                          <input type="number" name="to_ton_sl_cuon" class="form-control float-right" placeholder="Tồn kho cuộn đến" value="{{old('to_ton_sl_cuon')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m từ" value="{{old('from_ton_sl_m')}}">
+                          <input type="number" name="to_ton_sl_m" class="form-control float-right" placeholder="Tồn kho m đến" value="{{old('to_ton_sl_m')}}">
+                        </div>
+                        @break
+                      @case ('rtj')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_size" class="form-control float-right" placeholder="Size từ" value="{{old('from_size')}}">
+                          <input type="number" name="to_size" class="form-control float-right" placeholder="Size đến" value="{{old('to_size')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                        </div>
+                        @break
+                      @case ('thanhphamswg')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_inner" class="form-control float-right" placeholder="Inner từ" value="{{old('from_inner')}}">
+                          <input type="number" name="to_inner" class="form-control float-right" placeholder="Inner đến" value="{{old('to_inner')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_hoop" class="form-control float-right" placeholder="Hoop từ" value="{{old('from_hoop')}}">
+                          <input type="number" name="to_hoop" class="form-control float-right" placeholder="Hoop đến" value="{{old('to_hoop')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_filler" class="form-control float-right" placeholder="Filler từ" value="{{old('from_filler')}}">
+                          <input type="number" name="to_filler" class="form-control float-right" placeholder="Filler đến" value="{{old('to_filler')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_outer" class="form-control float-right" placeholder="Outer từ" value="{{old('from_outer')}}">
+                          <input type="number" name="to_outer" class="form-control float-right" placeholder="Outer đến" value="{{old('to_outer')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_thick" class="form-control float-right" placeholder="Thick từ" value="{{old('from_thick')}}">
+                          <input type="number" name="to_thick" class="form-control float-right" placeholder="Thick đến" value="{{old('to_thick')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                        </div>
+                        @break
+                      @case ('vanhtinhinnerswg')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_do_day" class="form-control float-right" placeholder="Độ dày từ" value="{{old('from_do_day')}}">
+                          <input type="number" name="to_do_day" class="form-control float-right" placeholder="Độ dày đến" value="{{old('to_do_day')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_d1" class="form-control float-right" placeholder="D1 từ" value="{{old('from_d1')}}">
+                          <input type="number" name="to_d1" class="form-control float-right" placeholder="D1 đến" value="{{old('to_d1')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_d2" class="form-control float-right" placeholder="D2 từ" value="{{old('from_d2')}}">
+                          <input type="number" name="to_d2" class="form-control float-right" placeholder="D2 đến" value="{{old('to_d2')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                        </div>
+                        @break
+                      @case ('vanhtinhouterswg')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_do_day" class="form-control float-right" placeholder="Độ dày từ" value="{{old('from_do_day')}}">
+                          <input type="number" name="to_do_day" class="form-control float-right" placeholder="Độ dày đến" value="{{old('to_do_day')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_D3" class="form-control float-right" placeholder="D3 từ" value="{{old('from_D3')}}">
+                          <input type="number" name="to_D3" class="form-control float-right" placeholder="D3 đến" value="{{old('to_D3')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_D4" class="form-control float-right" placeholder="D4 từ" value="{{old('from_D4')}}">
+                          <input type="number" name="to_D4" class="form-control float-right" placeholder="D4 đến" value="{{old('to_D4')}}">
+                        </div>
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="SL cái từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="SL cái đến" value="{{old('to_ton_sl_cai')}}">
+                        </div>
+                        @break
+                    @endswitch
+                    <div class="input-group-append p-2">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search">Tìm kiếm</i>
+                      </button>
+                    </div>
+                    {!! Form::close() !!}
+                     <table id="dataTable" class="table table-hover text-nowrap">
                        <thead>
                          <tr>
                            <th>ID</th>
@@ -60,50 +222,40 @@
                             @case ('filler')
                               <th>Vật liệu</th>
                               <th>Size</th>
-                              <th>SL - Cuộn</th>
-                              <th>SL - KG</th>
                               <th>Tồn SL - Cuộn</th>
                               <th>Tồn SL - KG</th>
                               @break
                             @case ('glandpackinglatty')
                               <th>Vật liệu</th>
                               <th>Size</th>
-                              <th>SL - Cuộn</th>
                               <th>Tồn SL - Cuộn</th>
                               @break
                             @case ('hoop')
                               <th>Vật liệu</th>
                               <th>Size</th>
-                              <th>SL - Cuộn</th>
-                              <th>SL - KG</th>
                               <th>Tồn SL - Cuộn</th>
                               <th>Tồn SL - KG</th>
                               @break
                             @case ('oring')
                               <th>Vật liệu</th>
                               <th>Size</th>
-                              <th>SL - Cái</th>
                               <th>Tồn SL - Cái</th>
                               @break
                             @case ('ptfeenvelope')
                               <th>Vật liệu</th>
                               <th>Độ dày</th>
                               <th>Size</th>
-                              <th>SL - Cái</th>
                               <th>Tồn SL - Cái</th>
                               @break
                             @case ('ptfetape')
                               <th>Vật liệu</th>
                               <th>Size</th>
-                              <th>SL - Cuộn</th>
-                              <th>SL - m</th>
                               <th>Tồn SL - Cuộn</th>
                               <th>Tồn SL - m</th>
                               @break
                             @case ('rtj')
                               <th>Vật liệu</th>
                               <th>Size</th>
-                              <th>SL - Cái</th>
                               <th>Tồn SL - Cái</th>
                               @break
                             @case ('thanhphamswg')
@@ -119,7 +271,6 @@
                               <th>Độ dày</th>
                               <th>D1</th>
                               <th>D2</th>
-                              <th>SL - Cái</th>
                               <th>Tồn SL - Cái</th>
                               @break
                             @case ('vanhtinhouterswg')
@@ -127,7 +278,6 @@
                               <th>Độ dày</th>
                               <th>D3</th>
                               <th>D4</th>
-                              <th>SL - Cái</th>
                               <th>Tồn SL - Cái</th>
                               @break
                            @endswitch
@@ -146,50 +296,40 @@
                               @case ('filler')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
-                                <td>{{ $warehouseSpw->sl_cuon }}</td>
-                                <td>{{ $warehouseSpw->sl_kg }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cuon }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_kg }}</td>
                                 @break
                               @case ('glandpackinglatty')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
-                                <td>{{ $warehouseSpw->sl_cuon }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cuon }}</td>
                                 @break
                               @case ('hoop')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
-                                <td>{{ $warehouseSpw->sl_cuon }}</td>
-                                <td>{{ $warehouseSpw->sl_kg }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cuon }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_kg }}</td>
                                 @break
                               @case ('oring')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
-                                <td>{{ $warehouseSpw->sl_cai }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('ptfeenvelope')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->do_day }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
-                                <td>{{ $warehouseSpw->sl_cai }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('ptfetape')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
-                                <td>{{ $warehouseSpw->sl_cuon }}</td>
-                                <td>{{ $warehouseSpw->sl_m }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cuon }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_m }}</td>
                                 @break
                               @case ('rtj')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
-                                <td>{{ $warehouseSpw->sl_cai }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('thanhphamswg')
@@ -205,7 +345,6 @@
                                 <td>{{ $warehouseSpw->do_day }}</td>
                                 <td>{{ $warehouseSpw->d1 }}</td>
                                 <td>{{ $warehouseSpw->d2 }}</td>
-                                <td>{{ $warehouseSpw->sl_cai }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                               @case ('vanhtinhouterswg')
@@ -213,7 +352,6 @@
                                 <td>{{ $warehouseSpw->do_day }}</td>
                                 <td>{{ $warehouseSpw->d3 }}</td>
                                 <td>{{ $warehouseSpw->d4 }}</td>
-                                <td>{{ $warehouseSpw->sl_cai }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
                                 @break
                              @endswitch
@@ -231,6 +369,79 @@
                            </tr>
                          @endforeach
                        </tbody>
+                       <tfoot>
+                        <tr>
+                          <th>ID</th>
+                          <th>Mã hàng hoá</th>
+                          @switch ($model)
+                           @case ('filler')
+                             <th>Vật liệu</th>
+                             <th>Size</th>
+                             <th>Tồn SL - Cuộn</th>
+                             <th>Tồn SL - KG</th>
+                             @break
+                           @case ('glandpackinglatty')
+                             <th>Vật liệu</th>
+                             <th>Size</th>
+                             <th>Tồn SL - Cuộn</th>
+                             @break
+                           @case ('hoop')
+                             <th>Vật liệu</th>
+                             <th>Size</th>
+                             <th>Tồn SL - Cuộn</th>
+                             <th>Tồn SL - KG</th>
+                             @break
+                           @case ('oring')
+                             <th>Vật liệu</th>
+                             <th>Size</th>
+                             <th>Tồn SL - Cái</th>
+                             @break
+                           @case ('ptfeenvelope')
+                             <th>Vật liệu</th>
+                             <th>Độ dày</th>
+                             <th>Size</th>
+                             <th>Tồn SL - Cái</th>
+                             @break
+                           @case ('ptfetape')
+                             <th>Vật liệu</th>
+                             <th>Size</th>
+                             <th>Tồn SL - Cuộn</th>
+                             <th>Tồn SL - m</th>
+                             @break
+                           @case ('rtj')
+                             <th>Vật liệu</th>
+                             <th>Size</th>
+                             <th>Tồn SL - Cái</th>
+                             @break
+                           @case ('thanhphamswg')
+                             <th>Inner</th>
+                             <th>Hoop</th>
+                             <th>Filler</th>
+                             <th>Outer</th>
+                             <th>Thick</th>
+                             <th>Tồn SL - Cái</th>
+                             @break
+                           @case ('vanhtinhinnerswg')
+                             <th>Vật liệu</th>
+                             <th>Độ dày</th>
+                             <th>D1</th>
+                             <th>D2</th>
+                             <th>Tồn SL - Cái</th>
+                             @break
+                           @case ('vanhtinhouterswg')
+                             <th>Vật liệu</th>
+                             <th>Độ dày</th>
+                             <th>D3</th>
+                             <th>D4</th>
+                             <th>Tồn SL - Cái</th>
+                             @break
+                          @endswitch
+                          <th>Lot no</th>
+                          <th>Ghi chú</th>
+                          <th>Date</th>
+                          <th>&nbsp</th>
+                        </tr>
+                      </tfoot>
                      </table>
                      <div class="d-flex justify-content-center">
                        {!! $warehouseSpws->appends(session()->getOldInput())->links() !!}
@@ -285,6 +496,7 @@
 @endsection
 
 @section('js')
+<script type="text/javascript" src="{{ asset('js/admin/dataTable.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script type="text/javascript">
   $( document ).ready(function() {

@@ -48,13 +48,8 @@ class WarehouseSupplyController extends Controller
         $breadcrumb                 = $this->menu;
         $breadcrumb['data']['list'] = ['label'  => 'Danh sách ' . $nameWarehouse];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
-        $params                     = array();
+        $params                     = $request->all();
         $limit                      = 10;
-        // search
-        if($request->has('key_word')) {
-            $params['key_word'] = $request->key_word;
-        }
-
         $warehouseRemains = $this->warehouseService->search($model, $params);
         $request->flash();
         return view('admins.warehouse_supplies.index',compact('types', 'breadcrumb', 'titleForLayout', 'warehouseRemains', 'model'));

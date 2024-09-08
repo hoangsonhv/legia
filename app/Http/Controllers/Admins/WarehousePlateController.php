@@ -38,7 +38,6 @@ class WarehousePlateController extends Controller
 
     public function index(Request $request, $model=null)
     {
-        // dd($request->all());
         if (!$model) {
             $model = 'bia';
         }
@@ -48,11 +47,8 @@ class WarehousePlateController extends Controller
         $breadcrumb                 = $this->menu;
         $breadcrumb['data']['list'] = ['label'  => 'Danh sách ' . $nameWarehouse];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
-        $params                     = array();
+        $params                     = $request->all();
         // search
-        if($request->has('key_word')) {
-            $params['key_word'] = $request->key_word;
-        }
         $warehousePlates = $this->warehouseService->search($model,$params);
         $request->flash();
         return view('admins.warehouse_plates.index',compact('types', 'breadcrumb', 'titleForLayout', 'warehousePlates', 'model'));

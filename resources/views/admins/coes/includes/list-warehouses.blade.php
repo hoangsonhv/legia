@@ -6,12 +6,33 @@
 <script>
     $(document).ready(function() {
         $('.select2').select2();
-        $('.dataTable').dataTable({
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        
+        $('.dataTable tfoot th').each(function (i) {
+            var title = $('.dataTable thead th')
+                .eq($(this).index())
+                .text();
+            $(this).html(
+                '<input type="text" placeholder="' + title + '" data-index="' + i + '" />'
+            );
+        });
+        var table = $('.dataTable').dataTable({
             "bPaginate": false,
             "oLanguage": {
                 "sSearch": "Tìm kiếm"
             }
         });
+        $(table.each(function(i) {
+          i.table().container().on('keyup', 'tfoot input', function () {
+            table
+            .column($(this).data('index'))
+            .search(this.value)
+            .draw();
+            })  
+        }));
     });
 </script>
 <h3 class="text-primary">Danh sách vật liệu kho</h3>
@@ -87,6 +108,17 @@
                                 @endforeach
                             @endif
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Mã HH</th>
+                                <th>Chi tiết</th>
+                                <th>Lot no</th>
+                                <th>Ghi chú</th>
+                                <th>Date</th>
+                                <th>Tồn kho</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
                 @php

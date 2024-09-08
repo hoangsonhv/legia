@@ -51,7 +51,26 @@
               <div class="card-body overflow-auto">
                 <div class="tab-content">
                   <div class="tab-pane fade show active" role="tabpanel">
-                     <table class="table table-hover text-nowrap">
+                    {!! Form::open(array('route' => ['admin.warehouse-remain.index', $model], 'method' => 'get')) !!}
+                    <div class="input-group p-2">
+                      <input type="number" name="code" class="form-control float-right" placeholder="Code" value="{{old('code')}}">
+                      <input type="number" name="lotno" class="form-control float-right" placeholder="Lotno" value="{{old('Lotno')}}">
+                    </div>
+                    @switch($model)
+                      @case ('supply')
+                        <div class="input-group p-2">
+                          <input type="number" name="from_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho từ" value="{{old('from_ton_sl_cai')}}">
+                          <input type="number" name="to_ton_sl_cai" class="form-control float-right" placeholder="Tồn kho đến" value="{{old('to_ton_sl_cai')}}">
+                        </div>
+                        @break
+                    @endswitch
+                    <div class="input-group-append p-2">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search">Tìm kiếm</i>
+                      </button>
+                    </div>
+                    {!! Form::close() !!}
+                     <table id="dataTable" class="table table-hover text-nowrap">
                        <thead>
                          <tr>
                            <th>ID</th>
@@ -59,7 +78,6 @@
                            @switch ($model)
                             @case ('supply')
                               <th>Đơn vị tính</th>
-                              <th>SL</th>
                               <th>Tồn SL - Cái</th>
                               @break
                            @endswitch
@@ -77,7 +95,6 @@
                              @switch ($model)
                               @case ('supply')
                                 <td>{{ $warehouseRemain->dvt }}</td>
-                                <td>{{ $warehouseRemain->sl }}</td>
                                 <td>{{ $warehouseRemain->ton_sl_cai }}</td>
                                 @break
                              @endswitch
@@ -95,6 +112,22 @@
                            </tr>
                          @endforeach
                        </tbody>
+                       <tfoot>
+                        <tr>
+                          <th>ID</th>
+                          <th>Mã hàng hoá</th>
+                          @switch ($model)
+                           @case ('supply')
+                             <th>Đơn vị tính</th>
+                             <th>Tồn SL - Cái</th>
+                             @break
+                          @endswitch
+                          <th>Lot no</th>
+                          <th>Ghi chú</th>
+                          <th>Date</th>
+                          <th>&nbsp</th>
+                        </tr>
+                      </tfoot>
                      </table>
                      <div class="d-flex justify-content-center">
                        {!! $warehouseRemains->appends(session()->getOldInput())->links() !!}
@@ -149,6 +182,7 @@
 @endsection
 
 @section('js')
+<script type="text/javascript" src="{{ asset('js/admin/dataTable.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script type="text/javascript">
   $( document ).ready(function() {

@@ -195,6 +195,293 @@ class WarehouseService
             $query->where('code','like',"%$keyword%");
             $query->orWhere('l_id', '=', $keyword);
         }
+        if(isset($params['code']))
+        {
+            $keyword = $params['code'];
+            $query->where('code','like',"%$keyword%");
+        }
+        if(isset($params['vat_lieu']))
+        {
+            $keyword = $params['vat_lieu'];
+            $query->where('vat_lieu','like',"%$keyword%");
+        }
+        if(isset($params['lot_no']))
+        {
+            $keyword = $params['lot_no'];
+            $query->where('lot_no','like',"%$keyword%");
+        }
+        if(isset($params['muc_ap_luc']))
+        {
+            $keyword = $params['muc_ap_luc'];
+            $query->where('muc_ap_luc','like',"%$keyword%");
+        }
+        if(isset($params['tieu_chuan']))
+        {
+            $keyword = $params['tieu_chuan'];
+            $query->where('tieu_chuan','like',"%$keyword%");
+        }
+        if(isset($params['kich_co']))
+        {
+            $keyword = $params['kich_co'];
+            $query->where('kich_co','like',"%$keyword%");
+        }
+        if(isset($params['kich_thuoc']))
+        {
+            $keyword = $params['kich_thuoc'];
+            $query->where('kich_thuoc','like',"%$keyword%");
+        }
+        if(isset($params['chuan_mat_bich']))
+        {
+            $keyword = $params['chuan_mat_bich'];
+            $query->where('chuan_mat_bich','like',"%$keyword%");
+        }
+        if(isset($params['chuan_gasket']))
+        {
+            $keyword = $params['chuan_gasket'];
+            $query->where('chuan_gasket','like',"%$keyword%");
+        }
+        if(isset($params['from_do_day']))
+        {
+            $keyword = $params['from_do_day'];
+            $query->where('do_day','>=', (double)$keyword);
+        }
+        if(isset($params['to_do_day']))
+        {
+            $keyword = $params['to_do_day'];
+            $query->where('do_day','<=', (double)$keyword);
+        }
+        if(isset($params['from_size']))
+        {
+            $keyword = $params['from_size'];
+            $query->where('size','>=', (double)$keyword);
+        }
+        if(isset($params['to_size']))
+        {
+            $keyword = $params['to_size'];
+            $query->where('size','<=', (double)$keyword);
+        }
+        if(isset($params['from_dia_w_w1']))
+        {
+            $keyword = $params['from_dia_w_w1'];
+            $query->where('dia_w_w1','>=', (double)$keyword);
+        }
+        if(isset($params['to_dia_w_w1']))
+        {
+            $keyword = $params['to_dia_w_w1'];
+            $query->where('dia_w_w1','<=', (double)$keyword);
+        }
+        if(isset($params['from_l_l1']))
+        {
+            $keyword = $params['from_l_l1'];
+            $query->where('l_l1','>=', (double)$keyword);
+        }
+        if(isset($params['to_l_l1']))
+        {
+            $keyword = $params['to_l_l1'];
+            $query->where('l_l1','<=', (double)$keyword);
+        }
+        if(isset($params['from_w2']))
+        {
+            $keyword = $params['from_w2'];
+            $query->where('w2','>=', (double)$keyword);
+        }
+        if(isset($params['to_w2']))
+        {
+            $keyword = $params['to_w2'];
+            $query->where('w2','<=', (double)$keyword);
+        }
+        if(isset($params['from_l2']))
+        {
+            $keyword = $params['from_l2'];
+            $query->where('l2','>=', (double)$keyword);
+        }
+        if(isset($params['to_l2']))
+        {
+            $keyword = $params['to_l2'];
+            $query->where('l2','<=', (double)$keyword);
+        }
+        if(isset($params['from_d1']))
+        {
+            $keyword = $params['from_d1'];
+            $query->where('d1','>=', (double)$keyword);
+        }
+        if(isset($params['to_d2']))
+        {
+            $keyword = $params['to_d1'];
+            $query->where('d1','<=', (double)$keyword);
+        }
+        if(isset($params['from_d2']))
+        {
+            $keyword = $params['from_d2'];
+            $query->where('d2','>=', (double)$keyword);
+        }
+        if(isset($params['to_d2']))
+        {
+            $keyword = $params['to_d2'];
+            $query->where('d2','<=', (double)$keyword);
+        }
+        if(isset($params['from_d3']))
+        {
+            $keyword = $params['from_d3'];
+            $query->where('d3','>=', (double)$keyword);
+        }
+        if(isset($params['to_d3']))
+        {
+            $keyword = $params['to_d3'];
+            $query->where('d3','<=', (double)$keyword);
+        }
+        if(isset($params['from_d4']))
+        {
+            $keyword = $params['from_d4'];
+            $query->where('d4','>=', (double)$keyword);
+        }
+        if(isset($params['to_d4']))
+        {
+            $keyword = $params['to_d4'];
+            $query->where('d4','<=', (double)$keyword);
+        }
+        if(isset($params['from_inner']))
+        {
+            $keyword = $params['from_inner'];
+            $query->where('inner','>=', (double)$keyword);
+        }
+        if(isset($params['to_inner']))
+        {
+            $keyword = $params['to_inner'];
+            $query->where('inner','<=', (double)$keyword);
+        }
+        if(isset($params['from_outner']))
+        {
+            $keyword = $params['from_outner'];
+            $query->where('outner','>=', (double)$keyword);
+        }
+        if(isset($params['to_outner']))
+        {
+            $keyword = $params['to_outner'];
+            $query->where('outner','<=', (double)$keyword);
+        }
+        if(isset($params['from_hoop']))
+        {
+            $keyword = $params['from_hoop'];
+            $query->where('hoop','>=', (double)$keyword);
+        }
+        if(isset($params['to_hoop']))
+        {
+            $keyword = $params['to_hoop'];
+            $query->where('hoop','<=', (double)$keyword);
+        }
+        if(isset($params['from_filler']))
+        {
+            $keyword = $params['from_filler'];
+            $query->where('filler','>=', (double)$keyword);
+        }
+        if(isset($params['to_filler']))
+        {
+            $keyword = $params['to_filler'];
+            $query->where('filler','<=', (double)$keyword);
+        }
+        if(isset($params['from_thick']))
+        {
+            $keyword = $params['from_thick'];
+            $query->where('thick','>=', (double)$keyword);
+        }
+        if(isset($params['to_thick']))
+        {
+            $keyword = $params['to_thick'];
+            $query->where('thick','<=', (double)$keyword);
+        }
+        if(isset($params['from_ton_sl']))
+        {
+            $keyword = $params['from_ton_sl'];
+            $query->where('ton_sl','>=', (double)$keyword);
+        }
+        if(isset($params['to_ton_sl']))
+        {
+            $keyword = $params['to_ton_sl'];
+            $query->where('ton_sl','<=', (double)$keyword);
+        }
+        if(isset($params['from_ton_sl_cuon']))
+        {
+            $keyword = $params['from_ton_sl_cuon'];
+            $query->where('ton_sl_cuon','>=', (double)$keyword);
+        }
+        if(isset($params['to_ton_sl_cuon']))
+        {
+            $keyword = $params['to_ton_sl_cuon'];
+            $query->where('ton_sl_cuon','<=', (double)$keyword);
+        }
+        if(isset($params['from_ton_sl_cai']))
+        {
+            $keyword = $params['from_ton_sl_cai'];
+            $query->where('ton_sl_cai','>=', (double)$keyword);
+        }
+        if(isset($params['to_ton_sl_cai']))
+        {
+            $keyword = $params['to_ton_sl_cai'];
+            $query->where('ton_sl_cai','<=', (double)$keyword);
+        }
+        if(isset($params['from_ton_sl_m']))
+        {
+            $keyword = $params['from_ton_sl_m'];
+            $query->where('ton_sl_m','>=', (double)$keyword);
+        }
+        if(isset($params['to_ton_sl_m']))
+        {
+            $keyword = $params['to_ton_sl_m'];
+            $query->where('ton_sl_m','<=', (double)$keyword);
+        }
+        if(isset($params['from_ton_sl_kg']))
+        {
+            $keyword = $params['from_ton_sl_kg'];
+            $query->where('ton_sl_kg','>=', (double)$keyword);
+        }
+        if(isset($params['to_ton_sl_kg']))
+        {
+            $keyword = $params['to_ton_sl_kg'];
+            $query->where('ton_sl_kg','<=', (double)$keyword);
+        }
+        if(isset($params['from_ton_sl_cay']))
+        {
+            $keyword = $params['from_ton_sl_cay'];
+            $query->where('ton_sl_cay','>=', (double)$keyword);
+        }
+        if(isset($params['to_ton_sl_cay']))
+        {
+            $keyword = $params['to_ton_sl_cay'];
+            $query->where('ton_sl_cay','<=', (double)$keyword);
+        }
+        if(isset($params['from_m_cuon']))
+        {
+            $keyword = $params['from_m_cuon'];
+            $query->where('m_cuon','>=', (double)$keyword);
+        }
+        if(isset($params['to_m_cuon']))
+        {
+            $keyword = $params['to_m_cuon'];
+            $query->where('m_cuon','<=', (double)$keyword);
+        }
+        if(isset($params['from_kg_cuon']))
+        {
+            $keyword = $params['from_kg_cuon'];
+            $query->where('kg_cuon','>=', (double)$keyword);
+        }
+        if(isset($params['to_kg_cuon']))
+        {
+            $keyword = $params['to_kg_cuon'];
+            $query->where('kg_cuon','<=', (double)$keyword);
+        }
+        if(isset($params['from_m_cay']))
+        {
+            $keyword = $params['from_m_cay'];
+            $query->where('m_cay','>=', (double)$keyword);
+        }
+        if(isset($params['to_m_cay']))
+        {
+            $keyword = $params['to_m_cay'];
+            $query->where('m_cay','<=', (double)$keyword);
+        }
+
+
         $query->where('model_type',$this->modelType);
         $query->orderBy('l_id','DESC');
         return $query->paginate($this->paginate());
