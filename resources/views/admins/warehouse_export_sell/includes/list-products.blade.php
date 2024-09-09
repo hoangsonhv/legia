@@ -48,16 +48,16 @@
             <td class="sequence">{{ $index + 1 }}</td>
             <td class="code">
               <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}">
-              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly>
+              <input class="form-control" type="text" style="width: 100px" name="product[code][]" value="{{ $product['code'] }}" readonly>
             </td>
             <td class="vat-lieu">
-              <textarea class="form-control" name="product[name][]" rows="1">{{ $product['name'] }}</textarea>
+              <textarea class="form-control" style="width: 150px" name="product[name][]" rows="1">{{ $product['name'] }}</textarea>
             </td>
             <td class="">
-              <input class="form-control" style="width: 100px" name="product[do_day][]" value="{{ $product['do_day'] }}" readonly />
+              <input class="form-control" style="width: 80px" name="product[do_day][]" value="{{ $product['do_day'] }}" readonly />
             </td>
             <td class="">
-              <input class="form-control" style="width: 100px" name="product[tieu_chuan][]" value="{{ $product['tieu_chuan'] }}" readonly />
+              <input class="form-control" style="width: 150px" name="product[tieu_chuan][]" value="{{ $product['tieu_chuan'] }}" readonly />
             </td>
             <td class="">
               <input class="form-control" style="width: 100px" name="product[kich_co][]" value="{{ $product['kich_co'] }}" readonly />

@@ -11,6 +11,12 @@ class WarehouseExportSellProduct extends Model
     protected $fillable = [
         'warehouse_export_sell_id',
         'code',
+        'do_day',
+        'tieu_chuan',
+        'kich_co',
+        'kich_thuoc',
+        'chuan_bich',
+        'chuan_gasket',
         'name',
         'vat',
         'unit',
