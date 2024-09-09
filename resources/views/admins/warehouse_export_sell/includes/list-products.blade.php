@@ -78,12 +78,12 @@
               <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
             </td>
             <td class="">
-              <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+              <input readonly style="width: 70px" class="form-control" type="text" name="product[ton_kho][]" value="{{ 
                 isset($product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])]) ? $product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])] : 0
               }}">
             </td>
             <td class="">
-              <input type="number" max="{{ 
+              <input style="width: 70px" type="number" max="{{ 
                 isset($product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])]) ? $product['ton_kho'][\App\Helpers\WarehouseHelper::groupTonKhoKey($product['model_type'])] : 0}}" class="form-control data-quantity" style="width: 120px" name="product[quantity][]" value="{{ $product['quantity'] }}"
                 onKeyUp="return getNumberFormatQuantity(this)">
             </td>
