@@ -294,7 +294,7 @@ function getItem(index, unit, opts) {
         + '<td class="code"><input readonly class="form-control" style="width: 100px" type="text" name="product[lot_no][]" value="'+opts.lot_no+'"></td>'
         + '<td class=""><input readonly class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
         + '<td class="code"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho+'"></td>'
-        + '<td class=""><input class="form-control data-quantity" style="width: 120px" type="number" name="product[quantity][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
+        + '<td class=""><input class="form-control data-quantity" style="width: 60px" type="number" name="product[quantity][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
         + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[unit_price][]" onKeyUp="return getNumberFormatUnitPrice(this)" min="1" value="">'
         + '<input class="form-control data-origin data-unit-price" type="hidden" name="product[unit_price][]" value=""></td>'
         + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[vat][]" onKeyUp="return getNumberFormatVatPer(this)" min="0" value="">'
