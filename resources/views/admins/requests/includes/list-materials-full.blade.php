@@ -7,7 +7,7 @@
   }
 </style>
 <div class="table-responsive data-materials p-0">
-  <table id="dataTable" class="table table-head-fixed table-bordered table-hover">
+  <table id="dataTable" class="table table-head-fixed table-bordered table-hover" style="width:100%">
     <thead>
       <tr align="center">
         <th class="align-middle">&nbsp</th>
@@ -75,7 +75,29 @@
               <input type="hidden" name="material[mo_ta][]" value="{{ $material->vat_lieu }}">
               {{ $material->vat_lieu }}
             </td>
+            <td class="ton_kho_phu d-none">
+              <input type="hidden" name="material[do_day][]" value="{{ $material->do_day }}">
+            </td>
+            <td class="do_day d-none">
+              <input type="hidden" name="material[do_day][]" value="{{ $material->do_day }}">
+            </td>
+            <td class="tieu_chuan d-none">
+              <input type="hidden" name="material[tieu_chuan][]" value="{{ $material->tieu_chuan }}">
+            </td>
+            <td class="kich_co d-none">
+              <input type="hidden" name="material[kich_co][]" value="{{ $material->kich_co }}">
+            </td>
+            <td class="kich_thuoc d-none">
+              <input type="hidden" name="material[kich_thuoc][]" value="{{ $material->kich_thuoc }}">
+            </td>
+            <td class="chuan_bich d-none">
+              <input type="hidden" name="material[chuan_bich][]" value="{{ $material->chuan_mat_bich }}">
+            </td>
+            <td class="chuan_gasket d-none">
+              <input type="hidden" name="material[chuan_gasket][]" value="{{ $material->chuan_gasket }}">
+            </td>
             <td class="chi-tiet" align="left">
+
               <ul style="list-style: circle">
                 @php
                   $detail = "";   
@@ -145,4 +167,4 @@
     </tfoot>
   </table>
 </div>
-<script type="text/javascript" src="{{ asset('js/admin/dataTable.js') }}" scoped></script>
+{{-- <script type="text/javascript" src="{{ asset('js/admin/dataTable.js') }}" scoped></script> --}}

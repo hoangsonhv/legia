@@ -17,6 +17,12 @@
         <th class="align-middle">Số TT</th>
         <th class="align-middle">Mã hàng</th>
         <th class="align-middle">Tên hàng</th>
+        <th class="align-middle">Độ dày</th>
+        <th class="align-middle">Tiêu chuẩn</th>
+        <th class="align-middle">Kích cỡ</th>
+        <th class="align-middle">Kích thước</th>
+        <th class="align-middle">Chuẩn bích</th>
+        <th class="align-middle">Chuẩn Gasket</th>
         <th class="align-middle">Lot No</th>
         <th class="align-middle">Đ/v tính</th>
         <th class="align-middle">Tồn kho</th>
@@ -46,6 +52,24 @@
             </td>
             <td class="vat-lieu">
               <textarea class="form-control" name="product[name][]" rows="1">{{ $product['name'] }}</textarea>
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 100px" name="product[do_day][]" value="{{ $product['do_day'] }}" readonly />
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 100px" name="product[tieu_chuan][]" value="{{ $product['tieu_chuan'] }}" readonly />
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 100px" name="product[kich_co][]" value="{{ $product['kich_co'] }}" readonly />
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 100px" name="product[kich_thuoc][]" value="{{ $product['kich_thuoc'] }}" readonly />
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 100px" name="product[chuan_bich][]" value="{{ $product['chuan_bich'] }}" readonly />
+            </td>
+            <td class="">
+              <input class="form-control" style="width: 100px" name="product[code][]" value="{{ $product['code'] }}" readonly />
             </td>
             <td class="">
               <input class="form-control" name="product[lot_no][]" value="{{ $product['lot_no'] }}" readonly />

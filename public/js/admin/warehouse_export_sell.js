@@ -109,6 +109,12 @@ $(function () {
                                     code: eleRow.find('td.code input').val(),
                                     vat_lieu: eleRow.find('td.vat-lieu input').val(),
                                     lot_no: eleRow.find('td.lot_no input').val(),
+                                    do_day: eleRow.find('td.do_day input').val(),
+                                    tieu_chuan: eleRow.find('td.tieu_chuan input').val(),
+                                    kich_co: eleRow.find('td.kich_co input').val(),
+                                    kich_thuoc: eleRow.find('td.kich_thuoc input').val(),
+                                    chuan_bich: eleRow.find('td.chuan_bich input').val(),
+                                    chuan_gasket: eleRow.find('td.chuan_gasket input').val(),
                                     ton_kho: eleRow.find('td.ton_kho input').val(),
                                 };
                                 $(eleForm).append(getItem(lengthTrForm, 'Cái', opts));
@@ -273,12 +279,19 @@ function reloadDatepicker() {
 }
 
 function getItem(index, unit, opts) {
+    console.log(opts);
     return '<tr align="center">'
         + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá sản phẩm" onclick="deteleItem(this)"></i></td>'
         + '<td class="sequence">'+index+'</td>'
         + '<td class="code"><input type="hidden" name="product[merchandise_id][]" value="'+opts.merchandise_id+'"><input readonly class="form-control" type="text" name="product[code][]" value="'+opts.code+'"></td>'
-        + '<td class=""><textarea readonly class="form-control" name="product[name][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
-        + '<td class="code"><input readonly class="form-control" type="text" name="product[lot_no][]" value="'+opts.lot_no+'"></td>'
+        + '<td class=""><textarea readonly class="form-control" name="product[name][]" style="width: 170px" rows="1">'+opts.vat_lieu+'</textarea></td>'
+        + '<td class="code"><input readonly class="form-control" style="width: 100px" type="text" name="product[do_day][]" value="'+opts.do_day+'"></td>'
+        + '<td class="code"><input readonly class="form-control" style="width: 100px" type="text" name="product[tieu_chuan][]" value="'+opts.tieu_chuan+'"></td>'
+        + '<td class="code"><input readonly class="form-control" style="width: 100px" type="text" name="product[kich_co][]" value="'+opts.kich_co+'"></td>'
+        + '<td class="code"><input readonly class="form-control" style="width: 100px" type="text" name="product[kich_thuoc][]" value="'+opts.kich_thuoc+'"></td>'
+        + '<td class="code"><input readonly class="form-control" style="width: 100px" type="text" name="product[chuan_bich][]" value="'+opts.chuan_bich+'"></td>'
+        + '<td class="code"><input readonly class="form-control" style="width: 100px" type="text" name="product[chuan_gasket][]" value="'+opts.chuan_gasket+'"></td>'
+        + '<td class="code"><input readonly class="form-control" style="width: 100px" type="text" name="product[lot_no][]" value="'+opts.lot_no+'"></td>'
         + '<td class=""><input readonly class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
         + '<td class="code"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho+'"></td>'
         + '<td class=""><input class="form-control data-quantity" style="width: 120px" type="number" name="product[quantity][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
