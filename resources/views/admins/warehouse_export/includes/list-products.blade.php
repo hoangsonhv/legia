@@ -48,7 +48,7 @@
               <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly>
             </td>
             <td class="">
-              <input class="form-control" type="text" name="product[lot_no][]" value="{{ $merchandise->lot_no }}" readonly>
+              <input class="form-control" type="text" name="product[lot_no][]" value="{{ $product['lot_no'] }}" readonly>
             </td>
             <td class="">
               <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>

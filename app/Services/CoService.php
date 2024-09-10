@@ -149,9 +149,21 @@ class CoService
                 foreach ($codes as $code) {
                     $merchandiseCode = \App\Helpers\AdminHelper::detectProductCode($code);
                     if ($merchandiseCode['model_type'] == null
-                        || $merchandiseCode['manufacture_type'] == MerchandiseGroup::COMMERCE) {
+                        && $merchandiseCode['manufacture_type'] == MerchandiseGroup::COMMERCE) {
                         continue;
-                    }
+                    } 
+                    if ($merchandiseCode['model_type'] != null
+                        && $merchandiseCode['manufacture_type'] == MerchandiseGroup::COMMERCE) {
+                            $query = self::getMaterialsQuery($merchandiseCode['merchandise_code_in_warehouse'], $merchandiseCode['model_type']);
+                            $warehouse_materials = $query->get()->toArray();
+                            // dd($warehouse_materials);
+                            if (count($warehouse_materials) > 0) {
+                                $model_type = $warehouse_materials[0]['model_type'];
+                                $materials = WarehouseHelper::getModel($model_type)->hydrate($warehouse_materials);
+                                $results = $results->merge($materials);
+                            }
+                        continue;
+                    } 
 
                     $query = '';
                     if ($merchandiseCode['model_type'] == WarehouseHelper::THANH_PHAM_SWG) {
