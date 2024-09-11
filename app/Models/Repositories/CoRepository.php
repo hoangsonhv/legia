@@ -111,7 +111,10 @@ class CoRepository extends BaseRepository
     public function doneCo($coId)
     {
         $co = $this->model->find($coId);
-        if ($co) {
+        // thu đủ  && chi đủ && xuất kho bán hàng đủ
+        if ($co 
+            && $co->payment()->sum('money_total') >= $co->request->first()->money_total 
+            && $co->receipt()->sum('actual_money') >= ($co->tong_gia + $co->vat)) {
             $co->confirm_done = 1;
             $co->save();
         }

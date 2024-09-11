@@ -207,7 +207,7 @@ class BaseAdminController extends Controller
                                             $this->coStepHistoryRepo->insertNextStep('warehouse-receipt', $repository->co_id, $repository->request_id, CoStepHistory::ACTION_CREATE);
                                             break;
                                         case 3:
-                                            $this->coStepHistoryRepo->insertNextStep('warehouse-export', $repository->co_id, $repository->co_id, CoStepHistory::ACTION_CREATE);
+                                            $this->coRepository->doneCo($repository->co_id);
                                             break;
                                     }
                                 } else if (in_array($repository->request->category, array_keys($categories))) {

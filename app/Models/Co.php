@@ -116,4 +116,8 @@ class Co extends Model
     {
         return $this->hasMany(WarehouseExport::class, 'co_id', 'id');
     }
+    public function warehouseReceipts() 
+    {
+        return $this->hasMany(WarehouseReceipt::class, 'co_id', 'id');
+    }
 }

@@ -31,4 +31,8 @@ class WarehouseReceipt extends Model
     public function admin() {
         return $this->belongsTo(Admin::class, 'created_by');
     }
+
+    public function co() {
+        return $this->belongsTo(Co::class, 'co_id');
+    }
 }

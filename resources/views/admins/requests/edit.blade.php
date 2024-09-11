@@ -286,7 +286,7 @@
                     @endif
                     <!-- /.card-body -->
                         <div class="card-footer text-right">
-                            @if(!empty($canCreatePayment) && $canCreatePayment)
+                            @if(!empty($canCreatePayment) && $canCreatePayment || $isPaymentStep4)
                                 @permission('admin.payment.create')
                                 @if(\App\Enums\ProcessStatus::Approved == $requestModel->status)
                                     <a href="{{ route('admin.payment.create', ['requestId' => $requestModel->id]) }}"

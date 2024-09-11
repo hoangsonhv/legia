@@ -24,6 +24,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Repositories\CoStepHistoryRepository;
 use App\Models\Repositories\ManufactureRepository;
 use App\Helpers\PermissionHelper;
+use App\Models\Repositories\RequestRepository;
 use Hamcrest\Collection\IsEmptyTraversable;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,6 +34,7 @@ class CoController extends Controller
 
     protected $coTmpRepository;
     protected $coRepository;
+    protected $requestRepository;
     protected $coService;
     protected $deliveryRepository;
     protected $coStepHisRepo;
@@ -43,6 +45,7 @@ class CoController extends Controller
     function __construct(
         CoTmpRepository $coTmpRepository,
         CoRepository $coRepository,
+        RequestRepository $requestRepository,
         CoService $coService,
         DeliveryRepository $deliveryRepository,
         CoStepHistoryRepository $coStepHisRepo,
@@ -50,6 +53,7 @@ class CoController extends Controller
     ) {
         $this->coTmpRepository    = $coTmpRepository;
         $this->coRepository       = $coRepository;
+        $this->requestRepository  = $requestRepository;
         $this->coService          = $coService;
         $this->deliveryRepository = $deliveryRepository;
         $this->coStepHisRepo      = $coStepHisRepo;

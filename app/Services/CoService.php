@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Helpers\DataHelper;
 use App\Helpers\WarehouseHelper;
+use App\Models\Co;
 use App\Models\CoStepHistory;
 use App\Models\MerchandiseGroup;
 use App\Models\MerchandiseGroupWareHouse;
@@ -69,6 +70,9 @@ class CoService
         return $result;
     }
 
+    public function checkQuantityExportSell(Co $co) {
+
+    }
     public function searchProductMaterialsInWarehouses($code, $lot_no, $mo_ta = "")
     {
         $results = collect([]);

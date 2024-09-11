@@ -328,6 +328,7 @@ class RequestController extends Controller
             $canCreatePayment = false;
             $canCreateWarehouseReceipt = false;
             $coStep = '';
+            $isPaymentStep4 = false;
 
             if ($requestModel->co_id) {
                 $categories = DataHelper::getCategories([DataHelper::KHO]);
@@ -358,6 +359,10 @@ class RequestController extends Controller
                             CoStepHistory::STEP_CREATE_PAYMENT_N4,
                         ]);
                     $canCreateWarehouseReceipt = $coModel->currentStep->step == CoStepHistory::STEP_CREATE_WAREHOUSE_RECEIPT;
+                }
+                if($coModel->request->first() && $co->warehouseReceipts()->count()) {
+                    $hasPercent = $this->requestRepository->checkPercentPayment($coModel->request->first()->id , 3);
+                    if($hasPercent && $coModel->payment()->sum('money_total') < $coModel->request->first()->money_total ) $isPaymentStep4 = true;
                 }
             } else {
                 $categories    = DataHelper::getCategories([DataHelper::DINH_KY, DataHelper::VAN_PHONG_PHAM, DataHelper::HOAT_DONG]);
@@ -400,7 +405,7 @@ class RequestController extends Controller
             }
             return view('admins.requests.edit',compact('totalPayment', 'coStep', 'steps', 'breadcrumb', 'titleForLayout', 'requestModel',
                 'permissions', 'categories', 'co', 'materials', 'existsCat', 'warehouses', 'listWarehouse',
-                'corePriceSurvey', 'payments', 'isSelectedPriceSurveyForAllMaterials', 'canCreatePayment', 'canCreateWarehouseReceipt'));
+                'corePriceSurvey', 'payments', 'isSelectedPriceSurveyForAllMaterials', 'canCreatePayment', 'canCreateWarehouseReceipt', 'isPaymentStep4'));
         }
         return redirect()->route('admin.request.index')->with('error', 'Phiếu Yêu Cầu không tồn tại!');
     }
