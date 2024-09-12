@@ -8,7 +8,7 @@ use App\Models\Repositories\ManufactureRepository;
 use App\Models\Repositories\WarehouseExportSellRepository;
 use App\Models\Repositories\ConfigRepository;
 use App\Models\Repositories\WarehouseExportRepository;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PDFController extends Controller
 {
@@ -44,7 +44,7 @@ class PDFController extends Controller
             if ($model) {
                 $details = $model->details;
                 //            return view('admins.pdf.manufacture', compact('model', 'details'));
-                $pdf = PDF::loadView('admins.pdf.manufacture', compact('model', 'details'));
+                $pdf = Pdf::loadView('admins.pdf.manufacture', compact('model', 'details'))->setPaper('a4', 'landscape');
                 return $pdf->download('Lenh_san_xuat_' . date("d-m-Y") . '.pdf');
             }
         } catch (\Exception $ex) {
@@ -59,7 +59,7 @@ class PDFController extends Controller
             if ($model) {
                 $details = $model->details;
                 //            return view('admins.pdf.manufacture-check', compact('model', 'details'));
-                $pdf = PDF::loadView('admins.pdf.manufacture-check', compact('model', 'details'));
+                $pdf = PDF::loadView('admins.pdf.manufacture-check', compact('model', 'details'))->setPaper('a4', 'landscape');
                 return $pdf->download('Phieu_kiem_tra_san_xuat_' . date("d-m-Y") . '.pdf');
             }
         } catch (\Exception $ex) {

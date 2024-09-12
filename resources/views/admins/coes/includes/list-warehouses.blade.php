@@ -221,146 +221,146 @@
                                         <td>{{ $sequence }}</td>
                                         <td>{{ $warehouse->code }}</td>
                                         @switch($key)
-                                    @case(\App\Helpers\WarehouseHelper::BIA)
-                                        <td class="align-middle">{{ $warehouse->do_day }}</td>
-                                        <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
-                                        <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
-                                        <td class="align-middle">{{ $warehouse->l_l1 }}</td>
-                                        <td class="align-middle">{{ $warehouse->w2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->l2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::CAO_SU)
-                                        <td class="align-middle">{{ $warehouse->do_day }}</td>
-                                        <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
-                                        <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
-                                        <td class="align-middle">{{ $warehouse->l_l1 }}</td>
-                                        <td class="align-middle">{{ $warehouse->w2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->l2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::CAO_SU_VN_ZA)
-                                        <td class="align-middle">{{ $warehouse->do_day }}</td>
-                                        <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
-                                        <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
-                                        <td class="align-middle">{{ $warehouse->l_l1 }}</td>
-                                        <td class="align-middle">{{ $warehouse->w2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->l2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::TAM_KIM_LOAI)
-                                        <td class="align-middle">{{ $warehouse->do_day }}</td>
-                                        <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
-                                        <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
-                                        <td class="align-middle">{{ $warehouse->l_l1 }}</td>
-                                        <td class="align-middle">{{ $warehouse->w2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->l2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::CREAMIC)
-                                        <td class="align-middle">{{ $warehouse->do_day }}</td>
-                                        <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
-                                        <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
-                                        <td class="align-middle">{{ $warehouse->l_l1 }}</td>
-                                        <td class="align-middle">{{ $warehouse->w2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->l2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::GRAPHITE)
-                                        <td class="align-middle">{{ $warehouse->do_day }}</td>
-                                        <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
-                                        <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
-                                        <td class="align-middle">{{ $warehouse->l_l1 }}</td>
-                                        <td class="align-middle">{{ $warehouse->w2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->l2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::PTFE)
-                                        <td class="align-middle">{{ $warehouse->do_day }}</td>
-                                        <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
-                                        <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
-                                        <td class="align-middle">{{ $warehouse->l_l1 }}</td>
-                                        <td class="align-middle">{{ $warehouse->w2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->l2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::TAM_NHUA)
-                                        <td class="align-middle">{{ $warehouse->do_day }}</td>
-                                        <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
-                                        <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
-                                        <td class="align-middle">{{ $warehouse->l_l1 }}</td>
-                                        <td class="align-middle">{{ $warehouse->w2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->l2 }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::THANH_PHAM_SWG)
-                                        <td class="align-middle">{{ $warehouse->inner }}</td>
-                                        <td class="align-middle">{{ $warehouse->hoop }}</td>
-                                        <td class="align-middle">{{ $warehouse->filler }}</td>
-                                        <td class="align-middle">{{ $warehouse->outer }}</td>
-                                        <td class="align-middle">{{ $warehouse->thick }}</td>
-                                        <td class="align-middle">{{ $warehouse->tieu_chuan }}</td>
-                                        <td class="align-middle">{{ $warehouse->kich_co }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cai }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::RTJ)
-                                        <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cai }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::GLAND_PACKING)
-                                        <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->trong_luong_kg_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->m_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_kg }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::GLAND_PACKING_LATTY)
-                                        <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::DAY_CREAMIC)
-                                        <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->m_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::DAY_CAO_SU_VA_SILICON)
-                                        <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->m_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::NHU_KY_THUAT_CAY_ONG)
-                                        <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->m_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::PTFE_CAYONG)
-                                        <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->m_cay }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cay }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::ORING)
-                                        <td class="align-middle">{{ $warehouse->size }}</td>
-                                        <td class="align-middle">{{ $warehouse->m_cay }}</td>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::PTFE_TAPE)
-                                        <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->m_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
-                                        <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
-                                        @break
-                                @endswitch
+                                            @case(\App\Helpers\WarehouseHelper::BIA)
+                                                <td class="align-middle">{{ $warehouse->do_day }}</td>
+                                                <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
+                                                <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
+                                                <td class="align-middle">{{ $warehouse->l_l1 }}</td>
+                                                <td class="align-middle">{{ $warehouse->w2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->l2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::CAO_SU)
+                                                <td class="align-middle">{{ $warehouse->do_day }}</td>
+                                                <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
+                                                <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
+                                                <td class="align-middle">{{ $warehouse->l_l1 }}</td>
+                                                <td class="align-middle">{{ $warehouse->w2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->l2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::CAO_SU_VN_ZA)
+                                                <td class="align-middle">{{ $warehouse->do_day }}</td>
+                                                <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
+                                                <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
+                                                <td class="align-middle">{{ $warehouse->l_l1 }}</td>
+                                                <td class="align-middle">{{ $warehouse->w2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->l2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::TAM_KIM_LOAI)
+                                                <td class="align-middle">{{ $warehouse->do_day }}</td>
+                                                <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
+                                                <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
+                                                <td class="align-middle">{{ $warehouse->l_l1 }}</td>
+                                                <td class="align-middle">{{ $warehouse->w2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->l2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::CREAMIC)
+                                                <td class="align-middle">{{ $warehouse->do_day }}</td>
+                                                <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
+                                                <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
+                                                <td class="align-middle">{{ $warehouse->l_l1 }}</td>
+                                                <td class="align-middle">{{ $warehouse->w2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->l2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::GRAPHITE)
+                                                <td class="align-middle">{{ $warehouse->do_day }}</td>
+                                                <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
+                                                <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
+                                                <td class="align-middle">{{ $warehouse->l_l1 }}</td>
+                                                <td class="align-middle">{{ $warehouse->w2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->l2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::PTFE)
+                                                <td class="align-middle">{{ $warehouse->do_day }}</td>
+                                                <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
+                                                <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
+                                                <td class="align-middle">{{ $warehouse->l_l1 }}</td>
+                                                <td class="align-middle">{{ $warehouse->w2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->l2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::TAM_NHUA)
+                                                <td class="align-middle">{{ $warehouse->do_day }}</td>
+                                                <td class="align-middle">{{ $warehouse->hinh_dang }}</td>
+                                                <td class="align-middle">{{ $warehouse->dia_w_w1}}</td>
+                                                <td class="align-middle">{{ $warehouse->l_l1 }}</td>
+                                                <td class="align-middle">{{ $warehouse->w2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->l2 }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_tam }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m2 }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::THANH_PHAM_SWG)
+                                                <td class="align-middle">{{ $warehouse->inner }}</td>
+                                                <td class="align-middle">{{ $warehouse->hoop }}</td>
+                                                <td class="align-middle">{{ $warehouse->filler }}</td>
+                                                <td class="align-middle">{{ $warehouse->outer }}</td>
+                                                <td class="align-middle">{{ $warehouse->thick }}</td>
+                                                <td class="align-middle">{{ $warehouse->tieu_chuan }}</td>
+                                                <td class="align-middle">{{ $warehouse->kich_co }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cai }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::RTJ)
+                                                <td class="align-middle">{{ $warehouse->size}}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cai }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::GLAND_PACKING)
+                                                <td class="align-middle">{{ $warehouse->size}}</td>
+                                                <td class="align-middle">{{ $warehouse->trong_luong_kg_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->m_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_kg }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::GLAND_PACKING_LATTY)
+                                                <td class="align-middle">{{ $warehouse->size}}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::DAY_CREAMIC)
+                                                <td class="align-middle">{{ $warehouse->size}}</td>
+                                                <td class="align-middle">{{ $warehouse->m_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::DAY_CAO_SU_VA_SILICON)
+                                                <td class="align-middle">{{ $warehouse->size}}</td>
+                                                <td class="align-middle">{{ $warehouse->m_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::NHU_KY_THUAT_CAY_ONG)
+                                                <td class="align-middle">{{ $warehouse->size}}</td>
+                                                <td class="align-middle">{{ $warehouse->m_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::PTFE_CAYONG)
+                                                <td class="align-middle">{{ $warehouse->size}}</td>
+                                                <td class="align-middle">{{ $warehouse->m_cay }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cay }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::ORING)
+                                                <td class="align-middle">{{ $warehouse->size }}</td>
+                                                <td class="align-middle">{{ $warehouse->m_cay }}</td>
+                                                @break
+                                            @case(\App\Helpers\WarehouseHelper::PTFE_TAPE)
+                                                <td class="align-middle">{{ $warehouse->size}}</td>
+                                                <td class="align-middle">{{ $warehouse->m_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
+                                                <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
+                                                @break
+                                        @endswitch
                                         <td>{{ $warehouse->lot_no }}</td>
                                         <td>{{ $warehouse->ghi_chu }}</td>
                                         <td>{{ $warehouse->date }}</td>

@@ -1,8 +1,9 @@
 body {
     font-family: DejaVu Sans, sans-serif;
-    font-size: 13px;
-    line-height: 1.2;
-}
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+  }
 .w1 {
     width: 1%;
 }
@@ -74,4 +75,41 @@ body {
 .table-signature td {
     vertical-align: top;
 }
-
+/* Không ngắt trang giữa các dòng của bảng */
+.table-material {
+    page-break-inside: auto;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* Tránh ngắt trang giữa các hàng trong bảng */
+  .table-material tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  
+  /* Ngắt trang sau khi bảng kết thúc, để bảng tiếp theo được đặt ở trang mới */
+  .table-material tbody tr:last-child {
+    page-break-after: always;
+  }
+  
+  /* Đảm bảo khối chữ ký không bị chia cắt khi in ra PDF */
+  .block-signature {
+    page-break-inside: avoid;
+  }
+  
+  /* Đảm bảo bảng không bị ngắt giữa các trang */
+  section.right {
+    page-break-inside: avoid;
+  }
+  /* Đảm bảo các hàng trong bảng không bị ngắt đôi */
+  table, tr, td, th {
+    page-break-inside: avoid;
+  }
+  
+  /* Tự động ngắt trang khi cần, nhưng không cắt giữa các phần tử quan trọng */
+  section, div, table {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+  

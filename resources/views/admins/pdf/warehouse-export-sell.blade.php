@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Phiếu xuất kho bán hàng</title>
     {{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"--}}
     {{--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">--}}
-    <link rel="stylesheet" href={{asset('css/pdf/warehouse-export-sell.css')}} />
+    <link rel="stylesheet" href={{public_path('css/pdf/warehouse-export-sell.css')}} />
 </head>
 <body>
 <div id="pdf-warehouse-export-sell">

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Lệnh sản xuất</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href={{asset('css/pdf/manufacture.css')}} />
+    <link rel="stylesheet" href={{public_path('css/pdf/manufacture.css')}} />
 </head>
 <body>
 <div id="pdf-manufacture">
@@ -191,10 +191,7 @@
             </tr>
             </thead>
             <tbody>
-            <?php $i=0 ?>
             @foreach($details as $key => $detail)
-                <?php $i++;
-                ?>
                 @php
                     $offerPrice = new \App\Models\OfferPrice;
                     $kichThuot = [];
@@ -224,7 +221,6 @@
                     <td></td>
                     <td></td>
                 </tr>
-                <div class="{{ ( $i == 5 ) ? 'page-break':''}}"></div>
             @endforeach
             @for($i = 0; $i + count($details) <= 12; $i++)
                 <tr>
