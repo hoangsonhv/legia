@@ -208,6 +208,21 @@
             <td class="do_day d-none">
               <input type="hidden" name="material[do_day][]" value="{{ $material->do_day }}">
             </td>
+            <td class="hinh_dang d-none">
+              <input type="hidden" name="material[hinh_dang][]" value="{{ $material->hinh_dang }}">
+            </td>
+            <td class="dia_w_w1 d-none">
+              <input type="hidden" name="material[dia_w_w1][]" value="{{ $material->dia_w_w1 }}">
+            </td>
+            <td class="l_l1 d-none">
+              <input type="hidden" name="material[l_l1][]" value="{{ $material->l_l1 }}">
+            </td>
+            <td class="w2 d-none">
+              <input type="hidden" name="material[w2][]" value="{{ $material->w2 }}">
+            </td>
+            <td class="l2 d-none">
+              <input type="hidden" name="material[l2][]" value="{{ $material->l2 }}">
+            </td>
             <td class="tieu_chuan d-none">
               <input type="hidden" name="material[tieu_chuan][]" value="{{ $material->tieu_chuan }}">
             </td>

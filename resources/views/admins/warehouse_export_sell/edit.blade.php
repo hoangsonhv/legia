@@ -117,7 +117,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary">Lưu thông tin</button>
+                            {{-- <button type="submit" class="btn btn-primary">Lưu thông tin</button> --}}
                             <a href="{{ route('admin.warehouse-export-sell.index') }}" class="btn btn-default">Quay lại</a>
                         </div>
                     {!! Form::close() !!}

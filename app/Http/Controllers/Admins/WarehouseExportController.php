@@ -218,6 +218,12 @@ class WarehouseExportController extends Controller
                     }
                     $products[] = [
                         'code' => $inputProducts['code'][$key],
+                        'do_day' => $inputProducts['do_day'][$key],
+                        'hinh_dang' => $inputProducts['hinh_dang'][$key],
+                        'dia_w_w1' => $inputProducts['dia_w_w1'][$key],
+                        'l_l1' => $inputProducts['l_l1'][$key],
+                        'w2' => $inputProducts['w2'][$key],
+                        'l2' => $inputProducts['l2'][$key],
                         'name' => $inputProducts['name'][$key],
                         'unit' => $inputProducts['unit'][$key],
                         'quantity_doc' => $inputProducts['quantity_doc'][$key],

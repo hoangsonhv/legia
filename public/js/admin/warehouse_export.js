@@ -103,6 +103,12 @@ $(function () {
                                 var opts = {
                                     code: eleRow.find('td.code input').val(),
                                     name: eleRow.find('td.vat-lieu input').val(),
+                                    do_day: eleRow.find('td.do_day input').val(),
+                                    hinh_dang: eleRow.find('td.hinh_dang input').val(),
+                                    dia_w_w1: eleRow.find('td.dia_w_w1 input').val(),
+                                    l_l1: eleRow.find('td.l_l1 input').val(),
+                                    w2: eleRow.find('td.w2 input').val(),
+                                    l2: eleRow.find('td.l2 input').val(),
                                     warehouse_id: eleRow.find('td.warehouse_id input').val(),
                                     table_name: eleRow.find('td.table_name input').val(),
                                     merchandise_id: eleRow.find('td.merchandise_id input').val(),
@@ -243,10 +249,16 @@ function getItem(index, unit, opts) {
         + '<td class="sequence">'+index+'</td>'
         + '<td class="name"><textarea readonly class="form-control" name="product[name][]" rows="1">'+opts.name+'</textarea></td>'
         + '<td class="code"><input readonly class="form-control" type="text" name="product[code][]" value="'+opts.code+'"></td>'
-        + '<td class="code"><input readonly class="form-control" type="text" name="product[lot_no][]" value="'+opts.lot_no+'"></td>'
+        + '<td class="do_day"><input readonly class="form-control" type="text" name="product[do_day][]" value="'+opts.do_day+'"></td>'
+        + '<td class="hinh_dang"><input readonly class="form-control" type="text" name="product[hinh_dang][]" value="'+opts.hinh_dang+'"></td>'
+        + '<td class="dia_w_w1"><input readonly class="form-control" type="text" name="product[dia_w_w1][]" value="'+opts.dia_w_w1+'"></td>'
+        + '<td class="l_l1"><input readonly class="form-control" type="text" name="product[l_l1][]" value="'+opts.l_l1+'"></td>'
+        + '<td class="w2"><input readonly class="form-control" type="text" name="product[w2][]" value="'+opts.w2+'"></td>'
+        + '<td class="l2"><input readonly class="form-control" type="text" name="product[l2][]" value="'+opts.l2+'"></td>'
+        + '<td class="lot_no"><input readonly class="form-control" type="text" name="product[lot_no][]" value="'+opts.lot_no+'"></td>'
         + '<td class=""><input readonly class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
-        + '<td class="code"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho+'"></td>'
-        + '<td class="code"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho_phu+'"></td>'
+        + '<td class="ton_kho"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho+'"></td>'
+        + '<td class="ton_kho_phu"><input readonly class="form-control" type="text" name="product[ton_kho][]" value="'+opts.ton_kho_phu+'"></td>'
         + '<td class=""><input class="form-control" style="width: 70px" type="number" name="product[quantity_doc][]"/> </td>'
         + '<td class=""><input class="form-control data-quantity" style="width: 120px" type="number" name="product[quantity_reality][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
         + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_product[unit_price][]" onKeyUp="return getNumberFormatUnitPrice(this)" min="1" value="">'
