@@ -10,18 +10,37 @@
 <div class="data-materials p-0">
     <table class="table table-content table-head-fixed table-bordered table-hover">
         <thead>
-        <tr align="center">
-            <th class="align-middle">&nbsp</th>
-            <th class="align-middle">Số TT</th>
-            <th class="align-middle">Mã HH</th>
-            <th class="align-middle">Mô tả</th>
-            <th class="align-middle">Kích thước</th>
-            <th class="align-middle">Quy cách</th>
-            <th class="align-middle">Đ/v tính</th>
-            <th class="align-middle t-dinh-luong">Số lượng</th>
-            <th class="align-middle">Thời gian cần</th>
-            <th class="align-middle">Ghi chú</th>
-        </tr>
+        @if($co) 
+            <tr align="center">
+                <th class="align-middle">&nbsp</th>
+                <th class="align-middle">Số TT</th>
+                <th class="align-middle">Mã HH</th>
+                <th class="align-middle">Mô tả</th>
+                <th class="align-middle">Độ dày</th>
+                <th class="align-middle">Hình dạng</th>
+                <th class="align-middle">Dia W W1</th>
+                <th class="align-middle">L L1</th>
+                <th class="align-middle">W2</th>
+                <th class="align-middle">L2</th>
+                <th class="align-middle">Đ/v tính</th>
+                <th class="align-middle t-dinh-luong">Số lượng</th>
+                <th class="align-middle">Thời gian cần</th>
+                <th class="align-middle">Ghi chú</th>
+            </tr>
+        @else
+            <tr align="center">
+                <th class="align-middle">&nbsp</th>
+                <th class="align-middle">Số TT</th>
+                <th class="align-middle">Mã HH</th>
+                <th class="align-middle">Mô tả</th>
+                <th class="align-middle">Kích thước</th>
+                <th class="align-middle">Quy cách</th>
+                <th class="align-middle">Đ/v tính</th>
+                <th class="align-middle t-dinh-luong">Số lượng</th>
+                <th class="align-middle">Thời gian cần</th>
+                <th class="align-middle">Ghi chú</th>
+            </tr>
+        @endif
         </thead>
         <tbody>
         @if(!empty($materials) && $materials->count())
@@ -47,6 +66,26 @@
                         <textarea class="form-control" name="material[mo_ta][]"
                                   rows="1" readonly>{{ $material->mo_ta }}</textarea>
                     </td>
+                    @if($co)
+                    <td class="do_day">
+                        <input class="form-control" type="text" name="product[do_day][]" value="{{ $material->do_day }}" readonly>
+                    </td>
+                    <td class="hinh_dang">
+                        <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $material->hinh_dang }}" readonly>
+                    </td>
+                    <td class="dia_w_w1">
+                        <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $material->dia_w_w1 }}" readonly>
+                    </td>
+                    <td class="l_l1">
+                        <input class="form-control" type="text" name="product[l_l1][]" value="{{ $material->l_l1 }}" readonly>
+                    </td>
+                    <td class="w2">
+                        <input class="form-control" type="text" name="product[w2][]" value="{{ $material->w2 }}" readonly>
+                    </td>
+                    <td class="l2">
+                        <input class="form-control" type="text" name="product[l2][]" value="{{ $material->l2 }}" readonly>
+                    </td>
+                    @else 
                     <td class="">
                         <textarea class="form-control" name="material[kick_thuoc][]"
                                   rows="1">{{ $material->kich_thuoc }}</textarea>
@@ -55,6 +94,7 @@
                         <textarea class="form-control" name="material[quy_cach][]"
                                   rows="1">{{ $material->quy_cach }}</textarea>
                     </td>
+                    @endif
                     <td class="">
                         <input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]"
                                value="{{ $material->dv_tinh }}">

@@ -118,9 +118,14 @@ $(function () {
                 var opts = {
                   merchandise_id: eleRow.find('td.merchandise_id input').val(),
                   code: eleRow.find('td.code input').val(),
+                  do_day: eleRow.find('td.do_day input').val(),
+                  hinh_dang: eleRow.find('td.hinh_dang input').val(),
+                  dia_w_w1: eleRow.find('td.dia_w_w1 input').val(),
+                  l_l1: eleRow.find('td.l_l1 input').val(),
+                  w2: eleRow.find('td.w2 input').val(),
+                  l2: eleRow.find('td.l2 input').val(),
                   vat_lieu: eleRow.find('td.vat-lieu input').val(),
                   dv_tinh: eleRow.find('td.dv_tinh input').val(),
-                  kich_thuoc: eleRow.find('td.chi-tiet input').val(),
                 };
                 $(eleForm).append(getItem(lengthTrForm, 'Tấm', opts));
                 // Add code
@@ -141,6 +146,12 @@ $(function () {
     var eleForm = $('.form-material');
     var codeMaterial = eleForm.find('input[name="code"]').first().val();
     var motaMaterial = eleForm.find('input[name="vat_lieu"]').length ? eleForm.find('input[name="vat_lieu"]').first().val() : '';
+    var do_day = eleForm.find('input[name="do_day"]').length ? eleForm.find('input[name="do_day"]').first().val() : '';
+    var hinh_dang = eleForm.find('input[name="hinh_dang"]').length ? eleForm.find('input[name="hinh_dang"]').first().val() : '';
+    var dia_w_w1 = eleForm.find('input[name="dia_w_w1"]').length ? eleForm.find('input[name="dia_w_w1"]').first().val() : '';
+    var l_l1 = eleForm.find('input[name="l_l1"]').length ? eleForm.find('input[name="l_l1"]').first().val() : '';
+    var w2 = eleForm.find('input[name="w2"]').length ? eleForm.find('input[name="w2"]').first().val() : '';
+    var l2 = eleForm.find('input[name="l2"]').length ? eleForm.find('input[name="l2"]').first().val() : '';
     var ele    = $('.data-materials').find(".table-content tbody");
     var index  = ele.find('tr').length + 1;
     var dvTinh = '';
@@ -148,7 +159,18 @@ $(function () {
       dvTinh = $(this).attr('data-dvTinh');
     }
     submitFormMaterial(eleForm.find('form').first().attr('action'), eleForm.find('form').first().serializeArray(), function(res) {
-      ele.append(getItem(index, 'Tấm', { code: codeMaterial, vat_lieu: motaMaterial, merchandise_id: res.l_id, kich_thuoc: res.detail, dv_tinh: res.dv_tinh }));
+      ele.append(getItem(index, 'Tấm', { 
+        code: codeMaterial, 
+        do_day: do_day, 
+        hinh_dang: hinh_dang, 
+        dia_w_w1: dia_w_w1, 
+        l_l1: l_l1, 
+        w2: w2, 
+        l2: l2, 
+        vat_lieu: motaMaterial, 
+        merchandise_id: res.l_id, 
+        dv_tinh: res.dv_tinh 
+      }));
       reloadDatepicker();
       $('#modal-another-material').modal('hide');
     });
@@ -226,8 +248,12 @@ function getItem(index, unit, opts,readonly = true) {
     + '<td class="sequence">'+index+'</td>'
     + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input '+$readonly+' class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
     + '<td class=""><textarea '+$readonly+' class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
-    + '<td class=""><textarea class="form-control" name="material[kich_thuoc][]" rows="1">'+result+'</textarea></td>'
-    + '<td class=""><textarea class="form-control" name="material[quy_cach][]" rows="1"></textarea></td>'
+    + '<td style="width: 70px" class="do_day"><input readonly class="form-control" type="text" name="product[do_day][]" value="'+opts.do_day+'"></td>'
+    + '<td style="width: 70px" class="hinh_dang"><input readonly class="form-control" type="text" name="product[hinh_dang][]" value="'+opts.hinh_dang+'"></td>'
+    + '<td style="width: 70px" class="dia_w_w1"><input readonly class="form-control" type="text" name="product[dia_w_w1][]" value="'+opts.dia_w_w1+'"></td>'
+    + '<td style="width: 70px" class="l_l1"><input readonly class="form-control" type="text" name="product[l_l1][]" value="'+opts.l_l1+'"></td>'
+    + '<td style="width: 70px" class="w2"><input readonly class="form-control" type="text" name="product[w2][]" value="'+opts.w2+'"></td>'
+    + '<td style="width: 70px" class="l2"><input readonly class="form-control" type="text" name="product[l2][]" value="'+opts.l2+'"></td>'
     + '<td class=""><input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="'+opts.dv_tinh+'"></td>'
     + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'
     + '<td class=""><input class="form-control calendar-date" style="width: 120px" type="text" name="material[thoi_gian_can][]" value=""></td>'

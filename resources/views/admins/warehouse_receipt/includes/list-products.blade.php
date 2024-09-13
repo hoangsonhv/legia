@@ -15,8 +15,12 @@
         <th class="align-middle">Số TT</th>
         <th class="align-middle">Mã hàng</th>
         <th class="align-middle">Tên hàng</th>
-        <th class="align-middle">Kích thước</th>
-        <th class="align-middle">Quy cách</th>
+        <th class="align-middle">Độ dày</th>
+        <th class="align-middle">Hình dạng</th>
+        <th class="align-middle">Dia W W1</th>
+        <th class="align-middle">L L1</th>
+        <th class="align-middle">W2</th>
+        <th class="align-middle">L2</th>
         <th class="align-middle">Đ/v tính</th>
         <th class="align-middle">Lot No</th>
         <th class="align-middle">Số lượng (Theo chứng từ)</th>
@@ -39,16 +43,28 @@
             <td class="sequence">{{ $index + 1 }}</td>
             <td class="code">
               <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}" />
-              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly />
+              <input class="form-control" style="width: 70px" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly />
             </td>
             <td class="">
-              <textarea class="form-control" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
+              <textarea class="form-control" style="width: 200px" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
             </td>
-            <td class="">
-              <textarea class="form-control" name="product[kich_thuoc][]" rows="1" readonly>{{ $product['kich_thuoc'] }}</textarea>
+            <td class="do_day">
+              <input type="text" style="width: 70px" class="form-control" name="product[do_day][]" value="{{ $product['do_day'] }}"  readonly>
             </td>
-            <td class="">
-              <textarea class="form-control" name="product[quy_cach][]" rows="1" readonly>{{ $product['quy_cach'] }}</textarea>
+            <td class="hinh_dang">
+              <input type="text" style="width: 70px" class="form-control" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] }}"  readonly>
+            </td>
+            <td class="dia_w_w1">
+              <input type="text" style="width: 70px" class="form-control" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] }}"  readonly>
+            </td>
+            <td class="l_l1">
+              <input type="text" style="width: 70px" class="form-control" name="product[l_l1][]" value="{{ $product['l_l1'] }}"  readonly>
+            </td>
+            <td class="w2">
+              <input type="text" style="width: 70px" class="form-control" name="product[w2][]" value="{{ $product['w2'] }}"  readonly>
+            </td>
+            <td class="l2">
+              <input type="text" style="width: 70px" class="form-control" name="product[l2][]" value="{{ $product['l2'] }}"  readonly>
             </td>
             <td class="">
               <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
