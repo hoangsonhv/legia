@@ -360,7 +360,7 @@ class RequestController extends Controller
                         ]);
                     $canCreateWarehouseReceipt = $coModel->currentStep->step == CoStepHistory::STEP_CREATE_WAREHOUSE_RECEIPT;
                 }
-                if($coModel->request->first() && $co->warehouseReceipts()->count()) {
+                if($coModel->request->first() && $coModel->warehouseReceipts()->count()) {
                     $hasPercent = $this->requestRepository->checkPercentPayment($coModel->request->first()->id , 3);
                     if($hasPercent && $coModel->payment()->sum('money_total') < $coModel->request->first()->money_total ) $isPaymentStep4 = true;
                 }
