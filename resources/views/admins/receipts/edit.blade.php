@@ -206,6 +206,13 @@
                          {{ $valVnd }}
                         </td>
                         <td>
+                          @php
+                            $valVnd = number_format(old('thanh_toan[amount_money][sau_khi_giao_hang_va_cttt]', $co->thanh_toan['amount_money']['sau_khi_giao_hang_va_cttt']));
+                            if (!$valVnd) {
+                              $valVnd = null;
+                            }
+                          @endphp
+                         {{ $valVnd }}
                         </td>
                       </tr>
                       <tr class="text-center">
