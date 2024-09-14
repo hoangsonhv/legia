@@ -227,9 +227,9 @@ class PriceSurveyController extends Controller
                             'request_id' => $requestId,
                             'core_customer_id' => $priceSurvey->id,
                         ];
+                        $priceSurvey->surveyPrices()->create($surveyPrice ?? );
                     }
                     
-                    $priceSurvey->surveyPrices()->create($surveyPrice);
                 }
                 catch (\Exception $ex) {
                     dd($ex);
