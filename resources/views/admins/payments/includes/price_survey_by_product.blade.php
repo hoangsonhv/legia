@@ -28,7 +28,8 @@
             <td>
                 <div class="d-block">
                     @php
-                        $surveyPrice = $priceSurvey->surveyPrices()->first();
+                        $surveyPrice = $priceSurvey->surveyPrices()->count();
+                        if($surveyPrice > 0) $surveyPrice = $priceSurvey->surveyPrices()->first();
                     @endphp
                     @if($surveyPrice) 
                         @if($surveyPrice->accompanying_document != "[]")
