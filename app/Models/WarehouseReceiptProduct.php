@@ -24,6 +24,7 @@ class WarehouseReceiptProduct extends Model
         'kich_thuoc',
         'quy_cach',
         'into_money',
+        'vat',
         'merchandise_id'
     ];
 }
