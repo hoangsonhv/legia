@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-12">
                     <div class="card form-root">
-                        {!! Form::open(array('route' => 'admin.warehouse-export-sell.store', 'method' => 'post', 'enctype' => 'multipart/form-data')) !!}
+                        {!! Form::open(array('route' => 'admin.warehouse-export-sell.store', 'method' => 'post', 'enctype' => 'multipart/form-data', 'id' => 'export_sell')) !!}
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="core_customer_id">CO<b style="color: red;"> (*)</b></label>
@@ -79,11 +79,12 @@
                             @include('admins.warehouse_export_sell.includes.list-products')
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary">Lưu thông tin</button>
-                            <a href="{{ route('admin.warehouse-export-sell.index') }}" class="btn btn-default">Quay lại</a>
-                        </div>
+                        
                     {!! Form::close() !!}
+                    <div class="card-footer text-right">
+                        <button id="btn_submit_export_sell" data-url="{{route('admin.warehouse-export-sell.check-quantity-pre-store')}}" type="submit" class="btn btn-primary">Lưu thông tin</button>
+                        <a href="{{ route('admin.warehouse-export-sell.index') }}" class="btn btn-default">Quay lại</a>
+                    </div>
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
@@ -93,6 +94,25 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="comfirmStore" tabindex="-1" role="dialog" aria-labelledby="comfirmStoreLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="comfirmStoreLabel">Cảnh báo</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Hàng hóa xuất kho chưa đủ so với CO, bạn vẫn muốn tiếp tục ?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="storeExportSell" type="button" class="btn btn-primary">Tiếp tục</button>
+            </div>
+          </div>
+        </div>
+      </div>
 @endsection
 @section('js')
     <script type="text/javascript" src="{{ asset('vendor/moment/moment.min.js') }}"></script>

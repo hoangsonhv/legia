@@ -249,6 +249,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
         Route::patch('/edit/{id}', [WarehouseExportSellController::class, 'update'])->name('admin.warehouse-export-sell.update');
         Route::get('/destroy/{id}', [WarehouseExportSellController::class, 'destroy'])->name('admin.warehouse-export-sell.destroy');
         Route::post('/remove-file', [WarehouseExportSellController::class, 'removeFile'])->name('admin.warehouse-export-sell.remove-file');
+        Route::post('/check-quantity-pre-store', [WarehouseExportSellController::class, 'checkQuantityPreStore'])->name('admin.warehouse-export-sell.check-quantity-pre-store');
     });
     /* Warehouse-export */
     Route::group(['prefix' => 'warehouse-export'], function() {

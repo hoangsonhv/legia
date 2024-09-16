@@ -289,18 +289,91 @@ class WarehouseExportSellController extends Controller
                         $group_warehouse->save();
                     }
                 }
-
+                if($this->coRepo->checkQuantityExportSell($co)) {
+                    $co->is_enough_export_sell = true;
+                } else {
+                    $co->is_enough_export_sell = false;
+                }
+                $co->save();
                 \DB::commit();
                 return redirect()->route('admin.warehouse-export-sell.index')->with('success', 'Tạo phiếu xuất kho bán hàng thành công!');
             }
         } catch (\Exception $ex) {
             \DB::rollback();
             //dd($ex);
-	    report($ex);
+            report($ex);
         }
         return redirect()->route('admin.warehouse-export-sell.index')->with('error', 'Tạo phiếu xuất kho bán hàng thất bại!');
     }
 
+    public function checkQuantityPreStore(WarehouseExportSellRequest $request) 
+    {
+        $input = $request->input();
+        $result = false;
+        $co = null;
+        if(isset($input['co_id']) && $input['co_id']) {
+            $co = Co::find($model->co_id ?? $input['co_id']);
+        }
+        $products = [];
+        $inputProducts = $request->input('product');
+        if($inputProducts) {
+            foreach ($inputProducts['code'] as $key => $code) {
+                if (empty($code)) {
+                    continue;
+                }
+                $products[] = [
+                    'code' => $inputProducts['code'][$key],
+                    'name' => $inputProducts['name'][$key],
+                    'do_day' => $inputProducts['do_day'][$key],
+                    'tieu_chuan' => $inputProducts['tieu_chuan'][$key],
+                    'kich_co' => $inputProducts['kich_co'][$key],
+                    'kich_thuoc' => $inputProducts['kich_thuoc'][$key],
+                    'chuan_bich' => $inputProducts['chuan_bich'][$key],
+                    'chuan_gasket' => $inputProducts['chuan_gasket'][$key],
+                    'unit' => $inputProducts['unit'][$key],
+                    'quantity' => $inputProducts['quantity'][$key],
+                    'unit_price' => $inputProducts['unit_price'][$key],
+                    'into_money' => $inputProducts['into_money'][$key],
+                    'lot_no' => $inputProducts['lot_no'][$key],
+                    'vat' => $inputProducts['vat'][$key],
+                    'merchandise_id' => $inputProducts['merchandise_id'][$key],
+                ];
+            }
+            $products = collect($products)
+                        ->groupBy('code')
+                        ->map(function ($group) {
+                            return [
+                                'total_quantity' => $group->sum('quantity'),
+                            ];
+                        });
+        }
+        if($co->warehouseExportSells()->count()) {
+            $merchandiseCo = $co->warehouses;
+            $merchandiseExportSell = $co->warehouseExportSells()
+            ->with('products')
+            ->get()
+            ->flatMap(function ($exportSell) {
+                return $exportSell->products;
+            })
+            ->groupBy(function ($product) {
+                return $product->code;
+            })
+            ->map(function ($group) {
+                return [
+                    'code' => $group->first()->code,
+                    'total_quantity' => $group->sum('quantity'),
+                ];
+            });
+            foreach ($merchandiseCo as $key => $value) {
+                $currentQuantity = (isset($products[$value->code])) ? $products[$value->code]['total_quantity'] : 0;
+                if(isset($merchandiseExportSell[$value->code])) {
+                    if($value->so_luong <= ($merchandiseExportSell[$value->code]['total_quantity'] + $currentQuantity)) $result = true;
+                }
+                $result = false;
+            }
+        }
+        return ['success' => $result, 'data' => []];
+    }
     public function edit(Request $request, $id)
     {
         $breadcrumb = $this->menu;

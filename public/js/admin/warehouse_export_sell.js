@@ -5,7 +5,25 @@ var aCode = [];
 
 $(function () {
     'use strict'
-
+    $('#btn_submit_export_sell').click(function(e) {
+        var dataForm = $('form#export_sell').serializeArray();
+        $.ajax({
+            method: "POST",
+            url: $(this).attr('data-url'),
+            data: dataForm
+        })
+            .done(function( data ) {
+                if (data.success) {
+                    $('form#export_sell').submit();
+                } else {
+                    $('#comfirmStore').modal('show');
+                }
+            });
+    })
+    $('#storeExportSell').click(function(e) {
+        $('#comfirmStore').modal('hide');
+        $('form#export_sell').submit();
+    })
     // Init
     $('[data-toggle="tooltip"]').tooltip();
     reloadDatepicker();

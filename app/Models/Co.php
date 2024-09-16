@@ -33,6 +33,7 @@ class Co extends Model
         'tong_gia',
         'vat',
         'dong_goi_va_van_chuyen',
+        'is_enough_export_sell',
         'noi_giao_hang',
         'xuat_xu',
         'thoi_gian_giao_hang',
@@ -119,5 +120,9 @@ class Co extends Model
     public function warehouseReceipts() 
     {
         return $this->hasMany(WarehouseReceipt::class, 'co_id', 'id');
+    }
+    public function warehouseExportSells() 
+    {
+        return $this->hasMany(WarehouseExportSell::class, 'co_id', 'id');
     }
 }

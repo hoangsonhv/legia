@@ -90,7 +90,12 @@ class CoStepHistoryRepository extends AdminRepository
                                 {
                                     $this->insertNextStep('receipt', $coId, $objectId, CoStepHistory::ACTION_CREATE, 4);
                                 } else {
-                                    $this->coRepo->doneCo($coId);
+                                    $isEnoughExportSell = $this->coRepo->checkQuantityExportSell($co);
+                                    if($isEnoughExportSell) {
+                                        $this->coRepo->doneCo($coId);
+                                    } else {
+                                        $this->insertNextStep('manufacture', $coId, $coId, CoStepHistory::ACTION_APPROVE);
+                                    }
                                 }
                             }
                             break;
@@ -245,7 +250,9 @@ class CoStepHistoryRepository extends AdminRepository
                         break;
                     case 2:
                         $hasPercent = $this->coRepo->checkPercentPayment($coId, 1);
-                        if ($hasPercent) {
+                        $co = $this->coRepo->find($coId);
+
+                        if ($hasPercent && !$co->warehouseExportSells()->count()) {
                             $step = CoStepHistory::STEP_CREATE_RECEIPT_N2;
                         } else {
                             $this->insertNextStep('warehouse-export-sell', $coId, $coId, CoStepHistory::ACTION_CREATE);

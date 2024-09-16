@@ -114,9 +114,39 @@ class CoRepository extends BaseRepository
         // thu đủ  && chi đủ && xuất kho bán hàng đủ
         if ($co 
             && $co->payment()->sum('money_total') >= $co->request->first()->money_total 
-            && $co->receipt()->sum('actual_money') >= ($co->tong_gia + $co->vat)) {
+            && $co->receipt()->sum('actual_money') >= ($co->tong_gia + $co->vat)
+            && $this->checkQuantityExportSell($co)) {
             $co->confirm_done = 1;
             $co->save();
         }
+    }
+    public function checkQuantityExportSell(Co $co) {
+        $result = false;
+        if($co->warehouseExportSells()->count()) {
+            $merchandiseCo = $co->warehouses;
+            $merchandiseExportSell = $co->warehouseExportSells()
+            ->with('products')
+            ->get()
+            ->flatMap(function ($exportSell) {
+                return $exportSell->products;
+            })
+            ->groupBy(function ($product) {
+                return $product->code;
+            })
+            ->map(function ($group) {
+                return [
+                    'code' => $group->first()->code,
+                    'total_quantity' => $group->sum('quantity'),
+                ];
+            });
+            // dd($merchandiseCo, $merchandiseExportSell);
+            foreach ($merchandiseCo as $key => $value) {
+                if(isset($merchandiseExportSell[$value->code])) {
+                    if($value->so_luong <= $merchandiseExportSell[$value->code]['total_quantity']) $result = true;
+                }
+                $result = false;
+            }
+        }
+        return $result;
     }
 }

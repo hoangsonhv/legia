@@ -71,7 +71,33 @@ class CoService
     }
 
     public function checkQuantityExportSell(Co $co) {
-
+        $result = false;
+        if($co->warehouseExportSells()->count()) {
+            $merchandiseCo = $co->warehouses;
+            $merchandiseExportSell = $co->warehouseExportSells()
+            ->with('products')
+            ->get()
+            ->flatMap(function ($exportSell) {
+                return $exportSell->products;
+            })
+            ->groupBy(function ($product) {
+                return $product->code;
+            })
+            ->map(function ($group) {
+                return [
+                    'code' => $group->first()->code,
+                    'total_quantity' => $group->sum('quantity'),
+                ];
+            });
+            // dd($merchandiseCo, $merchandiseExportSell);
+            foreach ($merchandiseCo as $key => $value) {
+                if(isset($merchandiseExportSell[$value->code])) {
+                    if($value->so_luong <= $merchandiseExportSell[$value->code]['total_quantity']) $result = true;
+                }
+                $result = false;
+            }
+        }
+        return $result;
     }
     public function searchProductMaterialsInWarehouses($code, $lot_no, $mo_ta = "")
     {
