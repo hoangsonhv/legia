@@ -33,6 +33,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Mã Phiếu xuất kho</th>
+                  <th>Mã CO</th>
                   <th>Tên người nhận hàng</th>
                   <th>Xuất tại kho</th>
                   <th>Địa điểm</th>
@@ -45,6 +46,7 @@
                 @foreach($datas as $data)
                   <tr>
                     <td>{{ $data->id }}</td>
+                    <td>{{ $data->co ? $data->co->code: '' }}</td>
                     <td>{{ $data->code }}</td>
                     <td>{{ $data->recipient_name }}</td>
                     <td>{{ $data->warehouse_at }}</td>

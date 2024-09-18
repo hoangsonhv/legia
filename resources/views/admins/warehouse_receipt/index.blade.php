@@ -33,6 +33,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Mã Phiếu nhập kho</th>
+                  <th>Mã CO</th>
                   <th>Tên người giao</th>
                   <th>Nhập tại kho</th>
                   <th>Địa điểm</th>
@@ -46,6 +47,7 @@
                   <tr>
                     <td>{{ $data->id }}</td>
                     <td>{{ $data->code }}</td>
+                    <td>{{ $data->co ? $data->co->code : '' }}</td>
                     <td>{{ $data->delivery_name }}</td>
                     <td>{{ $data->warehouse_at }}</td>
                     <td>{{ $data->address }}</td>
