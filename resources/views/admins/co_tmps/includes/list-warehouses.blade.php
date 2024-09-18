@@ -9,31 +9,6 @@
 <script>
     $(document).ready(function() {
         $('.select2').select2();
-        
-        $('.dataTable tfoot th').each(function (i) {
-            var title = $('.dataTable thead th')
-                .eq($(this).index())
-                .text();
-            $(this).html(
-                '<input type="text" placeholder="' + title + '" data-index="' + i + '" />'
-            );
-        });
-        $('.dataTable').each(function () {
-            var table = $(this).DataTable({
-                "paging": false,
-                "language": {
-                    "search": "Tìm kiếm"
-                }
-            });
-
-            // Event handler for searching in each table
-            $(table.table().container()).on('keyup', 'tfoot input', function () {
-                table
-                    .column($(this).data('index'))
-                    .search(this.value)
-                    .draw();
-            });
-        });
     });
 </script>
 <h3 class="text-primary">Danh sách vật liệu kho</h3>
@@ -62,6 +37,156 @@
             @foreach ($warehouseGroup as $key => $item)
                 <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="warehouse-{{ $key }}">
                     <table class="table table-head-fixed table-bordered table-hover dataTable text-wrap data-products">
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Mã HH</th>
+                                @switch($key)
+                                    @case(\App\Helpers\WarehouseHelper::BIA)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Hình dạng</th>
+                                        <th class="align-middle">Dia W W1</th>
+                                        <th class="align-middle">L L1</th>
+                                        <th class="align-middle">W2</th>
+                                        <th class="align-middle">L2</th>
+                                        <th class="align-middle">SL Tấm</th>
+                                        <th class="align-middle">SL m2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::CAO_SU)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Hình dạng</th>
+                                        <th class="align-middle">Dia W W1</th>
+                                        <th class="align-middle">L L1</th>
+                                        <th class="align-middle">W2</th>
+                                        <th class="align-middle">L2</th>
+                                        <th class="align-middle">SL Tấm</th>
+                                        <th class="align-middle">SL m2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::CAO_SU_VN_ZA)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Hình dạng</th>
+                                        <th class="align-middle">Dia W W1</th>
+                                        <th class="align-middle">L L1</th>
+                                        <th class="align-middle">W2</th>
+                                        <th class="align-middle">L2</th>
+                                        <th class="align-middle">SL Tấm</th>
+                                        <th class="align-middle">SL m2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::TAM_KIM_LOAI)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Hình dạng</th>
+                                        <th class="align-middle">Dia W W1</th>
+                                        <th class="align-middle">L L1</th>
+                                        <th class="align-middle">W2</th>
+                                        <th class="align-middle">L2</th>
+                                        <th class="align-middle">SL Tấm</th>
+                                        <th class="align-middle">SL m2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::CREAMIC)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Hình dạng</th>
+                                        <th class="align-middle">Dia W W1</th>
+                                        <th class="align-middle">L L1</th>
+                                        <th class="align-middle">W2</th>
+                                        <th class="align-middle">L2</th>
+                                        <th class="align-middle">SL Tấm</th>
+                                        <th class="align-middle">SL m2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::GRAPHITE)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Hình dạng</th>
+                                        <th class="align-middle">Dia W W1</th>
+                                        <th class="align-middle">L L1</th>
+                                        <th class="align-middle">W2</th>
+                                        <th class="align-middle">L2</th>
+                                        <th class="align-middle">SL Tấm</th>
+                                        <th class="align-middle">SL m2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::PTFE)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Hình dạng</th>
+                                        <th class="align-middle">Dia W W1</th>
+                                        <th class="align-middle">L L1</th>
+                                        <th class="align-middle">W2</th>
+                                        <th class="align-middle">L2</th>
+                                        <th class="align-middle">SL Tấm</th>
+                                        <th class="align-middle">SL m2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::TAM_NHUA)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Hình dạng</th>
+                                        <th class="align-middle">Dia W W1</th>
+                                        <th class="align-middle">L L1</th>
+                                        <th class="align-middle">W2</th>
+                                        <th class="align-middle">L2</th>
+                                        <th class="align-middle">SL Tấm</th>
+                                        <th class="align-middle">SL m2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::THANH_PHAM_SWG)
+                                        <th class="align-middle">Inner</th>
+                                        <th class="align-middle">Hoop</th>
+                                        <th class="align-middle">Filler</th>
+                                        <th class="align-middle">Outer</th>
+                                        <th class="align-middle">Thick</th>
+                                        <th class="align-middle">Tiêu Chuẩn</th>
+                                        <th class="align-middle">Kích cỡ</th>
+                                        <th class="align-middle">SL cái</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::RTJ)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">SL cái</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::GLAND_PACKING)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">Trọng lượng Kg/cuộn</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL Kg</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::GLAND_PACKING_LATTY)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::DAY_CREAMIC)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL m</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::DAY_CAO_SU_VA_SILICON)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL m</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::NHU_KY_THUAT_CAY_ONG)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL m</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::PTFE_CAYONG)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">m/cây</th>
+                                        <th class="align-middle">SL cây</th>
+                                        <th class="align-middle">SL m</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::ORING)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">m/cái</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::PTFE_TAPE)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL m</th>
+                                        @break
+                                @endswitch
+                                <th>Lot no</th>
+                                <th>Ghi chú</th>
+                                <th>Date</th>
+                            </tr>
+                        </tfoot>
                         <thead>
                             <tr align="center">
                                 <th class="align-middle">Số TT</th>
@@ -372,156 +497,6 @@
                                 @endforeach
                             @endif
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th>Mã HH</th>
-                                @switch($key)
-                                    @case(\App\Helpers\WarehouseHelper::BIA)
-                                        <th class="align-middle">Độ dày</th>
-                                        <th class="align-middle">Hình dạng</th>
-                                        <th class="align-middle">Dia W W1</th>
-                                        <th class="align-middle">L L1</th>
-                                        <th class="align-middle">W2</th>
-                                        <th class="align-middle">L2</th>
-                                        <th class="align-middle">SL Tấm</th>
-                                        <th class="align-middle">SL m2</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::CAO_SU)
-                                        <th class="align-middle">Độ dày</th>
-                                        <th class="align-middle">Hình dạng</th>
-                                        <th class="align-middle">Dia W W1</th>
-                                        <th class="align-middle">L L1</th>
-                                        <th class="align-middle">W2</th>
-                                        <th class="align-middle">L2</th>
-                                        <th class="align-middle">SL Tấm</th>
-                                        <th class="align-middle">SL m2</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::CAO_SU_VN_ZA)
-                                        <th class="align-middle">Độ dày</th>
-                                        <th class="align-middle">Hình dạng</th>
-                                        <th class="align-middle">Dia W W1</th>
-                                        <th class="align-middle">L L1</th>
-                                        <th class="align-middle">W2</th>
-                                        <th class="align-middle">L2</th>
-                                        <th class="align-middle">SL Tấm</th>
-                                        <th class="align-middle">SL m2</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::TAM_KIM_LOAI)
-                                        <th class="align-middle">Độ dày</th>
-                                        <th class="align-middle">Hình dạng</th>
-                                        <th class="align-middle">Dia W W1</th>
-                                        <th class="align-middle">L L1</th>
-                                        <th class="align-middle">W2</th>
-                                        <th class="align-middle">L2</th>
-                                        <th class="align-middle">SL Tấm</th>
-                                        <th class="align-middle">SL m2</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::CREAMIC)
-                                        <th class="align-middle">Độ dày</th>
-                                        <th class="align-middle">Hình dạng</th>
-                                        <th class="align-middle">Dia W W1</th>
-                                        <th class="align-middle">L L1</th>
-                                        <th class="align-middle">W2</th>
-                                        <th class="align-middle">L2</th>
-                                        <th class="align-middle">SL Tấm</th>
-                                        <th class="align-middle">SL m2</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::GRAPHITE)
-                                        <th class="align-middle">Độ dày</th>
-                                        <th class="align-middle">Hình dạng</th>
-                                        <th class="align-middle">Dia W W1</th>
-                                        <th class="align-middle">L L1</th>
-                                        <th class="align-middle">W2</th>
-                                        <th class="align-middle">L2</th>
-                                        <th class="align-middle">SL Tấm</th>
-                                        <th class="align-middle">SL m2</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::PTFE)
-                                        <th class="align-middle">Độ dày</th>
-                                        <th class="align-middle">Hình dạng</th>
-                                        <th class="align-middle">Dia W W1</th>
-                                        <th class="align-middle">L L1</th>
-                                        <th class="align-middle">W2</th>
-                                        <th class="align-middle">L2</th>
-                                        <th class="align-middle">SL Tấm</th>
-                                        <th class="align-middle">SL m2</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::TAM_NHUA)
-                                        <th class="align-middle">Độ dày</th>
-                                        <th class="align-middle">Hình dạng</th>
-                                        <th class="align-middle">Dia W W1</th>
-                                        <th class="align-middle">L L1</th>
-                                        <th class="align-middle">W2</th>
-                                        <th class="align-middle">L2</th>
-                                        <th class="align-middle">SL Tấm</th>
-                                        <th class="align-middle">SL m2</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::THANH_PHAM_SWG)
-                                        <th class="align-middle">Inner</th>
-                                        <th class="align-middle">Hoop</th>
-                                        <th class="align-middle">Filler</th>
-                                        <th class="align-middle">Outer</th>
-                                        <th class="align-middle">Thick</th>
-                                        <th class="align-middle">Tiêu Chuẩn</th>
-                                        <th class="align-middle">Kích cỡ</th>
-                                        <th class="align-middle">SL cái</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::RTJ)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">SL cái</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::GLAND_PACKING)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">Trọng lượng Kg/cuộn</th>
-                                        <th class="align-middle">m/cuộn</th>
-                                        <th class="align-middle">SL Cuộn</th>
-                                        <th class="align-middle">SL Kg</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::GLAND_PACKING_LATTY)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">SL Cuộn</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::DAY_CREAMIC)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">m/cuộn</th>
-                                        <th class="align-middle">SL Cuộn</th>
-                                        <th class="align-middle">SL m</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::DAY_CAO_SU_VA_SILICON)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">m/cuộn</th>
-                                        <th class="align-middle">SL Cuộn</th>
-                                        <th class="align-middle">SL m</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::NHU_KY_THUAT_CAY_ONG)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">m/cuộn</th>
-                                        <th class="align-middle">SL Cuộn</th>
-                                        <th class="align-middle">SL m</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::PTFE_CAYONG)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">m/cây</th>
-                                        <th class="align-middle">SL cây</th>
-                                        <th class="align-middle">SL m</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::ORING)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">m/cái</th>
-                                        @break
-                                    @case(\App\Helpers\WarehouseHelper::PTFE_TAPE)
-                                        <th class="align-middle">Size</th>
-                                        <th class="align-middle">m/cuộn</th>
-                                        <th class="align-middle">SL Cuộn</th>
-                                        <th class="align-middle">SL m</th>
-                                        @break
-                                @endswitch
-                                <th>Lot no</th>
-                                <th>Ghi chú</th>
-                                <th>Date</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
                 @php
@@ -531,3 +506,41 @@
         </div>
     </div>
 </div>
+<script>
+    $('.dataTable').each(function() {
+    var table = $(this).DataTable(); // Khởi tạo DataTable cho mỗi bảng
+    
+    // Thêm các dropdown Select2 cho mỗi cột trong footer
+    $(this).find('tfoot th').each(function(index) {
+        var title = $(this).text();
+        var select = $('<select class="select2" multiple="multiple" style="width:100%" ><option value="">' + title + '</option></select>');
+        $(this).html(select);
+
+        // Lấy tất cả các giá trị duy nhất từ cột và thêm vào Select2
+        table.column(index).data().unique().sort().each(function(d) {
+            // Loại bỏ các thẻ HTML khỏi dữ liệu nếu cần
+            select.append('<option value="' + d + '">' + d + '</option>');
+        });
+
+        // Khởi tạo Select2
+        select.select2();
+    });
+    // Khởi tạo Select2 cho các dropdown vừa tạo
+    $(this).find('.select2').select2();
+
+    // Thêm sự kiện tìm kiếm cho mỗi cột
+    table.columns().every(function() {
+        var column = this;
+        $('select', this.footer()).on('change', function() {
+            var val = $(this).val(); // Lấy giá trị đã chọn
+            if (val.length > 0) {
+                // Tạo chuỗi regex để tìm kiếm với tất cả các lựa chọn
+                val = val.map(function(v) {
+                    return $.fn.dataTable.util.escapeRegex(v);
+                }).join('|');
+            }
+            column.search(val ? val : '', true, false).draw();
+        });
+    });
+  });
+</script>
