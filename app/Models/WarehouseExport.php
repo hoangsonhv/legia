@@ -25,6 +25,37 @@ class WarehouseExport extends Model
         'request_id'
     ];
 
+    protected static function booted()
+    {
+        // Khi tạo mới
+        static::created(function ($we) {
+            ChangeHistory::logChange($we, 'created', null, 'created');
+        });
+
+        // Khi cập nhật
+        static::updated(function ($we) {
+            $changes = [];
+
+            // Kiểm tra nếu status thay đổi
+            if ($we->isDirty('status')) {
+                $changes['status'] = [
+                    'previous' => $we->getOriginal('status'),
+                    'new' => $we->status,
+                ];
+            }
+            // Nếu có thay đổi, thì ghi lại lịch sử
+            if (!empty($changes)) {
+                ChangeHistory::logChange(
+                    $we,
+                    'updated', // Hành động cập nhật
+                    $we->getOriginal('status'), // Trạng thái trước
+                    $we->status, // Trạng thái sau
+                    $changes // Chi tiết các thay đổi
+                );
+            }
+        });
+    }
+
     public function products() {
         return $this->hasMany(WarehouseExportProduct::class, 'warehouse_export_id', 'id');
     }

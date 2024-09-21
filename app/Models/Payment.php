@@ -25,6 +25,37 @@ class Payment extends Model
         'step_id'
     ];
 
+    protected static function booted()
+    {
+        // Khi tạo mới
+        static::created(function ($payment) {
+            ChangeHistory::logChange($payment, 'created', null, 'created');
+        });
+
+        // Khi cập nhật
+        static::updated(function ($payment) {
+            $changes = [];
+
+            // Kiểm tra nếu status thay đổi
+            if ($payment->isDirty('status')) {
+                $changes['status'] = [
+                    'previous' => $payment->getOriginal('status'),
+                    'new' => $payment->status,
+                ];
+            }
+            // Nếu có thay đổi, thì ghi lại lịch sử
+            if (!empty($changes)) {
+                ChangeHistory::logChange(
+                    $payment,
+                    'updated', // Hành động cập nhật
+                    $payment->getOriginal('status'), // Trạng thái trước
+                    $payment->status, // Trạng thái sau
+                    $changes // Chi tiết các thay đổi
+                );
+            }
+        });
+    }
+
     public function co() {
         return $this->morphToMany(Co::class, 'coables');
     }

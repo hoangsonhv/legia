@@ -30,6 +30,37 @@ class Receipt extends Model
         'step_id'
     ];
 
+    protected static function booted()
+    {
+        // Khi tạo mới
+        static::created(function ($receipt) {
+            ChangeHistory::logChange($receipt, 'created', null, 'created');
+        });
+
+        // Khi cập nhật
+        static::updated(function ($receipt) {
+            $changes = [];
+
+            // Kiểm tra nếu status thay đổi
+            if ($receipt->isDirty('status')) {
+                $changes['status'] = [
+                    'previous' => $receipt->getOriginal('status'),
+                    'new' => $receipt->status,
+                ];
+            }
+            // Nếu có thay đổi, thì ghi lại lịch sử
+            if (!empty($changes)) {
+                ChangeHistory::logChange(
+                    $receipt,
+                    'updated', // Hành động cập nhật
+                    $receipt->getOriginal('status'), // Trạng thái trước
+                    $receipt->status, // Trạng thái sau
+                    $changes // Chi tiết các thay đổi
+                );
+            }
+        });
+    }
+    
     public function co() {
         return $this->morphToMany(Co::class, 'coables');
     }

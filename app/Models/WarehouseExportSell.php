@@ -29,6 +29,38 @@ class WarehouseExportSell extends Model
         'co_id'
     ];
 
+
+    protected static function booted()
+    {
+        // Khi tạo mới
+        static::created(function ($wes) {
+            ChangeHistory::logChange($wes, 'created', null, 'created');
+        });
+
+        // Khi cập nhật
+        static::updated(function ($wes) {
+            $changes = [];
+
+            // Kiểm tra nếu status thay đổi
+            if ($wes->isDirty('status')) {
+                $changes['status'] = [
+                    'previous' => $wes->getOriginal('status'),
+                    'new' => $wes->status,
+                ];
+            }
+            // Nếu có thay đổi, thì ghi lại lịch sử
+            if (!empty($changes)) {
+                ChangeHistory::logChange(
+                    $wes,
+                    'updated', // Hành động cập nhật
+                    $wes->getOriginal('status'), // Trạng thái trước
+                    $wes->status, // Trạng thái sau
+                    $changes // Chi tiết các thay đổi
+                );
+            }
+        });
+    }
+
     const CURRENCY_VND = 1;
 
     public function products() {

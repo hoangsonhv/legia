@@ -28,6 +28,37 @@ class Request extends Model
         'thanh_toan' => 'array'
     ];
 
+    protected static function booted()
+    {
+        // Khi tạo mới
+        static::created(function ($requestModel) {
+            ChangeHistory::logChange($requestModel, 'created', null, 'created');
+        });
+
+        // Khi cập nhật
+        static::updated(function ($requestModel) {
+            $changes = [];
+
+            // Kiểm tra nếu status thay đổi
+            if ($requestModel->isDirty('status')) {
+                $changes['status'] = [
+                    'previous' => $requestModel->getOriginal('status'),
+                    'new' => $requestModel->status,
+                ];
+            }
+            // Nếu có thay đổi, thì ghi lại lịch sử
+            if (!empty($changes)) {
+                ChangeHistory::logChange(
+                    $requestModel,
+                    'updated', // Hành động cập nhật
+                    $requestModel->getOriginal('status'), // Trạng thái trước
+                    $requestModel->status, // Trạng thái sau
+                    $changes // Chi tiết các thay đổi
+                );
+            }
+        });
+    }
+
     public function co() {
         return $this->morphToMany(Co::class, 'coables');
     }

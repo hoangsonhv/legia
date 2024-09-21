@@ -58,7 +58,38 @@ class Co extends Model
     // public function coes() {
     //     return $this->hasMany(Coable::class);
     // }
+    // Lắng nghe sự kiện khi tạo và cập nhật phiếu
+    protected static function booted()
+    {
+        // Khi tạo mới
+        static::created(function ($co) {
+            ChangeHistory::logChange($co, 'created', null, 'created');
+        });
 
+        // Khi cập nhật
+        static::updated(function ($co) {
+            $changes = [];
+
+            // Kiểm tra nếu status thay đổi
+            if ($co->isDirty('status')) {
+                $changes['status'] = [
+                    'previous' => $co->getOriginal('status'),
+                    'new' => $co->status,
+                ];
+            }
+            // Nếu có thay đổi, thì ghi lại lịch sử
+            if (!empty($changes)) {
+                ChangeHistory::logChange(
+                    $co,
+                    'updated', // Hành động cập nhật
+                    $co->getOriginal('status'), // Trạng thái trước
+                    $co->status, // Trạng thái sau
+                    $changes // Chi tiết các thay đổi
+                );
+            }
+        });
+    }
+    
     public function getRawCodeAttribute() {
         return str_replace('CO', '', $this->code);
     }
@@ -125,4 +156,11 @@ class Co extends Model
     {
         return $this->hasMany(WarehouseExportSell::class, 'co_id', 'id');
     }
+
+    // Quan hệ đa hình với bảng change_histories
+    public function changeHistories()
+    {
+        return $this->morphMany(ChangeHistory::class, 'formable');
+    }
+    
 }
