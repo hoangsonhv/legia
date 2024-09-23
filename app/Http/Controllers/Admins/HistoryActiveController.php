@@ -60,7 +60,7 @@ class HistoryActiveController extends Controller
             $query->where('performed_by', $request->performed_by);
         }
         if($request->has('formable_type')) {
-            $query->where('performed_by', $request->formable_type);
+            $query->where('formable_type', $request->formable_type);
         }
         if($request->has('formable_id')) {
             $query->where('formable_id', $request->formable_id);

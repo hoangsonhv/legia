@@ -698,6 +698,9 @@ return [
                 'admin.config.price' => [
                     'label' => 'Thông tin đơn giá'
                 ],
+                'admin.history-active.index' => [
+                    'label' => 'Lịch sử hoạt động'
+                ],
             ]
         ],
 	],
