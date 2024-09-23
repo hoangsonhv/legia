@@ -63,7 +63,7 @@ class Co extends Model
     {
         // Khi tạo mới
         static::created(function ($co) {
-            ChangeHistory::logChange($co, 'created', null, 'created');
+            ChangeHistory::logChange($co, 'created', null, $co->status);
         });
 
         // Khi cập nhật

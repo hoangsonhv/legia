@@ -29,7 +29,7 @@ class Payment extends Model
     {
         // Khi tạo mới
         static::created(function ($payment) {
-            ChangeHistory::logChange($payment, 'created', null, 'created');
+            ChangeHistory::logChange($payment, 'created', null,1);
         });
 
         // Khi cập nhật

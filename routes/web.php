@@ -27,6 +27,7 @@ use App\Http\Controllers\Admins\DocumentController;
 use App\Http\Controllers\Admins\PDFController;
 use App\Http\Controllers\Admins\ReportController;
 use App\Http\Controllers\Admins\BankLoanController;
+use App\Http\Controllers\Admins\HistoryActiveController;
 use App\Http\Controllers\Admins\WarehouseController;
 use App\Http\Controllers\Admins\WarehouseGroupController;
 use Illuminate\Support\Facades\Route;
@@ -345,6 +346,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
 	/* Get form create material */
 	Route::group(['prefix' => 'warehouse'], function() {
 		Route::get('show-form-create', [WarehouseController::class, 'showFormCreate'])->name('admin.warehouse.show-form-create');
+	});
+	Route::group(['prefix' => '/history-active'],function(){
+		Route::get('index', [HistoryActiveController::class, 'index'])->name('admin.history-active.index');
 	});
 
 	Route::get('/test',function(){

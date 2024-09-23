@@ -34,7 +34,7 @@ class WarehouseExportSell extends Model
     {
         // Khi tạo mới
         static::created(function ($wes) {
-            ChangeHistory::logChange($wes, 'created', null, 'created');
+            ChangeHistory::logChange($wes, 'created', null, $wes->status);
         });
 
         // Khi cập nhật

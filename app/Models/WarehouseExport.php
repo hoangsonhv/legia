@@ -29,7 +29,7 @@ class WarehouseExport extends Model
     {
         // Khi tạo mới
         static::created(function ($we) {
-            ChangeHistory::logChange($we, 'created', null, 'created');
+            ChangeHistory::logChange($we, 'created', null, $we->status);
         });
 
         // Khi cập nhật

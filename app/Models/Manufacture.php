@@ -39,6 +39,15 @@ class Manufacture extends Model
                     'previous' => $wr->getOriginal('is_completed'),
                     'new' => $wr->is_completed,
                 ];
+                if (!empty($changes)) {
+                    ChangeHistory::logChange(
+                        $wr,
+                        'updated', // Hành động cập nhật
+                        $changes['is_completed']['previous'], // Trạng thái trước
+                        $changes['is_completed']['new'], // Trạng thái sau
+                        $changes // Chi tiết các thay đổi
+                    );
+                }
             }
             // Kiểm tra nếu status thay đổi
             if ($wr->isDirty('qc_check')) {
@@ -46,17 +55,17 @@ class Manufacture extends Model
                     'previous' => $wr->getOriginal('qc_check'),
                     'new' => $wr->qc_check,
                 ];
+                if (!empty($changes)) {
+                    ChangeHistory::logChange(
+                        $wr,
+                        'updated', // Hành động cập nhật
+                        $changes['qc_check']['previous'], // Trạng thái trước
+                        $changes['qc_check']['new'], // Trạng thái sau
+                        $changes // Chi tiết các thay đổi
+                    );
+                }
             }
             // Nếu có thay đổi, thì ghi lại lịch sử
-            if (!empty($changes)) {
-                ChangeHistory::logChange(
-                    $wr,
-                    'updated', // Hành động cập nhật
-                    $changes['previous'], // Trạng thái trước
-                    $changes['new'], // Trạng thái sau
-                    $changes // Chi tiết các thay đổi
-                );
-            }
         });
     }
     public function co()

@@ -664,6 +664,14 @@
             </a>
           </li>
           @endpermission
+          <li class="nav-item{{ (strpos(url()->current(), '/history-active') !== false) ? ' menu-open' : '' }}">
+            <a href="{{ route('admin.history-active.index') }}" class="nav-link{{ (strpos(url()->current(), '/config') !== false) ? ' active' : '' }}">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>
+                Lịch sử hoạt động
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

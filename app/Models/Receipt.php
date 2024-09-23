@@ -34,7 +34,7 @@ class Receipt extends Model
     {
         // Khi tạo mới
         static::created(function ($receipt) {
-            ChangeHistory::logChange($receipt, 'created', null, 'created');
+            ChangeHistory::logChange($receipt, 'created', null, 1);
         });
 
         // Khi cập nhật

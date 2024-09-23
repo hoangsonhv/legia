@@ -28,7 +28,7 @@ class WarehouseReceipt extends Model
     {
         // Khi tạo mới
         static::created(function ($wr) {
-            ChangeHistory::logChange($wr, 'created', null, 'created');
+            ChangeHistory::logChange($wr, 'created', null, $wr->status);
         });
 
         // Khi cập nhật

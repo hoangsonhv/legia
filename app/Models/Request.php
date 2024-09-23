@@ -32,7 +32,7 @@ class Request extends Model
     {
         // Khi tạo mới
         static::created(function ($requestModel) {
-            ChangeHistory::logChange($requestModel, 'created', null, 'created');
+            ChangeHistory::logChange($requestModel, 'created', null, $requestModel->status);
         });
 
         // Khi cập nhật
