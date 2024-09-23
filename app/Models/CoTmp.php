@@ -36,7 +36,36 @@ class CoTmp extends Model
     protected $casts = [
         'thanh_toan' => 'array'
     ];
+    protected static function booted()
+    {
+        // Khi tạo mới
+        static::created(function ($co) {
+            ChangeHistory::logChange($co, 'created', null, $co->status);
+        });
 
+        // Khi cập nhật
+        static::updated(function ($co) {
+            $changes = [];
+
+            // Kiểm tra nếu status thay đổi
+            if ($co->isDirty('status')) {
+                $changes['status'] = [
+                    'previous' => $co->getOriginal('status'),
+                    'new' => $co->status,
+                ];
+            }
+            // Nếu có thay đổi, thì ghi lại lịch sử
+            if (!empty($changes)) {
+                ChangeHistory::logChange(
+                    $co,
+                    'updated', // Hành động cập nhật
+                    $co->getOriginal('status'), // Trạng thái trước
+                    $co->status, // Trạng thái sau
+                    $changes // Chi tiết các thay đổi
+                );
+            }
+        });
+    }
     public function customer()
     {
         return $this->hasOne(Customer::class);
