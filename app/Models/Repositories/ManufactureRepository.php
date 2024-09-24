@@ -99,42 +99,45 @@ class ManufactureRepository extends AdminRepository
                     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type],
                 ];
 
-                if ($detail->reality_quantity >= $material->need_quantity) {
-                    $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->where('lot_no', $detail->lot_no)->first();
-                    if($base_warehouse != null) {
+                $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->where('lot_no', $detail->lot_no)->first();
+                if($base_warehouse != null) {
+                    $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
+                            ->find($base_warehouse->l_id);
+                    $merchandise->size = $detail->size;
+                    $merchandise->dia_w_w1 = $detail->dia_w_w1;
+                    $merchandise->l_l1 = $detail->l_l1;
+                    $merchandise->setQuantity($detail->reality_quantity, accumulate: false);
+                    $merchandise->save();
+                } else {
+                    $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->first();
+                    $warehouseModelId = 0;
+
+                    if ($base_warehouse != null) {
                         $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
-                                ->find($base_warehouse->l_id);
-                        $merchandise->setQuantity($detail->reality_quantity, accumulate: false);
-                        $merchandise->save();
-                    } else {
-                        $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->first();
-                        $warehouseModelId = 0;
-    
-                        if ($base_warehouse != null) {
-                            $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
-                                ->find($base_warehouse->l_id);
-    
-                            $new_merchandise = $merchandise->replicate();
-                            $new_merchandise->created_at = Carbon::now();
-                            $new_merchandise->ghi_chu = "";
-                            $new_merchandise->lot_no = $detail->lot_no;
-                            $new_merchandise->date = Carbon::now();
-                            $new_merchandise->setQuantity($detail->reality_quantity, accumulate: false);
-                            $new_merchandise->save();
-                            $warehouseModelId = $new_merchandise->l_id;
-                        }
-                        else
-                        {
-                            $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type])
-                                ->create($modelAttributes);
-                        
-                            $warehouseModel->setQuantity($detail->reality_quantity, accumulate: false);
-                            $warehouseModel->save();
-                            $warehouseModelId = $warehouseModel->l_id;
-                        }
+                            ->find($base_warehouse->l_id);
+
+                        $new_merchandise = $merchandise->replicate();
+                        $new_merchandise->created_at = Carbon::now();
+                        $new_merchandise->ghi_chu = "";
+                        $new_merchandise->size = $detail->size;
+                        $new_merchandise->dia_w_w1 = $detail->dia_w_w1;
+                        $new_merchandise->l_l1 = $detail->l_l1;
+                        $new_merchandise->lot_no = $detail->lot_no;
+                        $new_merchandise->date = Carbon::now();
+                        $new_merchandise->setQuantity($detail->reality_quantity, accumulate: false);
+                        $new_merchandise->save();
+                        $warehouseModelId = $new_merchandise->l_id;
+                    }
+                    else
+                    {
+                        $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type])
+                            ->create($modelAttributes);
+                    
+                        $warehouseModel->setQuantity($detail->reality_quantity, accumulate: false);
+                        $warehouseModel->save();
+                        $warehouseModelId = $warehouseModel->l_id;
                     }
                 }
-
                 $material->merchandise_id = $warehouseModelId;
                 $material->save();
             }

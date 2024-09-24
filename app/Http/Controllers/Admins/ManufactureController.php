@@ -308,8 +308,36 @@ class ManufactureController extends Controller
                 if($offerPriceIds) {
                     foreach ($offerPriceIds as $index => $offerPriceId) {
                         $dataUpdate = [];
+                        $kich_thuoc = 0;
+                        $merchandiseDetect = AdminHelper::detectProductCode(@$inputs['code'][$index]);
+                        switch ($merchandiseDetect['model_type']) {
+                            case WarehouseHelper::BIA:
+                            case WarehouseHelper::CAO_SU:
+                            case WarehouseHelper::CAO_SU_VN_ZA:
+                            case WarehouseHelper::TAM_KIM_LOAI:
+                            case WarehouseHelper::CREAMIC:
+                            case WarehouseHelper::GRAPHITE:
+                            case WarehouseHelper::PTFE:
+                            case WarehouseHelper::TAM_NHUA:
+                                $kich_thuoc = @$inputs['dia_w_w1'][$index] ?? 0 . 'x' .@$inputs['l_l1'][$index] ?? 0;
+                                break;
+                            case WarehouseHelper::GLAND_PACKING_LATTY:
+                                $kich_thuoc = @$inputs['size'][$index] ?? 0 . 'x' . @$inputs['size'][$index] ?? 0;
+                                break;
+                            default:
+                                $kich_thuoc = @$inputs['size'][$index] ?? 0;
+                                break;
+                        }
                         $reality = $inputs['reality_quantity'][$index] - (@$inputs['error_quantity'][$index] ?? 0);
                         $dataUpdate = [
+                            'do_day' => @$inputs['do_day'][$index] ?? 0,
+                            'tieu_chuan' => @$inputs['tieu_chuan'][$index] ?? 0,
+                            'size' => @$inputs['size'][$index] ?? 0,
+                            'dia_w_w1' => @$inputs['dia_w_w1'][$index] ?? 0,
+                            'l_l1' => @$inputs['l_l1'][$index] ?? 0,
+                            'kich_thuoc' => $kich_thuoc,
+                            'chuan_bich' => @$inputs['chuan_bich'][$index] ?? 0,
+                            'chuan_gasket' => @$inputs['chuan_gasket'][$index] ?? 0,
                             'reality_quantity' => $reality > 0 ? $reality : 0,
                             'error_quantity' => @$inputs['error_quantity'][$index] ?? 0,
                             'need_quantity' => $inputs['need_quantity'][$index],

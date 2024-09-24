@@ -15,6 +15,8 @@ class ManufactureDetail extends Model
         'offer_price_id',
         'reality_quantity',
         'error_quantity',
+        'l_l1',
+        'dia_w_w1',
         'material_type',
         'need_quantity',
         'manufacture_quantity',
