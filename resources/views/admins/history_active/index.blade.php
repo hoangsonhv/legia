@@ -77,7 +77,7 @@
                         </span>
                       @else
                         <span class="badge bg-warning">
-                          {{ \App\Enums\ProcessStatus::all()[$activity->new_status] }}
+                          {{ $activity->new_status ? \App\Enums\ProcessStatus::all()[$activity->new_status] : '' }}
                         </span>
                       @endif
                     </td>
