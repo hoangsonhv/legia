@@ -19,6 +19,8 @@ class ProcessStatus
         ];
         if ($unKey !== null && isset($statuses[$unKey])) {
             unset($statuses[$unKey]);
+        } else {
+            return '';
         }
         return $statuses;
     }
