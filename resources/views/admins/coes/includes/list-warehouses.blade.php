@@ -182,6 +182,26 @@
                                         <th class="align-middle">SL Cuộn</th>
                                         <th class="align-middle">SL m</th>
                                         @break
+                                    @case(\App\Helpers\WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Mức áp lực</th>
+                                        <th class="align-middle">Tiêu chuẩn</th>
+                                        <th class="align-middle">Kích cỡ</th>
+                                        <th class="align-middle">Kích thước</th>
+                                        <th class="align-middle">Chuẩn mặt bích</th>
+                                        <th class="align-middle">Chuẩn gasket</th>
+                                        <th class="align-middle">Tồn sl cái</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Mức áp lực</th>
+                                        <th class="align-middle">Tiêu chuẩn</th>
+                                        <th class="align-middle">Kích cỡ</th>
+                                        <th class="align-middle">Kích thước</th>
+                                        <th class="align-middle">Chuẩn mặt bích</th>
+                                        <th class="align-middle">Chuẩn gasket</th>
+                                        <th class="align-middle">Tồn sl cái</th>
+                                        @break
                                 @endswitch
                                 <th>Lot no</th>
                                 <th>Ghi chú</th>

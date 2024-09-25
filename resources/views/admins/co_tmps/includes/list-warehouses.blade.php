@@ -181,6 +181,26 @@
                                         <th class="align-middle">SL Cuộn</th>
                                         <th class="align-middle">SL m</th>
                                         @break
+                                    @case(\App\Helpers\WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Mức áp lực</th>
+                                        <th class="align-middle">Tiêu chuẩn</th>
+                                        <th class="align-middle">Kích cỡ</th>
+                                        <th class="align-middle">Kích thước</th>
+                                        <th class="align-middle">Chuẩn mặt bích</th>
+                                        <th class="align-middle">Chuẩn gasket</th>
+                                        <th class="align-middle">Tồn sl cái</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Mức áp lực</th>
+                                        <th class="align-middle">Tiêu chuẩn</th>
+                                        <th class="align-middle">Kích cỡ</th>
+                                        <th class="align-middle">Kích thước</th>
+                                        <th class="align-middle">Chuẩn mặt bích</th>
+                                        <th class="align-middle">Chuẩn gasket</th>
+                                        <th class="align-middle">Tồn sl cái</th>
+                                        @break
                                 @endswitch
                                 <th>Lot no</th>
                                 <th>Ghi chú</th>
@@ -330,6 +350,26 @@
                                         <th class="align-middle">m/cuộn</th>
                                         <th class="align-middle">SL Cuộn</th>
                                         <th class="align-middle">SL m</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Mức áp lực</th>
+                                        <th class="align-middle">Tiêu chuẩn</th>
+                                        <th class="align-middle">Kích cỡ</th>
+                                        <th class="align-middle">Kích thước</th>
+                                        <th class="align-middle">Chuẩn mặt bích</th>
+                                        <th class="align-middle">Chuẩn gasket</th>
+                                        <th class="align-middle">Tồn sl cái</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">Mức áp lực</th>
+                                        <th class="align-middle">Tiêu chuẩn</th>
+                                        <th class="align-middle">Kích cỡ</th>
+                                        <th class="align-middle">Kích thước</th>
+                                        <th class="align-middle">Chuẩn mặt bích</th>
+                                        <th class="align-middle">Chuẩn gasket</th>
+                                        <th class="align-middle">Tồn sl cái</th>
                                         @break
                                 @endswitch
                                 <th class="align-middle">Lot No</th>
@@ -485,6 +525,26 @@
                                         <td class="align-middle">{{ $warehouse->m_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->ton_sl_m }}</td>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::KHO_THANH_PHAM_PHI_KIM_LOAI)
+                                        <td class="align-middle">{{ $warehouse->do_day}}</td>
+                                        <td class="align-middle">{{ $warehouse->muc_ap_luc}}</td>
+                                        <td class="align-middle">{{ $warehouse->tieu_chuan}}</td>
+                                        <td class="align-middle">{{ $warehouse->kich_co}}</td>
+                                        <td class="align-middle">{{ $warehouse->kich_thuoc}}</td>
+                                        <td class="align-middle">{{ $warehouse->chuan_mat_bich}}</td>
+                                        <td class="align-middle">{{ $warehouse->chuan_gasket}}</td>
+                                        <td class="align-middle">{{ $warehouse->sl_ton}}</td>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::KHO_THANH_PHAM_KIM_LOAI)
+                                        <td class="align-middle">{{ $warehouse->do_day}}</td>
+                                        <td class="align-middle">{{ $warehouse->muc_ap_luc}}</td>
+                                        <td class="align-middle">{{ $warehouse->tieu_chuan}}</td>
+                                        <td class="align-middle">{{ $warehouse->kich_co}}</td>
+                                        <td class="align-middle">{{ $warehouse->kich_thuoc}}</td>
+                                        <td class="align-middle">{{ $warehouse->chuan_mat_bich}}</td>
+                                        <td class="align-middle">{{ $warehouse->chuan_gasket}}</td>
+                                        <td class="align-middle">{{ $warehouse->sl_ton}}</td>
                                         @break
                                 @endswitch
                                         <td>{{ $warehouse->lot_no }}</td>
