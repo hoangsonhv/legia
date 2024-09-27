@@ -8,6 +8,15 @@
   .divider {
     border-top: 50px solid #dee2e6 !important; /* Đường kẻ chia phần */
   }
+  #content_table {
+      overflow-x: auto; /* Thêm thanh cuộn ngang khi cần */
+  }
+
+  #content_table table {
+      border-collapse: collapse !important; /* Xóa khoảng cách giữa các ô */
+      width: auto !important; /* Chiều rộng tự động theo nội dung */
+      table-layout: auto !important;
+  }
 </style>
 <div class="table-responsive p-0" id="content_table">
   <table class="table table-head-fixed table-bordered table-hover">
@@ -15,22 +24,22 @@
       <tr align="center">
         <th class="align-middle">&nbsp</th>
         <th class="align-middle">Số TT</th>
-        <th class="align-middle">Tên</th>
-        <th class="align-middle">Mã hàng</th>
-        <th class="align-middle">Độ dày</th>
-        <th class="align-middle">Hình dạng</th>
-        <th class="align-middle">Dia W W1</th>
-        <th class="align-middle">L L1</th>
-        <th class="align-middle">W2</th>
-        <th class="align-middle">L2</th>
-        <th class="align-middle">Lot No</th>
-        <th class="align-middle">Đ/v tính</th>
-        <th class="align-middle">Tồn kho</th>
-        <th class="align-middle">Tồn kho (đơn vị phụ)</th>
-        <th class="align-middle">Số lượng (Yêu cầu)</th>
-        <th class="align-middle">Số lượng (Thực xuất)</th>
-        <th class="align-middle">Đơn giá</th>
-        <th class="align-middle">Thành tiền</th>
+        <th class="align-middle w-100">Tên</th>
+        <th class="align-middle w-100">Mã hàng</th>
+        <th class="align-middle w-100">Độ dày</th>
+        <th class="align-middle w-100">Hình dạng</th>
+        <th class="align-middle w-100">Dia W W1</th>
+        <th class="align-middle w-100">L L1</th>
+        <th class="align-middle w-100">W2</th>
+        <th class="align-middle w-100">L2</th>
+        <th class="align-middle w-100">Lot No</th>
+        <th class="align-middle w-100">Đ/v tính</th>
+        <th class="align-middle w-100">Tồn kho</th>
+        <th class="align-middle w-100">Tồn kho (đơn vị phụ)</th>
+        <th class="align-middle w-100">Số lượng (Yêu cầu)</th>
+        <th class="align-middle w-100">Số lượng (Thực xuất)</th>
+        <th class="align-middle w-100">Đơn giá</th>
+        <th class="align-middle w-100">Thành tiền</th>
       </tr>
     </thead>
     <tbody>
@@ -48,63 +57,63 @@
             </td>
             <td class="sequence">{{ $index + 1 }}</td>
             <td class="">
-              <textarea class="form-control" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
+              <textarea class="form-control w-auto" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
             </td>
-            <td class="code">
-              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly>
+            <td class=" code">
+              <input class="form-control w-auto" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly>
             </td>
-            <td class="do_day">
-              <input class="form-control" type="text" name="product[do_day][]" value="{{ $product['do_day'] }}" readonly>
+            <td class=" do_day">
+              <input class="form-control w-auto" type="text" name="product[do_day][]" value="{{ $product['do_day'] }}" readonly>
             </td>
-            <td class="hinh_dang">
-              <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] }}" readonly>
+            <td class=" hinh_dang">
+              <input class="form-control w-auto" type="text" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] }}" readonly>
             </td>
-            <td class="dia_w_w1">
-              <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] }}" readonly>
+            <td class=" dia_w_w1">
+              <input class="form-control w-auto" type="text" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] }}" readonly>
             </td>
-            <td class="l_l1">
-              <input class="form-control" type="text" name="product[l_l1][]" value="{{ $product['l_l1'] }}" readonly>
+            <td class=" l_l1">
+              <input class="form-control w-auto" type="text" name="product[l_l1][]" value="{{ $product['l_l1'] }}" readonly>
             </td>
-            <td class="w2">
-              <input class="form-control" type="text" name="product[w2][]" value="{{ $product['w2'] }}" readonly>
+            <td class=" w2">
+              <input class="form-control w-auto" type="text" name="product[w2][]" value="{{ $product['w2'] }}" readonly>
             </td>
-            <td class="l2">
-              <input class="form-control" type="text" name="product[l2][]" value="{{ $product['l2'] }}" readonly>
-            </td>
-            <td class="">
-              <input class="form-control" type="text" name="product[lot_no][]" value="{{ $product['lot_no'] }}" readonly>
+            <td class=" l2">
+              <input class="form-control w-auto" type="text" name="product[l2][]" value="{{ $product['l2'] }}" readonly>
             </td>
             <td class="">
-              <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
+              <input class="form-control w-auto" type="text" name="product[lot_no][]" value="{{ $product['lot_no'] }}" readonly>
             </td>
             <td class="">
-              <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+              <input class="form-control w-auto" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
+            </td>
+            <td class="">
+              <input readonly class="form-control w-auto" type="text" name="product[ton_kho][]" value="{{ 
                 $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}">
             </td>
             <td class="">
-              <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+              <input disabled class="form-control w-auto" type="text" name="product[ton_kho][]" value="{{ 
                 isset(array_values($merchandise->ton_kho)[1]) ? customRound(array_values($merchandise->ton_kho)[1]) : 0
               }}">
             </td>
             <td class="">
-              <input class="form-control" style="width: 70px" name="product[quantity_doc][]" value="{{ $product['quantity_doc'] }}">
+              <input class="form-control w-auto" style="width: 70px" name="product[quantity_doc][]" value="{{ $product['quantity_doc'] }}">
             </td>
             <td class="">
               <input type="number" max="{{ 
                 $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
-              }}" class="form-control data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
+              }}" class="form-control w-auto data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
                      onKeyUp="return getNumberFormatQuantity(this)">
             </td>
             <td class="">
-              <input class="form-control" style="width: 120px" min="1" type="text" name="tmp_product[unit_price][]"
+              <input class="form-control w-auto" style="width: 120px" min="1" type="text" name="tmp_product[unit_price][]"
                      onKeyUp="return getNumberFormatUnitPrice(this)" value="{{ number_format($product['unit_price']) }}">
-              <input class="form-control data-origin data-unit-price" type="hidden" name="product[unit_price][]" value="{{ $product['unit_price'] }}">
+              <input class="form-control w-auto data-origin data-unit-price" type="hidden" name="product[unit_price][]" value="{{ $product['unit_price'] }}">
             </td>
             <td class="">
-              <input class="form-control data-into-money" style="width: 120px" min="1" type="text" name="tmp_product[into_money][]"
+              <input class="form-control w-auto data-into-money" style="width: 120px" min="1" type="text" name="tmp_product[into_money][]"
                      onKeyUp="return getNumberFormat(this)" value="{{ number_format($product['into_money']) }}">
-              <input class="form-control data-origin-into-money" type="hidden" name="product[into_money][]" value="{{$product['into_money']}}">
+              <input class="form-control w-auto data-origin-into-money" type="hidden" name="product[into_money][]" value="{{$product['into_money']}}">
             </td>
           </tr>
         @endforeach
