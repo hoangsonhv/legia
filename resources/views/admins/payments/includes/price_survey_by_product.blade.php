@@ -30,6 +30,7 @@
                     @php
                         $surveyPrice = $priceSurvey->surveyPrices()->count();
                         if($surveyPrice > 0) $surveyPrice = $priceSurvey->surveyPrices()->first();
+                        else $surveyPrice = null;
                     @endphp
                     @if($surveyPrice) 
                         @if($surveyPrice->accompanying_document != "[]")
