@@ -390,15 +390,15 @@ class WarehouseService
             $keyword = $params['to_thick'];
             $query->where('thick','<=', (double)$keyword);
         }
-        if(isset($params['from_ton_sl']))
+        if(isset($params['from_sl_ton']))
         {
-            $keyword = $params['from_ton_sl'];
-            $query->where('ton_sl','>=', (double)$keyword);
+            $keyword = $params['from_sl_ton'];
+            $query->where('sl_ton','>=', (double)$keyword);
         }
-        if(isset($params['to_ton_sl']))
+        if(isset($params['to_sl_ton']))
         {
-            $keyword = $params['to_ton_sl'];
-            $query->where('ton_sl','<=', (double)$keyword);
+            $keyword = $params['to_sl_ton'];
+            $query->where('sl_ton','<=', (double)$keyword);
         }
         if(isset($params['from_ton_sl_cuon']))
         {
@@ -480,7 +480,6 @@ class WarehouseService
             $keyword = $params['to_m_cay'];
             $query->where('m_cay','<=', (double)$keyword);
         }
-
 
         $query->where('model_type',$this->modelType);
         $query->orderBy('l_id','DESC');
