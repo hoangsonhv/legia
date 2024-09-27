@@ -38,7 +38,9 @@
                 <input type="file" name="accompanying_document[]" id="" class="form-control">
                 <div class="d-block">
                     @php
-                        $surveyPrice = $priceSurvey->surveyPrices()->first();
+                        $surveyPrice = $priceSurvey->surveyPrices()->count();
+                        if($surveyPrice > 0) $surveyPrice = $priceSurvey->surveyPrices()->first();
+                        else $surveyPrice = null;
                     @endphp
                     @if($surveyPrice->accompanying_document != "[]")
                         <button type="button" class="btn btn-success"
