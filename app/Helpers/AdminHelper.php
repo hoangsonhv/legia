@@ -407,20 +407,27 @@ class AdminHelper
             return $tonKho;
         }
 
+        $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
         $baseWarehouseRepository = new BaseWarehouseRepository();
         $baseWarehouseRepository->setModel(WarehouseHelper::getModel($model_type));
         $results = $baseWarehouseRepository->model->where('code', $codeInWareHouse)
-            ->where('model_type', $model_type)->get();
+            ->where('model_type', $model_type)
+            ->where(function($query) use ($nonZeroConditions) {
+                foreach ($nonZeroConditions as $cnd) {
+                    $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+                }
+                return $query;
+            })->get();
         if ($results != null) {
             foreach ($results as $result) {
                 if($support) {
-                    $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];
+                    $tonKho += $result[array_keys($result['ton_kho'])[0]];
                 } else {
                     if(count($result['ton_kho']) > 1) {
-                        $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[1]];
+                        $tonKho += $result[array_keys($result['ton_kho'])[1]];
                     } else 
                     {
-                        $tonKho += $result['ton_kho'][array_keys($result['ton_kho'])[0]];
+                        $tonKho += $result[array_keys($result['ton_kho'])[0]];
                     }
                 }
 

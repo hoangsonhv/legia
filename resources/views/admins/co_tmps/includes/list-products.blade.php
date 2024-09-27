@@ -70,7 +70,7 @@
             $donGia      = !empty($collect) ? $warehouse->don_gia : $warehouse[11];
             $vatPer      = $warehouse[13];
             $vatM        = $warehouse[14];
-            $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], 1);
+            $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], false);
             $tonKhoSupport = 0;
             $merchandisePro = \App\Helpers\WarehouseHelper::getModel($detectCode['model_type'])->find($detectCode['merchandise_id']);
             $dv_chinh = '';

@@ -49,7 +49,9 @@ class Group3 extends BaseWarehouseCommon
             'ton_sl_m' => self::acreage($this->ton_sl_cuon),
         ];
     }
-
+    public function setTonSlMAttribute() {
+        return self::acreage($this->ton_sl_cuon);
+    }
     public function setQuantity($qty, $accumulate = true) {
         if ($accumulate) {
             $this->ton_sl_cuon += $qty;

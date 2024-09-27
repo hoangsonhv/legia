@@ -186,7 +186,6 @@ class CoService
                         && $merchandiseCode['manufacture_type'] == MerchandiseGroup::COMMERCE) {
                             $query = self::getMaterialsQuery($merchandiseCode['merchandise_code_in_warehouse'], $merchandiseCode['model_type']);
                             $warehouse_materials = $query->get()->toArray();
-                            // dd($warehouse_materials);
                             if (count($warehouse_materials) > 0) {
                                 $model_type = $warehouse_materials[0]['model_type'];
                                 $materials = WarehouseHelper::getModel($model_type)->hydrate($warehouse_materials);
@@ -279,7 +278,7 @@ class CoService
 
     private function getMaterialsQuery($code, $model_type) {
         $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
-        $query = BaseWarehouseCommon::where('code', 'like', '%'.$code.'%')
+        $query = BaseWarehouseCommon::where('code',$code)
             ->where(function($query) use ($nonZeroConditions) {
                 foreach ($nonZeroConditions as $cnd) {
                     $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
