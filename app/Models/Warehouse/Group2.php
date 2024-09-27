@@ -55,6 +55,9 @@ class Group2 extends BaseWarehouseCommon
     public function setTonSlKgAttribute() {
         return self::acreage($this->ton_sl_cuon);
     }
+    public function getTonSlKgAttribute() {
+        return self::acreage($this->ton_sl_cuon);
+    }
 
     public function setQuantity($qty, $accumulate = true) {
         if ($accumulate) {
