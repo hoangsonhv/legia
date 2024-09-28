@@ -21,9 +21,12 @@
                 <div class="col-12">
                     <div class="card form-root">
                         {!! Form::open(array('route' => 'admin.warehouse-receipt.store', 'method' => 'post', 'enctype' => 'multipart/form-data')) !!}
-                        {{Form::hidden('co_id', $coModel ? $coModel->id : null)}}
                         {{Form::hidden('request_id', $request_id ?? null)}}
                         <div class="card-body">
+                            <div class="form-group">
+                                <label for="recipient_name">Chọn CO</label>
+                                {!! Form::select('co_id', $listCo, $coId ?? null, array('class' => 'form-control')) !!}
+                            </div>
                             <div class="form-group">
                                 <label for="delivery_name">Họ tên người giao<b style="color: red;"> (*)</b></label>
                                 {!! Form::text('delivery_name', null, array('class' => 'form-control', 'required' => 'required')) !!}

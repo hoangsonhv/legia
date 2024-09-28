@@ -158,9 +158,10 @@ class WarehouseReceiptController extends Controller
                 }
             }
         }
+        $listCo = Co::where('status', 2)->where('confirm_done', 0)->orderBy('id', 'DESC')->get()->pluck('code', 'id');
 
         return view('admins.warehouse_receipt.create', compact('breadcrumb', 'titleForLayout',
-            'permissions', 'products', 'model', 'coModel','request_id'));
+            'permissions', 'products', 'model', 'coModel','request_id','listCo'));
     }
 
     public function store(WarehouseReceiptRequest $request)
@@ -194,12 +195,14 @@ class WarehouseReceiptController extends Controller
             $model = $this->whReceiptRepo->insert($input);
             if($model && $model->co_id) {
                 $co = Co::find($model->co_id);
-                if($co && $co->request && $co->request[0]) {
-                    // $this->coStepHisRepo->insertNextStep('payment', $model->co_id, $co->request[0]->id, CoStepHistory::ACTION_CREATE, 3);
-                    $this->coStepHisRepo->insertNextStep('warehouse-export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
-                }
-                else {
-                    $this->coStepHisRepo->insertNextStep('warehouse-export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
+                if($co->warehouseReceipts()->count() == 1) {
+                    if($co && $co->request && $co->request[0]) {
+                        // $this->coStepHisRepo->insertNextStep('payment', $model->co_id, $co->request[0]->id, CoStepHistory::ACTION_CREATE, 3);
+                        $this->coStepHisRepo->insertNextStep('warehouse-export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
+                    }
+                    else {
+                        $this->coStepHisRepo->insertNextStep('warehouse-export', $model->co_id, $model->co_id, CoStepHistory::ACTION_CREATE);
+                    }
                 }
             } else if($model && $model->request_id && !$model->co_id) {
                     $this->requestRepo->doneRequest($model->request_id);

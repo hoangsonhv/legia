@@ -189,7 +189,6 @@ class WarehouseExportController extends Controller
                     $documents[] = ['name' => $file->getClientOriginalName(), 'path' => $fileSave];
                 }
             }
-
             \DB::beginTransaction();
             // Save warehouse receipt
             $input['code'] = $this->whExportRepo->generateCode();
@@ -206,7 +205,9 @@ class WarehouseExportController extends Controller
                     ]);
                     $this->manufactureRepo->checkNeedQuantity($model->co_id);
                 }
-                $this->coStepHisRepo->insertNextStep('manufacture', $model->co_id, $model->co_id, CoStepHistory::ACTION_APPROVE);
+                if($co->warehouseExports()->count() == 1) {
+                    $this->coStepHisRepo->insertNextStep('manufacture', $model->co_id, $model->co_id, CoStepHistory::ACTION_APPROVE);
+                }
             }
             // Save many product
             $inputProducts = $request->input('product');
