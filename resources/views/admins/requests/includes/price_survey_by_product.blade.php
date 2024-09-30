@@ -127,11 +127,11 @@
                 </td>
                 <td>
                     <div class="icheck-success">
-                        {!! Form::checkbox('status[' . $index . ']', true, $priceSurvey->status, [
-                            'id' => 'status_' . $material->id . '_' . $index,
+                        {!! Form::checkbox('status[]', true, $priceSurvey->status, [
+                            'id' => 'status_' . $priceSurvey->id . '_' . $index,
                             'checked' => $priceSurvey->status ? true : false,
                         ]) !!}
-                        <label for={{ 'status_' . $material->id . '_' . $index }}></label>
+                        <label for={{ 'status_' . $priceSurvey->id . '_' . $index }}></label>
                     </div>
                 </td>
             </tr>
