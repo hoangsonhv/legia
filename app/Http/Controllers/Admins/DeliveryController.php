@@ -216,8 +216,13 @@ class DeliveryController extends Controller
                 // Save delivery
                 $input['status_customer_received'] = (int) $request->input('status_customer_received');
                 $delivery = $this->deliRepo->update($inputs, $id);
-                if($delivery->status_customer_received && $co->currentStep && $co->currentStep->step == CoStepHistory::STEP_WAITING_APPROVE_DELIVERY){
-                    $this->coStepHisRepo->insertNextStep('receipt', $co->id, $co->id, CoStepHistory::ACTION_CREATE, 3);
+                if($input['status_customer_received'] && $co->currentStep && $co->currentStep->step == CoStepHistory::STEP_WAITING_APPROVE_DELIVERY){
+                    $isEnoughExportSell = $this->coRepo->checkQuantityExportSell($co);
+                    if(!$isEnoughExportSell) {
+                        $this->insertNextStep('manufacture', $co->id, $co->id, CoStepHistory::ACTION_APPROVE);
+                    } else {
+                        $this->coStepHisRepo->insertNextStep('receipt', $co->id, $co->id, CoStepHistory::ACTION_CREATE, 3);
+                    }
                 }
 
                 // Save timeline
