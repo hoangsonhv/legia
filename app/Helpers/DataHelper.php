@@ -162,6 +162,7 @@ class DataHelper
                 'bia'        => 'Kho BIA',
                 'caosuvnza'  => 'Kho CAO SU Viet Nam ZA',
                 'caosu'      => 'Kho CAO SU',
+                'ptfe'       => 'Kho PTFE',
                 'graphite'   => 'Kho Graphite',
                 'tamkimloai' => 'Kho Tấm Kim Loại',
                 'tamnhua'    => 'Kho Tấm nhựa'
