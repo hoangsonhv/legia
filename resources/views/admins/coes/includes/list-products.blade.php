@@ -89,7 +89,7 @@
                     $manufactureType = !empty($collect) ? $warehouse->manufacture_type : $detectCode['manufacture_type'];
                     $materialType = !empty($collect) ? $warehouse->material_type : $detectCode['material_type'];
                     $warehouseGroupId = !empty($collect) ? $warehouse->merchandise_group_id : $detectCode['merchandise_group_id'];
-                    $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type']);
+                    $tonKho = $detectCode['model_type'] ? \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type']) : 0;
                     if (!empty($createCO)) {
                         if (($tonKho >= $soLuong) || $manufactureType == \App\Models\MerchandiseGroup::COMMERCE) {
                             $soLuongSanXuat = 0;
@@ -99,14 +99,14 @@
                         }
                     }
                     $tonKhoSupport = 0;
-                    $merchandisePro = \App\Helpers\WarehouseHelper::getModel($detectCode['model_type'])->find($detectCode['merchandise_id']);
+                    $merchandisePro = $detectCode['model_type'] ? \App\Helpers\WarehouseHelper::getModel($detectCode['model_type'])->find($detectCode['merchandise_id']) : null;
                     $dv_chinh = '';
                     $dv_phu = '';
                     $arDvTinh = array_keys($merchandisePro->ton_kho);
                     if(count($merchandisePro->ton_kho) > 1) {
                         $dv_chinh =  \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[1]);
                         $dv_phu = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
-                        $tonKhoSupport = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], true);
+                        $tonKhoSupport = $detectCode['model_type'] ? \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], true) : 0;
                     } else {
                         $dv_chinh = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
                     }

@@ -70,16 +70,16 @@
             $donGia      = !empty($collect) ? $warehouse->don_gia : $warehouse[11];
             $vatPer      = $warehouse[13];
             $vatM        = $warehouse[14];
-            $tonKho = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], false);
+            $tonKho = $detectCode['model_type'] ? \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], false) : 0;
             $tonKhoSupport = 0;
-            $merchandisePro = \App\Helpers\WarehouseHelper::getModel($detectCode['model_type'])->find($detectCode['merchandise_id']);
+            $merchandisePro = $detectCode['model_type'] ? \App\Helpers\WarehouseHelper::getModel($detectCode['model_type'])->find($detectCode['merchandise_id']) : null;
             $dv_chinh = '';
             $dv_phu = '';
             $arDvTinh = array_keys($merchandisePro->ton_kho);
             if(count($merchandisePro->ton_kho) > 1) {
                 $dv_chinh =  \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[1]);
                 $dv_phu = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
-                $tonKhoSupport = \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], true);
+                $tonKhoSupport =  $detectCode['model_type'] ? \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], true) : 0;
             } else {
                 $dv_chinh = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
             }
