@@ -102,8 +102,8 @@
                     $merchandisePro = $detectCode['model_type'] ? \App\Helpers\WarehouseHelper::getModel($detectCode['model_type'])->find($detectCode['merchandise_id']) : null;
                     $dv_chinh = '';
                     $dv_phu = '';
-                    $arDvTinh = array_keys($merchandisePro->ton_kho ?? []);
-                    if(count($merchandisePro->ton_kho) > 1) {
+                    $arDvTinh = array_keys(@$merchandisePro->ton_kho ?? []);
+                    if(count(@$merchandisePro->ton_kho ?? []) > 1) {
                         $dv_chinh =  \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[1]);
                         $dv_phu = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
                         $tonKhoSupport = $detectCode['model_type'] ? \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], true) : 0;
