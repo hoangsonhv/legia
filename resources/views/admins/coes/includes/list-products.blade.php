@@ -108,7 +108,7 @@
                         $dv_phu = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
                         $tonKhoSupport = $detectCode['model_type'] ? \App\Helpers\AdminHelper::countProductMerchanInWarehouse($code, $detectCode['model_type'], true) : 0;
                     } else {
-                        $dv_chinh = \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]);
+                        $dv_chinh = $arDvTinh ? \App\Helpers\WarehouseHelper::translateAtt($arDvTinh[0]) : '';
                     }
                 @endphp
                 <tr align="center">
