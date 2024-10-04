@@ -41,6 +41,7 @@
                             <tr>
                                 <th></th>
                                 <th>Mã HH</th>
+                                <th class="align-middle">Vật liệu</th>
                                 @switch($key)
                                     @case(\App\Helpers\WarehouseHelper::BIA)
                                         <th class="align-middle">Độ dày</th>
@@ -237,6 +238,7 @@
                             <tr align="center">
                                 <th class="align-middle">Số TT</th>
                                 <th class="align-middle">Mã HH</th>
+                                <th class="align-middle">Vật liệu</th>
                                 @switch($key)
                                     @case(\App\Helpers\WarehouseHelper::BIA)
                                         <th class="align-middle">Độ dày</th>
@@ -438,6 +440,7 @@
                                     <tr align="center">
                                         <td>{{ $sequence }}</td>
                                         <td>{{ $warehouse->code }}</td>
+                                        <td>{{ $warehouse->vat_lieu }}</td>
                                         @switch($key)
                                     @case(\App\Helpers\WarehouseHelper::BIA)
                                         <td class="align-middle">{{ $warehouse->do_day }}</td>
