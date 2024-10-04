@@ -221,11 +221,13 @@
                                         <th class="align-middle">Độ dày</th>
                                         <th class="align-middle">D1</th>
                                         <th class="align-middle">D2</th>
+                                        <th class="align-middle">Tồn sl cái</th>
                                         @break
                                     @case(\App\Helpers\WarehouseHelper::VANH_TINH_OUTER_SWG)
                                         <th class="align-middle">Độ dày</th>
                                         <th class="align-middle">D3</th>
                                         <th class="align-middle">D4</th>
+                                        <th class="align-middle">Tồn sl cái</th>
                                         @break
                                 @endswitch
                                 <th>Lot no</th>
@@ -416,11 +418,13 @@
                                         <th class="align-middle">Độ dày</th>
                                         <th class="align-middle">D1</th>
                                         <th class="align-middle">D2</th>
+                                        <th class="align-middle">Tồn sl cái</th>
                                         @break
                                     @case(\App\Helpers\WarehouseHelper::VANH_TINH_OUTER_SWG)
                                         <th class="align-middle">Độ dày</th>
                                         <th class="align-middle">D3</th>
                                         <th class="align-middle">D4</th>
+                                        <th class="align-middle">Tồn sl cái</th>
                                         @break
                                 @endswitch
                                 <th class="align-middle">Lot No</th>
@@ -613,14 +617,16 @@
                                                 <td class="align-middle">{{ $warehouse->ton_sl_kg }}</td>
                                                 @break
                                             @case(\App\Helpers\WarehouseHelper::VANH_TINH_INNER_SWG)
-                                                <th class="align-middle">{{ $warehouse->do_day }}/th>
+                                                <th class="align-middle">{{ $warehouse->do_day }}</th>
                                                 <th class="align-middle">{{ $warehouse->d1}}</th>
                                                 <th class="align-middle">{{ $warehouse->d2}}</th>
+                                                <th class="align-middle">{{ $warehouse->ton_sl_cai}}</th>
                                                 @break
                                             @case(\App\Helpers\WarehouseHelper::VANH_TINH_OUTER_SWG)
-                                                <th class="align-middle">{{ $warehouse->do_day }}/th>
+                                                <th class="align-middle">{{ $warehouse->do_day }}</th>
                                                 <th class="align-middle">{{ $warehouse->d3}}</th>
                                                 <th class="align-middle">{{ $warehouse->d4}}</th>
+                                                <th class="align-middle">{{ $warehouse->ton_sl_cai}}</th>
                                                 @break
                                         @endswitch
                                         <td>{{ $warehouse->lot_no }}</td>
