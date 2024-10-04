@@ -403,7 +403,6 @@ class WarehouseHelper
                 WarehouseHelper::TAM_NHUA => 'admins._form-plate',
             
                 WarehouseHelper::FILLER => 'admins._form-spw',
-                WarehouseHelper::GLAND_PACKING => 'admins._form-spw',
                 WarehouseHelper::HOOP => 'admins._form-spw',
                 WarehouseHelper::ORING => 'admins._form-spw',
                 WarehouseHelper::PTFE_ENVELOP => 'admins._form-spw',
@@ -421,6 +420,7 @@ class WarehouseHelper
                 WarehouseHelper::NK_LOAI_KHAC => 'admins._form-remain',
                 WarehouseHelper::PHU_TUNG_DUNG_CU => 'admins._form-remain',
                 WarehouseHelper::GLAND_PACKING_LATTY => 'admins._form-remain',
+                WarehouseHelper::GLAND_PACKING => 'admins._form-remain',
                 WarehouseHelper::CCDC => 'admins._form-remain',
                 WarehouseHelper::KHO_VAT_DUNG => 'admins._form-supply',
                 WarehouseHelper::NHU_KY_THUAT_CAY_ONG => 'admins._form-remain',
