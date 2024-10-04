@@ -201,6 +201,30 @@
                                         <th class="align-middle">Chuẩn gasket</th>
                                         <th class="align-middle">Tồn sl cái</th>
                                         @break
+                                    @case(\App\Helpers\WarehouseHelper::HOOP)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">Trọng lượng Kg/cuộn</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL Kg</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::FILLER)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">Trọng lượng Kg/cuộn</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL Kg</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::VANH_TINH_INNER_SWG)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">D1</th>
+                                        <th class="align-middle">D2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::VANH_TINH_OUTER_SWG)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">D3</th>
+                                        <th class="align-middle">D4</th>
+                                        @break
                                 @endswitch
                                 <th>Lot no</th>
                                 <th>Ghi chú</th>
@@ -370,6 +394,30 @@
                                         <th class="align-middle">Chuẩn mặt bích</th>
                                         <th class="align-middle">Chuẩn gasket</th>
                                         <th class="align-middle">Tồn sl cái</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::HOOP)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">Trọng lượng Kg/cuộn</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL Kg</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::FILLER)
+                                        <th class="align-middle">Size</th>
+                                        <th class="align-middle">Trọng lượng Kg/cuộn</th>
+                                        <th class="align-middle">m/cuộn</th>
+                                        <th class="align-middle">SL Cuộn</th>
+                                        <th class="align-middle">SL Kg</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::VANH_TINH_INNER_SWG)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">D1</th>
+                                        <th class="align-middle">D2</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::VANH_TINH_OUTER_SWG)
+                                        <th class="align-middle">Độ dày</th>
+                                        <th class="align-middle">D3</th>
+                                        <th class="align-middle">D4</th>
                                         @break
                                 @endswitch
                                 <th class="align-middle">Lot No</th>
@@ -545,6 +593,30 @@
                                         <td class="align-middle">{{ $warehouse->chuan_mat_bich}}</td>
                                         <td class="align-middle">{{ $warehouse->chuan_gasket}}</td>
                                         <td class="align-middle">{{ $warehouse->sl_ton}}</td>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::HOOP)
+                                        <td class="align-middle">{{ $warehouse->size}}</td>
+                                        <td class="align-middle">{{ $warehouse->trong_luong_kg_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->m_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->ton_sl_kg }}</td>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::FILLER)
+                                        <td class="align-middle">{{ $warehouse->size}}</td>
+                                        <td class="align-middle">{{ $warehouse->trong_luong_kg_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->m_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->ton_sl_kg }}</td>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::VANH_TINH_INNER_SWG)
+                                        <th class="align-middle">{{ $warehouse->do_day }}/th>
+                                        <th class="align-middle">{{ $warehouse->d1}}</th>
+                                        <th class="align-middle">{{ $warehouse->d2}}</th>
+                                        @break
+                                    @case(\App\Helpers\WarehouseHelper::VANH_TINH_OUTER_SWG)
+                                        <th class="align-middle">{{ $warehouse->do_day }}/th>
+                                        <th class="align-middle">{{ $warehouse->d3}}</th>
+                                        <th class="align-middle">{{ $warehouse->d4}}</th>
                                         @break
                                 @endswitch
                                         <td>{{ $warehouse->lot_no }}</td>
