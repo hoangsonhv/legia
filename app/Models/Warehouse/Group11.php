@@ -40,7 +40,12 @@ class Group11 extends BaseWarehouseCommon
             'dvt'   => $this->dvt,
         ];
     }
-
+    public function getKichThuocAttribute() {
+        return $this->kich_co;
+    }
+    public function setKichThuocAttribute() {
+        return $this->kich_co;
+    }
     public function getAcreageAttribute() {
         return null;
     }

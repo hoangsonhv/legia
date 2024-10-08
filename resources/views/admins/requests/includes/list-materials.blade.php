@@ -17,11 +17,16 @@
                 <th class="align-middle">Mã HH</th>
                 <th class="align-middle">Mô tả</th>
                 <th class="align-middle">Độ dày</th>
-                <th class="align-middle">Hình dạng</th>
-                <th class="align-middle">Dia W W1</th>
+                <th class="align-middle">Kích thước</th>
+                <th class="align-middle">Kích cỡ</th>
+                <th class="align-middle">Tiêu chuẩn</th>
+                <th class="align-middle">Chuẩn Gasket</th>
+                <th class="align-middle">Chuẩn bích</th>
+                {{-- <th class="align-middle">Hình dạng</th> --}}
+                {{-- <th class="align-middle">Dia W W1</th>
                 <th class="align-middle">L L1</th>
                 <th class="align-middle">W2</th>
-                <th class="align-middle">L2</th>
+                <th class="align-middle">L2</th> --}}
                 <th class="align-middle">Đ/v tính</th>
                 <th class="align-middle t-dinh-luong">Số lượng</th>
                 <th class="align-middle">Thời gian cần</th>
@@ -70,19 +75,34 @@
                     <td class="do_day">
                         <input class="form-control" type="text" name="product[do_day][]" value="{{ $material->do_day }}" readonly>
                     </td>
-                    <td class="hinh_dang">
+                    <td class="kich_thuoc">
+                        <input class="form-control" type="text" name="product[kich_thuoc][]" value="{{ $material->kich_thuoc }}" readonly>
+                    </td>
+                    <td class="kich_co">
+                        <input class="form-control" type="text" name="product[kich_co][]" value="{{ $material->size }}" readonly>
+                    </td>
+                    <td class="tieu_chuan">
+                        <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ $material->tieu_chuan }}" readonly>
+                    </td>
+                    <td class="chuan_gasket">
+                        <input class="form-control" type="text" name="product[chuan_gasket][]" value="{{ $material->chuan_gasket }}" readonly>
+                    </td>
+                    <td class="chuan_bich">
+                        <input class="form-control" type="text" name="product[chuan_bich][]" value="{{ $material->chuan_bich }}" readonly>
+                    </td>
+                    <td class="hinh_dang d-none">
                         <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $material->hinh_dang }}" readonly>
                     </td>
-                    <td class="dia_w_w1">
+                    <td class="dia_w_w1 d-none">
                         <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $material->dia_w_w1 }}" readonly>
                     </td>
-                    <td class="l_l1">
+                    <td class="l_l1 d-none">
                         <input class="form-control" type="text" name="product[l_l1][]" value="{{ $material->l_l1 }}" readonly>
                     </td>
-                    <td class="w2">
+                    <td class="w2 d-none">
                         <input class="form-control" type="text" name="product[w2][]" value="{{ $material->w2 }}" readonly>
                     </td>
-                    <td class="l2">
+                    <td class="l2 d-none">
                         <input class="form-control" type="text" name="product[l2][]" value="{{ $material->l2 }}" readonly>
                     </td>
                     @else 

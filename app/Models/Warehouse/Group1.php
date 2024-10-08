@@ -59,7 +59,12 @@ class Group1 extends BaseWarehouseCommon
                 //throw new NotFoundHttpException('Not found hinh_dang');
         }
     }
-
+    public function getKichThuocAttribute() {
+        return $this->dia_w_w1 . ' x ' . $this->l_l1;
+    }
+    public function setKichThuocAttribute() {
+        return $this->dia_w_w1 . ' x ' . $this->l_l1;
+    }
     public function getDvTinhAttribute() {
         return 'tấm';
     }

@@ -40,7 +40,12 @@ class Group8 extends BaseWarehouseCommon
             'ton_sl_cuon' => $this->ton_sl_cuon,
         ];
     }
-
+    public function getKichThuocAttribute() {
+        return $this->size;
+    }
+    public function setKichThuocAttribute() {
+        return $this->size;
+    }
     public function setQuantity($qty, $accumulate = true) {
         if ($accumulate) {
             $this->ton_sl_cuon += $qty;

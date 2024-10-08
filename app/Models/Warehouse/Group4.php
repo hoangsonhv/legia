@@ -32,7 +32,12 @@ class Group4 extends BaseWarehouseCommon
             'd2' => $this->d2,
         ];
     }
-   
+    public function getKichThuocAttribute() {
+        return $this->size;
+    }
+    public function setKichThuocAttribute() {
+        return $this->size;
+    }
     public function getAcreageAttribute() {
         return null;
     }

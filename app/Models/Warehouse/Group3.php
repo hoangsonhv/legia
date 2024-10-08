@@ -36,6 +36,12 @@ class Group3 extends BaseWarehouseCommon
     public function getAcreageAttribute() {
         return self::acreage($this->sl_cuon);
     }
+    public function getKichThuocAttribute() {
+        return $this->size;
+    }
+    public function setKichThuocAttribute() {
+        return $this->size;
+    }
 
     public function acreage($sl_cuon) {
         return $this->m_cuon * $sl_cuon;

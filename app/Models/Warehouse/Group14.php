@@ -41,7 +41,12 @@ class Group14 extends BaseWarehouseCommon
             'ton_sl_cai' => $this->ton_sl_cai,
         ];
     }
-
+    public function getKichThuocAttribute() {
+        return $this->size;
+    }
+    public function setKichThuocAttribute() {
+        return $this->size;
+    }
     public function setQuantity($qty, $accumulate = true) {
         if ($accumulate) {
             $this->ton_sl_cai += $qty;

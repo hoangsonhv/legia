@@ -29,6 +29,12 @@ class Group6 extends BaseWarehouseCommon
             'cho_may_moc_thiet_bi' => $this->cho_may_moc_thiet_bi,
         ];
     }
+    public function getKichThuocAttribute() {
+        return $this->size;
+    }
+    public function setKichThuocAttribute() {
+        return $this->size;
+    }
     public function setDetailAttribute() {
         return [
             'mo_ta' => $this->mo_ta,

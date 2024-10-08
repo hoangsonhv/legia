@@ -34,7 +34,12 @@ class Group2 extends BaseWarehouseCommon
             'm_cuon' => $this->m_cuon,
         ];
     }
-   
+    public function getKichThuocAttribute() {
+        return $this->size . " * " . $this->size;
+    }
+    public function setKichThuocAttribute() {
+        return $this->size . " * " . $this->size;
+    }
     public function getAcreageAttribute() {
         return self::acreage($this->sl_cuon);
     }

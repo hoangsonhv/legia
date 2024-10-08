@@ -52,7 +52,12 @@ class Group12 extends BaseWarehouseCommon
             $this->ton_sl_cai = $qty;
         }
     }
-
+    public function getKichThuocAttribute() {
+        return $this->size;
+    }
+    public function setKichThuocAttribute() {
+        return $this->size;
+    }
     public function getQuantityAttribute() {
         return $this->ton_sl_cai;
     }

@@ -29,6 +29,12 @@ class Group5 extends BaseWarehouseCommon
             'size' => $this->size,
         ];
     }
+    public function getKichThuocAttribute() {
+        return "";
+    }
+    public function setKichThuocAttribute() {
+        return "";
+    }
       
     public function getAcreageAttribute() {
         return null;

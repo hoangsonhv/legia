@@ -227,7 +227,7 @@
               <input type="hidden" name="material[tieu_chuan][]" value="{{ $material->tieu_chuan }}">
             </td>
             <td class="kich_co d-none">
-              <input type="hidden" name="material[kich_co][]" value="{{ $material->kich_co }}">
+              <input type="hidden" name="material[kich_co][]" value="{{ ($material->kich_co ?? $material->size) ?? '' }}">
             </td>
             <td class="kich_thuoc d-none">
               <input type="hidden" name="material[kich_thuoc][]" value="{{ $material->kich_thuoc }}">
