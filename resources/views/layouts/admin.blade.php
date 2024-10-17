@@ -360,7 +360,7 @@
             <a href="#" class="nav-link{{ ((strpos(url()->current(), '/admin/warehouse-export') !== false) && (!(strpos(url()->current(), '/admin/warehouse-export-sell') !== false))) ? ' active' : '' }}">
               <i class="nav-icon fas fa-file-export" aria-hidden="true"></i>
               <p>
-                Phiếu xuất kho
+                Phiếu xuất kho nội bộ
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>

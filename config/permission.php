@@ -330,7 +330,7 @@ return [
             ]
         ],
         'warehouse-export' => [
-            'label' => 'Quản lý Phiếu xuất kho',
+            'label' => 'Quản lý Phiếu xuất kho nội bộ',
             'routes' => [
                 'admin.warehouse-export.index-all' => [
                     'label' => 'Tất cả phiếu xuất kho'

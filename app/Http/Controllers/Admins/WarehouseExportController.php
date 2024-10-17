@@ -61,7 +61,7 @@ class WarehouseExportController extends Controller
         $this->requestRepo             = $requestRepo;
         $this->warehouseHistoryRepo = $warehouseHistoryRepo;
         $this->menu = [
-            'root' => 'Quản lý Phiếu xuất kho',
+            'root' => 'Quản lý Phiếu xuất kho nội bộ',
             'data' => [
                 'parent' => [
                     'href' => route('admin.warehouse-export.index'),
