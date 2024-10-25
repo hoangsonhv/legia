@@ -97,7 +97,6 @@ class PDFController extends Controller
         }
         
         $products = $model->products->toArray();
-        // dd($products);
         $pdf = PDF::loadView('admins.pdf.warehouse-export', compact('model', 'products','co'));
         return $pdf->download('Phieu_xuat_kho' . date("d-m-Y") . '.pdf');
     }

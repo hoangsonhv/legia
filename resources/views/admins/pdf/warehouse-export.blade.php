@@ -85,7 +85,7 @@
                         <td style="border: 1px solid black">{{ $index + 1 }}</td>
                         <td style="border: 1px solid black">{{ $product['code'] }}</td>
                         <td style="border: 1px solid black">{{$merchandise->vat_lieu}}</td>
-                        <td style="border: 1px solid black">{{$product['code']}}</td>
+                        <td style="border: 1px solid black">{{$product['do_day']}}</td>
                         <td style="border: 1px solid black">{{$merchandise->tieu_chuan}}</td>
                         <td style="border: 1px solid black">{{$merchandise->kich_co}}</td>
                         <td style="border: 1px solid black">{{$merchandise->kich_thuoc}}</td>
