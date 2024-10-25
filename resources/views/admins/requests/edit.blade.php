@@ -387,6 +387,45 @@
                     format: 'yyyy-mm-dd'
                 });
             })
+
+            $('.dataTable').each(function() {
+            var table = $(this).DataTable(); // Khởi tạo DataTable cho mỗi bảng
+            
+            // Thêm các dropdown Select2 cho mỗi cột trong footer
+            $(this).find('tfoot th').each(function(index) {
+                var title = $(this).text();
+                var select = $('<select class="select2" multiple="multiple" style="width:100%" ><option value="">' + title + '</option></select>');
+                $(this).html(select);
+
+                // Lấy tất cả các giá trị duy nhất từ cột và thêm vào Select2
+                table.column(index).data().unique().sort().each(function(d) {
+                    // Loại bỏ các thẻ HTML khỏi dữ liệu nếu cần
+                    select.append('<option value="' + d + '">' + d + '</option>');
+                });
+
+                // Khởi tạo Select2
+                select.select2();
+            });
+            console.log(1);
+            // Khởi tạo Select2 cho các dropdown vừa tạo
+            $(this).find('.select2').select2();
+
+            // Thêm sự kiện tìm kiếm cho mỗi cột
+            table.columns().every(function() {
+                var column = this;
+                $('select', this.footer()).on('change', function() {
+                    var val = $(this).val(); // Lấy giá trị đã chọn
+                    if (val.length > 0) {
+                        // Tạo chuỗi regex để tìm kiếm với tất cả các lựa chọn
+                        val = val.map(function(v) {
+                            return $.fn.dataTable.util.escapeRegex(v);
+                        }).join('|');
+                    }
+                    column.search(val ? val : '', true, false).draw();
+                });
+            });
+        });
+
         });
 
         function getHtmlFile(field) {
@@ -500,45 +539,5 @@
         function removeSurveyPrice(_this) {
             $(_this).parents('.item-survey-price:first').remove();
         }
-
-
-        $('.dataTable').each(function() {
-            var table = $(this).DataTable(); // Khởi tạo DataTable cho mỗi bảng
-            
-            // Thêm các dropdown Select2 cho mỗi cột trong footer
-            $(this).find('tfoot th').each(function(index) {
-                var title = $(this).text();
-                var select = $('<select class="select2" multiple="multiple" style="width:100%" ><option value="">' + title + '</option></select>');
-                $(this).html(select);
-
-                // Lấy tất cả các giá trị duy nhất từ cột và thêm vào Select2
-                table.column(index).data().unique().sort().each(function(d) {
-                    // Loại bỏ các thẻ HTML khỏi dữ liệu nếu cần
-                    select.append('<option value="' + d + '">' + d + '</option>');
-                });
-
-                // Khởi tạo Select2
-                select.select2();
-            });
-            console.log(1);
-            // Khởi tạo Select2 cho các dropdown vừa tạo
-            $(this).find('.select2').select2();
-
-            // Thêm sự kiện tìm kiếm cho mỗi cột
-            table.columns().every(function() {
-                var column = this;
-                $('select', this.footer()).on('change', function() {
-                    var val = $(this).val(); // Lấy giá trị đã chọn
-                    if (val.length > 0) {
-                        // Tạo chuỗi regex để tìm kiếm với tất cả các lựa chọn
-                        val = val.map(function(v) {
-                            return $.fn.dataTable.util.escapeRegex(v);
-                        }).join('|');
-                    }
-                    column.search(val ? val : '', true, false).draw();
-                });
-            });
-        });
-
     </script>
 @endsection
