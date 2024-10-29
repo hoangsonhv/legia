@@ -169,4 +169,21 @@ class WarehouseController extends Controller
         $viewPath = WarehouseHelper::warehouseFormCreate($request->model_type);
         return view($viewPath,compact('model'));
     }
+
+    public function showMaterialByCode(Request $request)
+    {
+        $model = WarehouseHelper::warehouseModelPath($request->model_type);
+
+        $param['code'] = $request->code;
+        $listDataSearch = $this->warehouseService->search($model, $param)->items();
+        $output = '<div id="search-results">';
+
+        foreach ($listDataSearch as $item) {
+            $vatLieu = optional($item->detail)['vat_lieu'];
+            $output .= '<p class="search-item" data-value="' . $vatLieu . '">' . htmlspecialchars($item->code) . '</p>';
+        }
+
+        $output .= '</div>';
+        return response($output);
+    }
 }

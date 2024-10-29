@@ -61,9 +61,9 @@
             @endif
             <div class="card-body">
               <h3 class="title text-primary">Nội dung</h3>
-              @if ($co)    
+              @if ($co)
                 @include('admins.requests.includes.list-materials', ['co' => $co, 'coStep' => $coStep])
-              @else 
+              @else
                 @include('admins.requests.includes.list-service')
               @endif
             </div>
@@ -83,7 +83,27 @@
   </div>
 </section>
 @endsection
-
+<style>
+    #search-results {
+        position: absolute; /* Đặt vị trí là tuyệt đối */
+        z-index: 1000; /* Đảm bảo nó hiển thị trên các phần tử khác */
+        background: white; /* Nền trắng để dễ đọc */
+        border: 1px solid #ccc; /* Đường viền nhẹ */
+        max-height: 100px; /* Chiều cao tối đa để tránh che khuất màn hình */
+        overflow-y: auto; /* Thêm thanh cuộn nếu quá nhiều kết quả */
+        width: calc(100% - 45px); /* Chiều rộng bằng với ô input trừ đi viền */
+        margin-top: -4px;
+        border-radius: 0 0 5px 5px;
+    }
+    .search-item {
+        padding: 8px; /* Khoảng cách bên trong cho mỗi mục */
+        cursor: pointer; /* Hiển thị con trỏ khi di chuột qua */
+        margin-bottom: 0;
+    }
+    .search-item:hover {
+        background-color: #f0f0f0; /* Hiệu ứng hover */
+    }
+</style>
 @section('js')
 <script type="text/javascript" src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
@@ -94,26 +114,26 @@
     bsCustomFileInput.init();
     $('.dataTable').each(function() {
               var table = $(this).DataTable(); // Khởi tạo DataTable cho mỗi bảng
-              
+
               // Thêm các dropdown Select2 cho mỗi cột trong footer
               $(this).find('tfoot th').each(function(index) {
                   var title = $(this).text();
                   var select = $('<select class="select2" multiple="multiple" style="width:100%" ><option value="">' + title + '</option></select>');
                   $(this).html(select);
-  
+
                   // Lấy tất cả các giá trị duy nhất từ cột và thêm vào Select2
                   table.column(index).data().unique().sort().each(function(d) {
                       // Loại bỏ các thẻ HTML khỏi dữ liệu nếu cần
                       select.append('<option value="' + d + '">' + d + '</option>');
                   });
-  
+
                   // Khởi tạo Select2
                   select.select2();
               });
               console.log(1);
               // Khởi tạo Select2 cho các dropdown vừa tạo
               $(this).find('.select2').select2();
-  
+
               // Thêm sự kiện tìm kiếm cho mỗi cột
               table.columns().every(function() {
                   var column = this;
@@ -132,5 +152,50 @@
   });
 
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on('keyup', 'input[name="code"]', function () {
+            let input = $(this);
+            input.attr('autocomplete', 'off');
+            input.addClass('relative')
+            $('#loading-all').hide()
+            let type = $(this).parents('.modal-body:first').find('[name=model_type]').val();
+            let url = window.location.origin + '/admin/warehouse/show-material-by-code';
+            let param = $(this).val();
+            if (param.length < 1) {
+                $('#search-results').remove();
+            }
+            $.ajax({
+                method: "GET",
+                url: url,
+                data: {
+                    'model_type': type,
+                    'code': param,
+                }
+            })
+                .done(function(data) {
+                    input.parent().find('#search-results').remove()
+                    input.parent().append(data)
+                    if ($(data).find('.search-item').length < 1) {
+                        $('#search-results').remove();
+                    }
+                });
+        });
+        $(document).on('focusout', 'input[name="code"]', function () {
+            setTimeout(function() {
+                $('#search-results').remove();
+            }, 200);
+        });
+        $(document).on('click', '#search-results', function (event) {
+            event.stopPropagation();
+        });
+        $(document).on('click', '.search-item', function () {
+            let selectedValue = $(this).data('value');
+            $('input[name="code"]').val($(this).html());
+            $('input[name="vat_lieu"]').val(selectedValue);
+            $('#search-results').remove();
+        });
+    });
 </script>
 @endsection
