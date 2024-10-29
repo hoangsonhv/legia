@@ -163,6 +163,7 @@ $(function () {
     // var chuan_gasket = eleForm.find('input[name="chuan_gasket"]').length ? eleForm.find('input[name="chuan_gasket"]').first().val() : '';
     // var chuan_bich = eleForm.find('input[name="chuan_bich"]').length ? eleForm.find('input[name="chuan_bich"]').first().val() : '';
     var ele    = $('.data-materials').find(".table-content tbody");
+    var eleHead    = $('.data-materials').find(".table-content thead");
     var index  = ele.find('tr').length + 1;
     var dvTinh = '';
     if ($(this).attr('data-dvTinh')) {
@@ -186,10 +187,145 @@ $(function () {
         chuan_gasket: res.chuan_gasket,
         chuan_bich: res.chuan_bich,
       }));
+      eleHead.html('');
+      eleHead.append(getHead(res.model_type));
       reloadDatepicker();
       $('#modal-another-material').modal('hide');
     });
   });
+  function getHead (modelType) {
+      var headers = [
+          '<th class="align-middle">Số TT</th>',
+          '<th class="align-middle">Mã HH</th>',
+          '<th class="align-middle">Vật liệu</th>'
+      ];
+
+      switch (modelType) {
+          case 1:
+          case 2:
+          case 3:
+          case 4:
+          case 5:
+          case 6:
+          case 7:
+          case 8:
+              headers.push(
+                  '<th class="align-middle">Độ dày</th>',
+                  '<th class="align-middle">Hình dạng</th>',
+                  '<th class="align-middle">Dia W W1</th>',
+                  '<th class="align-middle">L L1</th>',
+                  '<th class="align-middle">W2</th>',
+                  '<th class="align-middle">L2</th>',
+                  '<th class="align-middle">SL Tấm</th>',
+                  '<th class="align-middle">SL m2</th>'
+              );
+              break;
+          case 24:
+              headers.push(
+                  '<th class="align-middle">Inner</th>',
+                  '<th class="align-middle">Hoop</th>',
+                  '<th class="align-middle">Filler</th>',
+                  '<th class="align-middle">Outer</th>',
+                  '<th class="align-middle">Thick</th>',
+                  '<th class="align-middle">Tiêu Chuẩn</th>',
+                  '<th class="align-middle">Kích cỡ</th>',
+                  '<th class="align-middle">SL cái</th>'
+              );
+              break;
+          case 22:
+              headers.push(
+                  '<th class="align-middle">Size</th>',
+                  '<th class="align-middle">SL cái</th>'
+              );
+              break;
+          case 10:
+              headers.push(
+                  '<th class="align-middle">Size</th>',
+                  '<th class="align-middle">Trọng lượng Kg/cuộn</th>',
+                  '<th class="align-middle">m/cuộn</th>',
+                  '<th class="align-middle">SL Cuộn</th>',
+                  '<th class="align-middle">SL Kg</th>'
+              );
+              break;
+          case 25:
+              headers.push(
+                  '<th class="align-middle">Size</th>',
+                  '<th class="align-middle">SL Cuộn</th>'
+              );
+              break;
+          case 14:
+          case 12:
+          case 28:
+          case 16:
+              headers.push(
+                  '<th class="align-middle">Size</th>',
+                  '<th class="align-middle">m/cuốn</th>',
+                  '<th class="align-middle">SL Cuộn</th>',
+                  '<th class="align-middle">SL m</th>'
+              );
+              break;
+          case 15:
+              headers.push(
+                  '<th class="align-middle">Size</th>',
+                  '<th class="align-middle">m/cây</th>',
+                  '<th class="align-middle">SL cây</th>',
+                  '<th class="align-middle">SL m</th>'
+              );
+              break;
+          case 21:
+              headers.push(
+                  '<th class="align-middle">Size</th>',
+                  '<th class="align-middle">m/cái</th>'
+              );
+              break;
+          case 29:
+          case 30:
+              headers.push(
+                  '<th class="align-middle">Độ dày</th>',
+                  '<th class="align-middle">Mức áp lực</th>',
+                  '<th class="align-middle">Tiêu chuẩn</th>',
+                  '<th class="align-middle">Kích cỡ</th>',
+                  '<th class="align-middle">Kích thước</th>',
+                  '<th class="align-middle">Chuẩn mặt bích</th>',
+                  '<th class="align-middle">Chuẩn gasket</th>',
+                  '<th class="align-middle">Tồn sl cái</th>'
+              );
+              break;
+          case 11:
+          case 9:
+              headers.push(
+                  '<th class="align-middle">Size</th>',
+                  '<th class="align-middle">Trọng lượng Kg/cuộn</th>',
+                  '<th class="align-middle">m/cuốn</th>',
+                  '<th class="align-middle">SL Cuộn</th>',
+                  '<th class="align-middle">SL Kg</th>'
+              );
+              break;
+          case 17:
+              headers.push(
+                  '<th class="align-middle">Độ dày</th>',
+                  '<th class="align-middle">D1</th>',
+                  '<th class="align-middle">D2</th>',
+                  '<th class="align-middle">Tồn sl cái</th>'
+              );
+              break;
+          case 18:
+              headers.push(
+                  '<th class="align-middle">Độ dày</th>',
+                  '<th class="align-middle">D3</th>',
+                  '<th class="align-middle">D4</th>',
+                  '<th class="align-middle">Tồn sl cái</th>'
+              );
+              break;
+      }
+      headers.push(
+          '<th class="align-middle">Lot No</th>',
+          '<th class="align-middle">Ghi Chú</th>',
+          '<th class="align-middle">Date</th>'
+      );
+      var row = $('<tr align="center"></tr>').append(headers.join(''));
+      return row;
+  }
   function submitFormMaterial(url, data, callback) {
     $.ajax({
         method: "POST",
@@ -197,6 +333,7 @@ $(function () {
         data: data
     })
     .done(function(res) {
+        console.log(res)
         callback(res);
     });
   }
