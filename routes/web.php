@@ -346,6 +346,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['authAdmin']], function() {
 	/* Get form create material */
 	Route::group(['prefix' => 'warehouse'], function() {
 		Route::get('show-form-create', [WarehouseController::class, 'showFormCreate'])->name('admin.warehouse.show-form-create');
+        Route::get('show-material-by-code', [WarehouseController::class, 'showMaterialByCode'])->name('admin.warehouse.show-material-by-code');
 	});
 	Route::group(['prefix' => '/history-active'],function(){
 		Route::get('index', [HistoryActiveController::class, 'index'])->name('admin.history-active.index');

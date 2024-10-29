@@ -169,22 +169,22 @@ $(function () {
       dvTinh = $(this).attr('data-dvTinh');
     }
     submitFormMaterial(eleForm.find('form').first().attr('action'), eleForm.find('form').first().serializeArray(), function(res) {
-      ele.append(getItem(index, 'Tấm', { 
-        code: codeMaterial, 
-        do_day: do_day, 
-        hinh_dang: hinh_dang, 
-        dia_w_w1: dia_w_w1, 
-        l_l1: l_l1, 
-        w2: w2, 
-        l2: l2, 
-        vat_lieu: motaMaterial, 
-        merchandise_id: res.l_id, 
+      ele.append(getItem(index, 'Tấm', {
+        code: codeMaterial,
+        do_day: do_day,
+        hinh_dang: hinh_dang,
+        dia_w_w1: dia_w_w1,
+        l_l1: l_l1,
+        w2: w2,
+        l2: l2,
+        vat_lieu: motaMaterial,
+        merchandise_id: res.l_id,
         dv_tinh: res.dv_tinh,
-        kich_thuoc: res.kich_thuoc, 
-        kich_co: res.size, 
-        tieu_chuan: res.tieu_chuan, 
-        chuan_gasket: res.chuan_gasket, 
-        chuan_bich: res.chuan_bich, 
+        kich_thuoc: res.kich_thuoc,
+        kich_co: res.size,
+        tieu_chuan: res.tieu_chuan,
+        chuan_gasket: res.chuan_gasket,
+        chuan_bich: res.chuan_bich,
       }));
       reloadDatepicker();
       $('#modal-another-material').modal('hide');
@@ -252,7 +252,7 @@ function getItem(index, unit, opts,readonly = true) {
     $.each(opts.kich_thuoc, function(key, value) {
         result += `${key}: ${value}, `;
     });
-  
+
     // Loại bỏ dấu phẩy cuối cùng nếu có
     result = result.slice(0, -2);
   }
@@ -260,21 +260,21 @@ function getItem(index, unit, opts,readonly = true) {
   $readonly = readonly ? 'readonly' : '';
   return '<tr align="center">'
     + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá vật liệu" onclick="deteleItem(this)"></i></td>'
-    + '<td class="sequence">'+index+'</td>'
-    + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="'+opts.merchandise_id+'" /><input '+$readonly+' class="form-control" type="text" name="material[code][]" value="'+opts.code+'"></td>'
-    + '<td class=""><textarea '+$readonly+' class="form-control" name="material[mo_ta][]" rows="1">'+opts.vat_lieu+'</textarea></td>'
-    + '<td style="width: 70px" class="do_day"><input readonly class="form-control" type="text" name="material[do_day][]" value="'+opts.do_day+'"></td>'
-    + '<td style="width: 70px" class="hinh_dang d-none"><input readonly class="form-control" type="text" name="material[hinh_dang][]" value="'+opts.hinh_dang+'"></td>'
-    + '<td style="width: 70px" class="dia_w_w1 d-none"><input readonly class="form-control" type="text" name="material[dia_w_w1][]" value="'+opts.dia_w_w1+'"></td>'
-    + '<td style="width: 70px" class="l_l1 d-none"><input readonly class="form-control" type="text" name="material[l_l1][]" value="'+opts.l_l1+'"></td>'
-    + '<td style="width: 70px" class="w2 d-none"><input readonly class="form-control" type="text" name="material[w2][]" value="'+opts.w2+'"></td>'
-    + '<td style="width: 70px" class="l2 d-none"><input readonly class="form-control" type="text" name="material[l2][]" value="'+opts.l2+'"></td>'
-    + '<td style="width: 70px" class="kich_thuoc"><input readonly class="form-control" type="text" name="material[kich_thuoc][]" value="'+opts.kich_thuoc+'"></td>'
-    + '<td style="width: 70px" class="size"><input readonly class="form-control" type="text" name="material[size][]" value="'+(opts.kich_co ?? "")+'"></td>'
-    + '<td style="width: 70px" class="tieu_chuan"><input readonly class="form-control" type="text" name="material[tieu_chuan][]" value="'+opts.tieu_chuan+'"></td>'
-    + '<td style="width: 70px" class="chuan_gasket"><input readonly class="form-control" type="text" name="material[chuan_gasket][]" value="'+opts.chuan_gasket+'"></td>'
-    + '<td style="width: 70px" class="chuan_bich"><input readonly class="form-control" type="text" name="material[chuan_bich][]" value="'+opts.chuan_bich+'"></td>'
-    + '<td class=""><input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="'+opts.dv_tinh+'"></td>'
+    + '<td class="sequence">' + index + '</td>'
+    + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="' + (opts.merchandise_id ?? '') + '" /><input ' + $readonly + ' class="form-control" type="text" name="material[code][]" value="' + (opts.code ?? '') + '"></td>'
+    + '<td class=""><textarea ' + $readonly + ' class="form-control" name="material[mo_ta][]" rows="1">' + (opts.vat_lieu ?? '') + '</textarea></td>'
+    + '<td style="width: 70px" class="do_day"><input readonly class="form-control" type="text" name="material[do_day][]" value="' + (opts.do_day ?? '') + '"></td>'
+    + '<td style="width: 70px" class="hinh_dang d-none"><input readonly class="form-control" type="text" name="material[hinh_dang][]" value="' + (opts.hinh_dang ?? '') + '"></td>'
+    + '<td style="width: 70px" class="dia_w_w1 d-none"><input readonly class="form-control" type="text" name="material[dia_w_w1][]" value="' + (opts.dia_w_w1 ?? '') + '"></td>'
+    + '<td style="width: 70px" class="l_l1 d-none"><input readonly class="form-control" type="text" name="material[l_l1][]" value="' + (opts.l_l1 ?? '') + '"></td>'
+    + '<td style="width: 70px" class="w2 d-none"><input readonly class="form-control" type="text" name="material[w2][]" value="' + (opts.w2 ?? '') + '"></td>'
+    + '<td style="width: 70px" class="l2 d-none"><input readonly class="form-control" type="text" name="material[l2][]" value="' + (opts.l2 ?? '') + '"></td>'
+    + '<td style="width: 70px" class="kich_thuoc"><input readonly class="form-control" type="text" name="material[kich_thuoc][]" value="' + (opts.kich_thuoc ?? '') + '"></td>'
+    + '<td style="width: 70px" class="size"><input readonly class="form-control" type="text" name="material[size][]" value="' + (opts.kich_co ?? '') + '"></td>'
+    + '<td style="width: 70px" class="tieu_chuan"><input readonly class="form-control" type="text" name="material[tieu_chuan][]" value="' + (opts.tieu_chuan ?? '') + '"></td>'
+    + '<td style="width: 70px" class="chuan_gasket"><input readonly class="form-control" type="text" name="material[chuan_gasket][]" value="' + (opts.chuan_gasket ?? '') + '"></td>'
+    + '<td style="width: 70px" class="chuan_bich"><input readonly class="form-control" type="text" name="material[chuan_bich][]" value="' + (opts.chuan_bich ?? '') + '"></td>'
+    + '<td class=""><input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="' + (opts.dv_tinh ?? '') + '"></td>'
     + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'
     + '<td class=""><input class="form-control calendar-date" style="width: 120px" type="text" name="material[thoi_gian_can][]" value=""></td>'
     + '<td class=""><textarea class="form-control" name="material[ghi_chu][]" rows="1"></textarea></td>'
