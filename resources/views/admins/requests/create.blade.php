@@ -59,7 +59,7 @@
               @include('admins.coes.includes.list-warehouses',['warehouses' => $listWarehouse])
             </div>
             @endif
-            <div class="card-body overflow-auto">
+            <div class="card-body">
               <h3 class="title text-primary">Nội dung</h3>
               @if ($co)
                 @include('admins.requests.includes.list-materials', ['co' => $co, 'coStep' => $coStep])

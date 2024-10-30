@@ -7,37 +7,43 @@
         cursor: pointer;
     }
 </style>
-<div class="data-materials p-0">
+<div class="data-materials p-0 overflow-auto">
     <table class="table table-content table-head-fixed table-bordered table-hover">
-        <thead>
-        @if($co) 
+        <thead class="text-nowrap border-bottom">
+        @if($co)
             <tr align="center">
                 <th class="align-middle">&nbsp</th>
                 <th class="align-middle">Số TT</th>
-                <th class="align-middle">Mã HH</th>
-                <th class="align-middle">Mô tả</th>
-                <th class="align-middle">Độ dày</th>
-                <th class="align-middle">Kích thước</th>
-                <th class="align-middle">Kích cỡ</th>
-                <th class="align-middle">Tiêu chuẩn</th>
-                <th class="align-middle">Chuẩn Gasket</th>
-                <th class="align-middle">Chuẩn bích</th>
-                {{-- <th class="align-middle">Hình dạng</th> --}}
-                {{-- <th class="align-middle">Dia W W1</th>
-                <th class="align-middle">L L1</th>
-                <th class="align-middle">W2</th>
-                <th class="align-middle">L2</th> --}}
-                <th class="align-middle">Đ/v tính</th>
-                <th class="align-middle t-dinh-luong">Số lượng</th>
-                <th class="align-middle">Thời gian cần</th>
-                <th class="align-middle">Ghi chú</th>
+                <th class="align-middle" style="min-width: 120px">Mã HH(Code)</th>
+                <th class="align-middle" style="min-width: 200px">Vật liệu</th>
+                <th class="align-middle material_th_custom">Size</th>
+                <th class="align-middle material_th_custom">Độ dày</th>
+                <th class="align-middle material_th_custom">Hình dạng</th>
+                <th class="align-middle material_th_custom">Dia W W1</th>
+                <th class="align-middle material_th_custom">L L1</th>
+                <th class="align-middle material_th_custom">W2</th>
+                <th class="align-middle material_th_custom">L2</th>
+                <th class="align-middle material_th_custom">Inner</th>
+                <th class="align-middle material_th_custom">Hoop</th>
+                <th class="align-middle material_th_custom">Filler</th>
+                <th class="align-middle material_th_custom">Outer</th>
+                <th class="align-middle material_th_custom">Thick</th>
+                <th class="align-middle material_th_custom">Tiêu chuẩn</th>
+                <th class="align-middle material_th_custom">K.Cỡ</th>
+                <th class="align-middle material_th_custom">Trọng lượng - Kg/Cuộn</th>
+                <th class="align-middle material_th_custom">m/Cuộn</th>
+                <th class="align-middle material_th_custom">m/Cây</th>
+                <th class="align-middle material_th_custom">Đ/v tính</th>
+                <th class="align-middle material_th_custom t-dinh-luong">Số lượng</th>
+                <th class="align-middle material_th_custom">Thời gian cần</th>
+                <th class="align-middle material_th_custom">Ghi chú</th>
             </tr>
         @else
             <tr align="center">
                 <th class="align-middle">&nbsp</th>
                 <th class="align-middle">Số TT</th>
-                <th class="align-middle">Mã HH</th>
-                <th class="align-middle">Mô tả</th>
+                <th class="align-middle" style="min-width: 120px">Mã HH</th>
+                <th class="align-middle" style="min-width: 200px">Mô tả</th>
                 <th class="align-middle">Kích thước</th>
                 <th class="align-middle">Quy cách</th>
                 <th class="align-middle">Đ/v tính</th>
@@ -72,40 +78,67 @@
                                   rows="1" readonly>{{ $material->mo_ta }}</textarea>
                     </td>
                     @if($co)
+                    <td class="size">
+                        <input class="form-control" type="text" name="product[size][]" value="{{ $material->size }}" readonly>
+                    </td>
                     <td class="do_day">
                         <input class="form-control" type="text" name="product[do_day][]" value="{{ $material->do_day }}" readonly>
                     </td>
-                    <td class="kich_thuoc">
-                        <input class="form-control" type="text" name="product[kich_thuoc][]" value="{{ $material->kich_thuoc }}" readonly>
+                    <td class="hinh_dang">
+                        <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $material->hinh_dang }}" readonly>
                     </td>
-                    <td class="kich_co">
-                        <input class="form-control" type="text" name="product[kich_co][]" value="{{ $material->size }}" readonly>
+                    <td class="dia_w_w1">
+                        <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $material->dia_w_w1 }}" readonly>
+                    </td>
+                    <td class="l_l1">
+                        <input class="form-control" type="text" name="product[l_l1][]" value="{{ $material->l_l1 }}" readonly>
+                    </td>
+                    <td class="w2">
+                        <input class="form-control" type="text" name="product[w2][]" value="{{ $material->w2 }}" readonly>
+                    </td>
+                    <td class="l2">
+                        <input class="form-control" type="text" name="product[l2][]" value="{{ $material->l2 }}" readonly>
+                    </td>
+                    <td class="inner">
+                        <input class="form-control" type="text" name="product[inner][]" value="{{ $material->inner }}" readonly>
+                    </td>
+                    <td class="hoop">
+                        <input class="form-control" type="text" name="product[hoop][]" value="{{ $material->hoop }}" readonly>
+                    </td>
+                    <td class="filler">
+                        <input class="form-control" type="text" name="product[filler][]" value="{{ $material->filler }}" readonly>
+                    </td>
+                    <td class="outer">
+                        <input class="form-control" type="text" name="product[outer][]" value="{{ $material->outer }}" readonly>
+                    </td>
+                    <td class="thick">
+                        <input class="form-control" type="text" name="product[thick][]" value="{{ $material->thick }}" readonly>
                     </td>
                     <td class="tieu_chuan">
                         <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ $material->tieu_chuan }}" readonly>
                     </td>
-                    <td class="chuan_gasket">
+                    <td class="kich_co">
+                        <input class="form-control" type="text" name="product[kich_co][]" value="{{ $material->kich_co }}" readonly>
+                    </td>
+                    <td class="trong_luong_kg_cuon">
+                        <input class="form-control" type="text" name="product[trong_luong_kg_cuon][]" value="{{ $material->trong_luong_kg_cuon }}" readonly>
+                    </td>
+                    <td class="m_cuon">
+                        <input class="form-control" type="text" name="product[m_cuon][]" value="{{ $material->m_cuon }}" readonly>
+                    </td>
+                    <td class="m_cay">
+                        <input class="form-control" type="text" name="product[m_cay][]" value="{{ $material->m_cay }}" readonly>
+                    </td>
+                        <td class="kich_thuoc d-none">
+                            <input class="form-control" type="text" name="product[kich_thuoc][]" value="{{ $material->kich_thuoc }}" readonly>
+                        </td>
+                    <td class="chuan_gasket d-none">
                         <input class="form-control" type="text" name="product[chuan_gasket][]" value="{{ $material->chuan_gasket }}" readonly>
                     </td>
-                    <td class="chuan_bich">
+                    <td class="chuan_bich d-none">
                         <input class="form-control" type="text" name="product[chuan_bich][]" value="{{ $material->chuan_bich }}" readonly>
                     </td>
-                    <td class="hinh_dang d-none">
-                        <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $material->hinh_dang }}" readonly>
-                    </td>
-                    <td class="dia_w_w1 d-none">
-                        <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $material->dia_w_w1 }}" readonly>
-                    </td>
-                    <td class="l_l1 d-none">
-                        <input class="form-control" type="text" name="product[l_l1][]" value="{{ $material->l_l1 }}" readonly>
-                    </td>
-                    <td class="w2 d-none">
-                        <input class="form-control" type="text" name="product[w2][]" value="{{ $material->w2 }}" readonly>
-                    </td>
-                    <td class="l2 d-none">
-                        <input class="form-control" type="text" name="product[l2][]" value="{{ $material->l2 }}" readonly>
-                    </td>
-                    @else 
+                    @else
                     <td class="">
                         <textarea class="form-control" name="material[kick_thuoc][]"
                                   rows="1">{{ $material->kich_thuoc }}</textarea>
@@ -132,7 +165,7 @@
                     </td>
                     <td class="">
                         <textarea class="form-control" name="material[ghi_chu][]"
-                                  rows="1">{{ $material->ghi_chu }}</textarea>
+                                  rows="@if($material->ghi_chu) 2 @endif 1" style="min-width: 150px">{{ $material->ghi_chu }}</textarea>
                     </td>
                 </tr>
                 <tr style="background-color: #f4f6f9">
@@ -197,7 +230,7 @@
         @if (str_contains($coStep['title'], "Đang chờ tạo phiếu yêu cầu" ) || str_contains($coStep['title'], "duyệt phiếu yêu cầu" ))
             <tfoot>
                 <tr align="left">
-                    <td colspan="11">
+                    <td colspan="22">
                             <button type="button" class="btn btn-success" id="display-material">+ Thêm vật liệu từ KHO
                             </button>
                             <button type="button" class="btn btn-success" id="add-row-material">+ Thêm ngoài KHO</button>

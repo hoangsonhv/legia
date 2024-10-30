@@ -172,160 +172,34 @@ $(function () {
     submitFormMaterial(eleForm.find('form').first().attr('action'), eleForm.find('form').first().serializeArray(), function(res) {
       ele.append(getItem(index, 'Tấm', {
         code: codeMaterial,
+        size: res.size,
         do_day: do_day,
         hinh_dang: hinh_dang,
         dia_w_w1: dia_w_w1,
         l_l1: l_l1,
         w2: w2,
         l2: l2,
+        inner: res.inner,
+        hoop: res.hoop,
+        filler: res.filler,
+        outer: res.outer,
+        thick: res.thick,
+        tieu_chuan: res.tieu_chuan,
+        kich_co: res.kich_co,
+        trong_luong_kg_cuon: res.trong_luong_kg_cuon,
+        m_cuon: res.m_cuon,
+        m_cay: res.m_cay,
         vat_lieu: motaMaterial,
         merchandise_id: res.l_id,
         dv_tinh: res.dv_tinh,
         kich_thuoc: res.kich_thuoc,
-        kich_co: res.size,
-        tieu_chuan: res.tieu_chuan,
         chuan_gasket: res.chuan_gasket,
         chuan_bich: res.chuan_bich,
       }));
-      eleHead.html('');
-      eleHead.append(getHead(res.model_type));
       reloadDatepicker();
       $('#modal-another-material').modal('hide');
     });
   });
-  function getHead (modelType) {
-      var headers = [
-          '<th class="align-middle">Số TT</th>',
-          '<th class="align-middle">Mã HH</th>',
-          '<th class="align-middle">Vật liệu</th>'
-      ];
-
-      switch (modelType) {
-          case 1:
-          case 2:
-          case 3:
-          case 4:
-          case 5:
-          case 6:
-          case 7:
-          case 8:
-              headers.push(
-                  '<th class="align-middle">Độ dày</th>',
-                  '<th class="align-middle">Hình dạng</th>',
-                  '<th class="align-middle">Dia W W1</th>',
-                  '<th class="align-middle">L L1</th>',
-                  '<th class="align-middle">W2</th>',
-                  '<th class="align-middle">L2</th>',
-                  '<th class="align-middle">SL Tấm</th>',
-                  '<th class="align-middle">SL m2</th>'
-              );
-              break;
-          case 24:
-              headers.push(
-                  '<th class="align-middle">Inner</th>',
-                  '<th class="align-middle">Hoop</th>',
-                  '<th class="align-middle">Filler</th>',
-                  '<th class="align-middle">Outer</th>',
-                  '<th class="align-middle">Thick</th>',
-                  '<th class="align-middle">Tiêu Chuẩn</th>',
-                  '<th class="align-middle">Kích cỡ</th>',
-                  '<th class="align-middle">SL cái</th>'
-              );
-              break;
-          case 22:
-              headers.push(
-                  '<th class="align-middle">Size</th>',
-                  '<th class="align-middle">SL cái</th>'
-              );
-              break;
-          case 10:
-              headers.push(
-                  '<th class="align-middle">Size</th>',
-                  '<th class="align-middle">Trọng lượng Kg/cuộn</th>',
-                  '<th class="align-middle">m/cuộn</th>',
-                  '<th class="align-middle">SL Cuộn</th>',
-                  '<th class="align-middle">SL Kg</th>'
-              );
-              break;
-          case 25:
-              headers.push(
-                  '<th class="align-middle">Size</th>',
-                  '<th class="align-middle">SL Cuộn</th>'
-              );
-              break;
-          case 14:
-          case 12:
-          case 28:
-          case 16:
-              headers.push(
-                  '<th class="align-middle">Size</th>',
-                  '<th class="align-middle">m/cuốn</th>',
-                  '<th class="align-middle">SL Cuộn</th>',
-                  '<th class="align-middle">SL m</th>'
-              );
-              break;
-          case 15:
-              headers.push(
-                  '<th class="align-middle">Size</th>',
-                  '<th class="align-middle">m/cây</th>',
-                  '<th class="align-middle">SL cây</th>',
-                  '<th class="align-middle">SL m</th>'
-              );
-              break;
-          case 21:
-              headers.push(
-                  '<th class="align-middle">Size</th>',
-                  '<th class="align-middle">m/cái</th>'
-              );
-              break;
-          case 29:
-          case 30:
-              headers.push(
-                  '<th class="align-middle">Độ dày</th>',
-                  '<th class="align-middle">Mức áp lực</th>',
-                  '<th class="align-middle">Tiêu chuẩn</th>',
-                  '<th class="align-middle">Kích cỡ</th>',
-                  '<th class="align-middle">Kích thước</th>',
-                  '<th class="align-middle">Chuẩn mặt bích</th>',
-                  '<th class="align-middle">Chuẩn gasket</th>',
-                  '<th class="align-middle">Tồn sl cái</th>'
-              );
-              break;
-          case 11:
-          case 9:
-              headers.push(
-                  '<th class="align-middle">Size</th>',
-                  '<th class="align-middle">Trọng lượng Kg/cuộn</th>',
-                  '<th class="align-middle">m/cuốn</th>',
-                  '<th class="align-middle">SL Cuộn</th>',
-                  '<th class="align-middle">SL Kg</th>'
-              );
-              break;
-          case 17:
-              headers.push(
-                  '<th class="align-middle">Độ dày</th>',
-                  '<th class="align-middle">D1</th>',
-                  '<th class="align-middle">D2</th>',
-                  '<th class="align-middle">Tồn sl cái</th>'
-              );
-              break;
-          case 18:
-              headers.push(
-                  '<th class="align-middle">Độ dày</th>',
-                  '<th class="align-middle">D3</th>',
-                  '<th class="align-middle">D4</th>',
-                  '<th class="align-middle">Tồn sl cái</th>'
-              );
-              break;
-      }
-      headers.push(
-          '<th class="align-middle">Lot No</th>',
-          '<th class="align-middle">Ghi Chú</th>',
-          '<th class="align-middle">Date</th>'
-      );
-      var row = $('<tr align="center"></tr>').append(headers.join(''));
-      return row;
-  }
   function submitFormMaterial(url, data, callback) {
     $.ajax({
         method: "POST",
@@ -333,7 +207,6 @@ $(function () {
         data: data
     })
     .done(function(res) {
-        console.log(res)
         callback(res);
     });
   }
@@ -399,22 +272,31 @@ function getItem(index, unit, opts,readonly = true) {
     + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá vật liệu" onclick="deteleItem(this)"></i></td>'
     + '<td class="sequence">' + index + '</td>'
     + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="' + (opts.merchandise_id ?? '') + '" /><input ' + $readonly + ' class="form-control" type="text" name="material[code][]" value="' + (opts.code ?? '') + '"></td>'
-    + '<td class=""><textarea ' + $readonly + ' class="form-control" name="material[mo_ta][]" rows="1">' + (opts.vat_lieu ?? '') + '</textarea></td>'
-    + '<td style="width: 70px" class="do_day"><input readonly class="form-control" type="text" name="material[do_day][]" value="' + (opts.do_day ?? '') + '"></td>'
-    + '<td style="width: 70px" class="hinh_dang d-none"><input readonly class="form-control" type="text" name="material[hinh_dang][]" value="' + (opts.hinh_dang ?? '') + '"></td>'
-    + '<td style="width: 70px" class="dia_w_w1 d-none"><input readonly class="form-control" type="text" name="material[dia_w_w1][]" value="' + (opts.dia_w_w1 ?? '') + '"></td>'
-    + '<td style="width: 70px" class="l_l1 d-none"><input readonly class="form-control" type="text" name="material[l_l1][]" value="' + (opts.l_l1 ?? '') + '"></td>'
-    + '<td style="width: 70px" class="w2 d-none"><input readonly class="form-control" type="text" name="material[w2][]" value="' + (opts.w2 ?? '') + '"></td>'
-    + '<td style="width: 70px" class="l2 d-none"><input readonly class="form-control" type="text" name="material[l2][]" value="' + (opts.l2 ?? '') + '"></td>'
-    + '<td style="width: 70px" class="kich_thuoc"><input readonly class="form-control" type="text" name="material[kich_thuoc][]" value="' + (opts.kich_thuoc ?? '') + '"></td>'
-    + '<td style="width: 70px" class="size"><input readonly class="form-control" type="text" name="material[size][]" value="' + (opts.kich_co ?? '') + '"></td>'
-    + '<td style="width: 70px" class="tieu_chuan"><input readonly class="form-control" type="text" name="material[tieu_chuan][]" value="' + (opts.tieu_chuan ?? '') + '"></td>'
-    + '<td style="width: 70px" class="chuan_gasket"><input readonly class="form-control" type="text" name="material[chuan_gasket][]" value="' + (opts.chuan_gasket ?? '') + '"></td>'
-    + '<td style="width: 70px" class="chuan_bich"><input readonly class="form-control" type="text" name="material[chuan_bich][]" value="' + (opts.chuan_bich ?? '') + '"></td>'
-    + '<td class=""><input class="form-control" style="width: 70px" type="text" name="material[dv_tinh][]" value="' + (opts.dv_tinh ?? '') + '"></td>'
+    + '<td class=""><textarea ' + $readonly + ' class="form-control" style="min-height: 50px" name="material[mo_ta][]" rows="1">' + (opts.vat_lieu ?? '') + '</textarea></td>'
+    + '<td style="min-width: 120px" class="size"><input readonly class="form-control" type="text" name="material[size][]" value="' + (opts.size ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="do_day"><input readonly class="form-control" type="text" name="material[do_day][]" value="' + (opts.do_day ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="hinh_dang"><input readonly class="form-control" type="text" name="material[hinh_dang][]" value="' + (opts.hinh_dang ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="dia_w_w1"><input readonly class="form-control" type="text" name="material[dia_w_w1][]" value="' + (opts.dia_w_w1 ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="l_l1"><input readonly class="form-control" type="text" name="material[l_l1][]" value="' + (opts.l_l1 ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="w2"><input readonly class="form-control" type="text" name="material[w2][]" value="' + (opts.w2 ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="l2"><input readonly class="form-control" type="text" name="material[l2][]" value="' + (opts.l2 ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="inner"><input readonly class="form-control" type="text" name="material[inner][]" value="' + (opts.inner ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="hoop"><input readonly class="form-control" type="text" name="material[hoop][]" value="' + (opts.hoop ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="filler"><input readonly class="form-control" type="text" name="material[filler][]" value="' + (opts.filler ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="outer"><input readonly class="form-control" type="text" name="material[outer][]" value="' + (opts.outer ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="thick"><input readonly class="form-control" type="text" name="material[thick][]" value="' + (opts.thick ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="tieu_chuan"><input readonly class="form-control" type="text" name="material[tieu_chuan][]" value="' + (opts.tieu_chuan ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="kich_co"><input readonly class="form-control" type="text" name="material[kich_co][]" value="' + (opts.kich_co ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="trong_luong_kg_cuon"><input readonly class="form-control" type="text" name="material[trong_luong_kg_cuon][]" value="' + (opts.trong_luong_kg_cuon ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="m_cuon"><input readonly class="form-control" type="text" name="material[m_cuon][]" value="' + (opts.m_cuon ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="m_cay"><input readonly class="form-control" type="text" name="material[m_cay][]" value="' + (opts.m_cay ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="dv_tinh"><input class="form-control" type="text" name="material[dv_tinh][]" value="' + (opts.dv_tinh ?? '') + '"></td>'
     + '<td class=""><input class="form-control" style="width: 120px" type="text" name="tmp_material[dinh_luong][]" onKeyUp="return getNumberFormat(this)" min="1" value=""><input class="form-control data-origin" type="hidden" name="material[dinh_luong][]" value=""></td>'
     + '<td class=""><input class="form-control calendar-date" style="width: 120px" type="text" name="material[thoi_gian_can][]" value=""></td>'
     + '<td class=""><textarea class="form-control" name="material[ghi_chu][]" rows="1"></textarea></td>'
+    + '<td style="min-width: 120px" class="kich_thuoc d-none"><input readonly class="form-control" type="text" name="material[kich_thuoc][]" value="' + (opts.kich_thuoc ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="chuan_gasket d-none"><input readonly class="form-control" type="text" name="material[chuan_gasket][]" value="' + (opts.chuan_gasket ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="chuan_bich d-none"><input readonly class="form-control" type="text" name="material[chuan_bich][]" value="' + (opts.chuan_bich ?? '') + '"></td>'
     + '</tr>';
 }
 function getItemService(index, unit, opts, readonly = true) {
