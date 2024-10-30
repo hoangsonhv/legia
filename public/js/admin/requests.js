@@ -118,16 +118,25 @@ $(function () {
                 var opts = {
                   merchandise_id: eleRow.find('td.merchandise_id input').val(),
                   code: eleRow.find('td.code input').val(),
+                    size: eleRow.find('td.size input').val() ?? eleRow.find('td.m_size').text(),
                   do_day: eleRow.find('td.do_day input').val(),
                   hinh_dang: eleRow.find('td.hinh_dang input').val(),
                   dia_w_w1: eleRow.find('td.dia_w_w1 input').val(),
                   l_l1: eleRow.find('td.l_l1 input').val(),
                   w2: eleRow.find('td.w2 input').val(),
                   l2: eleRow.find('td.l2 input').val(),
+                    inner: eleRow.find('td.m_inner').text(),
+                    hoop: eleRow.find('td.m_hoop').text(),
+                    filler: eleRow.find('td.m_filler').text(),
+                    outer: eleRow.find('td.m_outer').text(),
+                    thick: eleRow.find('td.m_thick').text(),
+                    trong_luong_cuon: eleRow.find('td.m_trong_luong_cuon').text(),
+                    m_cuon: eleRow.find('td.m_m_cuon').text(),
+                    m_cay: eleRow.find('td.m_m_cay').text(),
                   vat_lieu: eleRow.find('td.vat-lieu input').val(),
                   dv_tinh: eleRow.find('td.dv_tinh input').val(),
                   kich_thuoc: eleRow.find('td.kich_thuoc input').val(),
-                  size: eleRow.find('td.kich_co input').val(),
+                    kich_co: eleRow.find('td.kich_co input').val(),
                   tieu_chuan: eleRow.find('td.tieu_chuan input').val(),
                   chuan_gasket: eleRow.find('td.chuan_gasket input').val(),
                   chuan_bich: eleRow.find('td.chuan_bich input').val(),
@@ -186,7 +195,7 @@ $(function () {
         thick: res.thick,
         tieu_chuan: res.tieu_chuan,
         kich_co: res.kich_co,
-        trong_luong_kg_cuon: res.trong_luong_kg_cuon,
+        trong_luong_cuon: res.trong_luong_cuon,
         m_cuon: res.m_cuon,
         m_cay: res.m_cay,
         vat_lieu: motaMaterial,
@@ -207,6 +216,7 @@ $(function () {
         data: data
     })
     .done(function(res) {
+        console.log(res)
         callback(res);
     });
   }
@@ -287,7 +297,7 @@ function getItem(index, unit, opts,readonly = true) {
     + '<td style="min-width: 120px" class="thick"><input readonly class="form-control" type="text" name="material[thick][]" value="' + (opts.thick ?? '') + '"></td>'
     + '<td style="min-width: 120px" class="tieu_chuan"><input readonly class="form-control" type="text" name="material[tieu_chuan][]" value="' + (opts.tieu_chuan ?? '') + '"></td>'
     + '<td style="min-width: 120px" class="kich_co"><input readonly class="form-control" type="text" name="material[kich_co][]" value="' + (opts.kich_co ?? '') + '"></td>'
-    + '<td style="min-width: 120px" class="trong_luong_kg_cuon"><input readonly class="form-control" type="text" name="material[trong_luong_kg_cuon][]" value="' + (opts.trong_luong_kg_cuon ?? '') + '"></td>'
+    + '<td style="min-width: 120px" class="trong_luong_cuon"><input readonly class="form-control" type="text" name="material[trong_luong_cuon][]" value="' + (opts.trong_luong_cuon ?? '') + '"></td>'
     + '<td style="min-width: 120px" class="m_cuon"><input readonly class="form-control" type="text" name="material[m_cuon][]" value="' + (opts.m_cuon ?? '') + '"></td>'
     + '<td style="min-width: 120px" class="m_cay"><input readonly class="form-control" type="text" name="material[m_cay][]" value="' + (opts.m_cay ?? '') + '"></td>'
     + '<td style="min-width: 120px" class="dv_tinh"><input class="form-control" type="text" name="material[dv_tinh][]" value="' + (opts.dv_tinh ?? '') + '"></td>'

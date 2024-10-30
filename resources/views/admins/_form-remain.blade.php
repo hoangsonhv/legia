@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="trong_luong_cuon">Trọng lượng - Kg/Cuộn</label>
-                                    {!! Form::number('trong_luong_kg_cuon', null, ['class' => 'form-control', 'step' => 'any']) !!}
+                                    {!! Form::number('trong_luong_cuon', null, ['class' => 'form-control', 'step' => 'any']) !!}
                                 </div>
                                 <div class="form-group">
                                     <label for="m_cuon">m/cuộn</label>
