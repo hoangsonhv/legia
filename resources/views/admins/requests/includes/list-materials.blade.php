@@ -8,6 +8,7 @@
     }
 </style>
 @php
+    $visibleShop = isset($requestModel) && $requestModel->status == 4 ? true : false;
     $materialArray = isset($materials) ? $materials[0]->toArray() : null;
     $materialColumn = !empty($materialArray) ? array_keys(array_diff_key($materialArray, array_flip(['id', 'request_id', 'created_at', 'updated_at', 'don_gia', 'quy_cach', 'thanh_tien']))) : null;
 @endphp
@@ -15,24 +16,24 @@
     <table class="table table-content table-head-fixed table-bordered table-hover">
         <thead class="text-nowrap border-bottom">
         @if($co)
-            @if(!empty($materialColumn))
-                <tr align="center">
-                    <th class="align-middle">&nbsp</th>
-                    <th class="align-middle">Số TT</th>
-                    <th class="align-middle material_th_custom">Mã HH</th>
-                    <th class="align-middle" style="min-width: 200px">Vật liệu</th>
-                    <th class="align-middle material_th_custom">Độ dày</th>
-                    <th class="align-middle material_th_custom">Hình dạng</th>
-                    <th class="align-middle material_th_custom">Dia W W1</th>
-                    <th class="align-middle material_th_custom">L L1</th>
-                    <th class="align-middle material_th_custom">W2</th>
-                    <th class="align-middle material_th_custom">L2</th>
-                    <th class="align-middle material_th_custom">Đ/v tính</th>
-                    <th class="align-middle material_th_custom t-dinh-luong">Số lượng</th>
-                    <th class="align-middle material_th_custom">Thời gian cần</th>
-                    <th class="align-middle material_th_custom">Ghi chú</th>
-                </tr>
-            @else
+{{--            @if(!empty($materialColumn))--}}
+{{--                <tr align="center">--}}
+{{--                    <th class="align-middle">&nbsp</th>--}}
+{{--                    <th class="align-middle">Số TT</th>--}}
+{{--                    <th class="align-middle material_th_custom">Mã HH</th>--}}
+{{--                    <th class="align-middle" style="min-width: 200px">Vật liệu</th>--}}
+{{--                    <th class="align-middle material_th_custom">Độ dày</th>--}}
+{{--                    <th class="align-middle material_th_custom">Hình dạng</th>--}}
+{{--                    <th class="align-middle material_th_custom">Dia W W1</th>--}}
+{{--                    <th class="align-middle material_th_custom">L L1</th>--}}
+{{--                    <th class="align-middle material_th_custom">W2</th>--}}
+{{--                    <th class="align-middle material_th_custom">L2</th>--}}
+{{--                    <th class="align-middle material_th_custom">Đ/v tính</th>--}}
+{{--                    <th class="align-middle material_th_custom t-dinh-luong">Số lượng</th>--}}
+{{--                    <th class="align-middle material_th_custom">Thời gian cần</th>--}}
+{{--                    <th class="align-middle material_th_custom">Ghi chú</th>--}}
+{{--                </tr>--}}
+{{--            @else--}}
                 <tr align="center">
                     <th class="align-middle">&nbsp</th>
                     <th class="align-middle">Số TT</th>
@@ -60,7 +61,7 @@
                     <th class="align-middle material_th_custom">Thời gian cần</th>
                     <th class="align-middle material_th_custom">Ghi chú</th>
                 </tr>
-            @endif
+{{--            @endif--}}
 
         @else
             <tr align="center">
@@ -103,8 +104,8 @@
                                   rows="1" readonly>{{ $material->mo_ta }}</textarea>
                     </td>
                     @if($co)
-                    <td class="size @if(!$material->size) d-none @endif">
-                        <input class="form-control" type="text" name="product[size][]" value="{{ $material->size }}" readonly>
+                    <td class="size">
+                        <input class="form-control" type="text" name="product[size][]" value="{{ $material->size ?? optional($material->merchandise)->size }}" readonly>
                     </td>
                     <td class="do_day">
                         <input class="form-control" type="text" name="product[do_day][]" value="{{ $material->do_day }}" readonly>
@@ -124,35 +125,35 @@
                     <td class="l2">
                         <input class="form-control" type="text" name="product[l2][]" value="{{ $material->l2 }}" readonly>
                     </td>
-                    <td class="inner @if(!$material->inner) d-none @endif">
-                        <input class="form-control" type="text" name="product[inner][]" value="{{ $material->inner }}" readonly>
+                    <td class="inner">
+                        <input class="form-control" type="text" name="product[inner][]" value="{{ $material->inner ?? optional($material->merchandise)->inner }}" readonly>
                     </td>
-                    <td class="hoop @if(!$material->hoop) d-none @endif">
-                        <input class="form-control" type="text" name="product[hoop][]" value="{{ $material->hoop }}" readonly>
+                    <td class="hoop">
+                        <input class="form-control" type="text" name="product[hoop][]" value="{{ $material->hoop ?? optional($material->merchandise)->hoop }}" readonly>
                     </td>
-                    <td class="filler @if(!$material->filler) d-none @endif">
-                        <input class="form-control" type="text" name="product[filler][]" value="{{ $material->filler }}" readonly>
+                    <td class="filler">
+                        <input class="form-control" type="text" name="product[filler][]" value="{{ $material->filler ?? optional($material->merchandise)->filler }}" readonly>
                     </td>
-                    <td class="outer @if(!$material->outer) d-none @endif">
-                        <input class="form-control" type="text" name="product[outer][]" value="{{ $material->outer }}" readonly>
+                    <td class="outer">
+                        <input class="form-control" type="text" name="product[outer][]" value="{{ $material->outer ?? optional($material->merchandise)->outer }}" readonly>
                     </td>
-                    <td class="thick @if(!$material->thick) d-none @endif">
-                        <input class="form-control" type="text" name="product[thick][]" value="{{ $material->thick }}" readonly>
+                    <td class="thick">
+                        <input class="form-control" type="text" name="product[thick][]" value="{{ $material->thick ?? optional($material->merchandise)->thick }}" readonly>
                     </td>
-                    <td class="tieu_chuan @if(!$material->tieu_chuan) d-none @endif">
-                        <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ $material->tieu_chuan }}" readonly>
+                    <td class="tieu_chuan">
+                        <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ $material->tieu_chuan ?? optional($material->merchandise)->tieu_chuan }}" readonly>
                     </td>
-                    <td class="kich_co @if(!$material->kich_co) d-none @endif">
-                        <input class="form-control" type="text" name="product[kich_co][]" value="{{ $material->kich_co }}" readonly>
+                    <td class="kich_co">
+                        <input class="form-control" type="text" name="product[kich_co][]" value="{{ $material->kich_co ?? optional($material->merchandise)->kich_co }}" readonly>
                     </td>
-                    <td class="trong_luong_kg_cuon @if(!$material->trong_luong_kg_cuon) d-none @endif">
-                        <input class="form-control" type="text" name="product[trong_luong_kg_cuon][]" value="{{ $material->trong_luong_kg_cuon }}" readonly>
+                    <td class="trong_luong_cuon">
+                        <input class="form-control" type="text" name="product[trong_luong_cuon][]" value="{{ $material->trong_luong_cuon ?? optional($material->merchandise)->trong_luong_cuon }}" readonly>
                     </td>
-                    <td class="m_cuon @if(!$material->m_cuon) d-none @endif">
-                        <input class="form-control" type="text" name="product[m_cuon][]" value="{{ $material->m_cuon }}" readonly>
+                    <td class="m_cuon">
+                        <input class="form-control" type="text" name="product[m_cuon][]" value="{{ $material->m_cuon ?? optional($material->merchandise)->m_cuon }}" readonly>
                     </td>
-                    <td class="m_cay @if(!$material->m_cay) d-none @endif">
-                        <input class="form-control" type="text" name="product[m_cay][]" value="{{ $material->m_cay }}" readonly>
+                    <td class="m_cay">
+                        <input class="form-control" type="text" name="product[m_cay][]" value="{{ $material->m_cay ?? optional($material->merchandise)->m_cay }}" readonly>
                     </td>
                         <td class="kich_thuoc d-none">
                             <input class="form-control" type="text" name="product[kich_thuoc][]" value="{{ $material->kich_thuoc }}" readonly>
@@ -193,11 +194,13 @@
                                   rows="@if($material->ghi_chu) 2 @endif 1" style="min-width: 150px">{{ $material->ghi_chu }}</textarea>
                     </td>
                 </tr>
-                <tr style="background-color: #f4f6f9">
-                    <td colspan="10">
-                        @include('admins.requests.includes.price_survey_by_product')
-                    </td>
-                </tr>
+                @if($visibleShop)
+                    <tr style="background-color: #f4f6f9">
+                        <td colspan="10">
+                            @include('admins.requests.includes.price_survey_by_product')
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         @endif
         @if(!empty($filterWarehouses) && $filterWarehouses->count())
