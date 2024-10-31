@@ -281,7 +281,7 @@ function getItem(index, unit, opts,readonly = true) {
   return '<tr align="center">'
     + '<td class=""><i class="fas fa-minus-circle text-danger delete-item" title="Xoá vật liệu" onclick="deteleItem(this)"></i></td>'
     + '<td class="sequence">' + index + '</td>'
-    + '<td class="code"><input type="hidden" name="material[merchandise_id][]" value="' + (opts.merchandise_id ?? '') + '" /><input ' + $readonly + ' class="form-control" type="text" name="material[code][]" value="' + (opts.code ?? '') + '"></td>'
+    + '<td class="code" style="width: max-content"><input type="hidden" name="material[merchandise_id][]" value="' + (opts.merchandise_id ?? '') + '" /><input ' + $readonly + ' class="form-control" type="text" name="material[code][]" value="' + (opts.code ?? '') + '"></td>'
     + '<td class=""><textarea ' + $readonly + ' class="form-control" style="min-height: 50px" name="material[mo_ta][]" rows="1">' + (opts.vat_lieu ?? '') + '</textarea></td>'
     + '<td style="min-width: 120px" class="size"><input readonly class="form-control" type="text" name="material[size][]" value="' + (opts.size ?? '') + '"></td>'
     + '<td style="min-width: 120px" class="do_day"><input readonly class="form-control" type="text" name="material[do_day][]" value="' + (opts.do_day ?? '') + '"></td>'

@@ -78,6 +78,7 @@
         @endif
         </thead>
         <tbody>
+{{--        @dd($requestModel)--}}
         @if(!empty($materials) && $materials->count())
             @foreach($materials as $index => $material)
                 <tr style="background-color: #fff;">
@@ -95,7 +96,7 @@
                     <td class="sequence">{{ $index + 1 }}</td>
                     <td class="code">
                         <input type="hidden" name="material[merchandise_id][]" value="{{ $material->merchandise_id }}">
-                        <input class="form-control" type="text" name="material[code][]" value="{{ $material->code }}" readonly>
+                        <input style="width: max-content" class="form-control" type="text" name="material[code][]" value="{{ $material->code }}" readonly>
                     </td>
                     <td class="">
                         <textarea class="form-control" name="material[mo_ta][]"
