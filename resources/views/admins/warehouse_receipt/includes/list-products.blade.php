@@ -54,62 +54,62 @@
             <td class="sequence">{{ $index + 1 }}</td>
             <td class="code">
               <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}" />
-              <input class="form-control" style="width: 70px" type="text" name="product[code][]" value="{{ $product['code'] ?? optional($product->merchandise)->code }}" readonly />
+              <input class="form-control" style="width: 70px" type="text" name="product[code][]" value="{{ $product['code'] ?? (isset($merchandise) ? $merchandise->code : null) }}" readonly />
             </td>
             <td class="">
               <textarea class="form-control" style="width: 200px" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
             </td>
             <td class="do_day">
-              <input type="text" style="width: 70px" class="form-control" name="product[do_day][]" value="{{ $product['do_day'] ?? optional($product->merchandise)->do_day }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[do_day][]" value="{{ $product['do_day'] ?? (isset($merchandise) ? $merchandise->do_day : null) }}"  readonly>
             </td>
             <td class="hinh_dang">
-              <input type="text" style="width: 70px" class="form-control" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] ?? optional($product->merchandise)->hinh_dang }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] ?? (isset($merchandise) ? $merchandise->hinh_dang : null) }}"  readonly>
             </td>
             <td class="dia_w_w1">
-              <input type="text" style="width: 70px" class="form-control" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] ?? optional($product->merchandise)->dia_w_w1 }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] ?? (isset($merchandise) ? $merchandise->dia_w_w1 : null) }}"  readonly>
             </td>
             <td class="l_l1">
-              <input type="text" style="width: 70px" class="form-control" name="product[l_l1][]" value="{{ $product['l_l1'] ?? optional($product->merchandise)->l_l1 }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[l_l1][]" value="{{ $product['l_l1'] ?? (isset($merchandise) ? $merchandise->l_l1 : null) }}"  readonly>
             </td>
             <td class="w2">
-              <input type="text" style="width: 70px" class="form-control" name="product[w2][]" value="{{ $product['w2'] ?? optional($product->merchandise)->w2 }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[w2][]" value="{{ $product['w2'] ?? (isset($merchandise) ? $merchandise->w2 : null) }}"  readonly>
             </td>
             <td class="l2">
-              <input type="text" style="width: 70px" class="form-control" name="product[l2][]" value="{{ $product['l2'] ?? optional($product->merchandise)->l2 }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[l2][]" value="{{ $product['l2'] ?? (isset($merchandise) ? $merchandise->l2 : null) }}"  readonly>
             </td>
 
               <td class="">
-                  <input class="form-control" type="text" name="product[inner][]" value="{{ optional($product->merchandise)->inner ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[inner][]" value="{{ isset($merchandise) ? $merchandise->inner : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[hoop][]" value="{{ optional($product->merchandise)->hoop ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[hoop][]" value="{{ isset($merchandise) ? $merchandise->hoop : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[filler][]" value="{{ optional($product->merchandise)->filler ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[filler][]" value="{{ isset($merchandise) ? $merchandise->filler : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[outer][]" value="{{ optional($product->merchandise)->outer ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[outer][]" value="{{ isset($merchandise) ? $merchandise->outer : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[thick][]" value="{{ optional($product->merchandise)->thick ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[thick][]" value="{{ isset($merchandise) ? $merchandise->thick : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ optional($product->merchandise)->tieu_chuan ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ isset($merchandise) ? $merchandise->tieu_chuan : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[kich_co][]" value="{{ optional($product->merchandise)->kich_co ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[kich_co][]" value="{{ isset($merchandise) ? $merchandise->kich_co : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[trong_luong_cuon][]" value="{{ optional($product->merchandise)->trong_luong_cuon ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[trong_luong_cuon][]" value="{{ isset($merchandise) ? $merchandise->trong_luong_cuon : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[m_cuon][]" value="{{ optional($product->merchandise)->m_cuon ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[m_cuon][]" value="{{ isset($merchandise) ? $merchandise->m_cuon : null }}" readonly>
               </td>
               <td class="">
-                  <input class="form-control" type="text" name="product[m_cay][]" value="{{ optional($product->merchandise)->m_cay ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[m_cay][]" value="{{ isset($merchandise) ? $merchandise->m_cay : null }}" readonly>
               </td>
               <td class=" d-none">
-                  <input class="form-control" type="text" name="product[kich_thuoc][]" value="{{ optional($product->merchandise)->kich_thuoc ?? null }}" readonly>
+                  <input class="form-control" type="text" name="product[kich_thuoc][]" value="{{ isset($merchandise) ? $merchandise->kich_thuoc : null }}" readonly>
               </td>
               <td class="d-none">
                   <input class="form-control" type="text" name="product[quy_cach][]" value="{{ $product['quy_cach'] ?? null }}" readonly>
