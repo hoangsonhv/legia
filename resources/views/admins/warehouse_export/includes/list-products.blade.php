@@ -58,7 +58,7 @@
           @php
             $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['id'])
               ->first();
-            $base_warehouse = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
+           $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
               ->where('l_id', $product['id'])->first();
           @endphp
           <tr align="center">
@@ -129,12 +129,12 @@
             </td>
             <td class="">
               <input readonly class="form-control w-auto" type="text" name="product[ton_kho][]" value="{{
-                $base_warehouse->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($base_warehouse->model_type)]
+                $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}">
             </td>
             <td class="">
               <input disabled class="form-control w-auto" type="text" name="product[ton_kho][]" value="{{
-                isset(array_values($base_warehouse->ton_kho)[1]) ? customRound(array_values($base_warehouse->ton_kho)[1]) : 0
+                isset(array_values($merchandise->ton_kho)[1]) ? customRound(array_values($merchandise->ton_kho)[1]) : 0
               }}">
             </td>
             <td class="">
@@ -142,7 +142,7 @@
             </td>
             <td class="">
               <input type="number" max="{{
-                $base_warehouse->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($base_warehouse->model_type)]
+                $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}" class="form-control w-auto data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
                      onKeyUp="return getNumberFormatQuantity(this)">
             </td>
@@ -164,10 +164,10 @@
           @php
             $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])
               ->first();
-            $base_warehouse = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
+           $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
               ->where('l_id', $product['merchandise_id'])->first();
-              if(!isset($base_warehouse->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($base_warehouse->model_type)])) {
-                dump($base_warehouse, $base_warehouse->ton_kho, \App\Helpers\WarehouseHelper::groupTonKhoKey($base_warehouse->model_type), $base_warehouse->model_type);
+              if(!isset($merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)])) {
+                dump($merchandise, $merchandise->ton_kho, \App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type), $merchandise->model_type);
               }
           @endphp
           @if ($index > 0)
@@ -214,12 +214,12 @@
             </td>
             <td class="">
               <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{
-                $base_warehouse->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($base_warehouse->model_type)]
+                $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}">
             </td>
             <td class="">
               <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{
-                isset(array_values($base_warehouse->ton_kho)[1]) ? customRound(array_values($base_warehouse->ton_kho)[1]) : 0
+                isset(array_values($merchandise->ton_kho)[1]) ? customRound(array_values($merchandise->ton_kho)[1]) : 0
               }}">
             </td>
             <td class="">
@@ -227,7 +227,7 @@
             </td>
             <td class="">
               <input type="number" max="{{
-                $base_warehouse->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($base_warehouse->model_type)]
+                $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}" class="form-control data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
                      onKeyUp="return getNumberFormatQuantity(this)">
             </td>

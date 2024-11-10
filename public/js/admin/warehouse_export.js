@@ -251,7 +251,6 @@ function reloadDatepicker() {
 }
 
 function getItem(index, unit, opts) {
-    console.log(opts)
     return '<tr align="center">'
         + '<input class="warehouse_id" type="hidden" name="product[warehouse_id][]" value="'+opts.warehouse_id+'"></input>'
         + '<input class="warehouse_id" type="hidden" name="product[merchandise_id][]" value="'+opts.merchandise_id+'"></input>'

@@ -75,7 +75,6 @@
             </tr>
             @if (!empty($products))
                 @foreach ($products as $index => $product)
-                    @dump($product)
                     @php
                         $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])->first();
                         if ($base_warehouse) {
