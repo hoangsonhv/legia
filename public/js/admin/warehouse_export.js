@@ -280,7 +280,7 @@ function getItem(index, unit, opts) {
         + '<td class="ton_kho"><input readonly class="form-control w-auto" type="text" name="product[ton_kho][]" value="'+opts.ton_kho+'"></td>'
         + '<td class="ton_kho_phu"><input readonly class="form-control w-auto" type="text" name="product[ton_kho][]" value="'+opts.ton_kho_phu+'"></td>'
         + '<td class=""><input class="form-control w-auto" type="number" name="product[quantity_doc][]"/> </td>'
-        + '<td class=""><input class="form-control w-auto data-quantity" type="number" name="product[quantity_reality][]" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
+        + '<td class=""><input class="form-control w-auto data-quantity" type="number" name="product[quantity_reality][]" max="'+opts.ton_kho+'" onKeyUp="return getNumberFormatQuantity(this)"/> </td>'
         + '<td class=""><input class="form-control w-auto" type="text" name="tmp_product[unit_price][]" onKeyUp="return getNumberFormatUnitPrice(this)" min="1" value="">'
         + '<input class="form-control w-auto data-origin data-unit-price" type="hidden" name="product[unit_price][]" value=""></td>'
         + '<td class=""><input class="form-control w-auto data-into-money" type="text" name="tmp_product[into_money][]" onKeyUp="return getNumberFormat(this)" min="1" value="">'
