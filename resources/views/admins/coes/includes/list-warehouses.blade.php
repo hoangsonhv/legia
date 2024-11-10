@@ -6,6 +6,11 @@
         display: table-header-group;
     }
 </style>
+<script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js') }}"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('.select2').select2();
@@ -639,7 +644,7 @@
                                 @endforeach
                             @endif
                         </tbody>
-                        
+
                     </table>
                 </div>
                 @php
@@ -652,7 +657,7 @@
 <script>
         $('.dataTable').each(function() {
             var table = $(this).DataTable(); // Khởi tạo DataTable cho mỗi bảng
-            
+
             // Thêm các dropdown Select2 cho mỗi cột trong footer
             $(this).find('tfoot th').each(function(index) {
                 var title = $(this).text();

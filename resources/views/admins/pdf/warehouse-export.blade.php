@@ -56,7 +56,7 @@
                     <span style="margin-left: 50px"> Ref: </span> <span style="margin-left: 50px">
                         {{ $co->code }}</span>
                     @endif
-                    
+
                 </td>
             </tr>
         </table>
@@ -75,11 +75,14 @@
             </tr>
             @if (!empty($products))
                 @foreach ($products as $index => $product)
+                    @dump($product)
                     @php
                         $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])->first();
-                        $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
-                            ->where('l_id', $product['merchandise_id'])
-                            ->first();
+                        if ($base_warehouse) {
+                            $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
+                                ->where('l_id', $product['merchandise_id'])
+                                ->first();
+                        }
                     @endphp
                     <tr style="border: 1px solid black">
                         <td style="border: 1px solid black">{{ $index + 1 }}</td>

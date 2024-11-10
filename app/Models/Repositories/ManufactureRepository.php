@@ -76,7 +76,7 @@ class ManufactureRepository extends AdminRepository
         $query = ManufactureDetail::where('manufacture_id', $id)
             ->whereRaw('reality_quantity < manufacture_quantity')
             ->get();
-        
+
         if(!$query->count()) {
             $details = ManufactureDetail::where('manufacture_id', $id)->get();
             $date = date('Y-m-d');
@@ -98,6 +98,7 @@ class ManufactureRepository extends AdminRepository
                     'date' => $date,
                     'model_type' => WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type],
                 ];
+                $warehouseModelId = 0;
 
                 $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->where('lot_no', $detail->lot_no)->first();
                 if($base_warehouse != null) {
@@ -110,7 +111,6 @@ class ManufactureRepository extends AdminRepository
                     $merchandise->save();
                 } else {
                     $base_warehouse = BaseWarehouseCommon::where('code', $material->code)->first();
-                    $warehouseModelId = 0;
 
                     if ($base_warehouse != null) {
                         $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
@@ -132,7 +132,7 @@ class ManufactureRepository extends AdminRepository
                     {
                         $warehouseModel = WarehouseHelper::getModel(WarehouseHelper::PRODUCT_WAREHOUSES[$material->material_type])
                             ->create($modelAttributes);
-                    
+
                         $warehouseModel->setQuantity($detail->reality_quantity, accumulate: false);
                         $warehouseModel->save();
                         $warehouseModelId = $warehouseModel->l_id;
@@ -207,7 +207,7 @@ class ManufactureRepository extends AdminRepository
                 if($warehouse->material_type == Manufacture::MATERIAL_TYPE_NON_METAL) {
                     array_push($commerceProductNonMetals, $row);
                 }
-                
+
                 continue;
             }
             else {
@@ -264,7 +264,7 @@ class ManufactureRepository extends AdminRepository
         if($modelCommerceMetals) {
             $modelCommerceMetals->details()->createMany($commerceProductMetals);
         }
-        
+
         $input['material_type'] = Manufacture::MATERIAL_TYPE_NON_METAL;
         $input['qc_check'] = QCCheckStatus::WAITING;
         if(!$commerceProductNonMetals) {
