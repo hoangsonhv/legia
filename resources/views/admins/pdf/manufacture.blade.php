@@ -191,14 +191,30 @@
             </tr>
             </thead>
             <tbody>
+            @php
+                $data = [];
+            @endphp
             @foreach($details as $key => $detail)
                 @php
-                    $offerPrice = new \App\Models\OfferPrice;
-                    $kichThuot = [];
-                    if($detail->offerPrice) {
-                        $offerPrice = $detail->offerPrice;
-                        $kichThuot = explode(" x ", $offerPrice->kich_thuoc);
-                    }
+                        $offerPrice = new \App\Models\OfferPrice;
+                        $kichThuot = [];
+                        $id = null;
+                        $tamC = null;
+                        $soLo = null;
+                        if($detail->offerPrice) {
+                            $offerPrice = $detail->offerPrice;
+                            $kichThuot = explode(" x ", $offerPrice->kich_thuoc);
+
+                            if (isset($kichThuot[1])) {
+                                $data = preg_split('/\s+/', $kichThuot[1]);
+                                if (count($data) > 2) {
+                                    $id = $data[0];
+                                    $tamC = $data[1];
+                                    $soLo = $data[2];
+                                }
+                            }
+                        }
+                        array_push($data, $kichThuot);
                 @endphp
                 <tr>
                     <td>{{$key + 1}}</td>
@@ -209,11 +225,13 @@
                     <td>{{$offerPrice->kich_co}}</td>
                     <td>{{isset($kichThuot[0]) ? $kichThuot[0] : ''}}</td>
                     <td>x</td>
-                    <td>{{isset($kichThuot[1]) ? $kichThuot[1] : ''}}</td>
-                    <td>{{isset($kichThuot[2]) ? $kichThuot[2] : ''}}</td>
+                    <td>{{ $id  ?? (isset($kichThuot[1]) ? $kichThuot[1] : '') }}</td>
+                    <td>{{ $tamC ?? (isset($kichThuot[3]) ? $kichThuot[3] : '') }}</td>
+                    <td>{{ $soLo ?? (isset($kichThuot[4]) ? $kichThuot[4] : '') }}</td>
+                    {{--                    <td>{{isset($kichThuot[3]) ? $kichThuot[3] : ''}}</td>--}}
+                    {{--                    <td>{{isset($kichThuot[4]) ? $kichThuot[4] : ''}}</td>--}}
                     <td>x</td>
-                    <td>{{isset($kichThuot[3]) ? $kichThuot[3] : ''}}</td>
-                    <td>{{isset($kichThuot[4]) ? $kichThuot[4] : ''}}</td>
+                    <td>{{isset($kichThuot[2]) ? $kichThuot[2] : ''}}</td>
                     <td>{{$offerPrice->chuan_bich}}</td>
                     <td>{{$offerPrice->chuan_gasket}}</td>
                     <td>{{$offerPrice->dv_tinh}}</td>
@@ -222,6 +240,8 @@
                     <td></td>
                 </tr>
             @endforeach
+{{--            @dd($data);--}}
+
             @for($i = 0; $i + count($details) <= 12; $i++)
                 <tr>
                     <td>{{ $i + count($details) + 1  }}</td>
