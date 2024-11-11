@@ -108,22 +108,22 @@
                         <input class="form-control" type="text" name="product[size][]" value="{{ $material->size ?? optional($material->merchandise)->size }}" readonly>
                     </td>
                     <td class="do_day">
-                        <input class="form-control" type="text" name="product[do_day][]" value="{{ $material->do_day }}" readonly>
+                        <input class="form-control" type="text" name="product[do_day][]" value="{{ $material->do_day ?? optional($material->merchandise)->do_day }}" readonly>
                     </td>
                     <td class="hinh_dang">
-                        <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $material->hinh_dang }}" readonly>
+                        <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $material->hinh_dang ?? optional($material->merchandise)->hinh_dang }}" readonly>
                     </td>
                     <td class="dia_w_w1">
-                        <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $material->dia_w_w1 }}" readonly>
+                        <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $material->dia_w_w1 ?? optional($material->merchandise)->dia_w_w1 }}" readonly>
                     </td>
                     <td class="l_l1">
-                        <input class="form-control" type="text" name="product[l_l1][]" value="{{ $material->l_l1 }}" readonly>
+                        <input class="form-control" type="text" name="product[l_l1][]" value="{{ $material->l_l1 ?? optional($material->merchandise)->l_l1 }}" readonly>
                     </td>
                     <td class="w2">
-                        <input class="form-control" type="text" name="product[w2][]" value="{{ $material->w2 }}" readonly>
+                        <input class="form-control" type="text" name="product[w2][]" value="{{ $material->w2 ?? optional($material->merchandise)->w2 }}" readonly>
                     </td>
                     <td class="l2">
-                        <input class="form-control" type="text" name="product[l2][]" value="{{ $material->l2 }}" readonly>
+                        <input class="form-control" type="text" name="product[l2][]" value="{{ $material->l2 ?? optional($material->merchandise)->l2 }}" readonly>
                     </td>
                     <td class="inner">
                         <input class="form-control" type="text" name="product[inner][]" value="{{ $material->inner ?? optional($material->merchandise)->inner }}" readonly>
