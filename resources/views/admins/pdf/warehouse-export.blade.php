@@ -76,9 +76,9 @@
             @if (!empty($products))
                 @foreach ($products as $index => $product)
                     @php
-                        $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])->first();
+                        $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['id'])->first();
                         $merchandise = $base_warehouse
-                        ? \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)->where('l_id', $product['merchandise_id'])->first()
+                        ? \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)->where('l_id', $product['id'])->first()
                         : null;
                     @endphp
                     <tr style="border: 1px solid black">
