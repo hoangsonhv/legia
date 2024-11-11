@@ -11,16 +11,16 @@
     <thead>
 
       <tr align="center">
-        <th class="align-middle">&nbsp</th>
-        <th class="align-middle">Số TT</th>
-        <th class="align-middle">Mã hàng</th>
-        <th class="align-middle">Tên hàng</th>
-        <th class="align-middle">Độ dày</th>
-        <th class="align-middle">Hình dạng</th>
-        <th class="align-middle">Dia W W1</th>
-        <th class="align-middle">L L1</th>
-        <th class="align-middle">W2</th>
-        <th class="align-middle">L2</th>
+        <th class="align-middle ">&nbsp</th>
+        <th class="align-middle ">Số TT</th>
+        <th class="align-middle material_th_custom">Mã hàng</th>
+        <th class="align-middle material_th_custom">Tên hàng</th>
+        <th class="align-middle material_th_custom">Độ dày</th>
+        <th class="align-middle material_th_custom">Hình dạng</th>
+        <th class="align-middle material_th_custom">Dia W W1</th>
+        <th class="align-middle material_th_custom">L L1</th>
+        <th class="align-middle material_th_custom">W2</th>
+        <th class="align-middle material_th_custom">L2</th>
           <th class="align-middle material_th_custom">Inner</th>
           <th class="align-middle material_th_custom">Hoop</th>
           <th class="align-middle material_th_custom">Filler</th>
@@ -38,7 +38,7 @@
         <th class="align-middle">Số lượng (Thực nhập)</th>
         <th class="align-middle">Đơn giá</th>
         <th class="align-middle">Thành tiền</th>
-        <th class="align-middle">&nbsp</th>
+{{--        <th class="align-middle">&nbsp</th>--}}
       </tr>
     </thead>
     <tbody>
