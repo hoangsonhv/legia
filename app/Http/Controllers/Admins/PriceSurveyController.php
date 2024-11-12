@@ -14,6 +14,10 @@ use App\Models\Repositories\RequestStepHistoryRepository;
 use App\Models\Request as RequestModel;
 use App\Models\CoreCustomer;
 use App\Models\PriceSurvey;
+use App\Models\RequestMaterial;
+use App\Models\RequestPriceSurvey;
+use App\Models\Supplier;
+use App\Models\SupplierProduct;
 use Illuminate\Http\Request;
 use App\Models\Repositories\PriceSurveyRepository;
 use App\Models\Repositories\CoStepHistoryRepository;
@@ -191,6 +195,7 @@ class PriceSurveyController extends Controller
         $accompanyingDocuments = $request->file('accompanying_document');
         // $dataInsert = [];
         $documents = [];
+
         foreach ($ids as $key => $id) {
             $data = [
                 'supplier' => $supplier[$key],
@@ -205,6 +210,12 @@ class PriceSurveyController extends Controller
                 'co_id' => $coId,
                 'status' => (isset($status[$key]) && $status[$key]) ? $status[$key] : 0,
             ];
+
+            //Create supplier
+            $supplierObj = Supplier::query()->where('name', $supplier[$key])->firstOrCreate([
+                'name' => $supplier[$key]
+            ]);
+
             if(!$ids[$key]) {
                 try{
                     $priceSurvey = PriceSurvey::create($data);
@@ -230,7 +241,7 @@ class PriceSurveyController extends Controller
                         $priceSurvey->surveyPrices()->create($surveyPrice ?? ['request_id' => $requestId,
                             'core_customer_id' => $priceSurvey->id,]);
                     }
-                    
+
                 }
                 catch (\Exception $ex) {
                     dd($ex);
@@ -261,10 +272,34 @@ class PriceSurveyController extends Controller
                         $priceSurvey->surveyPrices()->first()->update($surveyPrice);
                     } else {
                         $priceSurvey->surveyPrices()->create($surveyPrice);
-    
                     }
                 }
             }
+
+            //Init product to supplier
+            $material_to_supplier = RequestMaterial::query()->select([
+                'code',
+                'l2',
+                'w2',
+                'l_l1',
+                'dia_w_w1',
+                'hinh_dang',
+                'do_day',
+                'mo_ta',
+                'dv_tinh',
+                'dinh_luong'
+            ])->where('id', $materialId)->first();
+            SupplierProduct::query()->firstOrCreate(
+                [
+                    'supplier_id' => $supplierObj->id,
+                    'attribute' => $material_to_supplier,
+                    'product_code' => $material_to_supplier->code
+                ],
+                [
+                    'price' => $price[$key],
+                    'attachment' => null
+                ]
+            );
         }
 
         $requestModel = RequestModel::find($requestId);
