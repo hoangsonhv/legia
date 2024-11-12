@@ -10,7 +10,7 @@
 <div class="data-materials p-0">
     <table class="table table-content table-head-fixed table-bordered table-hover">
         <thead>
-        @if($co) 
+        @if($co)
             <tr align="center">
                 <th class="align-middle">&nbsp</th>
                 <th class="align-middle">Số TT</th>
@@ -105,7 +105,7 @@
                     <td class="l2 d-none">
                         <input class="form-control" type="text" name="product[l2][]" value="{{ $material->l2 }}" readonly>
                     </td>
-                    @else 
+                    @else
                     <td class="">
                         <textarea class="form-control" name="material[kick_thuoc][]"
                                   rows="1">{{ $material->kich_thuoc }}</textarea>
@@ -138,6 +138,9 @@
                 <tr style="background-color: #f4f6f9">
                     <td colspan="10">
                         @include('admins.requests.includes.price_survey_by_product')
+                    </td>
+                    <td colspan="5">
+                        @include('admins.requests.includes.price_survey_by_product_created')
                     </td>
                 </tr>
             @endforeach

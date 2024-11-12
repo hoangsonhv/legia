@@ -16,7 +16,8 @@
         "laravel/telescope": "^4.17",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.3",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
