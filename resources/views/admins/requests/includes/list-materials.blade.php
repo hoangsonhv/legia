@@ -62,7 +62,29 @@
                     <th class="align-middle material_th_custom">Ghi chú</th>
                 </tr>
 {{--            @endif--}}
-
+        <thead>
+        @if($co)
+            <tr align="center">
+                <th class="align-middle">&nbsp</th>
+                <th class="align-middle">Số TT</th>
+                <th class="align-middle">Mã HH</th>
+                <th class="align-middle">Mô tả</th>
+                <th class="align-middle">Độ dày</th>
+                <th class="align-middle">Kích thước</th>
+                <th class="align-middle">Kích cỡ</th>
+                <th class="align-middle">Tiêu chuẩn</th>
+                <th class="align-middle">Chuẩn Gasket</th>
+                <th class="align-middle">Chuẩn bích</th>
+                {{-- <th class="align-middle">Hình dạng</th> --}}
+                {{-- <th class="align-middle">Dia W W1</th>
+                <th class="align-middle">L L1</th>
+                <th class="align-middle">W2</th>
+                <th class="align-middle">L2</th> --}}
+                <th class="align-middle">Đ/v tính</th>
+                <th class="align-middle t-dinh-luong">Số lượng</th>
+                <th class="align-middle">Thời gian cần</th>
+                <th class="align-middle">Ghi chú</th>
+            </tr>
         @else
             <tr align="center">
                 <th class="align-middle">&nbsp</th>
@@ -192,6 +214,9 @@
                     <td class="">
                         <textarea class="form-control" name="material[ghi_chu][]"
                                   rows="@if($material->ghi_chu) 2 @endif 1" style="min-width: 150px">{{ $material->ghi_chu }}</textarea>
+                    </td>
+                    <td colspan="5">
+                        @include('admins.requests.includes.price_survey_by_product_created')
                     </td>
                 </tr>
                 @if($visibleShop)
