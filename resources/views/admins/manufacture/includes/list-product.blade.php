@@ -27,18 +27,18 @@
         </thead>
         <tbody>
             @foreach($details as $key => $detail)
-            {{-- @dd($detail) --}}
+{{--             @dd($detail)--}}
                 <tr align="center">
                     <input hidden value="{{isset($detail['id']) ? $detail['id'] : null}}" name="id[]" />
                     <input hidden value="{{$detail['offer_price_id']}}" name="offer_price_id[]" />
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $detail['code'] }}</td>
                     <td>{{ $detail['loai_vat_lieu'] }}</td>
-                    <td><input type="number" name="do_day[]" value="{{$detail['do_day']}}"></td>
+                    <td><input type="text" name="do_day[]" value="{{$detail['do_day']}}"></td>
                     <td><input type="text" name="tieu_chuan[]" value="{{ $detail['tieu_chuan'] }}"></td>
                     <td><input type="text" name="size[]" value="{{ $detail['kich_co'] }}"></td>
-                    <td><input type="text" name="w1[]" value="{{ @$detail['dia_w_w1'] }}"></td>
-                    <td><input type="text" name="l1[]" value="{{ @$detail['l_l1'] }}"></td>
+                    <td><input type="text" name="l_l1[]" value="{{ @$detail['l_l1'] }}"></td>
+                    <td><input type="text" name="dia_w_w1[]" value="{{ @$detail['dia_w_w1'] }}"></td>
                     <td><input type="text" name="kich_thuoc[]" value="{{ $detail['kich_thuoc'] }}"></td>
                     <td><input type="text" name="chuan_bich[]" value="{{ $detail['chuan_bich'] }}"></td>
                     <td><input type="text" name="chuan_gasket[]" value="{{ $detail['chuan_gasket'] }}"></td>

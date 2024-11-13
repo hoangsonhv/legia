@@ -56,7 +56,7 @@
                     <span style="margin-left: 50px"> Ref: </span> <span style="margin-left: 50px">
                         {{ $co->code }}</span>
                     @endif
-                    
+
                 </td>
             </tr>
         </table>
@@ -76,21 +76,28 @@
             @if (!empty($products))
                 @foreach ($products as $index => $product)
                     @php
-                        $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])->first();
-                        $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
-                            ->where('l_id', $product['merchandise_id'])
-                            ->first();
+                        $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['id'])->first();
+                        $merchandise = $base_warehouse
+                        ? \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)->where('l_id', $product['id'])->first()
+                        : null;
                     @endphp
                     <tr style="border: 1px solid black">
                         <td style="border: 1px solid black">{{ $index + 1 }}</td>
                         <td style="border: 1px solid black">{{ $product['code'] }}</td>
-                        <td style="border: 1px solid black">{{$merchandise->vat_lieu}}</td>
-                        <td style="border: 1px solid black">{{$product['do_day']}}</td>
-                        <td style="border: 1px solid black">{{$merchandise->tieu_chuan}}</td>
-                        <td style="border: 1px solid black">{{$merchandise->kich_co}}</td>
-                        <td style="border: 1px solid black">{{$merchandise->kich_thuoc}}</td>
+{{--                        <td style="border: 1px solid black">{{$merchandise->vat_lieu}}</td>--}}
+{{--                        <td style="border: 1px solid black">{{$product['do_day']}}</td>--}}
+{{--                        <td style="border: 1px solid black">{{$merchandise->tieu_chuan}}</td>--}}
+{{--                        <td style="border: 1px solid black">{{$merchandise->kich_co}}</td>--}}
+{{--                        <td style="border: 1px solid black">{{$merchandise->kich_thuoc}}</td>--}}
+{{--                        <td style="border: 1px solid black">{{ $product['unit'] }}</td>--}}
+{{--                        <td style="border: 1px solid black">{{ $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]}}</td>--}}
+                        <td style="border: 1px solid black">{{ $merchandise ? $merchandise->vat_lieu : '' }}</td>
+                        <td style="border: 1px solid black">{{ $product['do_day'] }}</td>
+                        <td style="border: 1px solid black">{{ $merchandise ? $merchandise->tieu_chuan : '' }}</td>
+                        <td style="border: 1px solid black">{{ $merchandise ? $merchandise->kich_co : '' }}</td>
+                        <td style="border: 1px solid black">{{ $merchandise ? $merchandise->kich_thuoc : '' }}</td>
                         <td style="border: 1px solid black">{{ $product['unit'] }}</td>
-                        <td style="border: 1px solid black">{{ $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]}}</td>
+                        <td style="border: 1px solid black">{{ $merchandise ? $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)] : '' }}</td>
                     </tr>
                 @endforeach
             @endif

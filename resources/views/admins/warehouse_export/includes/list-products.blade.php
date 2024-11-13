@@ -32,6 +32,16 @@
         <th class="align-middle w-100">L L1</th>
         <th class="align-middle w-100">W2</th>
         <th class="align-middle w-100">L2</th>
+          <th class="align-middle material_th_custom">Inner</th>
+          <th class="align-middle material_th_custom">Hoop</th>
+          <th class="align-middle material_th_custom">Filler</th>
+          <th class="align-middle material_th_custom">Outer</th>
+          <th class="align-middle material_th_custom">Thick</th>
+          <th class="align-middle material_th_custom">Tiêu chuẩn</th>
+          <th class="align-middle material_th_custom">K.Cỡ</th>
+          <th class="align-middle material_th_custom">Trọng lượng - Kg/Cuộn</th>
+          <th class="align-middle material_th_custom">m/Cuộn</th>
+          <th class="align-middle material_th_custom">m/Cây</th>
         <th class="align-middle w-100">Lot No</th>
         <th class="align-middle w-100">Đ/v tính</th>
         <th class="align-middle w-100">Tồn kho</th>
@@ -48,7 +58,7 @@
           @php
             $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['id'])
               ->first();
-            $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
+           $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
               ->where('l_id', $product['id'])->first();
           @endphp
           <tr align="center">
@@ -60,39 +70,70 @@
               <textarea class="form-control w-auto" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
             </td>
             <td class=" code">
-              <input class="form-control w-auto" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly>
+                <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}">
+                <input class="form-control w-auto" type="text" name="product[code][]" value="{{ $product['code'] ?? (isset($base_warehouse) ? $base_warehouse->code : null) }}" readonly>
             </td>
             <td class=" do_day">
-              <input class="form-control w-auto" type="text" name="product[do_day][]" value="{{ $product['do_day'] }}" readonly>
+              <input class="form-control w-auto" type="text" name="product[do_day][]" value="{{ $product['do_day'] ?? (isset($base_warehouse) ? $base_warehouse->do_day : null) }}" readonly>
             </td>
             <td class=" hinh_dang">
-              <input class="form-control w-auto" type="text" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] }}" readonly>
+              <input class="form-control w-auto" type="text" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] ?? (isset($base_warehouse) ? $base_warehouse->hinh_dang : null) }}" readonly>
             </td>
             <td class=" dia_w_w1">
-              <input class="form-control w-auto" type="text" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] }}" readonly>
+              <input class="form-control w-auto" type="text" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] ?? (isset($base_warehouse) ? $base_warehouse->dia_w_w1 : null) }}" readonly>
             </td>
             <td class=" l_l1">
-              <input class="form-control w-auto" type="text" name="product[l_l1][]" value="{{ $product['l_l1'] }}" readonly>
+              <input class="form-control w-auto" type="text" name="product[l_l1][]" value="{{ $product['l_l1'] ?? (isset($base_warehouse) ? $base_warehouse->l_l1 : null) }}" readonly>
             </td>
             <td class=" w2">
-              <input class="form-control w-auto" type="text" name="product[w2][]" value="{{ $product['w2'] }}" readonly>
+              <input class="form-control w-auto" type="text" name="product[w2][]" value="{{ $product['w2'] ?? (isset($base_warehouse) ? $base_warehouse->w2 : null) }}" readonly>
             </td>
             <td class=" l2">
-              <input class="form-control w-auto" type="text" name="product[l2][]" value="{{ $product['l2'] }}" readonly>
+              <input class="form-control w-auto" type="text" name="product[l2][]" value="{{ $product['l2'] ?? (isset($base_warehouse) ? $base_warehouse->l2 : null) }}" readonly>
             </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[inner][]" value="{{ isset($base_warehouse) ? $base_warehouse->inner : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[hoop][]" value="{{ isset($base_warehouse) ? $base_warehouse->hoop : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[filler][]" value="{{ isset($base_warehouse) ? $base_warehouse->filler : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[outer][]" value="{{ isset($base_warehouse) ? $base_warehouse->outer : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[thick][]" value="{{ isset($base_warehouse) ? $base_warehouse->thick : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ isset($base_warehouse) ? $base_warehouse->tieu_chuan : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[kich_co][]" value="{{ isset($base_warehouse) ? $base_warehouse->kich_co : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[trong_luong_cuon][]" value="{{ isset($base_warehouse) ? $base_warehouse->trong_luong_cuon : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[m_cuon][]" value="{{ isset($base_warehouse) ? $base_warehouse->m_cuon : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[m_cay][]" value="{{ isset($base_warehouse) ? $base_warehouse->m_cay : null }}" readonly>
+              </td>
             <td class="">
-              <input class="form-control w-auto" type="text" name="product[lot_no][]" value="{{ $product['lot_no'] }}" readonly>
+                <input class="form-control w-auto" type="text" name="product[lot_no][]" value="{{ (isset($product['lot_no']) && $product['lot_no'] !== '') ? $product['lot_no'] : (isset($base_warehouse) ? $base_warehouse->lot_no : null) }}" readonly>
             </td>
             <td class="">
               <input class="form-control w-auto" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
             </td>
             <td class="">
-              <input readonly class="form-control w-auto" type="text" name="product[ton_kho][]" value="{{ 
+              <input readonly class="form-control w-auto" type="text" name="product[ton_kho][]" value="{{
                 $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}">
             </td>
             <td class="">
-              <input disabled class="form-control w-auto" type="text" name="product[ton_kho][]" value="{{ 
+              <input disabled class="form-control w-auto" type="text" name="product[ton_kho][]" value="{{
                 isset(array_values($merchandise->ton_kho)[1]) ? customRound(array_values($merchandise->ton_kho)[1]) : 0
               }}">
             </td>
@@ -100,7 +141,7 @@
               <input class="form-control w-auto" style="width: 70px" name="product[quantity_doc][]" value="{{ $product['quantity_doc'] }}">
             </td>
             <td class="">
-              <input type="number" max="{{ 
+              <input type="number" max="{{
                 $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}" class="form-control w-auto data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
                      onKeyUp="return getNumberFormatQuantity(this)">
@@ -123,7 +164,7 @@
           @php
             $base_warehouse = \App\Models\Warehouse\BaseWarehouseCommon::where('l_id', $product['merchandise_id'])
               ->first();
-            $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
+           $merchandise = \App\Helpers\WarehouseHelper::getModel($base_warehouse->model_type)
               ->where('l_id', $product['merchandise_id'])->first();
               if(!isset($merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)])) {
                 dump($merchandise, $merchandise->ton_kho, \App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type), $merchandise->model_type);
@@ -145,39 +186,69 @@
               <textarea class="form-control" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
             </td>
             <td class="code">
-              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly>
+              <input class="form-control" type="text" name="product[code][]" value="{{ $product['code'] ?? (isset($base_warehouse) ? $base_warehouse->code : null) }}" readonly>
             </td>
             <td class="do_day">
-              <input class="form-control" type="text" name="product[do_day][]" value="{{ $product['do_day'] }}" readonly>
+              <input class="form-control" type="text" name="product[do_day][]" value="{{ $product['do_day'] ?? (isset($base_warehouse) ? $base_warehouse->do_day : null) }}" readonly>
             </td>
             <td class="hinh_dang">
-              <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] }}" readonly>
+              <input class="form-control" type="text" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] ?? (isset($base_warehouse) ? $base_warehouse->hinh_dang : null) }}" readonly>
             </td>
             <td class="dia_w_w1">
-              <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] }}" readonly>
+              <input class="form-control" type="text" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] ?? (isset($base_warehouse) ? $base_warehouse->dia_w_w1 : null) }}" readonly>
             </td>
             <td class="l_l1">
-              <input class="form-control" type="text" name="product[l_l1][]" value="{{ $product['l_l1'] }}" readonly>
+              <input class="form-control" type="text" name="product[l_l1][]" value="{{ $product['l_l1'] ?? (isset($base_warehouse) ? $base_warehouse->l_l1 : null) }}" readonly>
             </td>
             <td class="w2">
-              <input class="form-control" type="text" name="product[w2][]" value="{{ $product['w2'] }}" readonly>
+              <input class="form-control" type="text" name="product[w2][]" value="{{ $product['w2'] ?? (isset($base_warehouse) ? $base_warehouse->w2 : null) }}" readonly>
             </td>
             <td class="l2">
-              <input class="form-control" type="text" name="product[l2][]" value="{{ $product['l2'] }}" readonly>
+              <input class="form-control" type="text" name="product[l2][]" value="{{ $product['l2'] ?? (isset($base_warehouse) ? $base_warehouse->l2 : null) }}" readonly>
             </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[inner][]" value="{{ isset($base_warehouse) ? $base_warehouse->inner : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[hoop][]" value="{{ isset($base_warehouse) ? $base_warehouse->hoop : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[filler][]" value="{{ isset($base_warehouse) ? $base_warehouse->filler : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[outer][]" value="{{ isset($base_warehouse) ? $base_warehouse->outer : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[thick][]" value="{{ isset($base_warehouse) ? $base_warehouse->thick : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ isset($base_warehouse) ? $base_warehouse->tieu_chuan : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[kich_co][]" value="{{ isset($base_warehouse) ? $base_warehouse->kich_co : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[trong_luong_cuon][]" value="{{ isset($base_warehouse) ? $base_warehouse->trong_luong_cuon : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[m_cuon][]" value="{{ isset($base_warehouse) ? $base_warehouse->m_cuon : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[m_cay][]" value="{{ isset($base_warehouse) ? $base_warehouse->m_cay : null }}" readonly>
+              </td>
             <td class="">
-              <input class="form-control" type="text" name="product[lot_no][]" value="{{ $merchandise->lot_no }}" readonly>
+              <input class="form-control" type="text" name="product[lot_no][]" value="{{ $base_warehouse->lot_no }}" readonly>
             </td>
             <td class="">
               <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
             </td>
             <td class="">
-              <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+              <input readonly class="form-control" type="text" name="product[ton_kho][]" value="{{
                 $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}">
             </td>
             <td class="">
-              <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+              <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{
                 isset(array_values($merchandise->ton_kho)[1]) ? customRound(array_values($merchandise->ton_kho)[1]) : 0
               }}">
             </td>
@@ -185,7 +256,7 @@
               <input class="form-control" style="width: 70px" name="product[quantity_doc][]" value="{{ $product['quantity_doc'] }}">
             </td>
             <td class="">
-              <input type="number" max="{{ 
+              <input type="number" max="{{
                 $merchandise->ton_kho[\App\Helpers\WarehouseHelper::groupTonKhoKey($merchandise->model_type)]
               }}" class="form-control data-quantity" style="width: 120px" name="product[quantity_reality][]" value="{{ $product['quantity_reality'] }}"
                      onKeyUp="return getNumberFormatQuantity(this)">

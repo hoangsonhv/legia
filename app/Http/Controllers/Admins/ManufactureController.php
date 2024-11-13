@@ -276,9 +276,13 @@ class ManufactureController extends Controller
                 $details[$index]['so_luong_san_xuat'] = $detail->offerPrice ? $detail->offerPrice->so_luong_san_xuat : '';
                 $details[$index]['reality_quantity'] = $detail->reality_quantity;
                 $details[$index]['error_quantity'] = $detail->error_quantity;
-                $details[$index]['error_quantity'] = $detail->error_quantity;
                 $details[$index]['need_quantity'] = $detail->need_quantity;
                 $details[$index]['material_type'] = $detail->material_type;
+                // son added
+                $details[$index]['manufacture_id'] = $detail->manufacture_id;
+                $details[$index]['manufacture_quantity'] = $detail->manufacture_quantity;
+                $details[$index]['dia_w_w1'] = $detail->dia_w_w1;
+                $details[$index]['l_l1'] = $detail->l_l1;
             }
 
             return view('admins.manufacture.edit',compact('breadcrumb', 'titleForLayout', 'model',
@@ -292,7 +296,7 @@ class ManufactureController extends Controller
         $model = $this->manufactureRepo->find($id);
         if ($model) {
             $inputs = $request->input();
-            
+
             if ($model->is_completed == 1 && $model->qc_check != 1) {
                 $inputs['qc_check'] = 1;
             }
@@ -333,12 +337,12 @@ class ManufactureController extends Controller
                             'do_day' => @$inputs['do_day'][$index] ?? 0,
                             'tieu_chuan' => @$inputs['tieu_chuan'][$index] ?? 0,
                             'size' => @$inputs['size'][$index] ?? 0,
-                            'dia_w_w1' => @$inputs['dia_w_w1'][$index] ?? 0,
-                            'l_l1' => @$inputs['l_l1'][$index] ?? 0,
+                            'dia_w_w1' => @$inputs['dia_w_w1'][$index] ?? null,
+                            'l_l1' => @$inputs['l_l1'][$index] ?? null,
                             'kich_thuoc' => $kich_thuoc,
                             'chuan_bich' => @$inputs['chuan_bich'][$index] ?? 0,
                             'chuan_gasket' => @$inputs['chuan_gasket'][$index] ?? 0,
-                            'reality_quantity' => $reality > 0 ? $reality : 0,
+                            'reality_quantity' => $reality > 0 ? $reality : null,
                             'error_quantity' => @$inputs['error_quantity'][$index] ?? 0,
                             'need_quantity' => $inputs['need_quantity'][$index],
                             'material_type' => in_array($offerPriceId, $inputs['material_type'] ?? []) ?

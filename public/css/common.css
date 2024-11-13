@@ -86,13 +86,13 @@
     position: unset !important;
     width: 100%;
     margin-bottom: 20px;
-    
- 
+
+
   }
   .noti-pending a{
     width: 100%;
-    
- 
+
+
   }
 }
 .noti-pending {
@@ -135,4 +135,8 @@
 }
 .dataTables_filter {
   float: right !important;
+}
+
+.material_th_custom {
+    min-width: 120px;
 }

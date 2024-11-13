@@ -32,6 +32,7 @@
                         <div class="card form-root">
                             {!! Form::model($model, array('route' => ['admin.warehouse-export.update', $model->id], 'method' => 'patch', 'enctype' => 'multipart/form-data')) !!}
                             {!! Form::hidden('id', null) !!}
+                            {!! Form::hidden('product_code', $model->code) !!}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="shipping_unit">Mã phiếu xuất kho<b style="color: red;">(*)</b></label>
@@ -102,9 +103,9 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer text-right">
-                             
+
                                 <button type="submit" class="btn btn-primary">Lưu thông tin</button>
-                                
+
                                 <a href="{{ route('admin.warehouse-export.index') }}" class="btn btn-default">Quay lại</a>
                             </div>
                         {!! Form::close() !!}
@@ -130,7 +131,8 @@
                             <!-- /.modal-dialog -->
                     </div>
                 </div>
-            </div>
+                    @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material', ['action' => 'warehouse_export']),  'coModel' => $co])
+                </div>
         </section>
     @endsection
     @section('js')

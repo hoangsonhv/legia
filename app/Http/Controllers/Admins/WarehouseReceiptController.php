@@ -243,7 +243,7 @@ class WarehouseReceiptController extends Controller
                 foreach ($products as $product) {
                     if ($product['merchandise_id'] > 0) {
                         $base_warehouse = BaseWarehouseCommon::find($product['merchandise_id']);
-                        
+
                         $merchandise = WarehouseHelper::getModel($base_warehouse->model_type)
                             ->find($product['merchandise_id']);
 
@@ -280,7 +280,7 @@ class WarehouseReceiptController extends Controller
                 return redirect()->route('admin.warehouse-receipt.index')->with('error', 'Bạn không có quyền truy cập!');
             }
             $permissions = config('permission.permissions');
-            $products = $model->products->toArray();
+            $products = $model->products;
             return view('admins.warehouse_receipt.edit', compact('breadcrumb', 'titleForLayout', 'model',
                 'permissions', 'products'));
         }

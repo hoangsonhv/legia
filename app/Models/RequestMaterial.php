@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\AdminHelper;
 use App\Models\Request;
+use App\Models\Warehouse\BaseWarehouseCommon;
 use Illuminate\Database\Eloquent\Model;
 
 class RequestMaterial extends Model
@@ -49,5 +50,9 @@ class RequestMaterial extends Model
     public function price_survey()
     {
         return $this->hasMany(PriceSurvey::class, 'material_id');
+    }
+
+    public function merchandise() {
+        return $this->belongsTo(BaseWarehouseCommon::class, 'merchandise_id');
     }
 }

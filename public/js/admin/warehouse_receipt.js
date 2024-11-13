@@ -106,6 +106,17 @@ $(function () {
                                     l_l1: eleRow.find('td.l_l1 input').val(),
                                     w2: eleRow.find('td.w2 input').val(),
                                     l2: eleRow.find('td.l2 input').val(),
+
+                                    size: eleRow.find('td.size input').val() ?? eleRow.find('td.m_size').text(),
+                                    inner: eleRow.find('td.m_inner').text(),
+                                    hoop: eleRow.find('td.m_hoop').text(),
+                                    filler: eleRow.find('td.m_filler').text(),
+                                    outer: eleRow.find('td.m_outer').text(),
+                                    thick: eleRow.find('td.m_thick').text(),
+                                    trong_luong_cuon: eleRow.find('td.m_trong_luong_cuon').text(),
+                                    m_cuon: eleRow.find('td.m_m_cuon').text(),
+                                    m_cay: eleRow.find('td.m_m_cay').text(),
+                                    kich_co: eleRow.find('td.kich_co input').val(),
                                 };
                                 $(eleForm).append(getItem(lengthTrForm, 'Tấm', opts));
                                 // Add code
@@ -237,12 +248,22 @@ function getItem(index, unit, opts) {
         + '<td class="sequence">'+index+'</td>'
         + '<td style="width: 80px" class="code"><input class="form-control" type="text" name="product[code][]" value=""></td>'
         + '<td class=""><textarea style="width: 200px" class="form-control" name="product[name][]" rows="1"></textarea></td>'
-        + '<td style="width: 70px" class="do_day"><input readonly class="form-control" type="text" name="product[do_day][]" value="'+opts.do_day+'"></td>'
-        + '<td style="width: 70px" class="hinh_dang"><input readonly class="form-control" type="text" name="product[hinh_dang][]" value="'+opts.hinh_dang+'"></td>'
-        + '<td style="width: 70px" class="dia_w_w1"><input readonly class="form-control" type="text" name="product[dia_w_w1][]" value="'+opts.dia_w_w1+'"></td>'
-        + '<td style="width: 70px" class="l_l1"><input readonly class="form-control" type="text" name="product[l_l1][]" value="'+opts.l_l1+'"></td>'
-        + '<td style="width: 70px" class="w2"><input readonly class="form-control" type="text" name="product[w2][]" value="'+opts.w2+'"></td>'
-        + '<td style="width: 70px" class="l2"><input readonly class="form-control" type="text" name="product[l2][]" value="'+opts.l2+'"></td>'
+        + '<td style="min-width: 70px" class="do_day"><input readonly class="form-control" type="text" name="product[do_day][]" value="' + (opts.do_day ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="hinh_dang"><input readonly class="form-control" type="text" name="product[hinh_dang][]" value="'+(opts.hinh_dang ?? '')+'"></td>'
+        + '<td style="min-width: 70px" class="dia_w_w1"><input readonly class="form-control" type="text" name="product[dia_w_w1][]" value="'+(opts.dia_w_w1 ?? '')+'"></td>'
+        + '<td style="min-width: 70px" class="l_l1"><input readonly class="form-control" type="text" name="product[l_l1][]" value="'+(opts.l_l1 ?? '')+'"></td>'
+        + '<td style="min-width: 70px" class="w2"><input readonly class="form-control" type="text" name="product[w2][]" value="'+(opts.w2 ?? '')+'"></td>'
+        + '<td style="min-width: 70px" class="l2"><input readonly class="form-control" type="text" name="product[l2][]" value="'+(opts.l2 ?? '')+'"></td>'
+        + '<td style="min-width: 70px" class="inner"><input readonly class="form-control" type="text" name="product[inner][]" value="' + (opts.inner ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="hoop"><input readonly class="form-control" type="text" name="product[hoop][]" value="' + (opts.hoop ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="filler"><input readonly class="form-control" type="text" name="product[filler][]" value="' + (opts.filler ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="outer"><input readonly class="form-control" type="text" name="product[outer][]" value="' + (opts.outer ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="thick"><input readonly class="form-control" type="text" name="product[thick][]" value="' + (opts.thick ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="tieu_chuan"><input readonly class="form-control" type="text" name="product[tieu_chuan][]" value="' + (opts.tieu_chuan ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="kich_co"><input readonly class="form-control" type="text" name="product[kich_co][]" value="' + (opts.kich_co ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="trong_luong_cuon"><input readonly class="form-control" type="text" name="product[trong_luong_cuon][]" value="' + (opts.trong_luong_cuon ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="m_cuon"><input readonly class="form-control" type="text" name="product[m_cuon][]" value="' + (opts.m_cuon ?? '') + '"></td>'
+        + '<td style="min-width: 70px" class="m_cay"><input readonly class="form-control" type="text" name="product[m_cay][]" value="' + (opts.m_cay ?? '') + '"></td>'
         + '<td class=""><input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="'+unit+'"></td>'
         + '<td class=""><input class="form-control" style="width: 70px" type="text" name="product[lot_no][]" value=""></td>'
         + '<td class=""><input class="form-control" style="width: 70px" type="number" name="product[quantity_doc][]"/> </td>'

@@ -11,23 +11,34 @@
     <thead>
 
       <tr align="center">
-        <th class="align-middle">&nbsp</th>
-        <th class="align-middle">Số TT</th>
-        <th class="align-middle">Mã hàng</th>
-        <th class="align-middle">Tên hàng</th>
-        <th class="align-middle">Độ dày</th>
-        <th class="align-middle">Hình dạng</th>
-        <th class="align-middle">Dia W W1</th>
-        <th class="align-middle">L L1</th>
-        <th class="align-middle">W2</th>
-        <th class="align-middle">L2</th>
-        <th class="align-middle">Đ/v tính</th>
+        <th class="align-middle ">&nbsp</th>
+        <th class="align-middle ">Số TT</th>
+        <th class="align-middle material_th_custom">Mã hàng</th>
+        <th class="align-middle material_th_custom">Tên hàng</th>
+        <th class="align-middle material_th_custom">Độ dày</th>
+        <th class="align-middle material_th_custom">Hình dạng</th>
+        <th class="align-middle material_th_custom">Dia W W1</th>
+        <th class="align-middle material_th_custom">L L1</th>
+        <th class="align-middle material_th_custom">W2</th>
+        <th class="align-middle material_th_custom">L2</th>
+          <th class="align-middle material_th_custom">Inner</th>
+          <th class="align-middle material_th_custom">Hoop</th>
+          <th class="align-middle material_th_custom">Filler</th>
+          <th class="align-middle material_th_custom">Outer</th>
+          <th class="align-middle material_th_custom">Thick</th>
+          <th class="align-middle material_th_custom">Tiêu chuẩn</th>
+          <th class="align-middle material_th_custom">K.Cỡ</th>
+          <th class="align-middle material_th_custom">Trọng lượng - Kg/Cuộn</th>
+          <th class="align-middle material_th_custom">m/Cuộn</th>
+          <th class="align-middle material_th_custom">m/Cây</th>
+
+          <th class="align-middle">Đ/v tính</th>
         <th class="align-middle">Lot No</th>
         <th class="align-middle">Số lượng (Theo chứng từ)</th>
         <th class="align-middle">Số lượng (Thực nhập)</th>
         <th class="align-middle">Đơn giá</th>
         <th class="align-middle">Thành tiền</th>
-        <th class="align-middle">&nbsp</th>
+{{--        <th class="align-middle">&nbsp</th>--}}
       </tr>
     </thead>
     <tbody>
@@ -43,29 +54,66 @@
             <td class="sequence">{{ $index + 1 }}</td>
             <td class="code">
               <input type="hidden" name="product[merchandise_id][]" value="{{ $product['merchandise_id'] }}" />
-              <input class="form-control" style="width: 70px" type="text" name="product[code][]" value="{{ $product['code'] }}" readonly />
+              <input class="form-control" style="width: 70px" type="text" name="product[code][]" value="{{ $product['code'] ?? (isset($merchandise) ? $merchandise->code : null) }}" readonly />
             </td>
             <td class="">
               <textarea class="form-control" style="width: 200px" name="product[name][]" rows="1" readonly>{{ $product['name'] }}</textarea>
             </td>
             <td class="do_day">
-              <input type="text" style="width: 70px" class="form-control" name="product[do_day][]" value="{{ $product['do_day'] }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[do_day][]" value="{{ $product['do_day'] ?? (isset($merchandise) ? $merchandise->do_day : null) }}"  readonly>
             </td>
             <td class="hinh_dang">
-              <input type="text" style="width: 70px" class="form-control" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[hinh_dang][]" value="{{ $product['hinh_dang'] ?? (isset($merchandise) ? $merchandise->hinh_dang : null) }}"  readonly>
             </td>
             <td class="dia_w_w1">
-              <input type="text" style="width: 70px" class="form-control" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[dia_w_w1][]" value="{{ $product['dia_w_w1'] ?? (isset($merchandise) ? $merchandise->dia_w_w1 : null) }}"  readonly>
             </td>
             <td class="l_l1">
-              <input type="text" style="width: 70px" class="form-control" name="product[l_l1][]" value="{{ $product['l_l1'] }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[l_l1][]" value="{{ $product['l_l1'] ?? (isset($merchandise) ? $merchandise->l_l1 : null) }}"  readonly>
             </td>
             <td class="w2">
-              <input type="text" style="width: 70px" class="form-control" name="product[w2][]" value="{{ $product['w2'] }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[w2][]" value="{{ $product['w2'] ?? (isset($merchandise) ? $merchandise->w2 : null) }}"  readonly>
             </td>
             <td class="l2">
-              <input type="text" style="width: 70px" class="form-control" name="product[l2][]" value="{{ $product['l2'] }}"  readonly>
+              <input type="text" style="width: 70px" class="form-control" name="product[l2][]" value="{{ $product['l2'] ?? (isset($merchandise) ? $merchandise->l2 : null) }}"  readonly>
             </td>
+
+              <td class="">
+                  <input class="form-control" type="text" name="product[inner][]" value="{{ isset($merchandise) ? $merchandise->inner : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[hoop][]" value="{{ isset($merchandise) ? $merchandise->hoop : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[filler][]" value="{{ isset($merchandise) ? $merchandise->filler : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[outer][]" value="{{ isset($merchandise) ? $merchandise->outer : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[thick][]" value="{{ isset($merchandise) ? $merchandise->thick : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[tieu_chuan][]" value="{{ isset($merchandise) ? $merchandise->tieu_chuan : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[kich_co][]" value="{{ isset($merchandise) ? $merchandise->kich_co : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[trong_luong_cuon][]" value="{{ isset($merchandise) ? $merchandise->trong_luong_cuon : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[m_cuon][]" value="{{ isset($merchandise) ? $merchandise->m_cuon : null }}" readonly>
+              </td>
+              <td class="">
+                  <input class="form-control" type="text" name="product[m_cay][]" value="{{ isset($merchandise) ? $merchandise->m_cay : null }}" readonly>
+              </td>
+              <td class=" d-none">
+                  <input class="form-control" type="text" name="product[kich_thuoc][]" value="{{ isset($merchandise) ? $merchandise->kich_thuoc : null }}" readonly>
+              </td>
+              <td class="d-none">
+                  <input class="form-control" type="text" name="product[quy_cach][]" value="{{ $product['quy_cach'] ?? null }}" readonly>
+              </td>
             <td class="">
               <input class="form-control" style="width: 70px" type="text" name="product[unit][]" value="{{ $product['unit'] }}" readonly>
             </td>

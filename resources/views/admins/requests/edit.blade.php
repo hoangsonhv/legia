@@ -85,11 +85,11 @@
                         {!! Form::close() !!}
                         <div class="card-body">
                             <h3 class="title text-primary">Nội dung</h3>
-                            @if(!$co) 
+                            @if(!$co)
                             @include('admins.requests.includes.list-service', ['materials' => $materials])
                             @endif
                         </div>
-                        @if($co)                         
+                        @if($co)
                         @include('admins.requests.includes.list-materials', ['co' => $co, 'coStep' => $coStep , 'materials' => $materials])
                         @endif
                         @permission('admin.request.update-survey-price')
@@ -312,7 +312,7 @@
                     <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                    
+
                     @include('admins.requests.includes.search-material', ['url' => route('admin.co.get-material')])
                     @include('admins.requests.includes.select-warehouse', ['url' => route('admin.warehouse.show-form-create')])
 
@@ -390,7 +390,7 @@
 
             $('.dataTable').each(function() {
             var table = $(this).DataTable(); // Khởi tạo DataTable cho mỗi bảng
-            
+
             // Thêm các dropdown Select2 cho mỗi cột trong footer
             $(this).find('tfoot th').each(function(index) {
                 var title = $(this).text();

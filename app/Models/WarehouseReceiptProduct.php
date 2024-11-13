@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Warehouse\BaseWarehouseCommon;
 use Illuminate\Database\Eloquent\Model;
 
 class WarehouseReceiptProduct extends Model
@@ -27,4 +28,8 @@ class WarehouseReceiptProduct extends Model
         'vat',
         'merchandise_id'
     ];
+
+    public function merchandise() {
+        return $this->belongsTo(BaseWarehouseCommon::class, 'merchandise_id');
+    }
 }

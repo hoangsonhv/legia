@@ -193,7 +193,7 @@
               }}">
             </td>
             <td class="ton_kho_phu d-none">
-              <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{ 
+              <input disabled class="form-control" type="text" name="product[ton_kho][]" value="{{
                 isset(array_values($material->ton_kho)[1]) ? customRound(array_values($material->ton_kho)[1], 3) : 0
               }}">
             </td>
@@ -227,7 +227,10 @@
               <input type="hidden" name="material[tieu_chuan][]" value="{{ $material->tieu_chuan }}">
             </td>
             <td class="kich_co d-none">
-              <input type="hidden" name="material[kich_co][]" value="{{ ($material->kich_co ?? $material->size) ?? '' }}">
+              <input type="hidden" name="material[kich_co][]" value="{{ $material->kich_co ?? '' }}">
+            </td>
+            <td class="size d-none">
+              <input type="hidden" name="material[size][]" value="{{ $material->size ?? '' }}">
             </td>
             <td class="kich_thuoc d-none">
               <input type="hidden" name="material[kich_thuoc][]" value="{{ $material->kich_thuoc }}">
@@ -240,150 +243,150 @@
             </td>
             @switch($material->model_type)
               @case(\App\Helpers\WarehouseHelper::BIA)
-                  <td class="align-middle">{{ $material->do_day }}</td>
-                  <td class="align-middle">{{ $material->hinh_dang }}</td>
-                  <td class="align-middle">{{ $material->dia_w_w1}}</td>
-                  <td class="align-middle">{{ $material->l_l1 }}</td>
-                  <td class="align-middle">{{ $material->w2 }}</td>
-                  <td class="align-middle">{{ $material->l2 }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_tam }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m2 }}</td>
+                  <td class="align-middle m_do_day">{{ $material->do_day }}</td>
+                  <td class="align-middle m_hinh_dang">{{ $material->hinh_dang }}</td>
+                  <td class="align-middle m_dia_w_w1">{{ $material->dia_w_w1 }}</td>
+                  <td class="align-middle m_l_l1">{{ $material->l_l1 }}</td>
+                  <td class="align-middle m_w2">{{ $material->w2 }}</td>
+                  <td class="align-middle m_l2">{{ $material->l2 }}</td>
+                  <td class="align-middle m_ton_sl_tam">{{ $material->ton_sl_tam }}</td>
+                  <td class="align-middle m_ton_sl_m2">{{ $material->ton_sl_m2 }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::CAO_SU)
-                  <td class="align-middle">{{ $material->do_day }}</td>
-                  <td class="align-middle">{{ $material->hinh_dang }}</td>
-                  <td class="align-middle">{{ $material->dia_w_w1}}</td>
-                  <td class="align-middle">{{ $material->l_l1 }}</td>
-                  <td class="align-middle">{{ $material->w2 }}</td>
-                  <td class="align-middle">{{ $material->l2 }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_tam }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m2 }}</td>
+                  <td class="align-middle m_do_day">{{ $material->do_day }}</td>
+                  <td class="align-middle m_hinh_dang">{{ $material->hinh_dang }}</td>
+                  <td class="align-middle m_dia_w_w1">{{ $material->dia_w_w1 }}</td>
+                  <td class="align-middle m_l_l1">{{ $material->l_l1 }}</td>
+                  <td class="align-middle m_w2">{{ $material->w2 }}</td>
+                  <td class="align-middle m_l2">{{ $material->l2 }}</td>
+                  <td class="align-middle m_ton_sl_tam">{{ $material->ton_sl_tam }}</td>
+                  <td class="align-middle m_ton_sl_m2">{{ $material->ton_sl_m2 }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::CAO_SU_VN_ZA)
-                  <td class="align-middle">{{ $material->do_day }}</td>
-                  <td class="align-middle">{{ $material->hinh_dang }}</td>
-                  <td class="align-middle">{{ $material->dia_w_w1}}</td>
-                  <td class="align-middle">{{ $material->l_l1 }}</td>
-                  <td class="align-middle">{{ $material->w2 }}</td>
-                  <td class="align-middle">{{ $material->l2 }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_tam }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m2 }}</td>
+                  <td class="align-middle m_do_day">{{ $material->do_day }}</td>
+                  <td class="align-middle m_hinh_dang">{{ $material->hinh_dang }}</td>
+                  <td class="align-middle m_dia_w_w1">{{ $material->dia_w_w1 }}</td>
+                  <td class="align-middle m_l_l1">{{ $material->l_l1 }}</td>
+                  <td class="align-middle m_w2">{{ $material->w2 }}</td>
+                  <td class="align-middle m_l2">{{ $material->l2 }}</td>
+                  <td class="align-middle m_ton_sl_tam">{{ $material->ton_sl_tam }}</td>
+                  <td class="align-middle m_ton_sl_m2">{{ $material->ton_sl_m2 }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::TAM_KIM_LOAI)
-                  <td class="align-middle">{{ $material->do_day }}</td>
-                  <td class="align-middle">{{ $material->hinh_dang }}</td>
-                  <td class="align-middle">{{ $material->dia_w_w1}}</td>
-                  <td class="align-middle">{{ $material->l_l1 }}</td>
-                  <td class="align-middle">{{ $material->w2 }}</td>
-                  <td class="align-middle">{{ $material->l2 }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_tam }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m2 }}</td>
+                  <td class="align-middle m_do_day">{{ $material->do_day }}</td>
+                  <td class="align-middle m_hinh_dang">{{ $material->hinh_dang }}</td>
+                  <td class="align-middle m_dia_w_w1">{{ $material->dia_w_w1 }}</td>
+                  <td class="align-middle m_l_l1">{{ $material->l_l1 }}</td>
+                  <td class="align-middle m_w2">{{ $material->w2 }}</td>
+                  <td class="align-middle m_l2">{{ $material->l2 }}</td>
+                  <td class="align-middle m_ton_sl_tam">{{ $material->ton_sl_tam }}</td>
+                  <td class="align-middle m_ton_sl_m2">{{ $material->ton_sl_m2 }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::CREAMIC)
-                  <td class="align-middle">{{ $material->do_day }}</td>
-                  <td class="align-middle">{{ $material->hinh_dang }}</td>
-                  <td class="align-middle">{{ $material->dia_w_w1}}</td>
-                  <td class="align-middle">{{ $material->l_l1 }}</td>
-                  <td class="align-middle">{{ $material->w2 }}</td>
-                  <td class="align-middle">{{ $material->l2 }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_tam }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m2 }}</td>
+                  <td class="align-middle m_do_day">{{ $material->do_day }}</td>
+                  <td class="align-middle m_hinh_dang">{{ $material->hinh_dang }}</td>
+                  <td class="align-middle m_dia_w_w1">{{ $material->dia_w_w1 }}</td>
+                  <td class="align-middle m_l_l1">{{ $material->l_l1 }}</td>
+                  <td class="align-middle m_w2">{{ $material->w2 }}</td>
+                  <td class="align-middle m_l2">{{ $material->l2 }}</td>
+                  <td class="align-middle m_ton_sl_tam">{{ $material->ton_sl_tam }}</td>
+                  <td class="align-middle m_ton_sl_m2">{{ $material->ton_sl_m2 }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::GRAPHITE)
-                  <td class="align-middle">{{ $material->do_day }}</td>
-                  <td class="align-middle">{{ $material->hinh_dang }}</td>
-                  <td class="align-middle">{{ $material->dia_w_w1}}</td>
-                  <td class="align-middle">{{ $material->l_l1 }}</td>
-                  <td class="align-middle">{{ $material->w2 }}</td>
-                  <td class="align-middle">{{ $material->l2 }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_tam }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m2 }}</td>
+                  <td class="align-middle m_do_day">{{ $material->do_day }}</td>
+                  <td class="align-middle m_hinh_dang">{{ $material->hinh_dang }}</td>
+                  <td class="align-middle m_dia_w_w1">{{ $material->dia_w_w1 }}</td>
+                  <td class="align-middle m_l_l1">{{ $material->l_l1 }}</td>
+                  <td class="align-middle m_w2">{{ $material->w2 }}</td>
+                  <td class="align-middle m_l2">{{ $material->l2 }}</td>
+                  <td class="align-middle m_ton_sl_tam">{{ $material->ton_sl_tam }}</td>
+                  <td class="align-middle m_ton_sl_m2">{{ $material->ton_sl_m2 }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::PTFE)
-                  <td class="align-middle">{{ $material->do_day }}</td>
-                  <td class="align-middle">{{ $material->hinh_dang }}</td>
-                  <td class="align-middle">{{ $material->dia_w_w1}}</td>
-                  <td class="align-middle">{{ $material->l_l1 }}</td>
-                  <td class="align-middle">{{ $material->w2 }}</td>
-                  <td class="align-middle">{{ $material->l2 }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_tam }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m2 }}</td>
+                  <td class="align-middle m_do_day">{{ $material->do_day }}</td>
+                  <td class="align-middle m_hinh_dang">{{ $material->hinh_dang }}</td>
+                  <td class="align-middle m_dia_w_w1">{{ $material->dia_w_w1 }}</td>
+                  <td class="align-middle m_l_l1">{{ $material->l_l1 }}</td>
+                  <td class="align-middle m_w2">{{ $material->w2 }}</td>
+                  <td class="align-middle m_l2">{{ $material->l2 }}</td>
+                  <td class="align-middle m_ton_sl_tam">{{ $material->ton_sl_tam }}</td>
+                  <td class="align-middle m_ton_sl_m2">{{ $material->ton_sl_m2 }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::TAM_NHUA)
-                  <td class="align-middle">{{ $material->do_day }}</td>
-                  <td class="align-middle">{{ $material->hinh_dang }}</td>
-                  <td class="align-middle">{{ $material->dia_w_w1}}</td>
-                  <td class="align-middle">{{ $material->l_l1 }}</td>
-                  <td class="align-middle">{{ $material->w2 }}</td>
-                  <td class="align-middle">{{ $material->l2 }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_tam }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m2 }}</td>
+                  <td class="align-middle m_do_day">{{ $material->do_day }}</td>
+                  <td class="align-middle m_hinh_dang">{{ $material->hinh_dang }}</td>
+                  <td class="align-middle m_dia_w_w1">{{ $material->dia_w_w1 }}</td>
+                  <td class="align-middle m_l_l1">{{ $material->l_l1 }}</td>
+                  <td class="align-middle m_w2">{{ $material->w2 }}</td>
+                  <td class="align-middle m_l2">{{ $material->l2 }}</td>
+                  <td class="align-middle m_ton_sl_tam">{{ $material->ton_sl_tam }}</td>
+                  <td class="align-middle m_ton_sl_m2">{{ $material->ton_sl_m2 }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::THANH_PHAM_SWG)
-                  <td class="align-middle">{{ $material->inner }}</td>
-                  <td class="align-middle">{{ $material->hoop }}</td>
-                  <td class="align-middle">{{ $material->filler }}</td>
-                  <td class="align-middle">{{ $material->outer }}</td>
-                  <td class="align-middle">{{ $material->thick }}</td>
-                  <td class="align-middle">{{ $material->tieu_chuan }}</td>
-                  <td class="align-middle">{{ $material->kich_co }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cai }}</td>
+                  <td class="align-middle m_inner">{{ $material->inner }}</td>
+                  <td class="align-middle m_hoop">{{ $material->hoop }}</td>
+                  <td class="align-middle m_filler">{{ $material->filler }}</td>
+                  <td class="align-middle m_outer">{{ $material->outer }}</td>
+                  <td class="align-middle m_thick">{{ $material->thick }}</td>
+                  <td class="align-middle m_tieu_chuan">{{ $material->tieu_chuan }}</td>
+                  <td class="align-middle m_kich_co">{{ $material->kich_co }}</td>
+                  <td class="align-middle m_ton_sl_cai">{{ $material->ton_sl_cai }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::RTJ)
-                  <td class="align-middle">{{ $material->size}}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cai }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_ton_sl_cai">{{ $material->ton_sl_cai }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::GLAND_PACKING)
-                  <td class="align-middle">{{ $material->size}}</td>
-                  <td class="align-middle">{{ $material->trong_luong_kg_cuon }}</td>
-                  <td class="align-middle">{{ $material->m_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_kg }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_trong_luong_cuon">{{ $material->trong_luong_cuon }}</td>
+                  <td class="align-middle m_m_cuon">{{ $material->m_cuon }}</td>
+                  <td class="align-middle m_ton_sl_cuon">{{ $material->ton_sl_cuon }}</td>
+                  <td class="align-middle m_ton_sl_kg">{{ $material->ton_sl_kg }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::GLAND_PACKING_LATTY)
-                  <td class="align-middle">{{ $material->size}}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cuon }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_ton_sl_cuon">{{ $material->ton_sl_cuon }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::DAY_CREAMIC)
-                  <td class="align-middle">{{ $material->size}}</td>
-                  <td class="align-middle">{{ $material->m_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_m_cuon">{{ $material->m_cuon }}</td>
+                  <td class="align-middle m_ton_sl_cuon">{{ $material->ton_sl_cuon }}</td>
+                  <td class="align-middle m_ton_sl_m">{{ $material->ton_sl_m }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::DAY_CAO_SU_VA_SILICON)
-                  <td class="align-middle">{{ $material->size}}</td>
-                  <td class="align-middle">{{ $material->m_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_m_cuon">{{ $material->m_cuon }}</td>
+                  <td class="align-middle m_ton_sl_cuon">{{ $material->ton_sl_cuon }}</td>
+                  <td class="align-middle m_ton_sl_m">{{ $material->ton_sl_m }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::NHU_KY_THUAT_CAY_ONG)
-                  <td class="align-middle">{{ $material->size}}</td>
-                  <td class="align-middle">{{ $material->m_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_m_cuon">{{ $material->m_cuon }}</td>
+                  <td class="align-middle m_ton_sl_cuon">{{ $material->ton_sl_cuon }}</td>
+                  <td class="align-middle m_ton_sl_m">{{ $material->ton_sl_m }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::PTFE_CAYONG)
-                  <td class="align-middle">{{ $material->size}}</td>
-                  <td class="align-middle">{{ $material->m_cay }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cay }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_m_cay">{{ $material->m_cay }}</td>
+                  <td class="align-middle m_ton_sl_cay">{{ $material->ton_sl_cay }}</td>
+                  <td class="align-middle m_ton_sl_m">{{ $material->ton_sl_m }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::ORING)
-                  <td class="align-middle">{{ $material->size }}</td>
-                  <td class="align-middle">{{ $material->m_cay }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_m_cay">{{ $material->m_cay }}</td>
                   @break
               @case(\App\Helpers\WarehouseHelper::PTFE_TAPE)
-                  <td class="align-middle">{{ $material->size}}</td>
-                  <td class="align-middle">{{ $material->m_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_cuon }}</td>
-                  <td class="align-middle">{{ $material->ton_sl_m }}</td>
+                  <td class="align-middle m_size">{{ $material->size }}</td>
+                  <td class="align-middle m_m_cuon">{{ $material->m_cuon }}</td>
+                  <td class="align-middle m_ton_sl_cuon">{{ $material->ton_sl_cuon }}</td>
+                  <td class="align-middle m_ton_sl_m">{{ $material->ton_sl_m }}</td>
                   @break
             @endswitch
             {{-- <td class="chi-tiet" align="left">
 
               <ul style="list-style: circle">
                 @php
-                  $detail = "";   
+                  $detail = "";
                 @endphp
                 @foreach ($material->detail as $properties => $item)
                   @php
@@ -404,7 +407,7 @@
                   @endforeach
                 </ul>
               </td>
-            
+
             {{-- <td class="">{{ $material->ton_sl_tam }}</td>
             <td class="">{{ $material->ton_sl_m2 }}</td> --}}
           </tr>
@@ -565,7 +568,7 @@
                 @break
           @endswitch
         @endif
-        {{-- 
+        {{--
         <th class="align-middle">Độ dày</th>
         <th class="align-middle">Hình dạng</th>
         <th class="align-middle">Dia W W1</th>

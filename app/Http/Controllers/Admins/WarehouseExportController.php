@@ -115,7 +115,7 @@ class WarehouseExportController extends Controller
             $coMaterial = $warehouses->pluck('code', 'id')->toArray();
             // foreach ($warehouses as $warehouse) {
             //     if($warehouse['manufacture_type'] == 1) {
-            //         continue;   
+            //         continue;
             //     }
             //     $merchandise_id = $warehouse['merchandise_id'];
             //     $need_quantity = $warehouse['so_luong'];
@@ -243,7 +243,7 @@ class WarehouseExportController extends Controller
             }
             if (!empty($products)) {
                 $model->products()->createMany($products);
-                
+
                 // Decrease material in base warehouse
                 foreach ($products as $product) {
                     if ($product['merchandise_id'] > 0) {
@@ -261,13 +261,13 @@ class WarehouseExportController extends Controller
                 $groupedAndSummedArray = array_reduce($sum_quantity_reality, function($result, $item) {
                     $code = $item['code'];
                     $quantity = $item['quantity_reality'];
-                
+
                     if (!isset($result[$code])) {
                         $result[$code] = 0;
                     }
-                
+
                     $result[$code] += $quantity;
-                
+
                     return $result;
                 }, array());
                 $material = $modelRequest->material;
@@ -352,6 +352,7 @@ class WarehouseExportController extends Controller
                 \DB::beginTransaction();
                 // Save request
                 $inputs['document'] = json_encode($documents);
+                $inputs['code'] = $request['product_code'];
                 $model = $this->whExportRepo->update($inputs, $id);
 
                 // Save relationship
@@ -362,9 +363,18 @@ class WarehouseExportController extends Controller
                         continue;
                     }
                     $products[] = [
+                        'warehouse_export_id' => $model->id,
+                        'merchandise_id' => $inputProducts['merchandise_id'][$key],
                         'code' => $inputProducts['code'][$key],
+                        'do_day' => $inputProducts['do_day'][$key],
+                        'hinh_dang' => $inputProducts['hinh_dang'][$key],
+                        'dia_w_w1' => $inputProducts['dia_w_w1'][$key],
+                        'l_l1' => $inputProducts['l_l1'][$key],
+                        'w2' => $inputProducts['w2'][$key],
+                        'l2' => $inputProducts['l2'][$key],
                         'name' => $inputProducts['name'][$key],
                         'unit' => $inputProducts['unit'][$key],
+                        'lot_no' => $inputProducts['lot_no'][$key],
                         'quantity_doc' => $inputProducts['quantity_doc'][$key],
                         'quantity_reality' => $inputProducts['quantity_reality'][$key],
                         'unit_price' => $inputProducts['unit_price'][$key],
@@ -378,6 +388,7 @@ class WarehouseExportController extends Controller
                     return redirect()->route('admin.warehouse-export.edit', ['id' => $id])->with('success', 'Cập nhật Phiếu xuất kho thành công!');
                 }
             } catch (\Exception $ex) {
+                logger($ex->getMessage());
                 \DB::rollback();
                 report($ex);
             }

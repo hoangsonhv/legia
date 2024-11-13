@@ -538,7 +538,7 @@
                                         @break
                                     @case(\App\Helpers\WarehouseHelper::GLAND_PACKING)
                                         <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->trong_luong_kg_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->trong_luong_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->m_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->ton_sl_kg }}</td>
@@ -603,14 +603,14 @@
                                         @break
                                     @case(\App\Helpers\WarehouseHelper::HOOP)
                                         <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->trong_luong_kg_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->trong_luong_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->m_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->ton_sl_kg }}</td>
                                         @break
                                     @case(\App\Helpers\WarehouseHelper::FILLER)
                                         <td class="align-middle">{{ $warehouse->size}}</td>
-                                        <td class="align-middle">{{ $warehouse->trong_luong_kg_cuon }}</td>
+                                        <td class="align-middle">{{ $warehouse->trong_luong_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->m_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->ton_sl_cuon }}</td>
                                         <td class="align-middle">{{ $warehouse->ton_sl_kg }}</td>
@@ -618,7 +618,7 @@
                                     @case(\App\Helpers\WarehouseHelper::VANH_TINH_INNER_SWG)
                                         <th class="align-middle">{{ $warehouse->do_day }}</th>
                                         <th class="align-middle">{{ $warehouse->d1}}</th>
-                                        <th class="align-middle">{{ $warehouse->d4}}</th>
+                                        <th class="align-middle">{{ $warehouse->d2}}</th>
                                         <th class="align-middle">{{ $warehouse->ton_sl_cai}}</th>
                                         @break
                                     @case(\App\Helpers\WarehouseHelper::VANH_TINH_OUTER_SWG)
@@ -650,7 +650,7 @@
 <script>
     $('.dataTable').each(function() {
     var table = $(this).DataTable(); // Khởi tạo DataTable cho mỗi bảng
-    
+
     // Thêm các dropdown Select2 cho mỗi cột trong footer
     $(this).find('tfoot th').each(function(index) {
         var title = $(this).text();
