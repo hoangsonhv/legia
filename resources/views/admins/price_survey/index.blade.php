@@ -36,7 +36,7 @@
                   <th>Mã yêu cầu</th>
                   <th>IMPO/ DOME</th>
                   <th>Nhà cung cấp</th>
-                  <th>Nhóm sản phẩm</th>
+                  <th>Tên nguyên vật liệu</th>
                   <th>Người yêu cầu</th>
                   <th>Ngày yêu cầu</th>
                   <th>Ngày có kết quả</th>
@@ -46,17 +46,17 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($datas as $data)
+                @foreach($datas as $key => $data)
                   <tr>
                     <td>{{ $data->id }}</td>
                     <td>{{ $data->co ? $data->co->code : '' }}</td>
                     <td>{{ $data->request ? $data->request->code : '' }}</td>
                     <td>{{ $types[$data->type] }}</td>
                     <td>{{ $data->supplier }}</td>
-                    <td>{{ $data->product_group }}</td>
-                    <td>{{ $data->request_person }}</td>
-                    <td>{{ $data->date_request }}</td>
-                    <td>{{ $data->result_date }}</td>
+                    <td>{{ (isset($info_product_n_sup[$key])) ? $info_product_n_sup[$key]->product->first()->attribute['mo_ta'] : null }}</td>
+                    <td>{{ $data->admin->name }}</td>
+                    <td>{{ $data->created_at }}</td>
+                    <td>{{ ($data->status) ? $data->updated_at : null }}</td>
                     <td>{{ number_format($data->price, 0)  }}</td>
                     <td>{{ $data->admin ? $data->admin->name : '' }}</td>
                     <td>

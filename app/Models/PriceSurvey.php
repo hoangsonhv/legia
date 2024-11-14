@@ -61,4 +61,9 @@ class PriceSurvey extends Model
     public function admin() {
         return $this->belongsTo(Admin::class);
     }
+
+    public function supplier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
+    }
 }
