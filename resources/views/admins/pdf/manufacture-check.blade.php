@@ -101,7 +101,7 @@
                 <th class="w4">Độ dày</th>
                 <th class="w7">Tiểu chuẩn</th>
                 <th class="w4">Size</th>
-                <th colspan="7">Kích thước</th>
+                <th class="w7">Kích thước</th>
                 <th class="w7">Chuẩn mặt bích</th>
                 <th class="w7">Chuẩn Gasket/B.Về</th>
                 <th class="w4">ĐV tính</th>
@@ -110,25 +110,25 @@
                 <th class="w7">Ngày dự kiến</th>
             </tr>
             <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>OD/W</th>
-                <th>x</th>
-                <th>ID/L</th>
-                <th>Tâm C</th>
-                <th>Số lỗ</th>
-                <th>x</th>
-                <th>D lỗ</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th>OD/W</th>--}}
+{{--                <th>x</th>--}}
+{{--                <th>ID/L</th>--}}
+{{--                <th>Tâm C</th>--}}
+{{--                <th>Số lỗ</th>--}}
+{{--                <th>x</th>--}}
+{{--                <th>D lỗ</th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
+{{--                <th></th>--}}
             </tr>
             </thead>
             <tbody>
@@ -148,13 +148,7 @@
                     <td>{{$offerPrice->do_day}}</td>
                     <td>{{$offerPrice->tieu_chuan}}</td>
                     <td>{{$offerPrice->kich_co}}</td>
-                    <td>{{isset($kichThuot[0]) ? $kichThuot[0] : ''}}</td>
-                    <td>x</td>
-                    <td>{{isset($kichThuot[1]) ? $kichThuot[1] : ''}}</td>
-                    <td>{{isset($kichThuot[2]) ? $kichThuot[2] : ''}}</td>
-                    <td>x</td>
-                    <td>{{isset($kichThuot[3]) ? $kichThuot[3] : ''}}</td>
-                    <td>{{isset($kichThuot[4]) ? $kichThuot[4] : ''}}</td>
+                    <td>{{$offerPrice->kich_thuoc}}</td>
                     <td>{{$offerPrice->chuan_bich}}</td>
                     <td>{{$offerPrice->chuan_gasket}}</td>
                     <td>{{$offerPrice->dv_tinh}}</td>
@@ -182,12 +176,6 @@
                 @for($i = 0; $i <= $lines - 1 ; $i++)
                     <tr style="height: 30px;">
                         <td><span style="visibility: hidden">test</span></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
