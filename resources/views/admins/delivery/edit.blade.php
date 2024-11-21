@@ -225,7 +225,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="icheck-success">
-                                    {!! Form::checkbox('status_customer_received', true, null, array('id' => 'status_customer_received')) !!}
+                                    {!! Form::checkbox('status_customer_received', $model->status_customer_received ?? 0, null, array('id' => 'status_customer_received')) !!}
                                     <label for="status_customer_received">Khách hàng đã nhận được hàng</label>
                                 </div>
                             </div>
