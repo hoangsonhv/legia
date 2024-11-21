@@ -165,7 +165,6 @@ class DeliveryController extends Controller
 
     public function edit(Request $request, $id)
     {
-        dd(1);
         $breadcrumb                 = $this->menu;
         $breadcrumb['data']['list'] = ['label'  => 'Cập nhật'];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
