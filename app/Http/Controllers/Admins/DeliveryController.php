@@ -165,6 +165,7 @@ class DeliveryController extends Controller
 
     public function edit(Request $request, $id)
     {
+        dd(1);
         $breadcrumb                 = $this->menu;
         $breadcrumb['data']['list'] = ['label'  => 'Cập nhật'];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
@@ -219,7 +220,7 @@ class DeliveryController extends Controller
                 if($input['status_customer_received'] && $co->currentStep && $co->currentStep->step == CoStepHistory::STEP_WAITING_APPROVE_DELIVERY){
                     $isEnoughExportSell = $this->coRepo->checkQuantityExportSell($co);
                     if(!$isEnoughExportSell) {
-                        $this->insertNextStep('manufacture', $co->id, $co->id, CoStepHistory::ACTION_APPROVE);
+                        $this->coStepHisRepo->insertNextStep('manufacture', $co->id, $co->id, CoStepHistory::ACTION_APPROVE);
                     } else {
                         $this->coStepHisRepo->insertNextStep('receipt', $co->id, $co->id, CoStepHistory::ACTION_CREATE, 3);
                     }
