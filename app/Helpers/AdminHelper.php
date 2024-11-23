@@ -65,11 +65,11 @@ class AdminHelper
                 if ((strpos($route, '/product/') !== false) || (strpos($route, '/post/') !== false)) {
                     if ((strpos($route, '/post/') !== false)) {
                         $aListFile = array(
-                            'list' => array('width' => '300', 'height' => '260'), 
+                            'list' => array('width' => '300', 'height' => '260'),
                         );
                     } else {
                         $aListFile = array(
-                            'list' => array('width' => '260', 'height' => '250'), 
+                            'list' => array('width' => '260', 'height' => '250'),
                             'detail' => array('width' => '550', 'height' => '300'),
                         );
                     }
@@ -108,7 +108,7 @@ class AdminHelper
 	if (!empty($options['rotate'])) {
 		$image = imagerotate($image, $options['rotate'], $white);
 	}
-	// Get width, height image origin 
+	// Get width, height image origin
 	$oriWidth = imagesx($image);
 	$oriHeight = imagesy($image);
 	// Remain width, height
@@ -204,6 +204,17 @@ class AdminHelper
                 return '<p>&#45;&#160;'.$file['name'].'</p><a href="'.$path.'" target="_blank"><img height="70" src="'.$path.'" /></a>';
             default:
                 return '<p style="color: blue;">&#45;&#160;<a href="'.$path.'" target="_blank">'.$file['name'].'</a></p>';
+        }
+    }
+
+    public static function getFileUrl($file_path): ?string
+    {
+        $url = asset($file_path);
+
+        if (filter_var($url, FILTER_VALIDATE_URL) !== false) {
+            return $url;
+        } else {
+            return null;
         }
     }
 
@@ -425,7 +436,7 @@ class AdminHelper
                 } else {
                     if(count($result['ton_kho']) > 1) {
                         $tonKho += $result[array_keys($result['ton_kho'])[1]];
-                    } else 
+                    } else
                     {
                         $tonKho += $result[array_keys($result['ton_kho'])[0]];
                     }

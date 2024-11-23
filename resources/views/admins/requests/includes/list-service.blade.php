@@ -77,7 +77,7 @@
                         <input class="form-control calendar-date" style="width: 120px" type="text"
                                name="material[thoi_gian_can][]" value="{{ $material->thoi_gian_can }}">
                     </td>
-                    
+
                     <td class="">
                         <textarea class="form-control" name="material[ghi_chu][]"
                                   rows="1">{{ $material->ghi_chu }}</textarea>

@@ -83,8 +83,12 @@ class PriceSurveyController extends Controller
         }
 
         $datas = $this->priceSurveyRepo->search($params)->orderBy('id','DESC')->paginate($limit);
+
+        $info_product_n_sup = Supplier::query()->with('product')
+            ->whereIn('id', $datas->getCollection()->pluck('supplier_id')->toArray())->get();
+
         $request->flash();
-        return view('admins.price_survey.index',compact('breadcrumb', 'titleForLayout', 'datas', 'types',
+        return view('admins.price_survey.index',compact('breadcrumb', 'titleForLayout', 'datas', 'types', 'info_product_n_sup',
             'coreCustomers'));
     }
 
@@ -240,7 +244,10 @@ class PriceSurveyController extends Controller
                         ];
                         $priceSurvey->surveyPrices()->create($surveyPrice ?? ['request_id' => $requestId,
                             'core_customer_id' => $priceSurvey->id,]);
+                    } else {
+                        $fileSave = null;
                     }
+
 
                 }
                 catch (\Exception $ex) {
@@ -273,8 +280,14 @@ class PriceSurveyController extends Controller
                     } else {
                         $priceSurvey->surveyPrices()->create($surveyPrice);
                     }
+                } else {
+                    $fileSave = null;
                 }
             }
+
+            //Assign supplier to price survey
+            $priceSurvey->supplier()->associate($supplierObj);
+            $priceSurvey->save();
 
             //Init product to supplier
             $material_to_supplier = RequestMaterial::query()->select([
@@ -297,7 +310,7 @@ class PriceSurveyController extends Controller
                 ],
                 [
                     'price' => $price[$key],
-                    'attachment' => null
+                    'attachment' => $fileSave
                 ]
             );
         }
