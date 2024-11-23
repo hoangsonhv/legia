@@ -244,7 +244,10 @@ class PriceSurveyController extends Controller
                         ];
                         $priceSurvey->surveyPrices()->create($surveyPrice ?? ['request_id' => $requestId,
                             'core_customer_id' => $priceSurvey->id,]);
+                    } else {
+                        $fileSave = null;
                     }
+
 
                 }
                 catch (\Exception $ex) {
@@ -277,6 +280,8 @@ class PriceSurveyController extends Controller
                     } else {
                         $priceSurvey->surveyPrices()->create($surveyPrice);
                     }
+                } else {
+                    $fileSave = null;
                 }
             }
 
@@ -305,7 +310,7 @@ class PriceSurveyController extends Controller
                 ],
                 [
                     'price' => $price[$key],
-                    'attachment' => null
+                    'attachment' => $fileSave
                 ]
             );
         }
