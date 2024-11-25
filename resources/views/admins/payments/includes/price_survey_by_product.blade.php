@@ -16,7 +16,7 @@
         @php
             if ($priceSurvey->status != \App\Models\PriceSurvey::TYPE_BUY) {
                 continue;
-            }    
+            }
         @endphp
         <tr>
             <td>
@@ -32,7 +32,7 @@
                         if($surveyPrice > 0) $surveyPrice = $priceSurvey->surveyPrices()->first();
                         else $surveyPrice = null;
                     @endphp
-                    @if($surveyPrice) 
+                    @if($surveyPrice)
                         @if($surveyPrice->accompanying_document != "[]")
                             <button type="button" class="btn btn-success"
                                     data-toggle="modal"
