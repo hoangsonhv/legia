@@ -123,20 +123,68 @@
                                 <div class="col-sm-12 col-xl-12">
                                     <div class="form-group">
                                         <label for="attachment">File chứng từ</label>
-                                        @if(isset($info_product_n_sup) && is_array($info_product_n_sup) && array_key_exists($key, $info_product_n_sup))
-                                        @if($info_product_n_sup[$key]->product->first()->attachment)
-                                        {!! $file = \App\Helpers\AdminHelper::getFileUrl($info_product_n_sup[$key]->product->first()->attachment) !!}
-                                        <div class="d-block">
-                                            @if ($file)
-                                            <a href="{{ $file }}" target="_blank">Watch Document</a>
+                                        @php
+                                        $survey_price = App\Models\SurveyPrice::query()->where('core_price_survey_id', $model->id)->first();
+                                        @endphp
+                                        @if($survey_price)
+                                            @if($survey_price->accompanying_document != '[]')
+                                            <div>
+                                                <button type="button" class="btn btn-success" data-toggle="modal"
+                                                        data-target="#accompanying_document_survey_price_modal{{ $survey_price->id }}">
+                                                    Hiển thị chứng từ đã
+                                                    tồn tại
+                                                </button>
+                                            </div>
                                             @else
                                             Không tồn tại chứng từ
                                             @endif
-                                        </div>
-                                        @endif
-                                        @else
-                                        <div class="d-block">
-                                            Không tồn tại chứng từ
+                                        <div class="modal fade" id="accompanying_document_survey_price_modal{{ $survey_price->id }}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-success">
+                                                        <h4 class="modal-title">Chứng từ khảo sát
+                                                            giá</h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        @php
+                                                        $statusAcceptRequest = [
+                                                        \App\Enums\ProcessStatus::Approved,
+                                                        \App\Enums\ProcessStatus::PendingSurveyPrice,
+                                                        ];
+                                                        $statusNotEdit = [
+                                                        \App\Enums\ProcessStatus::Approved,
+                                                        \App\Enums\ProcessStatus::Unapproved,
+                                                        ];
+                                                        @endphp
+                                                        @foreach (json_decode($survey_price->accompanying_document, true) as $index => $file)
+                                                        <div class="data-file">
+                                                            {!! \App\Helpers\AdminHelper::checkFile($file) !!}
+                                                            @if (!in_array($survey_price->request->status, $statusNotEdit))
+                                                            <div class="mt-2">
+                                                                <button type="button" class="btn btn-danger form-control"
+                                                                        onclick="removeFile(this)"
+                                                                        data-id={{ $survey_price->id }}
+                                                                    data-path="{{ $file['path'] }}">
+                                                                    Xoá file
+                                                                </button>
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-dark"
+                                                                data-dismiss="modal">Đóng
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
                                         </div>
                                         @endif
                                     </div>
