@@ -120,9 +120,10 @@
                                         {!! Form::number('number_date_wait_pay', null, array('class' => 'form-control', 'placeholder' => 'Số ngày quá hạn thanh toán')) !!}
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-xl-2">
+                                <div class="col-sm-12 col-xl-12">
                                     <div class="form-group">
                                         <label for="attachment">File chứng từ</label>
+                                        @if(isset($info_product_n_sup) && is_array($info_product_n_sup) && array_key_exists($key, $info_product_n_sup))
                                         @if($info_product_n_sup[$key]->product->first()->attachment)
                                         {!! $file = \App\Helpers\AdminHelper::getFileUrl($info_product_n_sup[$key]->product->first()->attachment) !!}
                                         <div class="d-block">
@@ -131,6 +132,11 @@
                                             @else
                                             Không tồn tại chứng từ
                                             @endif
+                                        </div>
+                                        @endif
+                                        @else
+                                        <div class="d-block">
+                                            Không tồn tại chứng từ
                                         </div>
                                         @endif
                                     </div>
