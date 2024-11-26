@@ -13,6 +13,7 @@
             <th class="align-middle">Kích thước (mm)</th>
             <th class="align-middle">Chuẩn bích</th>
             <th class="align-middle">Chuẩn gasket</th>
+            <th class="align-middle">Đơn giá</th>
             <th class="align-middle">Đ/v tính</th>
             <th class="align-middle">Số lượng CO</th>
             @if ($isManufactureProduct)
@@ -42,6 +43,7 @@
                     <td><input type="text" name="kich_thuoc[]" value="{{ $detail['kich_thuoc'] }}"></td>
                     <td><input type="text" name="chuan_bich[]" value="{{ $detail['chuan_bich'] }}"></td>
                     <td><input type="text" name="chuan_gasket[]" value="{{ $detail['chuan_gasket'] }}"></td>
+                    <td><input type="text" name="don_gia[]" value="{{ number_format($detail['don_gia']) }}"></td>
                     <td>
                         {{ $detail['dv_tinh'] }}
                         <input hidden value="{{$detail['material_type']}}" name="offer_price_material_type[]" />

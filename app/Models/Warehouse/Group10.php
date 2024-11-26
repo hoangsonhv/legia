@@ -21,7 +21,8 @@ class Group10 extends BaseWarehouseCommon
         'ghi_chu',
         'ton_sl_cay',
         'ton_sl_m',
-        'model_type'
+        'model_type',
+        'don_gia'
     ];
     protected $appends = ['detail', 'dv_tinh'];
 
@@ -32,7 +33,7 @@ class Group10 extends BaseWarehouseCommon
             'm_cay' => $this->std,
         ];
     }
-       
+
     public function getAcreageAttribute() {
         return self::acreage($this->sl_cay);
     }

@@ -43,7 +43,7 @@ class WarehouseService
     }
 
     public function edit(int $l_id, string $model) : Model | null {
-   
+
         $this->setRepository($model);
         $model = $this->baseWarehouseReposiroty->find($l_id);
         return $model ? $model : null;
@@ -501,13 +501,13 @@ class WarehouseService
                 ->where('warehouse_export_products.merchandise_id', '<>', null)
                 ->get();
         }
-        
+
         $histories = array();
         foreach ($exports as $export) {
             $co = Co::where('id', $export->co_id)->first();
             $nhapTonCo = BaseWarehouseCommon::where('lot_no', '=', $co->raw_code);
 
-            
+
         }
     }
 

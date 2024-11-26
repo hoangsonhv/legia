@@ -92,6 +92,10 @@ class WarehousePlateController extends Controller
         $nameWarehouse = $this->checkExistModel($model);
 
         $input = $request->except('_token');
+
+        $donGia = str_replace(',', '', $request->input('don_gia'));
+        $input['don_gia'] = $donGia;
+        
         if($request->ajax()){
             return $this->warehouseService->storeOrUpdate($model, $input, false);
         }
@@ -123,6 +127,9 @@ class WarehousePlateController extends Controller
 
         $input          = $request->except('_token', '_method');
         $input['l_id'] = $id;
+        $donGia = str_replace(',', '', $request->input('don_gia'));
+        $input['don_gia'] = $donGia;
+
         if ($this->warehouseService->storeOrUpdate($model, $input)) {
             return redirect()->route('admin.warehouse-plate.edit', ['model' => $model, 'id' => $id])->with('success','Cập nhật Vật Liệu thành công!');
         }

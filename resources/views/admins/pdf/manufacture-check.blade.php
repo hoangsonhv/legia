@@ -104,12 +104,13 @@
                 <th class="w7">Kích thước</th>
                 <th class="w7">Chuẩn mặt bích</th>
                 <th class="w7">Chuẩn Gasket/B.Về</th>
+                <th class="w7">Đơn giá</th>
                 <th class="w4">ĐV tính</th>
                 <th class="w4">Số lượng</th>
                 <th class="w5">Ghi chú</th>
                 <th class="w7">Ngày dự kiến</th>
             </tr>
-            <tr>
+{{--            <tr>--}}
 {{--                <th></th>--}}
 {{--                <th></th>--}}
 {{--                <th></th>--}}
@@ -129,7 +130,7 @@
 {{--                <th></th>--}}
 {{--                <th></th>--}}
 {{--                <th></th>--}}
-            </tr>
+{{--            </tr>--}}
             </thead>
             <tbody>
             @foreach($details as $key => $detail)
@@ -151,6 +152,7 @@
                     <td>{{$offerPrice->kich_thuoc}}</td>
                     <td>{{$offerPrice->chuan_bich}}</td>
                     <td>{{$offerPrice->chuan_gasket}}</td>
+                    <td>{{ number_format($offerPrice->don_gia) }}</td>
                     <td>{{$offerPrice->dv_tinh}}</td>
                     <td>{{$offerPrice->so_luong}}</td>
                     <td></td>
@@ -176,6 +178,7 @@
                 @for($i = 0; $i <= $lines - 1 ; $i++)
                     <tr style="height: 30px;">
                         <td><span style="visibility: hidden">test</span></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

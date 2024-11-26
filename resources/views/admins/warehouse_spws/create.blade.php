@@ -271,6 +271,11 @@
                     <label for="ton_sl_kg">Tồn SL - Kg</label>
                     {!! Form::number('ton_sl_kg', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
+
+                  <div class="form-group">
+                    <label for="don_gia">Đơn giá</label>
+                    {!! Form::number('don_gia', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                  </div>
                   @break
                 @case ('glandpackinglatty')
                   <div class="form-group">
@@ -287,6 +292,11 @@
                     <label for="ton_sl_kg">Tồn SL - Kg</label>
                     {!! Form::number('ton_sl_kg', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
+
+                    <div class="form-group">
+                        <label for="don_gia">Đơn giá</label>
+                        {!! Form::number('don_gia', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                    </div>
                   @break
                 @case ('oring')
                   <div class="form-group">
@@ -315,12 +325,20 @@
                     <label for="ton_sl_cai">Tồn SL - Cái</label>
                     {!! Form::number('ton_sl_cai', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
+                  <div class="form-group">
+                    <label for="don_gia">Đơn giá</label>
+                    {!! Form::number('don_gia', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                  </div>
                   @break
                 @case ('thanhphamswg')
                   <div class="form-group">
                     <label for="ton_sl_cai">Tồn SL - Cái</label>
                     {!! Form::number('ton_sl_cai', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
+                    <div class="form-group">
+                        <label for="don_gia">Đơn giá</label>
+                        {!! Form::number('don_gia', null, array('class' => 'form-control', 'step' => 'any')) !!}
+                    </div>
                   @break
                 @case ('vanhtinhinnerswg')
                   <div class="form-group">
