@@ -302,7 +302,7 @@
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cuon }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_kg }}</td>
-                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
+                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehouseSpw->don_gia) : '' }}</td>
                                 @break
                               @case ('glandpackinglatty')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
@@ -314,7 +314,7 @@
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cuon }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_kg }}</td>
-                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
+                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehouseSpw->don_gia) : '' }}</td>
                                 @break
                               @case ('oring')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
@@ -337,7 +337,7 @@
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
-                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
+                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehouseSpw->don_gia) : '' }}</td>
                                 @break
                               @case ('thanhphamswg')
                                 <td>{{ $warehouseSpw->inner }}</td>
@@ -346,7 +346,7 @@
                                 <td>{{ $warehouseSpw->outer }}</td>
                                 <td>{{ $warehouseSpw->thick }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
-                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
+                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehouseSpw->don_gia) : '' }}</td>
                                 @break
                               @case ('vanhtinhinnerswg')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
