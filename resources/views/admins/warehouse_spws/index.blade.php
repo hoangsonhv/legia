@@ -224,6 +224,7 @@
                               <th>Size</th>
                               <th>Tồn SL - Cuộn</th>
                               <th>Tồn SL - KG</th>
+                              <th>Đơn giá</th>
                               @break
                             @case ('glandpackinglatty')
                               <th>Vật liệu</th>
@@ -235,6 +236,7 @@
                               <th>Size</th>
                               <th>Tồn SL - Cuộn</th>
                               <th>Tồn SL - KG</th>
+                              <th>Đơn giá</th>
                               @break
                             @case ('oring')
                               <th>Vật liệu</th>
@@ -257,6 +259,7 @@
                               <th>Vật liệu</th>
                               <th>Size</th>
                               <th>Tồn SL - Cái</th>
+                              <th>Đơn giá</th>
                               @break
                             @case ('thanhphamswg')
                               <th>Inner</th>
@@ -265,6 +268,7 @@
                               <th>Outer</th>
                               <th>Thick</th>
                               <th>Tồn SL - Cái</th>
+                              <th>Đơn giá</th>
                               @break
                             @case ('vanhtinhinnerswg')
                               <th>Vật liệu</th>
@@ -298,6 +302,7 @@
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cuon }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_kg }}</td>
+                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
                                 @break
                               @case ('glandpackinglatty')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
@@ -309,6 +314,7 @@
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cuon }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_kg }}</td>
+                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
                                 @break
                               @case ('oring')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
@@ -331,6 +337,7 @@
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
                                 <td>{{ $warehouseSpw->size }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
+                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
                                 @break
                               @case ('thanhphamswg')
                                 <td>{{ $warehouseSpw->inner }}</td>
@@ -339,6 +346,7 @@
                                 <td>{{ $warehouseSpw->outer }}</td>
                                 <td>{{ $warehouseSpw->thick }}</td>
                                 <td>{{ $warehouseSpw->ton_sl_cai + $warehouseSpw->sl_ton }}</td>
+                               <td>{{ ($warehouseSpw->don_gia && $warehouseSpw->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
                                 @break
                               @case ('vanhtinhinnerswg')
                                 <td>{{ $warehouseSpw->vat_lieu }}</td>
@@ -379,6 +387,7 @@
                              <th>Size</th>
                              <th>Tồn SL - Cuộn</th>
                              <th>Tồn SL - KG</th>
+                             <th>Đơn giá</th>
                              @break
                            @case ('glandpackinglatty')
                              <th>Vật liệu</th>
@@ -390,6 +399,7 @@
                              <th>Size</th>
                              <th>Tồn SL - Cuộn</th>
                              <th>Tồn SL - KG</th>
+                            <th>Đơn giá</th>
                              @break
                            @case ('oring')
                              <th>Vật liệu</th>
@@ -412,6 +422,7 @@
                              <th>Vật liệu</th>
                              <th>Size</th>
                              <th>Tồn SL - Cái</th>
+                            <th>Đơn giá</th>
                              @break
                            @case ('thanhphamswg')
                              <th>Inner</th>
@@ -420,6 +431,7 @@
                              <th>Outer</th>
                              <th>Thick</th>
                              <th>Tồn SL - Cái</th>
+                            <th>Đơn giá</th>
                              @break
                            @case ('vanhtinhinnerswg')
                              <th>Vật liệu</th>

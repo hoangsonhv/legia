@@ -100,6 +100,7 @@
                            <th>{{\App\Helpers\WarehouseHelper::translateAtt('l2')}}</th>
                            <th>Tồn SL - Tấm</th>
                            <th>Tồn SL - m2</th>
+                           <th>Đơn giá</th>
                            <th>&nbsp</th>
                          </tr>
                        </thead>
@@ -120,6 +121,7 @@
                              <td>{{ $warehousePlate->l2 }}</td>
                              <td>{{ $warehousePlate->ton_kho['ton_sl_tam'] }}</td>
                              <td>{{ $warehousePlate->ton_kho['ton_sl_m2'] }}</td>
+                             <td>{{ ($warehousePlate->don_gia && $warehousePlate->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
                              <td>
                                @permission('admin.warehouse-plate.edit')
                                  <a href="{{ route('admin.warehouse-plate.edit', ['model' => $model, 'id' => $warehousePlate->l_id]) }}" role="button" class="btn btn-outline-primary btn-sm" title="Cập nhật"><i class="fas fa-solid fa-pen"></i></a>
@@ -143,6 +145,7 @@
                           <th>Date</th>
                           <th>Tồn SL - Tấm</th>
                           <th>Tồn SL - m2</th>
+                          <th>Đơn giá</th>
                           <th>&nbsp</th>
                         </tr>
                       </tfoot>
