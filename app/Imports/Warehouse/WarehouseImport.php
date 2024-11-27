@@ -167,7 +167,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'date'       => now(),
             'ton_sl_tam' => floatval($row[13]),
             'ton_sl_m2'  => floatval($row[14]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia' => $row[15] ?? 0
         ];
 
         return $data;
@@ -188,7 +189,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'date'                => now(),
             'ton_sl_cuon'         => floatval($row[10]),
             'ton_sl_kg'           => floatval($row[11]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[12] ?? 0
         ];
 
         return $data;
@@ -208,7 +210,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'date'        => now(),
             'ton_sl_cuon' => floatval($row[9]),
             'ton_sl_m'    => floatval($row[10]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[11] ?? 0
         ];
 
         return $data;
@@ -227,7 +230,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'ghi_chu'    => $row[7],
             'date'       => !empty($row[8]) ? $this->transformDateTime($row[8]) : null,
             'ton_sl_cai' => floatval($row[9]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[10] ?? 0
         ];
 
         return $data;
@@ -245,7 +249,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'ghi_chu'    => $row[7],
             'date'       => !empty($row[8]) ? $this->transformDateTime($row[8]) : null,
             'ton_sl_cai' => floatval($row[9]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[10] ?? 0
         ];
 
         return $data;
@@ -262,7 +267,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'ghi_chu'    => $row[5],
             'date'       => !empty($row[6]) ? $this->transformDateTime($row[6]) : null,
             'ton_sl_cai' => floatval($row[7]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[8] ?? 0
         ];
 
         return $data;
@@ -279,7 +285,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'ghi_chu'            => $row[5],
             'date'               => !empty($row[6]) ? $this->transformDateTime($row[6]) : null,
             'ton_sl_cai'         => floatval($row[7]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[8] ?? 0
         ];
 
         return $data;
@@ -301,7 +308,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'ghi_chu'    => $row[10],
             'date'       => now(),
             'ton_sl_cai' => floatval($row[12]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[13] ?? 0
         ];
         return $data;
     }
@@ -317,7 +325,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'ghi_chu'     => $row[5],
             'date'        => !empty($row[6]) ? $this->transformDateTime($row[6]) : null,
             'ton_sl_cuon' => floatval($row[7]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[8] ?? 0
         ];
         return $data;
     }
@@ -334,7 +343,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'ghi_chu'    => $row[6],
             'date'       => now(),
             'ton_sl_cai' => floatval($row[8]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[9] ?? 0
         ];
         return $data;
     }
@@ -353,7 +363,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'ghi_chu'    => $row[9],
             'date'       => !empty($row[10]) ? $this->transformDateTime($row[10]) : null,
             'ton_sl_cai' => floatval($row[11]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[12] ?? 0
         ];
         return $data;
     }
@@ -371,7 +382,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'date'       => !empty($row[8]) ? $this->transformDateTime($row[8]) : null,
             'ton_sl_cay' => floatval($row[9]),
             'ton_sl_m'   => floatval($row[10]),
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[11] ?? 0
         ];
         return $data;
     }
@@ -391,7 +403,8 @@ class WarehouseImport implements ToModel, WithStartRow, WithChunkReading, WithBa
             'lot_no' => $row[9],
             'ghi_chu'   => $row[10],
             'sl_ton'   => $row[10],
-            'model_type' => $modelType
+            'model_type' => $modelType,
+            'don_gia'    => $row[11] ?? 0
 
         ];
         return $data;
