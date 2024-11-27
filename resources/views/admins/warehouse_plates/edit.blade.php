@@ -115,6 +115,13 @@
                     {!! Form::text('ton_sl_m2', null, array('class' => 'form-control')) !!}
                   </div>
                 </div>
+                  <div class="col-3">
+                      <div class="form-group">
+                          <label for="don_gia">Đơn giá</label>
+                          <input type="text" name="don_gia" value="{{ $warehousePlate->don_gia ? number_format($warehousePlate->don_gia, 0, '.', ',') : '' }}" class="form-control">
+                      </div>
+                  </div>
+
               </div>
             </div>
             <!-- /.card-body -->

@@ -164,6 +164,7 @@
                 <th class="w7">Kích thước</th>
                 <th class="w7">Chuẩn mặt bích</th>
                 <th class="w7">Chuẩn Gasket/B.Về</th>
+                <th class="w7">Đơn giá</th>
                 <th class="w4">ĐV tính</th>
                 <th class="w4">Số lượng</th>
                 <th class="w5">Ghi chú</th>
@@ -211,6 +212,7 @@
                     <td>{{$offerPrice->kich_thuoc}}</td>
                     <td>{{$offerPrice->chuan_bich}}</td>
                     <td>{{$offerPrice->chuan_gasket}}</td>
+                    <td>{{ number_format($offerPrice->don_gia) }}</td>
                     <td>{{$offerPrice->dv_tinh}}</td>
                     <td>{{$offerPrice->so_luong}}</td>
                     <td></td>
@@ -220,6 +222,7 @@
             @for($i = 0; $i + count($details) <= 12; $i++)
                 <tr>
                     <td>{{ $i + count($details) + 1  }}</td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>

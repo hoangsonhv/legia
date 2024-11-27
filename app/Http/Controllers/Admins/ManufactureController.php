@@ -283,6 +283,7 @@ class ManufactureController extends Controller
                 $details[$index]['manufacture_quantity'] = $detail->manufacture_quantity;
                 $details[$index]['dia_w_w1'] = $detail->dia_w_w1;
                 $details[$index]['l_l1'] = $detail->l_l1;
+                $details[$index]['don_gia'] = $detail->offerPrice ? $detail->offerPrice->don_gia : '';
             }
 
             return view('admins.manufacture.edit',compact('breadcrumb', 'titleForLayout', 'model',
@@ -348,7 +349,10 @@ class ManufactureController extends Controller
                             'material_type' => in_array($offerPriceId, $inputs['material_type'] ?? []) ?
                                 ManufactureDetail::MATERIAL_TYPE_METAL : ManufactureDetail::MATERIAL_TYPE_NON_METAL,
                             'lot_no' => $inputs['lot_no'][$index],
-                            'updated_at' => Date('Y-m-d H:i:s')
+                            'updated_at' => Date('Y-m-d H:i:s'),
+                            // son added
+                            'don_gia' => isset($inputs['don_gia'][$index]) ?
+                                (float) str_replace([',', ' '], '', $inputs['don_gia'][$index]) : null
                         ];
                         ManufactureDetail::updateOrCreate(['id' => $inputs['id'][$index]], $dataUpdate);
                     }

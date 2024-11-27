@@ -18,7 +18,8 @@ class Group14 extends BaseWarehouseCommon
         'ghi_chu',
         'date',
         'ton_sl_cai',
-        'model_type'
+        'model_type',
+        'don_gia'
     ];
     protected $appends = ['detail', 'dv_tinh'];
 
@@ -29,7 +30,7 @@ class Group14 extends BaseWarehouseCommon
             'dvt'   => $this->dvt,
         ];
     }
-       
+
     public function getAcreageAttribute() {
         return null;
     }

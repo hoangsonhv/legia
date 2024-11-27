@@ -272,6 +272,10 @@
                     <label for="ton_sl_kg">Tồn SL - Kg</label>
                     {!! Form::number('ton_sl_kg', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
+                    <div class="form-group">
+                        <label for="don_gia">Đơn giá</label>
+                        <input type="text" name="don_gia" value="{{ $warehouseSpw->don_gia ? number_format($warehouseSpw->don_gia, 0, '.', ',') : '' }}" class="form-control">
+                    </div>
                   @break
                 @case ('glandpackinglatty')
                   <div class="form-group">
@@ -288,6 +292,10 @@
                     <label for="ton_sl_kg">Tồn SL - Kg</label>
                     {!! Form::number('ton_sl_kg', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
+                    <div class="form-group">
+                        <label for="don_gia">Đơn giá</label>
+                        <input type="text" name="don_gia" value="{{ $warehouseSpw->don_gia ? number_format($warehouseSpw->don_gia, 0, '.', ',') : '' }}" class="form-control">
+                    </div>
                   @break
                 @case ('oring')
                   <div class="form-group">
@@ -316,12 +324,20 @@
                     <label for="ton_sl_cai">Tồn SL - Cái</label>
                     {!! Form::number('ton_sl_cai', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
+                    <div class="form-group">
+                        <label for="don_gia">Đơn giá</label>
+                        <input type="text" name="don_gia" value="{{ $warehouseSpw->don_gia ? number_format($warehouseSpw->don_gia, 0, '.', ',') : '' }}" class="form-control">
+                    </div>
                   @break
                 @case ('thanhphamswg')
                   <div class="form-group">
                     <label for="ton_sl_cai">Tồn SL - Cái</label>
                     {!! Form::number('ton_sl_cai', null, array('class' => 'form-control', 'step' => 'any')) !!}
                   </div>
+                    <div class="form-group">
+                        <label for="don_gia">Đơn giá</label>
+                        <input type="text" name="don_gia" value="{{ $warehouseSpw->don_gia ? number_format($warehouseSpw->don_gia, 0, '.', ',') : '' }}" class="form-control">
+                    </div>
                   @break
                 @case ('vanhtinhinnerswg')
                   <div class="form-group">

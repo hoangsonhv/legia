@@ -71,6 +71,9 @@ class WarehouseSpwController extends Controller
         $nameWarehouse = $this->checkExistModel($model);
 
         $input = $request->except('_token');
+        $donGia = str_replace(',', '', $request->input('don_gia'));
+        $input['don_gia'] = $donGia;
+
         if($request->ajax()){
             return $this->warehouseService->storeOrUpdate($model, $input, false);
         }
@@ -88,7 +91,7 @@ class WarehouseSpwController extends Controller
         $breadcrumb['data']['list'] = ['label'  => 'Cập nhật ' . $nameWarehouse];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
 
-      
+
         if ($warehouseSpw = $this->warehouseService->edit($id,$model)) {
             $permissions = config('permission.permissions');
             return view('admins.warehouse_spws.edit',compact('breadcrumb', 'titleForLayout', 'warehouseSpw', 'permissions', 'model'));
@@ -102,6 +105,9 @@ class WarehouseSpwController extends Controller
 
         $input          = $request->except('_token', '_method');
         $input["l_id"] = $id;
+        $donGia = str_replace(',', '', $request->input('don_gia'));
+        $input['don_gia'] = $donGia;
+
         if ($this->warehouseService->storeOrUpdate($model, $input)) {
             return redirect()->route('admin.warehouse-spw.edit', ['model' => $model, 'id' => $id])->with('success','Cập nhật Vật Liệu thành công!');
         }

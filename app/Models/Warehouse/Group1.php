@@ -27,7 +27,8 @@ class Group1 extends BaseWarehouseCommon
         'date',
         'ton_sl_tam',
         'ton_sl_m2',
-        'model_type'
+        'model_type',
+        'don_gia'
     ];
     protected $appends = ['detail', 'dv_tinh'];
 

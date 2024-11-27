@@ -23,7 +23,8 @@ class Group11 extends BaseWarehouseCommon
         'lot_no',
         'ghi_chu',
         'sl_ton',
-        'model_type'
+        'model_type',
+        'don_gia'
     ];
     protected $appends = ['detail', 'dv_tinh'];
 

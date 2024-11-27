@@ -83,6 +83,10 @@
                 <label for="ton_sl_m2">Tồn SL - m2</label>
                 {!! Form::text('ton_sl_m2', null, array('class' => 'form-control')) !!}
               </div>
+              <div class="form-group">
+                <label for="don_gia">Đơn giá</label>
+                {!! Form::text('don_gia', null, array('class' => 'form-control')) !!}
+              </div>
             </div>
             <!-- /.card-body -->
             <div class="card-footer text-right">
