@@ -119,8 +119,10 @@
                              <td>{{ $warehousePlate->l_l1 }}</td>
                              <td>{{ $warehousePlate->w2 }}</td>
                              <td>{{ $warehousePlate->l2 }}</td>
-                             <td>{{ $warehousePlate->ton_kho['ton_sl_tam'] }}</td>
-                             <td>{{ $warehousePlate->ton_kho['ton_sl_m2'] }}</td>
+                             <td>{{ $warehousePlate->ton_sl_tam }}</td>
+                             <td>{{ $warehousePlate->ton_sl_m2 }}</td>
+{{--                             <td>{{ $warehousePlate->ton_kho['ton_sl_tam'] }}</td>--}}
+{{--                             <td>{{ $warehousePlate->ton_kho['ton_sl_m2'] }}</td>--}}
                              <td>{{ ($warehousePlate->don_gia && $warehousePlate->don_gia > 0) ? number_format($warehousePlate->don_gia) : '' }}</td>
                              <td>
                                @permission('admin.warehouse-plate.edit')

@@ -37,7 +37,7 @@
                     <td>{{ $detail['loai_vat_lieu'] }}</td>
                     <td><input type="text" name="do_day[]" value="{{$detail['do_day']}}"></td>
                     <td><input type="text" name="tieu_chuan[]" value="{{ $detail['tieu_chuan'] }}"></td>
-                    <td><input type="text" name="size[]" value="{{ $detail['kich_co'] }}"></td>
+                    <td><input type="text" name="kich_co[]" value="{{ $detail['kich_co'] }}"></td>
                     <td><input type="text" name="l_l1[]" value="{{ @$detail['l_l1'] }}"></td>
                     <td><input type="text" name="dia_w_w1[]" value="{{ @$detail['dia_w_w1'] }}"></td>
                     <td><input type="text" name="kich_thuoc[]" value="{{ $detail['kich_thuoc'] }}"></td>

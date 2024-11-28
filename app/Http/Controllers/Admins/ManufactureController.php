@@ -274,13 +274,13 @@ class ManufactureController extends Controller
                 $details[$index]['dv_tinh'] = $detail->offerPrice ? $detail->offerPrice->dv_tinh : '';
                 $details[$index]['so_luong'] = $detail->offerPrice ? $detail->offerPrice->so_luong : '';
                 $details[$index]['so_luong_san_xuat'] = $detail->offerPrice ? $detail->offerPrice->so_luong_san_xuat : '';
-                $details[$index]['reality_quantity'] = $detail->reality_quantity;
-                $details[$index]['error_quantity'] = $detail->error_quantity;
-                $details[$index]['need_quantity'] = $detail->need_quantity;
-                $details[$index]['material_type'] = $detail->material_type;
+                $details[$index]['reality_quantity'] = $detail->reality_quantity ?? 0;
+                $details[$index]['error_quantity'] = $detail->error_quantity ?? 0;
+                $details[$index]['need_quantity'] = $detail->need_quantity ?? 0;
+                $details[$index]['material_type'] = $detail->material_type ?? 0;
                 // son added
                 $details[$index]['manufacture_id'] = $detail->manufacture_id;
-                $details[$index]['manufacture_quantity'] = $detail->manufacture_quantity;
+                $details[$index]['manufacture_quantity'] = $detail->manufacture_quantity ?? 0;
                 $details[$index]['dia_w_w1'] = $detail->dia_w_w1;
                 $details[$index]['l_l1'] = $detail->l_l1;
                 $details[$index]['don_gia'] = $detail->offerPrice ? $detail->offerPrice->don_gia : '';
@@ -327,34 +327,38 @@ class ManufactureController extends Controller
                                 $kich_thuoc = @$inputs['dia_w_w1'][$index] ?? 0 . 'x' .@$inputs['l_l1'][$index] ?? 0;
                                 break;
                             case WarehouseHelper::GLAND_PACKING_LATTY:
-                                $kich_thuoc = @$inputs['size'][$index] ?? 0 . 'x' . @$inputs['size'][$index] ?? 0;
+                                $kich_thuoc = @$inputs['kich_co'][$index] ?? 0 . 'x' . @$inputs['kich_co'][$index] ?? 0;
                                 break;
                             default:
-                                $kich_thuoc = @$inputs['size'][$index] ?? 0;
+                                $kich_thuoc = @$inputs['kich_co'][$index] ?? 0;
                                 break;
                         }
                         $reality = $inputs['reality_quantity'][$index] - (@$inputs['error_quantity'][$index] ?? 0);
                         $dataUpdate = [
-                            'do_day' => @$inputs['do_day'][$index] ?? 0,
-                            'tieu_chuan' => @$inputs['tieu_chuan'][$index] ?? 0,
-                            'size' => @$inputs['size'][$index] ?? 0,
+                            'manufacture_id' => $id,
                             'dia_w_w1' => @$inputs['dia_w_w1'][$index] ?? null,
                             'l_l1' => @$inputs['l_l1'][$index] ?? null,
-                            'kich_thuoc' => $kich_thuoc,
-                            'chuan_bich' => @$inputs['chuan_bich'][$index] ?? 0,
-                            'chuan_gasket' => @$inputs['chuan_gasket'][$index] ?? 0,
                             'reality_quantity' => $reality > 0 ? $reality : null,
                             'error_quantity' => @$inputs['error_quantity'][$index] ?? 0,
                             'need_quantity' => $inputs['need_quantity'][$index],
                             'material_type' => in_array($offerPriceId, $inputs['material_type'] ?? []) ?
                                 ManufactureDetail::MATERIAL_TYPE_METAL : ManufactureDetail::MATERIAL_TYPE_NON_METAL,
                             'lot_no' => $inputs['lot_no'][$index],
-                            'updated_at' => Date('Y-m-d H:i:s'),
-                            // son added
-                            'don_gia' => isset($inputs['don_gia'][$index]) ?
-                                (float) str_replace([',', ' '], '', $inputs['don_gia'][$index]) : null
                         ];
-                        ManufactureDetail::updateOrCreate(['id' => $inputs['id'][$index]], $dataUpdate);
+                        $manufactureDetail = ManufactureDetail::updateOrCreate(['id' => $inputs['id'][$index]], $dataUpdate);
+
+                       // son added
+                        $offerPrice = $manufactureDetail->offerPrice;
+                        $offerPrice->do_day = @$inputs['do_day'][$index] ?? null;
+                        $offerPrice->tieu_chuan = @$inputs['tieu_chuan'][$index] ?? null;
+                        $offerPrice->kich_co = @$inputs['kich_co'][$index] ?? null;
+                        $offerPrice->kich_thuoc = @$inputs['kich_thuoc'][$index] ?? null;
+                        $offerPrice->chuan_bich = @$inputs['chuan_bich'][$index] ?? null;
+                        $offerPrice->chuan_gasket = @$inputs['chuan_gasket'][$index] ?? null;
+                        $offerPrice->don_gia = isset($inputs['don_gia'][$index]) ?
+                            (float) str_replace([',', ' '], '', $inputs['don_gia'][$index]) : null;
+                        $offerPrice->updated_at = Date('Y-m-d H:i:s');
+                        $offerPrice->save();
                     }
                 }
                 $this->manufactureRepo->updateIsCompleted($id);
