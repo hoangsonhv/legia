@@ -76,12 +76,12 @@ class Group1 extends BaseWarehouseCommon
         ];
     }
 
-    public function setTonSlM2Attribute() {
-        return $this->acreage($this->ton_sl_tam);
-    }
-    public function getTonSlM2Attribute() {
-        return $this->acreage($this->ton_sl_tam);
-    }
+//    public function setTonSlM2Attribute() {
+//        return $this->acreage($this->ton_sl_tam);
+//    }
+//    public function getTonSlM2Attribute() {
+//        return $this->acreage($this->ton_sl_tam);
+//    }
 
     public function setQuantity($qty, $accumulate = true) {
         if ($accumulate) {

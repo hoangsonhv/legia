@@ -81,7 +81,7 @@
               </div>
               <div class="form-group">
                 <label for="ton_sl_m2">Tồn SL - m2</label>
-                {!! Form::text('ton_sl_m2', null, array('class' => 'form-control')) !!}
+                {!! Form::number('ton_sl_m2', null, array('class' => 'form-control')) !!}
               </div>
               <div class="form-group">
                 <label for="don_gia">Đơn giá</label>

@@ -95,7 +95,8 @@ class WarehousePlateController extends Controller
 
         $donGia = str_replace(',', '', $request->input('don_gia'));
         $input['don_gia'] = $donGia;
-        
+        $input['ton_sl_m2'] = (double)$request->input('ton_sl_m2');
+
         if($request->ajax()){
             return $this->warehouseService->storeOrUpdate($model, $input, false);
         }
@@ -129,6 +130,7 @@ class WarehousePlateController extends Controller
         $input['l_id'] = $id;
         $donGia = str_replace(',', '', $request->input('don_gia'));
         $input['don_gia'] = $donGia;
+        $input['ton_sl_m2'] = (double)$request->input('ton_sl_m2');
 
         if ($this->warehouseService->storeOrUpdate($model, $input)) {
             return redirect()->route('admin.warehouse-plate.edit', ['model' => $model, 'id' => $id])->with('success','Cập nhật Vật Liệu thành công!');
