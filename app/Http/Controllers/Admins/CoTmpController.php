@@ -67,7 +67,7 @@ class CoTmpController extends Controller
 
         // Count data pending
         $countPending = $this->coRepository->getCoes(['used' => 0])->count();
-        
+
         // search
         if($request->has('used')) {
             $params['used'] = $request->used;
@@ -168,7 +168,7 @@ class CoTmpController extends Controller
             $manufactureType = $request->input('manufacture_type');
             $warehouseGroupId = $request->input('warehouse_group_id');
             $materialType = $request->input('material_type');
-            
+
             foreach ($codes as $key => $code) {
                 $offerPrices[] = [
                     'code'          => $code,
@@ -201,7 +201,7 @@ class CoTmpController extends Controller
 
     public function edit(Request $request, $id)
     {
-        
+
         $breadcrumb                 = $this->menu;
         $breadcrumb['data']['list'] = ['label'  => 'Cập nhật'];
         $titleForLayout             = $breadcrumb['data']['list']['label'];
