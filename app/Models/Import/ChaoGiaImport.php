@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App\Models\Import;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
