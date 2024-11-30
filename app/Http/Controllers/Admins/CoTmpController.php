@@ -113,8 +113,8 @@ class CoTmpController extends Controller
 
     public function store(CoTmpRequest $request)
     {
-        // try {
-            // \DB::beginTransaction();
+        try {
+             \DB::beginTransaction();
             $customer = $request->input('customer');
             // Save core customer
             $dataCoreCustomer = [
@@ -169,6 +169,7 @@ class CoTmpController extends Controller
             $warehouseGroupId = $request->input('warehouse_group_id');
             $materialType = $request->input('material_type');
 
+            $co->warehouses()->delete();
             foreach ($codes as $key => $code) {
                 $offerPrices[] = [
                     'code'          => $code,
@@ -192,11 +193,11 @@ class CoTmpController extends Controller
             $co->warehouses()->createMany($offerPrices);
             \DB::commit();
             return redirect()->route('admin.co-tmp.index')->with('success','Tạo Chào Giá thành công!');
-        // } catch(\Exception $ex) {
-        //     \DB::rollback();
-        //     report($ex);
-        // }
-        // return redirect()->back()->withInput()->with('error','Tạo Chào Giá thất bại!');
+        } catch(\Exception $ex) {
+            \DB::rollback();
+            report($ex);
+        }
+        return redirect()->back()->withInput()->with('error','Tạo Chào Giá thất bại!');
     }
 
     public function edit(Request $request, $id)
