@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OfferPriceTmp extends Model
 {
     protected $fillable = [
-        'co_id',
+        'co_tmp_id',
         'code',
         'loai_vat_lieu',
         'do_day',
@@ -29,6 +29,6 @@ class OfferPriceTmp extends Model
     ];
 
     public function co() {
-        return $this->belongsTo(CoTmp::class);
+        return $this->belongsTo(CoTmp::class, 'co_tmp_id', 'id');
     }
 }

@@ -114,7 +114,7 @@ class CoService
                 return $results;
             }
             $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($base_warehouse->model_type));
-            
+
             // $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
 
             $merchandises = $this->baseWarehouseRepository->model
@@ -162,8 +162,8 @@ class CoService
                 return $merchandises->values();
             } else {
                 return $results;
-            } 
-            
+            }
+
         } catch(\Exception $ex) {
             dd($ex);
         }
@@ -181,7 +181,7 @@ class CoService
                     if ($merchandiseCode['model_type'] == null
                         && $merchandiseCode['manufacture_type'] == MerchandiseGroup::COMMERCE) {
                         continue;
-                    } 
+                    }
                     if ($merchandiseCode['model_type'] != null
                         && $merchandiseCode['manufacture_type'] == MerchandiseGroup::COMMERCE) {
                             $query = self::getMaterialsQuery($merchandiseCode['merchandise_code_in_warehouse'], $merchandiseCode['model_type']);
@@ -192,7 +192,7 @@ class CoService
                                 $results = $results->merge($materials);
                             }
                         continue;
-                    } 
+                    }
 
                     $query = '';
                     if ($merchandiseCode['model_type'] == WarehouseHelper::THANH_PHAM_SWG) {
@@ -242,7 +242,7 @@ class CoService
         $rim_size = WarehouseSwgSize::where('code_size', substr($swg_code, 8, 3))
             ->select('rim_size')->pluck('rim_size')->first() ?? '';
         $last = WarehouseSwgCode::select(['inner', 'outer'])->where('code_part', substr($swg_code, -8))->first() ?? '';
-        
+
         if ($last == '' || $rim_size == '') {
             $product_inner = '';
             $product_outer = '';
@@ -281,9 +281,8 @@ class CoService
         $query = BaseWarehouseCommon::where('code',$code)
             ->where(function($query) use ($nonZeroConditions) {
                 foreach ($nonZeroConditions as $cnd) {
-                    $query = $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
+                    $query->orWhere($cnd[0], $cnd[1], $cnd[2]);
                 }
-                return $query;
             });
 
         if (is_array($model_type)) {
@@ -314,14 +313,14 @@ class CoService
     //                 $warehouse_ids = array_merge($warehouse_ids, $group->warehouses->pluck('id')->toArray());
     //             }
     //             $warehouse_ids = array_unique($warehouse_ids);
-                
+
     //             $nonZeroConditions = WarehouseHelper::nonZeroWarehouseMerchandiseConditions();
 
     //             foreach ($warehouse_ids as $warehouse_id) {
     //                 $warehouse = Warehouse::find($warehouse_id);
     //                 $tonKhoKey = WarehouseHelper::groupTonKhoKey($warehouse->model_type);
     //                 $this->baseWarehouseRepository->setModel(WarehouseHelper::getModel($warehouse->model_type));
-                    
+
     //                 $query = DB::table('base_warehouses')
     //                     ->select('*', DB::raw('sum('.$tonKhoKey.') as '.$tonKhoKey))
     //                     ->where('model_type' , $warehouse->model_type)
@@ -377,7 +376,7 @@ class CoService
     //                                 return $query;
     //                             });
     //                         }
-    //                         $totalInWarehouse = $totalInWarehouse->get(); 
+    //                         $totalInWarehouse = $totalInWarehouse->get();
 
     //                         if(count($totalInWarehouse)) {
     //                             $merchindiseWarehouse = $merchindiseWarehouse->merge($totalInWarehouse)->unique();

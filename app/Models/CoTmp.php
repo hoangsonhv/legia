@@ -77,7 +77,7 @@ class CoTmp extends Model
     }
 
     public function warehouses() {
-        return $this->hasMany(OfferPriceTmp::class);
+        return $this->hasMany(OfferPriceTmp::class, 'co_tmp_id', 'id');
     }
 
     public function coes() {
